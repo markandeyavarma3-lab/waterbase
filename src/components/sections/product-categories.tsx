@@ -1,46 +1,46 @@
-import Link from "next/link";
-import { Droplets, CloudRain, Filter, Gauge, Cpu, Workflow, FlaskConical, Wrench, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Droplets, CloudRain, Filter, Gauge, Cpu, Workflow, FlaskConical, Wrench } from "lucide-react";
+import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 
 const categories = [
-  { icon: Droplets, title: "Drip Irrigation Systems" },
-  { icon: CloudRain, title: "Sprinklers & Rainguns" },
-  { icon: Filter, title: "Filters" },
-  { icon: Gauge, title: "Pumps & Motors" },
-  { icon: Cpu, title: "Valves & Automation" },
-  { icon: Workflow, title: "PVC & HDPE Pipes" },
-  { icon: FlaskConical, title: "Fertigation Systems" },
-  { icon: Wrench, title: "Fittings & Accessories" },
+  { icon: Droplets, title: "Drip Irrigation Systems", desc: "Precise, water-efficient delivery straight to the root zone.", items: ["Inline drip laterals", "Online drippers & emitters", "Pressure-compensating drippers", "Emitting / drip pipe", "Drip connectors & accessories"] },
+  { icon: CloudRain, title: "Sprinklers & Rainguns", desc: "Even coverage for field crops, lawns and large areas.", items: ["Micro & mini sprinklers", "Impact sprinklers", "Rain guns", "Pop-up sprinklers (landscape)", "Risers & nozzles"] },
+  { icon: Filter, title: "Filters", desc: "Clean water in, clogging out — protects the whole system.", items: ["Screen filters", "Disc filters", "Sand / media filters", "Hydrocyclone sand separators"] },
+  { icon: Gauge, title: "Pumps & Motors", desc: "Reliable pressure and flow from trusted pump brands.", items: ["Submersible pumps", "Monoblock pumps", "Openwell pumps", "Centrifugal pumps", "KSB & leading brands"] },
+  { icon: Cpu, title: "Valves & Automation", desc: "Control, protect and automate your irrigation.", items: ["Air-release & vacuum valves", "Flush & control valves", "Solenoid valves", "Controllers & timers"] },
+  { icon: Workflow, title: "PVC & HDPE Pipes", desc: "Mains and sub-mains that carry water across the site.", items: ["PVC pipes", "HDPE pipes", "Mains & sub-mains", "Pipe fittings & joiners"] },
+  { icon: FlaskConical, title: "Fertigation Systems", desc: "Deliver nutrients with the water, precisely and evenly.", items: ["Venturi injectors", "Fertilizer tanks", "Dosing pumps", "Fertigation controllers"] },
+  { icon: Wrench, title: "Fittings & Accessories", desc: "Everything that ties the system together.", items: ["Connectors & take-offs", "Grommets & start connectors", "End caps & joiners", "Tools & spares"] },
 ];
 
 export function ProductCategories() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
-      <Reveal>
-        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Products</p>
-            <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Everything for modern irrigation</h2>
-            <p className="mt-3 text-muted-foreground">A complete range of irrigation and water-management products from 20+ trusted brands.</p>
-          </div>
-          <Button asChild variant="outline" className="shrink-0">
-            <Link href="/products">Browse all products <ArrowRight className="h-4 w-4" /></Link>
-          </Button>
+    <Section tone="default">
+      <Container>
+        <SectionHeading eyebrow="Product range" title="Everything for modern irrigation" lead="A complete range of irrigation and water-management products from 20+ trusted brands — supplied across South India and pan-India for bulk orders." />
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {categories.map((c, i) => (
+            <Reveal key={c.title} delay={i * 60} className="h-full">
+              <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+                <div className="flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white"><c.icon className="h-6 w-6" /></span>
+                  <div>
+                    <h3 className="font-display text-lg font-semibold">{c.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
+                  </div>
+                </div>
+                <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                  {c.items.map((it) => (
+                    <li key={it} className="flex items-center gap-2 text-sm text-foreground/85">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green" aria-hidden="true" /> {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
         </div>
-      </Reveal>
-      <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {categories.map((c, i) => (
-          <Reveal key={c.title} delay={i * 60} className="h-full">
-            <Link href="/products" className="group flex h-full flex-col rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand-green/50 hover:bg-brand-green-soft/50 hover:shadow-md">
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
-                <c.icon className="h-6 w-6" />
-              </span>
-              <h3 className="mt-4 text-sm font-semibold transition-colors group-hover:text-brand-green md:text-base">{c.title}</h3>
-            </Link>
-          </Reveal>
-        ))}
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }
