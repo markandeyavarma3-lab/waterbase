@@ -5,6 +5,7 @@ import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { SiteChrome } from "@/components/site/site-chrome";
 import { LocalBusinessJsonLd } from "@/components/seo/local-business-jsonld";
+import { ConversionTracker } from "@/components/site/conversion-tracker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const bricolage = Bricolage_Grotesque({
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${bricolage.variable}`}>
       <body className="antialiased">
         <LocalBusinessJsonLd />
+        <ConversionTracker />
         <SiteChrome>{children}</SiteChrome>
       </body>
       <GoogleAnalytics gaId="G-RP33RYTKFF" />

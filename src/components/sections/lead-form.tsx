@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { leadSchema, type LeadInput, REQUIREMENT_OPTIONS } from "@/lib/leads";
 import { submitLead } from "@/lib/actions/leads";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function LeadForm() {
-  const [done, setDone] = useState(false);
+  const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
   const form = useForm<LeadInput>({
@@ -24,22 +25,11 @@ export function LeadForm() {
     setServerError(null);
     const result = await submitLead(values);
     if (result.ok) {
-      setDone(true);
       form.reset();
+      router.push("/thank-you?ref=lead");
     } else {
       setServerError(result.message);
     }
-  }
-
-  if (done) {
-    return (
-      <div className="rounded-2xl border border-brand-green/20 bg-brand-green-soft p-8 text-center">
-        <CheckCircle2 className="mx-auto mb-4 h-12 w-12 text-brand-green" />
-        <h3 className="font-display text-xl font-semibold text-brand-green-darker">Thank you! We&apos;ll call you back shortly.</h3>
-        <p className="mt-2 text-sm text-muted-foreground">Our team usually responds within a few working hours.</p>
-        <Button variant="outline" className="mt-6" onClick={() => setDone(false)}>Send another request</Button>
-      </div>
-    );
   }
 
   return (
