@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 
-// Drop logos at these paths in /public (PNG or SVG). Until then, the name shows as text.
+// Drop logos at these paths in /public (PNG works best). Until then, the name shows as text.
 const clients = [
   { name: "Nuziveedu Seeds", logo: "/clients/nuziveedu-seeds.png" },
   { name: "Alakananda Riverfront", logo: "/clients/alakananda-riverfront.png" },
@@ -22,7 +22,7 @@ function ClientLogo({ name, logo }: { name: string; logo: string }) {
         <span className="text-center font-display text-sm font-semibold text-foreground/70">{name}</span>
       ) : (
         <div className="relative h-12 w-full">
-          <Image src={logo} alt={name} fill sizes="200px" className="object-contain opacity-70 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0" onError={() => setErrored(true)} />
+          <Image src={logo} alt={name} fill sizes="200px" unoptimized className="object-contain" onError={() => setErrored(true)} />
         </div>
       )}
     </div>

@@ -1,11 +1,10 @@
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
-import { siteConfig } from "@/lib/site-config";
 
 const faqs = [
   {
     q: "Do you provide APMIP subsidy assistance?",
-    a: `Yes. We provide end-to-end help with APMIP (Andhra Pradesh Micro Irrigation Project) subsidy work — from paperwork to installation — focused on the West Godavari and Eluru region. Call our APMIP line on ${siteConfig.phones.apmip.primary} for details.`,
+    a: "Yes. We provide end-to-end help with APMIP (Andhra Pradesh Micro Irrigation Project) subsidy work — from paperwork to installation — focused on the West Godavari and Eluru region. Message us on WhatsApp or request a callback and our APMIP team will walk you through eligibility and the next steps.",
   },
   {
     q: "Which brands do you supply?",
@@ -25,7 +24,7 @@ const faqs = [
   },
   {
     q: "How do I get a quote or callback?",
-    a: `Fill in the callback form on our contact page, message us on WhatsApp, or call sales on ${siteConfig.phones.sales.primary}. Share your crop, area and requirement and our team will get back to you — usually within a few working hours.`,
+    a: "Fill in the callback form on our contact page or message us on WhatsApp. Share your crop, area and requirement and our team will get back to you — usually within a few working hours.",
   },
 ];
 

@@ -59,12 +59,8 @@ export function Contact() {
                   <div>
                     <span className="block text-sm text-muted-foreground">Working hours</span>
                     <ul className="mt-1 space-y-0.5 text-sm font-medium text-foreground">
-                      {siteConfig.hours.map((h) => (
-                        <li key={h.day} className="flex justify-between gap-6">
-                          <span>{h.day}</span>
-                          <span className="text-muted-foreground">{h.open ? `${h.open} – ${h.close}` : "Closed"}</span>
-                        </li>
-                      ))}
+                      <li className="flex justify-between gap-6"><span>{siteConfig.hoursSummary.days}</span><span className="text-muted-foreground">{siteConfig.hoursSummary.time}</span></li>
+                      <li className="flex justify-between gap-6"><span>{siteConfig.hoursSummary.closedDay}</span><span className="text-muted-foreground">Closed</span></li>
                     </ul>
                   </div>
                 </div>

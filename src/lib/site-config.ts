@@ -49,15 +49,22 @@ export const siteConfig = {
     country: "India",
   },
 
+  // Per-day hours feed the structured data (SEO). Display uses hoursSummary.
   hours: [
-    { day: "Monday", open: "9:00 AM", close: "8:30 PM" },
-    { day: "Tuesday", open: "9:00 AM", close: "8:30 PM" },
-    { day: "Wednesday", open: "9:00 AM", close: "8:30 PM" },
-    { day: "Thursday", open: "9:00 AM", close: "8:30 PM" },
-    { day: "Friday", open: "9:00 AM", close: "8:30 PM" },
-    { day: "Saturday", open: "9:00 AM", close: "8:30 PM" },
+    { day: "Monday", open: "10:00 AM", close: "7:00 PM" },
+    { day: "Tuesday", open: "10:00 AM", close: "7:00 PM" },
+    { day: "Wednesday", open: "10:00 AM", close: "7:00 PM" },
+    { day: "Thursday", open: "10:00 AM", close: "7:00 PM" },
+    { day: "Friday", open: "10:00 AM", close: "7:00 PM" },
+    { day: "Saturday", open: "10:00 AM", close: "7:00 PM" },
     { day: "Sunday", open: null, close: null },
   ],
+
+  hoursSummary: {
+    days: "Monday – Saturday",
+    time: "10:00 AM – 7:00 PM",
+    closedDay: "Sunday",
+  },
 
   /* Confirmed real figures — single source for every stat band */
   stats: [

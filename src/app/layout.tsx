@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { SiteChrome } from "@/components/site/site-chrome";
@@ -42,11 +43,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${bricolage.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${bricolage.variable}`}>
       <body className="antialiased">
         <LocalBusinessJsonLd />
         <SiteChrome>{children}</SiteChrome>
       </body>
+      <GoogleAnalytics gaId="G-RP33RYTKFF" />
     </html>
   );
 }

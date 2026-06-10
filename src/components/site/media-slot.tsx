@@ -17,6 +17,7 @@ const ratioClass: Record<Ratio, string> = {
 
 export function MediaSlot({
   src,
+  fallbackSrc,
   alt,
   ratio = "video",
   label,
@@ -25,6 +26,7 @@ export function MediaSlot({
   className,
 }: {
   src?: string;
+  fallbackSrc?: string | string[];
   alt: string;
   ratio?: Ratio;
   label?: string;
@@ -32,13 +34,16 @@ export function MediaSlot({
   sizes?: string;
   className?: string;
 }) {
-  const [errored, setErrored] = useState(false);
-  const showImage = src && !errored;
+  // Try src first, then each fallback in order, then the placeholder.
+  const fallbacks = Array.isArray(fallbackSrc) ? fallbackSrc : fallbackSrc ? [fallbackSrc] : [];
+  const sources = [src, ...fallbacks].filter(Boolean) as string[];
+  const [idx, setIdx] = useState(0);
+  const current = idx < sources.length ? sources[idx] : undefined;
 
   return (
     <div className={cn("relative overflow-hidden rounded-2xl border border-border bg-muted", ratioClass[ratio], className)}>
-      {showImage ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" onError={() => setErrored(true)} />
+      {current ? (
+        <Image key={current} src={current} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" onError={() => setIdx((i) => i + 1)} />
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[linear-gradient(135deg,var(--color-brand-green-soft),var(--color-brand-blue-soft))] text-brand-green-dark">
           <ImageIcon className="h-7 w-7 opacity-50" aria-hidden="true" />

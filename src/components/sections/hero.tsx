@@ -5,8 +5,13 @@ import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
 import { siteConfig } from "@/lib/site-config";
 
-// Sample stock photo — replace by dropping your own file in /public and pointing this here.
-const HERO_IMAGE = "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=70";
+// Drop your real hero photo at /public/images/hero.jpg (portrait ~1200x1500).
+// Until then it shows a green sprinkler-irrigation sample (with a backup if that ever fails).
+const HERO_LOCAL = "/images/hero.jpg";
+const HERO_SAMPLES = [
+  "https://images.unsplash.com/photo-1692369584496-3216a88f94c1?auto=format&fit=crop&w=1400&q=70", // sprinkler on green field
+  "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=70", // safe backup
+];
 
 export function Hero() {
   return (
@@ -40,7 +45,7 @@ export function Hero() {
           </div>
 
           <Reveal delay={200} className="relative">
-            <MediaSlot src={HERO_IMAGE} alt="Drip irrigation across a cultivated field" ratio="tall" priority sizes="(min-width: 1024px) 45vw, 100vw" className="shadow-lift ring-1 ring-white/15" />
+            <MediaSlot src={HERO_LOCAL} fallbackSrc={HERO_SAMPLES} alt="Sprinkler irrigation across a green field" ratio="tall" priority sizes="(min-width: 1024px) 45vw, 100vw" className="shadow-lift ring-1 ring-white/15" />
             <div className="absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card p-4 text-foreground shadow-lift sm:block">
               <p className="font-display text-2xl font-extrabold text-brand-green"><CountUp end={50000} suffix="+" /></p>
               <p className="text-xs font-medium text-muted-foreground">acres irrigated</p>

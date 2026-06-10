@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, MessageCircle, PhoneCall, Sprout } from "lucide-react";
+import { Menu, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
@@ -24,16 +24,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-green text-white">
-            <Sprout className="h-5 w-5" />
-          </span>
-          <span className="font-display text-lg font-extrabold leading-none">
-            Waterbase
-            <span className="block text-[11px] font-medium tracking-wide text-muted-foreground">
-              TECHNOLOGIES
-            </span>
-          </span>
+        <Link href="/" className="whitespace-nowrap font-display text-lg font-extrabold tracking-tight text-foreground">
+          Waterbase Technologies
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
@@ -45,8 +37,10 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild className="hidden sm:inline-flex">
-            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+          <Button asChild className="hidden bg-brand-green text-white hover:bg-brand-green-dark sm:inline-flex">
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+              <MessageCircle className="h-4 w-4" /> WhatsApp
+            </a>
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -67,12 +61,11 @@ export function Header() {
                   </Link>
                 ))}
               </nav>
-              <div className="mt-4 flex flex-col gap-2 px-2">
-                <Button asChild className="w-full">
-                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
-                </Button>
-                <Button asChild variant="outline" className="w-full" onClick={() => setOpen(false)}>
-                  <Link href="/contact"><PhoneCall className="h-4 w-4" /> Request a callback</Link>
+              <div className="mt-4 px-2">
+                <Button asChild className="w-full bg-brand-green text-white hover:bg-brand-green-dark">
+                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="h-4 w-4" /> Message on WhatsApp
+                  </a>
                 </Button>
               </div>
             </SheetContent>

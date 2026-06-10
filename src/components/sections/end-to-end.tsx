@@ -4,10 +4,11 @@ import { Reveal } from "@/components/sections/reveal";
 import { Process } from "@/components/sections/process";
 import { ContactActions } from "@/components/site/contact-actions";
 
+// Drop real photos at /public/images/work/<file>.jpg (landscape ~1200x675).
 const serve = [
-  { title: "Fields & farms", desc: "Drip and sprinkler systems for every crop and acreage — from a single plot to large estates.", label: "Field installation photo" },
-  { title: "Lawns & landscapes", desc: "Clean, efficient irrigation for corporate campuses, resorts and public green spaces.", label: "Landscape photo" },
-  { title: "Nurseries & greenhouses", desc: "Precise water and fertigation for high-value, controlled growing environments.", label: "Nursery photo" },
+  { title: "Fields & farms", desc: "Drip and sprinkler systems for every crop and acreage — from a single plot to large estates.", label: "Field installation photo", img: "/images/work/fields.jpg" },
+  { title: "Lawns & landscapes", desc: "Clean, efficient irrigation for corporate campuses, resorts and public green spaces.", label: "Landscape photo", img: "/images/work/lawns.jpg" },
+  { title: "Nurseries & greenhouses", desc: "Precise water and fertigation for high-value, controlled growing environments.", label: "Nursery photo", img: "/images/work/nurseries.jpg" },
 ];
 
 export function EndToEnd() {
@@ -20,7 +21,7 @@ export function EndToEnd() {
           {serve.map((s, i) => (
             <Reveal key={s.title} delay={i * 90}>
               <div className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:shadow-lift">
-                <MediaSlot alt={s.title} ratio="video" label={s.label} sizes="(min-width: 768px) 33vw, 100vw" className="rounded-none border-0" />
+                <MediaSlot src={s.img} alt={s.title} ratio="video" label={s.label} sizes="(min-width: 768px) 33vw, 100vw" className="rounded-none border-0" />
                 <div className="p-5">
                   <h3 className="font-display text-lg font-semibold">{s.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
