@@ -49,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteChrome>{children}</SiteChrome>
       </body>
       <GoogleAnalytics gaId="G-RP33RYTKFF" />
+      <GoogleAnalytics gaId="AW-874230546" />
     </html>
   );
 }
