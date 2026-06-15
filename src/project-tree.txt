@@ -1,0 +1,114 @@
+Folder PATH listing for volume Windows
+Volume serial number is 2ABC-C913
+C:.
+¦   project-tree.txt
+¦   proxy.ts
+¦   
++---admin
++---app
+¦   ¦   favicon.ico
+¦   ¦   globals.css
+¦   ¦   layout.tsx
+¦   ¦   not-found.tsx
+¦   ¦   opengraph-image.tsx
+¦   ¦   page.tsx
+¦   ¦   robots.ts
+¦   ¦   sitemap.ts
+¦   ¦   
+¦   +---about
+¦   ¦       page.tsx
+¦   ¦       
+¦   +---admin
+¦   ¦   ¦   page.tsx
+¦   ¦   ¦   
+¦   ¦   +---login
+¦   ¦           actions.ts
+¦   ¦           page.tsx
+¦   ¦           
+¦   +---contact
+¦   ¦       page.tsx
+¦   ¦       
+¦   +---crops
+¦   ¦       page.tsx
+¦   ¦       
+¦   +---products
+¦   ¦       page.tsx
+¦   ¦       
+¦   +---projects
+¦   ¦       page.tsx
+¦   ¦       
+¦   +---services
+¦   ¦       page.tsx
+¦   ¦       
+¦   +---thank-you
+¦           page.tsx
+¦           
++---components
+¦   +---admin
+¦   ¦       leads-table.tsx
+¦   ¦       
+¦   +---sections
+¦   ¦       apmip.tsx
+¦   ¦       brands.tsx
+¦   ¦       clients.tsx
+¦   ¦       contact-cta.tsx
+¦   ¦       contact.tsx
+¦   ¦       count-up.tsx
+¦   ¦       crops.tsx
+¦   ¦       end-to-end.tsx
+¦   ¦       faq.tsx
+¦   ¦       hero.tsx
+¦   ¦       lead-form.tsx
+¦   ¦       process.tsx
+¦   ¦       product-categories.tsx
+¦   ¦       projects.tsx
+¦   ¦       reveal.tsx
+¦   ¦       service-areas.tsx
+¦   ¦       services.tsx
+¦   ¦       solutions.tsx
+¦   ¦       stats.tsx
+¦   ¦       supply.tsx
+¦   ¦       testimonials.tsx
+¦   ¦       thank-you.tsx
+¦   ¦       why-choose-us.tsx
+¦   ¦       
+¦   +---seo
+¦   ¦       local-business-jsonld.tsx
+¦   ¦       
+¦   +---site
+¦   ¦       contact-actions.tsx
+¦   ¦       conversion-tracker.tsx
+¦   ¦       footer.tsx
+¦   ¦       header.tsx
+¦   ¦       media-slot.tsx
+¦   ¦       page-hero.tsx
+¦   ¦       section.tsx
+¦   ¦       site-chrome.tsx
+¦   ¦       sticky-mobile-cta.tsx
+¦   ¦       
+¦   +---ui
+¦           button.tsx
+¦           card.tsx
+¦           form.tsx
+¦           input.tsx
+¦           label.tsx
+¦           select.tsx
+¦           sheet.tsx
+¦           
++---lib
+    ¦   analytics.ts
+    ¦   leads.ts
+    ¦   notify.ts
+    ¦   seo.ts
+    ¦   site-config.ts
+    ¦   utils.ts
+    ¦   
+    +---actions
+    ¦       auth.ts
+    ¦       leads.ts
+    ¦       
+    +---supabase
+            admin.ts
+            client.ts
+            server.ts
+            

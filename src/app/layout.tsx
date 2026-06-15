@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { Inter, Bricolage_Grotesque, Sora } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
@@ -13,6 +13,14 @@ const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   display: "swap",
   weight: ["500", "600", "700", "800"],
+});
+
+// 👇 The wordmark / logo font. Swap "Sora" for another Google font to change the look.
+const logoFont = Sora({
+  subsets: ["latin"],
+  variable: "--font-logo",
+  display: "swap",
+  weight: ["600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -44,7 +52,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${bricolage.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${bricolage.variable} ${logoFont.variable}`}>
       <body className="antialiased">
         <LocalBusinessJsonLd />
         <ConversionTracker />

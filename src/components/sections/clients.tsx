@@ -33,7 +33,7 @@ export function Clients() {
   return (
     <Section tone="default">
       <Container>
-        <SectionHeading align="center" eyebrow="Trusted by" title="Names that rely on Waterbase" lead="From seed producers to riverfront developments, sugar mills and seafood exporters — organisations across sectors trust us with their irrigation." />
+        <SectionHeading align="center" eyebrow="Our work" title="Companies we've delivered for" lead="We've handled irrigation and water-management projects for these organisations — completed on time, backed by years of after-sales support, and not a single complaint to date." />
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {clients.map((c, i) => (
             <Reveal key={c.name} delay={i * 70}>

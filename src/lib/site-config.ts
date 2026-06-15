@@ -5,6 +5,10 @@ export const siteConfig = {
   established: 2014,
   since: 2011,
   experienceYears: "15+",
+
+  // 👇 Edit this one line anytime to change the hero badge text.
+  heroBadge: "Serving farmers for over 25 years",
+
   domain: "waterbasetechnologies.com",
   url: "https://waterbasetechnologies.com",
   tagline: "Complete Irrigation & Agricultural Water Management Solutions",

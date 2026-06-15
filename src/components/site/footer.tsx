@@ -9,7 +9,7 @@ export function Footer() {
       <div className="h-1 w-full bg-brand-green" />
       <div className="relative z-10 mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-4">
         <Reveal>
-          <span className="whitespace-nowrap font-display text-lg font-extrabold text-white">Waterbase Technologies</span>
+          <span className="whitespace-nowrap font-[family-name:var(--font-logo)] text-lg font-extrabold text-white">Waterbase Technologies</span>
           <p className="mt-4 text-sm leading-relaxed text-white/70">
             {siteConfig.tagline}. Authorized dealer of Jain Irrigation, KSB &amp; Netafim — serving South India since {siteConfig.since}.
           </p>
@@ -55,13 +55,11 @@ export function Footer() {
         <Reveal delay={240}>
           <h4 className="font-display text-sm font-bold uppercase tracking-wide text-white">Hours</h4>
           <ul className="mt-4 space-y-1.5 text-sm">
-            <li className="flex justify-between gap-4">
-              <span className="text-white/70">{siteConfig.hoursSummary.days}</span>
-              <span>{siteConfig.hoursSummary.time}</span>
+            <li className="whitespace-nowrap">
+              <span className="text-white/70">{siteConfig.hoursSummary.days}:</span> {siteConfig.hoursSummary.time}
             </li>
-            <li className="flex justify-between gap-4">
-              <span className="text-white/70">{siteConfig.hoursSummary.closedDay}</span>
-              <span>Closed</span>
+            <li className="whitespace-nowrap">
+              <span className="text-white/70">{siteConfig.hoursSummary.closedDay}:</span> Closed
             </li>
           </ul>
         </Reveal>
@@ -69,7 +67,7 @@ export function Footer() {
 
       <div className="relative z-10 border-t border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-5 text-center text-xs text-white/60">
-          © {new Date().getFullYear()} {siteConfig.legalName}. {siteConfig.businessType} · Est. {siteConfig.established}
+          © {new Date().getFullYear()} {siteConfig.legalName}. {siteConfig.businessType}
         </div>
       </div>
     </footer>

@@ -24,7 +24,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="whitespace-nowrap font-display text-lg font-extrabold tracking-tight text-foreground">
+        <Link href="/" className="whitespace-nowrap font-[family-name:var(--font-logo)] text-lg font-extrabold tracking-tight text-foreground">
           Waterbase Technologies
         </Link>
 

@@ -23,7 +23,7 @@ export function Hero() {
           <div>
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
-                Authorized dealer &amp; distributor · Since {siteConfig.since}
+                {siteConfig.heroBadge}
               </span>
             </Reveal>
             <Reveal delay={80}>
