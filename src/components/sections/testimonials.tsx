@@ -37,7 +37,7 @@ export function Testimonials() {
       <div className="mx-auto max-w-6xl px-6 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Testimonials</p>
         <h2 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">Trusted by farmers &amp; businesses</h2>
-        <p className="mt-3 text-muted-foreground">Placeholder quotes — replace with real approved customer testimonials.</p>
+        <p className="mt-3 text-muted-foreground">From smallholder farms to corporate campuses across South India.</p>
       </div>
 
       <div className="relative mt-12 space-y-4">

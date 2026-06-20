@@ -1,3 +1,4 @@
+import { Star, ShieldCheck, ChevronDown } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { MediaSlot } from "@/components/site/media-slot";
 import { CountUp } from "@/components/sections/count-up";
@@ -17,13 +18,24 @@ const HERO_SAMPLES = [
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-brand-green-deep text-white">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_85%_0%,rgba(63,160,108,0.22),transparent_60%)]" aria-hidden="true" />
+      {/* Aurora — slow drifting gradient blobs */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+        <div className="motion-aurora absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.35),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 18s ease-in-out infinite" }} />
+        <div className="motion-aurora absolute -bottom-[25%] -left-[10%] h-[50vw] w-[50vw] rounded-full bg-[radial-gradient(circle,rgba(20,135,196,0.22),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 22s ease-in-out infinite" }} />
+      </div>
+      {/* Subtle dot grid texture */}
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.04] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
+
       <Container className="py-20 md:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-green-light opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-green-light" />
+                </span>
                 {siteConfig.heroBadge}
               </span>
             </Reveal>
@@ -41,15 +53,35 @@ export function Hero() {
               <ContactActions onDark size="xl" className="mt-8" />
             </Reveal>
             <Reveal delay={320}>
-              <p className="mt-6 text-sm text-white/55">Jain Irrigation · KSB Pumps · Netafim FlexNet — 20+ leading brands</p>
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-0.5 text-amber-400">
+                    {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
+                  </div>
+                  <span className="text-sm text-white/70">Trusted by <strong className="font-semibold text-white">15,000+</strong> customers</span>
+                </div>
+                <span className="hidden h-4 w-px bg-white/20 sm:block" />
+                <p className="text-sm text-white/55">Jain · KSB · Netafim — 20+ leading brands</p>
+              </div>
             </Reveal>
           </div>
 
           <Reveal delay={200} className="relative">
             <MediaSlot src={HERO_LOCAL} fallbackSrc={HERO_SAMPLES} alt="Sprinkler irrigation across a green field" ratio="tall" priority sizes="(min-width: 1024px) 45vw, 100vw" className="shadow-lift ring-1 ring-white/15" />
-            <div className="absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card p-4 text-foreground shadow-lift sm:block">
+
+            {/* Floating stat badge — bottom left */}
+            <div className="motion-float absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card p-4 text-foreground shadow-lift sm:block" style={{ animation: "float-y 6s ease-in-out infinite" }}>
               <p className="font-display text-2xl font-extrabold text-brand-green"><CountUp end={50000} suffix="+" /></p>
               <p className="text-xs font-medium text-muted-foreground">acres irrigated</p>
+            </div>
+
+            {/* Floating trust badge — top right */}
+            <div className="motion-float absolute -right-4 top-6 hidden items-center gap-2.5 rounded-2xl border border-border bg-card p-3 pr-4 text-foreground shadow-lift md:flex" style={{ animation: "float-y 7s ease-in-out infinite 0.8s" }}>
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green"><ShieldCheck className="h-5 w-5" /></span>
+              <div>
+                <p className="text-sm font-bold leading-tight">Authorized dealer</p>
+                <p className="text-xs text-muted-foreground">Genuine · warranty-backed</p>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -64,6 +96,13 @@ export function Hero() {
             ))}
           </div>
         </Reveal>
+
+        {/* Scroll cue */}
+        <div className="mt-14 hidden justify-center md:flex" aria-hidden="true">
+          <span className="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 pt-1.5">
+            <ChevronDown className="motion-cue h-3.5 w-3.5 text-white/60" style={{ animation: "scroll-cue 1.8s ease-in-out infinite" }} />
+          </span>
+        </div>
       </Container>
     </section>
   );

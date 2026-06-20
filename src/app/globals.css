@@ -151,7 +151,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* ── Infinite marquee (testimonials) ──────────────────────────── */
+/* ── Infinite marquee (testimonials / brand ticker) ───────────── */
 @keyframes marquee-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -159,6 +159,35 @@
 @keyframes marquee-right {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
+}
+
+/* ── Hero aurora — slow drifting gradient blobs ───────────────── */
+@keyframes aurora-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(6%, 8%) scale(1.18); }
+}
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50%      { transform: translate(-7%, 5%) scale(1); }
+}
+
+/* ── Gentle float (floating badge cards) ──────────────────────── */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* ── Scroll cue dot ───────────────────────────────────────────── */
+@keyframes scroll-cue {
+  0%   { opacity: 0; transform: translateY(-5px); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(9px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-aurora,
+  .motion-float,
+  .motion-cue { animation: none !important; }
 }
 
 @layer base {
