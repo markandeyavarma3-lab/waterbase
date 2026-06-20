@@ -11,7 +11,7 @@ export function Footer() {
         <Reveal>
           <span className="whitespace-nowrap font-[family-name:var(--font-logo)] text-lg font-extrabold text-white">Waterbase Technologies</span>
           <p className="mt-4 text-sm leading-relaxed text-white/70">
-            {siteConfig.tagline}. Authorized dealer of Jain Irrigation, KSB &amp; Netafim — serving South India since {siteConfig.since}.
+            {siteConfig.tagline}. Authorized Distributor & Dealer of Jain Irrigation, KSB Pumps & Motors, Netafim Flexnet and 20 + leading brands.
           </p>
         </Reveal>
 
