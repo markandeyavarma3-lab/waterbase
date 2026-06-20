@@ -17,3 +17,12 @@ export function trackContactClick() {
 export function trackFormSubmit() {
   getGtag()?.("event", "ads_conversion_Form_1", {});
 }
+
+/**
+ * Fired when a visitor taps "Call Now" on an ad landing page.
+ * TODO: Replace "ads_conversion_Call_1" with the actual event name from your
+ * Google Ads "Phone Call" conversion action (Goals → Conversions → New → Website).
+ */
+export function trackCallClick() {
+  getGtag()?.("event", "ads_conversion_Call_1", {});
+}
