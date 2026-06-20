@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { StickyMobileCTA } from "@/components/site/sticky-mobile-cta";
+import { WhatsAppBubble } from "@/components/site/whatsapp-bubble";
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -18,6 +19,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <div aria-hidden className="h-16 md:hidden" />
       <Footer />
       <StickyMobileCTA />
+      <WhatsAppBubble />
     </>
   );
 }

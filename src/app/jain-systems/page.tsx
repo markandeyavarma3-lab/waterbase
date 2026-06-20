@@ -5,6 +5,7 @@ import { Reveal } from "@/components/sections/reveal";
 import { Stats } from "@/components/sections/stats";
 import { LeadForm } from "@/components/sections/lead-form";
 import { ContactActions } from "@/components/site/contact-actions";
+import { StickyCallBar } from "@/components/site/sticky-call-bar";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -141,6 +142,7 @@ export default function JainSystemsPage() {
           </Reveal>
         </Container>
       </Section>
+      <StickyCallBar />
     </main>
   );
 }

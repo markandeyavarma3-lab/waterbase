@@ -147,13 +147,12 @@ export default function ServicesPage() {
 
       <Section tone="brand-dark">
         <Container>
-          <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="font-display text-2xl font-bold tracking-tight text-white md:text-3xl">Ready to plan your irrigation?</h2>
-              <p className="mt-2 max-w-xl text-white/80">Tell us about your land and we&apos;ll recommend the right system.</p>
-            </div>
-            <ContactActions onDark className="shrink-0" />
-          </div>
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">Start your project</p>
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl">Ready to plan your irrigation?</h2>
+            <p className="mt-4 text-lg text-white/75">Tell us about your land and we&apos;ll recommend the right system — and help you access any available government subsidy.</p>
+            <ContactActions onDark size="xl" className="mt-7 justify-center" />
+          </Reveal>
         </Container>
       </Section>
     </main>

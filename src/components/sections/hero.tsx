@@ -3,6 +3,7 @@ import { MediaSlot } from "@/components/site/media-slot";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
+import { AnimatedWord } from "@/components/sections/animated-word";
 import { siteConfig } from "@/lib/site-config";
 
 // Drop your real hero photo at /public/images/hero.jpg (portrait ~1200x1500).
@@ -28,7 +29,7 @@ export function Hero() {
             </Reveal>
             <Reveal delay={80}>
               <h1 className="mt-6 max-w-xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-                Complete irrigation, engineered end to end.
+                Complete <AnimatedWord />,<br />engineered end to end.
               </h1>
             </Reveal>
             <Reveal delay={160}>
