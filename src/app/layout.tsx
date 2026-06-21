@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque, Sora } from "next/font/google";
+import { Inter, Archivo, Sora } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
@@ -8,9 +8,9 @@ import { LocalBusinessJsonLd } from "@/components/seo/local-business-jsonld";
 import { ConversionTracker } from "@/components/site/conversion-tracker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const bricolage = Bricolage_Grotesque({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-bricolage",
+  variable: "--font-archivo",
   display: "swap",
   weight: ["500", "600", "700", "800"],
 });
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${bricolage.variable} ${logoFont.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${archivo.variable} ${logoFont.variable}`}>
       <body className="antialiased">
         <LocalBusinessJsonLd />
         <ConversionTracker />

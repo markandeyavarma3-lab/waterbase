@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ImageIcon } from "lucide-react";
+import { Sprout } from "lucide-react";
 
 export function CropCard({ name, images }: { name: string; images: string[] }) {
   const [idx, setIdx] = useState(0);
@@ -30,9 +30,8 @@ export function CropCard({ name, images }: { name: string; images: string[] }) {
             />
           ))
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-brand-green/40">
-            <ImageIcon className="h-8 w-8" aria-hidden="true" />
-            <span className="text-xs font-medium">Photos coming soon</span>
+          <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(120%_120%_at_50%_0%,var(--color-brand-green-soft),#ffffff)]">
+            <Sprout className="h-9 w-9 text-brand-green/35" aria-hidden="true" />
           </div>
         )}
 

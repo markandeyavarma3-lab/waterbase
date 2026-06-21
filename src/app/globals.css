@@ -7,7 +7,7 @@
 @theme inline {
   /* Fonts — wired to the variables set in layout.tsx */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 
   /* Radius scale */
   --radius-sm: calc(var(--radius) - 4px);
@@ -49,11 +49,11 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* 🌱 Waterbase green — the single confident brand color */
+  /* 🌱 Waterbase green — the single confident brand color (softened a touch) */
   --color-brand-green: #167A4A;
-  --color-brand-green-dark: #0F5733;
-  --color-brand-green-darker: #0A3D24;
-  --color-brand-green-deep: #082B1A;
+  --color-brand-green-dark: #125E3B;
+  --color-brand-green-darker: #114A2F;
+  --color-brand-green-deep: #0E3A26;
   --color-brand-green-light: #3FA06C;
   --color-brand-green-soft: #E9F4EE;
 

@@ -1,4 +1,4 @@
-import { Star, ShieldCheck, ChevronDown } from "lucide-react";
+import { Star, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { MediaSlot } from "@/components/site/media-slot";
 import { CountUp } from "@/components/sections/count-up";
@@ -20,11 +20,11 @@ export function Hero() {
     <section className="relative overflow-hidden bg-brand-green-deep text-white">
       {/* Aurora — slow drifting gradient blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <div className="motion-aurora absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.35),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 18s ease-in-out infinite" }} />
-        <div className="motion-aurora absolute -bottom-[25%] -left-[10%] h-[50vw] w-[50vw] rounded-full bg-[radial-gradient(circle,rgba(20,135,196,0.22),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 22s ease-in-out infinite" }} />
+        <div className="motion-aurora absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.26),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 24s ease-in-out infinite" }} />
+        <div className="motion-aurora absolute -bottom-[25%] -left-[10%] h-[50vw] w-[50vw] rounded-full bg-[radial-gradient(circle,rgba(20,135,196,0.16),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 28s ease-in-out infinite" }} />
       </div>
       {/* Subtle dot grid texture */}
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.04] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
 
       <Container className="py-20 md:py-28">
@@ -97,12 +97,6 @@ export function Hero() {
           </div>
         </Reveal>
 
-        {/* Scroll cue */}
-        <div className="mt-14 hidden justify-center md:flex" aria-hidden="true">
-          <span className="flex h-9 w-5 items-start justify-center rounded-full border border-white/25 pt-1.5">
-            <ChevronDown className="motion-cue h-3.5 w-3.5 text-white/60" style={{ animation: "scroll-cue 1.8s ease-in-out infinite" }} />
-          </span>
-        </div>
       </Container>
     </section>
   );
