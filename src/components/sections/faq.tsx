@@ -1,5 +1,9 @@
-import { ChevronDown } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Plus } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
+import { cn } from "@/lib/utils";
 
 const faqs = [
   {
@@ -28,7 +32,27 @@ const faqs = [
   },
 ];
 
+function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
+  return (
+    <div className={cn("rounded-2xl border bg-card shadow-soft transition-colors", open ? "border-brand-green/40" : "border-border hover:border-brand-green/30")}>
+      <button onClick={onToggle} aria-expanded={open} className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left">
+        <span className="font-display text-base font-semibold md:text-lg">{q}</span>
+        <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-brand-green transition-transform duration-300", open && "rotate-45")}>
+          <Plus className="h-4 w-4" />
+        </span>
+      </button>
+      <div className={cn("grid transition-all duration-300 ease-out-expo", open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
+        <div className="overflow-hidden">
+          <p className="px-6 pb-5 text-sm leading-relaxed text-muted-foreground">{a}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -45,17 +69,12 @@ export function FAQ() {
       <Reveal className="text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">FAQ</p>
         <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Frequently asked questions</h2>
+        <p className="mt-3 text-muted-foreground">Everything you need to know before starting your irrigation project.</p>
       </Reveal>
       <div className="mt-10 space-y-3">
         {faqs.map((f, i) => (
-          <Reveal key={f.q} delay={i * 60}>
-            <details className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-brand-green/40">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-bold [&::-webkit-details-marker]:hidden">
-                {f.q}
-                <ChevronDown className="h-5 w-5 shrink-0 text-brand-green transition-transform duration-300 group-open:rotate-180" />
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
-            </details>
+          <Reveal key={f.q} delay={i * 50}>
+            <FaqItem q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
           </Reveal>
         ))}
       </div>

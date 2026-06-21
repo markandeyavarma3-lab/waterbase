@@ -1,11 +1,21 @@
 import Link from "next/link";
-import { Leaf, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
 
 const crops = [
-  "Banana", "Coconut", "Oil Palm", "Cocoa", "Lemon", "Guava",
-  "Papaya", "Dragon Fruit", "Maize", "Vegetables", "Flowers", "Plantations",
+  { name: "Banana", emoji: "🍌" },
+  { name: "Coconut", emoji: "🥥" },
+  { name: "Oil Palm", emoji: "🌴" },
+  { name: "Cocoa", emoji: "🍫" },
+  { name: "Lemon", emoji: "🍋" },
+  { name: "Guava", emoji: "🍈" },
+  { name: "Papaya", emoji: "🫐" },
+  { name: "Dragon Fruit", emoji: "🐉" },
+  { name: "Maize", emoji: "🌽" },
+  { name: "Vegetables", emoji: "🥦" },
+  { name: "Flowers", emoji: "🌸" },
+  { name: "Plantations", emoji: "🌳" },
 ];
 
 export function Crops() {
@@ -24,12 +34,17 @@ export function Crops() {
             </Button>
           </div>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {crops.map((c, i) => (
-            <Reveal key={c} delay={i * 50}>
-              <Link href="/crops" className="group flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-3 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-green/50 hover:text-brand-green hover:shadow-md">
-                <Leaf className="h-4 w-4 shrink-0 text-brand-green transition-transform duration-300 group-hover:scale-110" />
-                {c}
+            <Reveal key={c.name} delay={i * 50}>
+              <Link
+                href="/crops"
+                className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card px-4 py-6 text-center shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/50 hover:shadow-lift"
+              >
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-green-soft text-2xl transition-transform duration-300 ease-out-expo group-hover:scale-110">
+                  {c.emoji}
+                </span>
+                <span className="text-sm font-semibold transition-colors group-hover:text-brand-green">{c.name}</span>
               </Link>
             </Reveal>
           ))}

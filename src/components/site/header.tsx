@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Menu, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
 } from "@/components/ui/sheet";
 import { whatsappLink } from "@/lib/site-config";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -21,17 +23,50 @@ const navLinks = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href));
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="whitespace-nowrap font-[family-name:var(--font-logo)] text-lg font-extrabold tracking-tight text-foreground">
+    <header className={cn(
+      "sticky top-0 z-50 border-b backdrop-blur transition-all duration-300 ease-out-expo",
+      scrolled ? "border-border/70 bg-background/90 shadow-soft" : "border-border/40 bg-background/70"
+    )}>
+      <div className={cn(
+        "mx-auto flex max-w-6xl items-center justify-between px-4 transition-all duration-300 ease-out-expo md:px-6",
+        scrolled ? "h-14" : "h-16"
+      )}>
+        <Link href="/" className={cn(
+          "whitespace-nowrap font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-foreground transition-all duration-300",
+          scrolled ? "text-base md:text-lg" : "text-lg"
+        )}>
           Waterbase Technologies
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
           {navLinks.map((l) => (
-            <Link key={l.href} href={l.href} className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-accent-foreground">
+            <Link
+              key={l.href}
+              href={l.href}
+              className={cn(
+                "relative rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                isActive(l.href)
+                  ? "text-brand-green"
+                  : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+              )}
+            >
               {l.label}
+              {isActive(l.href) && (
+                <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-brand-green" aria-hidden="true" />
+              )}
             </Link>
           ))}
         </nav>
@@ -56,7 +91,15 @@ export function Header() {
               </SheetHeader>
               <nav className="mt-2 flex flex-col gap-1 px-2">
                 {navLinks.map((l) => (
-                  <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent">
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
+                      isActive(l.href) && "bg-accent text-brand-green"
+                    )}
+                  >
                     {l.label}
                   </Link>
                 ))}
