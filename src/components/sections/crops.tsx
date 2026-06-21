@@ -2,23 +2,23 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
+import { CropCard } from "@/components/sections/crop-card";
+import { listLogos } from "@/lib/logos";
 
-const crops = [
-  { name: "Banana", emoji: "🍌" },
-  { name: "Coconut", emoji: "🥥" },
-  { name: "Oil Palm", emoji: "🌴" },
-  { name: "Cocoa", emoji: "🍫" },
-  { name: "Lemon", emoji: "🍋" },
-  { name: "Guava", emoji: "🍈" },
-  { name: "Papaya", emoji: "🫐" },
-  { name: "Dragon Fruit", emoji: "🐉" },
-  { name: "Maize", emoji: "🌽" },
-  { name: "Vegetables", emoji: "🥦" },
-  { name: "Flowers", emoji: "🌸" },
-  { name: "Plantations", emoji: "🌳" },
+const cropNames = [
+  "Banana", "Coconut", "Oil Palm", "Cocoa", "Lemon", "Guava",
+  "Papaya", "Dragon Fruit", "Maize", "Vegetables", "Flowers", "Plantations",
 ];
 
+const slug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
+
 export function Crops() {
+  // Each crop's photos live in /public/crops/<slug>/ — drop images there.
+  const crops = cropNames.map((name) => ({
+    name,
+    images: listLogos(`crops/${slug(name)}`).map((l) => l.src),
+  }));
+
   return (
     <section className="border-y border-border bg-brand-green-soft/40">
       <div className="mx-auto max-w-6xl px-6 py-20">
@@ -34,17 +34,11 @@ export function Crops() {
             </Button>
           </div>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {crops.map((c, i) => (
-            <Reveal key={c.name} delay={i * 50}>
-              <Link
-                href="/crops"
-                className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card px-4 py-6 text-center shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/50 hover:shadow-lift"
-              >
-                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-green-soft text-2xl transition-transform duration-300 ease-out-expo group-hover:scale-110">
-                  {c.emoji}
-                </span>
-                <span className="text-sm font-semibold transition-colors group-hover:text-brand-green">{c.name}</span>
+            <Reveal key={c.name} delay={i * 50} className="h-full">
+              <Link href="/crops" className="block h-full">
+                <CropCard name={c.name} images={c.images} />
               </Link>
             </Reveal>
           ))}

@@ -8,7 +8,7 @@ import type { Logo } from "@/lib/logos";
 const CARD_W = 224; // card width in px
 const STEP = 256; // card width + gap
 const DURATION = 560; // transition ms
-const INTERVAL = 2600; // ms between advances
+const INTERVAL = 1800; // ms between advances
 
 export function ClientsCarousel({ clients }: { clients: Logo[] }) {
   const n = clients.length;

@@ -1,25 +1,23 @@
 import Image from "next/image";
+import { ImageIcon } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { listLogos } from "@/lib/logos";
 
-// Shown only until you drop real logo files into /public/brands/.
-const FALLBACK_BRANDS = [
-  "Jain Irrigation", "KSB Pumps", "Netafim", "Finolex", "Supreme",
-  "Ashirvad", "Captain Pipes", "Premier", "Rivulis", "Automat", "Texmo", "Sungrow",
-];
+// Number of empty placeholder cards shown until real logos are added.
+const PLACEHOLDER_COUNT = 12;
 
 export function BrandsMarquee() {
   const logos = listLogos("brands");
   const hasLogos = logos.length > 0;
   // Duplicate once so the -50% marquee loops seamlessly.
   const logoItems = [...logos, ...logos];
-  const textItems = [...FALLBACK_BRANDS, ...FALLBACK_BRANDS];
+  const placeholders = Array.from({ length: PLACEHOLDER_COUNT * 2 });
 
   return (
     <section className="border-y border-border bg-background py-16">
       <Container>
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Authorized dealer &amp; distributor</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Authorized Distributor &amp; Dealer</p>
           <h2 className="mt-3 font-display text-2xl font-bold tracking-tight md:text-3xl">Genuine products from 20+ leading brands</h2>
         </div>
       </Container>
@@ -41,9 +39,9 @@ export function BrandsMarquee() {
                     </div>
                   </div>
                 ))
-              : textItems.map((name, i) => (
-                  <div key={i} className="flex h-24 w-44 shrink-0 items-center justify-center rounded-2xl border border-dashed border-border bg-card px-6 text-center font-display text-sm font-semibold text-foreground/55 shadow-soft">
-                    {name}
+              : placeholders.map((_, i) => (
+                  <div key={i} className="flex h-24 w-44 shrink-0 items-center justify-center rounded-2xl border border-dashed border-border bg-card text-border shadow-soft">
+                    <ImageIcon className="h-7 w-7 text-foreground/15" aria-hidden="true" />
                   </div>
                 ))}
           </div>

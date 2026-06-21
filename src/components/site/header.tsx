@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
 } from "@/components/ui/sheet";
@@ -72,9 +73,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild className="hidden bg-brand-green text-white hover:bg-brand-green-dark sm:inline-flex">
+          <Button asChild size="icon" aria-label="Connect on WhatsApp" className="hidden bg-[#25D366] text-white hover:bg-[#1ebe5d] sm:inline-flex">
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-4 w-4" /> WhatsApp
+              <WhatsAppIcon className="h-5 w-5" />
             </a>
           </Button>
 
