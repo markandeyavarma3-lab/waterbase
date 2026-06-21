@@ -25,7 +25,7 @@ export function Projects() {
   return (
     <Section tone="default">
       <Container>
-        <SectionHeading eyebrow="Portfolio" title="Work we're proud of" lead="From smallholder farms to large commercial developments across South India — 15+ years of irrigation projects." />
+        <SectionHeading eyebrow="Portfolio" title="Work we're proud of" lead="From smallholder farms to large commercial developments across South India — 25+ years of irrigation projects." />
 
         {/* Filter tabs */}
         <div className="mt-8 flex flex-wrap gap-2">

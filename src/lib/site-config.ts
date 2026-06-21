@@ -1,10 +1,10 @@
+
 export const siteConfig = {
   name: "Waterbase Technologies",
   legalName: "Waterbase Technologies",
   businessType: "Proprietorship",
-  established: 2014,
-  since: 2011,
-  experienceYears: "15+",
+  since: 2000,
+  experienceYears: "25+",
 
   // 👇 Edit this one line anytime to change the hero badge text.
   heroBadge: "Serving farmers for over 25 years",

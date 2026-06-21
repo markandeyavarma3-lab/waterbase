@@ -8,14 +8,14 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "About",
-  description: "Waterbase Technologies has delivered complete irrigation and water-management solutions across South India since 2011 — product supply, design, installation, project execution and APMIP subsidy assistance.",
+  description: "Waterbase Technologies has delivered complete irrigation and water-management solutions across South India for over 25 years — product supply, design, installation, project execution and APMIP subsidy assistance.",
   path: "/about",
 });
 
 export default function AboutPage() {
   return (
     <main>
-      <PageHero eyebrow="About us" title="Complete irrigation partners since 2011" description="Product supply, survey & design, installation and full project execution — for farmers, nurseries, industries and large developments across South India." />
+      <PageHero eyebrow="About us" title="Complete irrigation partners for over 25 years" description="Product supply, survey & design, installation and full project execution — for farmers, nurseries, industries and large developments across South India." />
       <Stats />
       <WhyChooseUs />
       <Brands />

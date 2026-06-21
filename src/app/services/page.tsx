@@ -46,7 +46,7 @@ const team = [
 ];
 
 const reasons = [
-  { icon: Award, title: `${siteConfig.experienceYears} years of experience`, desc: `Serving farmers and businesses since ${siteConfig.since} with proven, reliable irrigation work.` },
+  { icon: Award, title: `${siteConfig.experienceYears} years of experience`, desc: `Serving farmers and businesses for over 25 years with proven, reliable irrigation work.` },
   { icon: ShieldCheck, title: "Authorized & genuine", desc: "Official dealer of Jain Irrigation, KSB and Netafim — genuine products with warranty." },
   { icon: Users, title: "Skilled in-house team", desc: "20+ team members, 15+ field technicians and 5+ dedicated installation teams." },
   { icon: BadgePercent, title: "APMIP subsidy expertise", desc: "End-to-end assistance with subsidy-based micro-irrigation in West Godavari." },

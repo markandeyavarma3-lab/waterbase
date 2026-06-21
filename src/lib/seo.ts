@@ -34,7 +34,7 @@ export function localBusinessJsonLd() {
     url: siteConfig.url,
     email: siteConfig.email,
     telephone: `+91${phones.sales.primary}`,
-    foundingDate: String(siteConfig.established),
+    foundingDate: String(siteConfig.since),
     priceRange: "₹₹",
     address: {
       "@type": "PostalAddress",
