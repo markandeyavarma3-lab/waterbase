@@ -48,8 +48,8 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
   }
 
   function exportCsv() {
-    const header = ["Date", "Name", "Mobile", "Requirement", "Status"];
-    const rows = filtered.map((l) => [new Date(l.created_at).toLocaleString("en-IN"), l.name, l.mobile, requirementLabel(l.requirement), l.status]);
+    const header = ["Date", "Name", "Mobile", "Location", "Land Size", "Requirement", "Status"];
+    const rows = filtered.map((l) => [new Date(l.created_at).toLocaleString("en-IN"), l.name, l.mobile, l.location ?? "", l.land_size ?? "", requirementLabel(l.requirement), l.status]);
     const csv = [header, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
@@ -87,6 +87,8 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
               <th className="px-4 py-3 font-semibold">Date</th>
               <th className="px-4 py-3 font-semibold">Name</th>
               <th className="px-4 py-3 font-semibold">Mobile</th>
+              <th className="px-4 py-3 font-semibold">Location</th>
+              <th className="px-4 py-3 font-semibold">Land Size</th>
               <th className="px-4 py-3 font-semibold">Requirement</th>
               <th className="px-4 py-3 font-semibold">Status</th>
             </tr>
@@ -94,7 +96,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-muted-foreground">No leads found.</td>
+                <td colSpan={7} className="px-4 py-10 text-center text-muted-foreground">No leads found.</td>
               </tr>
             ) : (
               filtered.map((l) => (
@@ -104,6 +106,8 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
                   <td className="whitespace-nowrap px-4 py-3">
                     <a href={`tel:+91${l.mobile}`} className="text-brand-green hover:underline">{l.mobile}</a>
                   </td>
+                  <td className="px-4 py-3 text-muted-foreground">{l.location || "—"}</td>
+                  <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{l.land_size || "—"}</td>
                   <td className="px-4 py-3 text-muted-foreground">{requirementLabel(l.requirement)}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">

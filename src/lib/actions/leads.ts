@@ -13,11 +13,18 @@ export async function submitLead(input: unknown): Promise<LeadResult> {
     return { ok: false, message: "Please check the form and try again." };
   }
 
-  const { name, mobile, requirement } = parsed.data;
+  const { name, mobile, requirement, location, landSize } = parsed.data;
 
   try {
     const supabase = createAdminClient();
-    const { error } = await supabase.from("leads").insert({ name, mobile, requirement, source: "website" });
+    const { error } = await supabase.from("leads").insert({
+      name,
+      mobile,
+      requirement,
+      location: location || null,
+      land_size: landSize || null,
+      source: "website",
+    });
     if (error) {
       console.error("Lead insert failed:", error);
       return { ok: false, message: "Couldn't save your request. Please call us directly." };
@@ -28,7 +35,7 @@ export async function submitLead(input: unknown): Promise<LeadResult> {
   }
 
   try {
-    await sendLeadNotification({ name, mobile, requirement });
+    await sendLeadNotification({ name, mobile, requirement, location, landSize });
   } catch (err) {
     console.error("Lead notification failed (lead still saved):", err);
   }

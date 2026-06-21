@@ -22,6 +22,9 @@ export const leadSchema = z.object({
     .transform((v) => v.replace(/\D/g, "").replace(/^91(?=\d{10}$)/, ""))
     .pipe(z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number")),
   requirement: z.string().refine((v) => REQUIREMENT_VALUES.includes(v), { message: "Please select what you need" }),
+  // Optional qualifying details
+  location: z.string().trim().max(120, "Location is too long").optional(),
+  landSize: z.string().trim().max(60, "Please keep it short").optional(),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
@@ -43,6 +46,8 @@ export type Lead = {
   name: string;
   mobile: string;
   requirement: string;
+  location: string | null;
+  land_size: string | null;
   status: string;
   source: string | null;
   admin_notes: string | null;

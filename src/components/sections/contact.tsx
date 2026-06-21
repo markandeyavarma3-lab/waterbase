@@ -5,6 +5,7 @@ import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
 
 export function Contact() {
   const waMessage = "Hi Waterbase, I'd like to know more about your irrigation solutions.";
+  const mapQuery = `${siteConfig.name}, ${fullAddress}`;
 
   return (
     <section id="contact" className="scroll-mt-20 bg-background py-16 sm:py-24">
@@ -74,6 +75,18 @@ export function Contact() {
             </div>
           </Reveal>
         </div>
+
+        <Reveal delay={120}>
+          <div className="mt-12 overflow-hidden rounded-2xl border border-border shadow-soft">
+            <iframe
+              title={`${siteConfig.name} location on Google Maps`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`}
+              className="h-[320px] w-full border-0 md:h-[400px]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

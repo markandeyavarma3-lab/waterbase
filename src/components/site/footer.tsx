@@ -75,8 +75,12 @@ export function Footer() {
       </div>
 
       <div className="relative z-10 border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-5 text-center text-xs text-white/60">
-          © {new Date().getFullYear()} {siteConfig.legalName}. {siteConfig.businessType}
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-5 text-xs text-white/60 sm:flex-row">
+          <p>© {new Date().getFullYear()} {siteConfig.legalName}. {siteConfig.businessType}</p>
+          <nav className="flex items-center gap-5">
+            <Link href="/privacy" className="transition-colors hover:text-white">Privacy Policy</Link>
+            <Link href="/terms" className="transition-colors hover:text-white">Terms of Use</Link>
+          </nav>
         </div>
       </div>
     </footer>

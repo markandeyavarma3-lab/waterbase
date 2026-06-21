@@ -18,7 +18,7 @@ export function LeadForm() {
 
   const form = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
-    defaultValues: { name: "", mobile: "", requirement: "" },
+    defaultValues: { name: "", mobile: "", requirement: "", location: "", landSize: "" },
   });
 
   async function onSubmit(values: LeadInput) {
@@ -54,6 +54,28 @@ export function LeadForm() {
             <FormMessage />
           </FormItem>
         )} />
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <FormField control={form.control} name="location" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Village / Town <span className="font-normal text-muted-foreground">(optional)</span></FormLabel>
+              <FormControl>
+                <Input placeholder="e.g. Bhimavaram" autoComplete="address-level2" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )} />
+
+          <FormField control={form.control} name="landSize" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Land size <span className="font-normal text-muted-foreground">(optional)</span></FormLabel>
+              <FormControl>
+                <Input placeholder="e.g. 5 acres" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )} />
+        </div>
 
         <FormField control={form.control} name="requirement" render={({ field }) => (
           <FormItem>

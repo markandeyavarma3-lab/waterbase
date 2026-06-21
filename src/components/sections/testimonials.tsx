@@ -65,7 +65,7 @@ export function Testimonials() {
         {/* Row 1 — scrolls left */}
         <div className="group flex gap-4 overflow-hidden">
           <div
-            className="flex gap-4 group-hover:[animation-play-state:paused]"
+            className="motion-marquee flex gap-4 group-hover:[animation-play-state:paused]"
             style={{ animation: "marquee-left 65s linear infinite" }}
           >
             {row1.map((t, i) => <Card key={i} t={t} />)}
@@ -75,7 +75,7 @@ export function Testimonials() {
         {/* Row 2 — scrolls right */}
         <div className="group flex gap-4 overflow-hidden">
           <div
-            className="flex gap-4 group-hover:[animation-play-state:paused]"
+            className="motion-marquee flex gap-4 group-hover:[animation-play-state:paused]"
             style={{ animation: "marquee-right 58s linear infinite" }}
           >
             {row2.map((t, i) => <Card key={i} t={t} />)}

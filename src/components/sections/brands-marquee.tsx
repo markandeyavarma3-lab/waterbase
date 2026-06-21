@@ -28,7 +28,7 @@ export function BrandsMarquee() {
 
         <div className="group flex overflow-hidden">
           <div
-            className="flex shrink-0 items-center gap-4 group-hover:[animation-play-state:paused]"
+            className="motion-marquee flex shrink-0 items-center gap-4 group-hover:[animation-play-state:paused]"
             style={{ animation: "marquee-left 45s linear infinite" }}
           >
             {hasLogos

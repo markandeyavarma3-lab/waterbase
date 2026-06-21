@@ -187,7 +187,8 @@
 @media (prefers-reduced-motion: reduce) {
   .motion-aurora,
   .motion-float,
-  .motion-cue { animation: none !important; }
+  .motion-cue,
+  .motion-marquee { animation: none !important; }
 }
 
 @layer base {
