@@ -1,9 +1,0 @@
-Standardize all site images to JPG
-
-- Convert the 5 client logos PNG -> JPG (sharp, white-flattened, q90) and remove PNGs
-- Update brands/clients/crops READMEs and logos.ts to make JPG the single
-  site-wide image format
-- All hardcoded image paths were already .jpg; folder-scan loader picks up the
-  converted files automatically
-
-Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
