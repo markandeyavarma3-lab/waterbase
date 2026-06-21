@@ -8,14 +8,15 @@ few seconds.
 
 HOW TO USE
 ----------
-1. Save each logo as a PNG (transparent background looks best),
-   or SVG / JPG / WEBP also work.
-2. Recommended size: about 400 x 160 px, logo centered.
+1. Save each logo as a JPG.  (JPG is the standard format for the
+   whole site.)  Logos look best on a WHITE background — the cards
+   they sit on are white, so they blend in cleanly.
+2. Recommended size: about 400 x 160 px, logo centered on white.
 3. Name the file after the company, e.g.:
-      nuziveedu-seeds.png
-      patanjali.png
+      nuziveedu-seeds.jpg
+      patanjali-foods.jpg
    The filename is turned into the label shown under the logo:
-      "nuziveedu-seeds.png"  ->  "Nuziveedu Seeds"
+      "nuziveedu-seeds.jpg"  ->  "Nuziveedu Seeds"
 4. Add as many as you like.
 5. Commit + push (or tell Claude to push) -> Vercel rebuilds and
    the logos go live.

@@ -22,8 +22,8 @@ FOLDERS (one per crop):
 HOW TO USE
 ----------
 1. Pick a crop folder, e.g. public/crops/oil-palm/
-2. Drop 3-4 images into it (JPG or PNG).
-   File names don't matter — name them anything, e.g.:
+2. Drop 3-4 images into it (JPG — the standard format for the
+   whole site). File names don't matter — name them anything, e.g.:
       1.jpg  2.jpg  3.jpg
 3. Recommended: landscape-ish photos, about 800 x 600 px.
 4. Commit + push (or tell Claude to push) -> Vercel rebuilds and

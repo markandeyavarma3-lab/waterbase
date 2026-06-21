@@ -5,11 +5,12 @@ export type Logo = { src: string; name: string };
 
 /**
  * Reads every image file inside /public/<dir> at build time and returns
- * them as { src, name } — so dropping a PNG/SVG into the folder is all
+ * them as { src, name } — so dropping a JPG into the folder is all
  * that's needed for it to appear on the site (then commit + push).
+ * (Other formats still work, but JPG is the site-wide standard.)
  *
  * The filename becomes the display name:
- *   "nuziveedu-seeds.png"  ->  "Nuziveedu Seeds"
+ *   "nuziveedu-seeds.jpg"  ->  "Nuziveedu Seeds"
  */
 export function listLogos(dir: string): Logo[] {
   const full = path.join(process.cwd(), "public", dir);
