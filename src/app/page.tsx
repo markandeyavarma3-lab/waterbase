@@ -2,6 +2,7 @@ import { Hero } from "@/components/sections/hero";
 import { EndToEnd } from "@/components/sections/end-to-end";
 import { Clients } from "@/components/sections/clients";
 import { Supply } from "@/components/sections/supply";
+import { BrandsMarquee } from "@/components/sections/brands-marquee";
 import { WhyWaterbase } from "@/components/sections/why-waterbase";
 import { Apmip } from "@/components/sections/apmip";
 import { Testimonials } from "@/components/sections/testimonials";
@@ -19,6 +20,7 @@ export default function Home() {
 
       {/* Part 2 — Products we supply */}
       <Supply />
+      <BrandsMarquee />
 
       {/* Part 3 — Why choose us */}
       <WhyWaterbase />
