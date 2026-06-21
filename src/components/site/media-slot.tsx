@@ -45,7 +45,7 @@ export function MediaSlot({
       {current ? (
         <Image key={current} src={current} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" onError={() => setIdx((i) => i + 1)} />
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[linear-gradient(135deg,var(--color-brand-green-soft),var(--color-brand-blue-soft))] text-brand-green-dark">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[linear-gradient(135deg,var(--color-brand-green-soft),#ffffff)] text-brand-green-dark">
           <ImageIcon className="h-7 w-7 opacity-50" aria-hidden="true" />
           <span className="px-3 text-center text-xs font-medium text-brand-green-dark/70">{label ?? "Photo coming soon"}</span>
         </div>

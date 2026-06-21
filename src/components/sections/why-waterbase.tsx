@@ -14,7 +14,7 @@ const reasons = [
 
 export function WhyWaterbase() {
   return (
-    <Section tone="default">
+    <Section tone="muted">
       <Container>
         <SectionHeading align="center" eyebrow="Why Waterbase" title="One accountable partner, end to end" lead="Not just a supplier — we own the entire journey, from the first survey to long-term support." />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

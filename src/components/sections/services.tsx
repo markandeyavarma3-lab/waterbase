@@ -20,7 +20,7 @@ export function Services() {
   return (
     <section className="relative overflow-hidden bg-brand-green-darker text-white">
       <div className="pointer-events-none absolute -left-20 top-0 h-72 w-72 rounded-full bg-brand-green-light/15 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-brand-blue/15 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-brand-green/20 blur-3xl" />
       <div className="relative z-10 mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-2 lg:items-center">
         <div>
           <Reveal>

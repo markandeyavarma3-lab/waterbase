@@ -1,17 +1,26 @@
 import Link from "next/link";
 import { MapPin, MessageCircle, Mail, PhoneCall } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
+import { BrandMark } from "@/components/site/brand-mark";
 import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
 
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-border bg-brand-green-deep text-white/80">
+      {/* Soft brand glow */}
+      <div className="pointer-events-none absolute -top-24 right-0 -z-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.18),transparent_65%)] blur-2xl" aria-hidden="true" />
       <div className="h-1 w-full bg-brand-green" />
       <div className="relative z-10 mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-4">
         <Reveal>
-          <span className="whitespace-nowrap font-[family-name:var(--font-logo)] text-lg font-extrabold text-white">Waterbase Technologies</span>
+          <div className="flex items-center gap-2.5">
+            <BrandMark className="h-9 w-9" />
+            <span className="whitespace-nowrap font-[family-name:var(--font-logo)] text-lg font-extrabold text-white">Waterbase Technologies</span>
+          </div>
           <p className="mt-4 text-sm leading-relaxed text-white/70">
             {siteConfig.tagline}. Authorized Distributor & Dealer of Jain Irrigation, KSB Pumps & Motors, Netafim Flexnet and 20 + leading brands.
+          </p>
+          <p className="mt-3 text-xs leading-relaxed text-white/55">
+            Serving Andhra Pradesh, Telangana, Karnataka &amp; Odisha · Pan-India for bulk orders.
           </p>
         </Reveal>
 

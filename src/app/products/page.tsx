@@ -33,7 +33,7 @@ export default function ProductsPage() {
                 {reach.map((r) => (
                   <span key={r} className="inline-flex items-center gap-1.5 rounded-full border border-brand-green/20 bg-brand-green-soft px-4 py-2 text-sm font-medium text-brand-green-dark"><Check className="h-4 w-4" /> {r}</span>
                 ))}
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-blue/20 bg-brand-blue-soft px-4 py-2 text-sm font-medium text-brand-blue-dark"><Check className="h-4 w-4" /> Pan-India (bulk orders)</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-green bg-brand-green px-4 py-2 text-sm font-medium text-white"><Check className="h-4 w-4" /> Pan-India (bulk orders)</span>
               </div>
             </Reveal>
           </div>

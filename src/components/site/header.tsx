@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Menu, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/site/whatsapp-icon";
+import { BrandMark } from "@/components/site/brand-mark";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
 } from "@/components/ui/sheet";
@@ -45,11 +46,14 @@ export function Header() {
         "mx-auto flex max-w-6xl items-center justify-between px-4 transition-all duration-300 ease-out-expo md:px-6",
         scrolled ? "h-14" : "h-16"
       )}>
-        <Link href="/" className={cn(
-          "whitespace-nowrap font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-foreground transition-all duration-300",
-          scrolled ? "text-base md:text-lg" : "text-lg"
-        )}>
-          Waterbase Technologies
+        <Link href="/" className="flex items-center gap-2.5">
+          <BrandMark className={cn("transition-all duration-300", scrolled ? "h-7 w-7" : "h-8 w-8")} />
+          <span className={cn(
+            "whitespace-nowrap font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-foreground transition-all duration-300",
+            scrolled ? "text-base md:text-lg" : "text-lg"
+          )}>
+            Waterbase Technologies
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
