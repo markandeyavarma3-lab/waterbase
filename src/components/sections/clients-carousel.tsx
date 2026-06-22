@@ -33,10 +33,9 @@ export function ClientsCarousel({ clients }: { clients: Logo[] }) {
     return () => ro.disconnect();
   }, []);
 
-  // Auto-advance (disabled when the user prefers reduced motion).
+  // Auto-advance.
   useEffect(() => {
     if (n <= 1 || paused) return;
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => setActive((a) => a + 1), INTERVAL);
     return () => clearInterval(id);
   }, [n, paused]);
