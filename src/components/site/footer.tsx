@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="relative overflow-hidden border-t border-border bg-brand-green-deep text-white/80">
       {/* Soft brand glow */}
       <div className="pointer-events-none absolute -top-24 right-0 -z-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.18),transparent_65%)] blur-2xl" aria-hidden="true" />
-      <div className="h-1 w-full bg-brand-green" />
+      <div className="h-1 w-full bg-gradient-to-r from-brand-green via-brand-sun to-brand-blue" />
       <div className="relative z-10 mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-4">
         <Reveal>
           <div className="flex items-center gap-2.5">

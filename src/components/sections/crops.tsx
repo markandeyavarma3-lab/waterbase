@@ -20,7 +20,7 @@ export function Crops() {
   }));
 
   return (
-    <section className="border-y border-border bg-brand-green-soft/40">
+    <section className="border-y border-border bg-brand-soil-soft/50">
       <div className="mx-auto max-w-6xl px-6 py-20">
         <Reveal>
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">

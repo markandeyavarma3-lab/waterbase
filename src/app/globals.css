@@ -49,29 +49,44 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* 🌱 Waterbase green — the single confident brand color (softened a touch) */
-  --color-brand-green: #167A4A;
-  --color-brand-green-dark: #125E3B;
-  --color-brand-green-darker: #114A2F;
-  --color-brand-green-deep: #0E3A26;
-  --color-brand-green-light: #3FA06C;
-  --color-brand-green-soft: #E9F4EE;
+  /* 🌅 Brand palette — sunrise over the fields:
+     green (crop) · sky blue (water) · soil (earth) · sun (sunrise) */
 
-  /* 💧 Water blue — supporting secondary */
-  --color-brand-blue: #1487C4;
-  --color-brand-blue-dark: #0C5D8C;
-  --color-brand-blue-light: #58B2E5;
-  --color-brand-blue-soft: #E7F3FB;
+  /* Green — softened & fresh (primary) */
+  --color-brand-green: #2E9466;
+  --color-brand-green-dark: #237352;
+  --color-brand-green-darker: #1A5740;
+  --color-brand-green-deep: #123D2C;
+  --color-brand-green-light: #6BC097;
+  --color-brand-green-soft: #E7F3EC;
 
-  /* Clean neutrals */
-  --color-ink: #0D1A12;
-  --color-stone-50: #F6F8F6;
-  --color-stone-100: #EEF2EF;
-  --color-stone-200: #E4EAE6;
+  /* Sky blue — water */
+  --color-brand-blue: #3FA3DA;
+  --color-brand-blue-dark: #2A7CAC;
+  --color-brand-blue-light: #93CEEE;
+  --color-brand-blue-soft: #E8F4FB;
 
-  /* Premium soft shadows */
-  --shadow-soft: 0 1px 2px rgba(13, 26, 18, 0.04), 0 6px 20px rgba(13, 26, 18, 0.06);
-  --shadow-lift: 0 2px 6px rgba(13, 26, 18, 0.05), 0 16px 40px rgba(13, 26, 18, 0.1);
+  /* Soil — warm earth */
+  --color-brand-soil: #A06E45;
+  --color-brand-soil-dark: #7A5232;
+  --color-brand-soil-light: #CDA079;
+  --color-brand-soil-soft: #F3EADF;
+
+  /* Sun — sunrise orange */
+  --color-brand-sun: #F4A24C;
+  --color-brand-sun-dark: #A85F16;
+  --color-brand-sun-light: #F9C589;
+  --color-brand-sun-soft: #FDF1E0;
+
+  /* Warm neutrals */
+  --color-ink: #2A2622;
+  --color-stone-50: #FAF6EF;
+  --color-stone-100: #F3EEE5;
+  --color-stone-200: #E9E1D5;
+
+  /* Premium soft shadows (warm-tinted) */
+  --shadow-soft: 0 1px 2px rgba(58, 44, 30, 0.05), 0 6px 20px rgba(58, 44, 30, 0.07);
+  --shadow-lift: 0 2px 6px rgba(58, 44, 30, 0.06), 0 16px 40px rgba(58, 44, 30, 0.12);
 
   /* Smooth easing for reveals & micro-interactions */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -81,40 +96,40 @@
   --radius: 0.75rem;
 
   --background: #FFFFFF;
-  --foreground: #0D1A12;
+  --foreground: #2A2622;
   --card: #FFFFFF;
-  --card-foreground: #0D1A12;
+  --card-foreground: #2A2622;
   --popover: #FFFFFF;
-  --popover-foreground: #0D1A12;
-  --primary: #167A4A;
+  --popover-foreground: #2A2622;
+  --primary: #2E9466;
   --primary-foreground: #FFFFFF;
-  --secondary: #F1F5F2;
-  --secondary-foreground: #143A28;
-  --muted: #F6F8F6;
-  --muted-foreground: #5B675F;
-  --accent: #E9F4EE;
-  --accent-foreground: #0F5733;
+  --secondary: #F3EEE5;
+  --secondary-foreground: #1F5740;
+  --muted: #F7F2EA;
+  --muted-foreground: #6F6458;
+  --accent: #E7F3EC;
+  --accent-foreground: #1F6A49;
   --destructive: #C0392B;
-  --border: #E4EAE6;
-  --input: #E1E8E3;
-  --ring: #167A4A;
+  --border: #EAE2D6;
+  --input: #E6DDD0;
+  --ring: #2E9466;
 
-  /* Charts — disciplined green + water palette */
-  --chart-1: #167A4A;
-  --chart-2: #1487C4;
-  --chart-3: #3FA06C;
-  --chart-4: #58B2E5;
-  --chart-5: #0F5733;
+  /* Charts — full brand palette */
+  --chart-1: #2E9466;
+  --chart-2: #3FA3DA;
+  --chart-3: #F4A24C;
+  --chart-4: #A06E45;
+  --chart-5: #6BC097;
 
   /* Sidebar — admin dashboard */
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #0D1A12;
-  --sidebar-primary: #167A4A;
+  --sidebar-foreground: #2A2622;
+  --sidebar-primary: #2E9466;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #E9F4EE;
-  --sidebar-accent-foreground: #0F5733;
-  --sidebar-border: #E4EAE6;
-  --sidebar-ring: #167A4A;
+  --sidebar-accent: #E7F3EC;
+  --sidebar-accent-foreground: #1F6A49;
+  --sidebar-border: #EAE2D6;
+  --sidebar-ring: #2E9466;
 }
 
 .dark {

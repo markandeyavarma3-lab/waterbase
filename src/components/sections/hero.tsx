@@ -20,8 +20,12 @@ export function Hero() {
     <section className="relative overflow-hidden bg-brand-green-deep text-white">
       {/* Aurora — slow drifting gradient blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <div className="motion-aurora absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.26),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 24s ease-in-out infinite" }} />
-        <div className="motion-aurora absolute -bottom-[25%] -left-[10%] h-[50vw] w-[50vw] rounded-full bg-[radial-gradient(circle,rgba(20,135,196,0.16),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 28s ease-in-out infinite" }} />
+        {/* green field glow */}
+        <div className="motion-aurora absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(107,192,151,0.22),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 24s ease-in-out infinite" }} />
+        {/* sky-blue glow */}
+        <div className="motion-aurora absolute -left-[12%] top-[8%] h-[45vw] w-[45vw] rounded-full bg-[radial-gradient(circle,rgba(63,163,218,0.16),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 28s ease-in-out infinite" }} />
+        {/* sunrise-orange glow on the horizon */}
+        <div className="motion-aurora absolute -bottom-[30%] left-[18%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(244,162,76,0.18),transparent_60%)] blur-3xl" style={{ animation: "aurora-1 26s ease-in-out infinite" }} />
       </div>
       {/* Subtle dot grid texture */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
