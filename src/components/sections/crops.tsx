@@ -7,7 +7,7 @@ import { listLogos } from "@/lib/logos";
 
 const cropNames = [
   "Banana", "Coconut", "Oil Palm", "Cocoa", "Lemon", "Guava",
-  "Papaya", "Dragon Fruit", "Maize", "Vegetables", "Flowers", "Plantations",
+  "Papaya", "Dragon Fruit", "Watermelon", "Maize", "Vegetables", "Flowers", "Plantations",
 ];
 
 const slug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
