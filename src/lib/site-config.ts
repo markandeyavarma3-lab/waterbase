@@ -79,7 +79,7 @@ export const siteConfig = {
     { value: 4, suffix: "+", label: "States served" },
   ],
 
-  mapsUrl: "https://maps.app.goo.gl/JSFE9Qx9Dq5z1skG9",
+  mapsUrl: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
 } as const;
 
 export function telLink(number: string) {

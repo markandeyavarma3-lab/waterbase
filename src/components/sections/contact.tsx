@@ -1,11 +1,10 @@
-import { MessageCircle, Mail, MapPin, Clock, Sprout } from "lucide-react";
+import { MessageCircle, Mail, MapPin, Clock, Sprout, ArrowUpRight } from "lucide-react";
 import { LeadForm } from "@/components/sections/lead-form";
 import { Reveal } from "@/components/sections/reveal";
 import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
 
 export function Contact() {
   const waMessage = "Hi Waterbase, I'd like to know more about your irrigation solutions.";
-  const mapQuery = `${siteConfig.name}, ${fullAddress}`;
 
   return (
     <section id="contact" className="scroll-mt-20 bg-background py-16 sm:py-24">
@@ -77,15 +76,23 @@ export function Contact() {
         </div>
 
         <Reveal delay={120}>
-          <div className="mt-12 overflow-hidden rounded-2xl border border-border shadow-soft">
-            <iframe
-              title={`${siteConfig.name} location on Google Maps`}
-              src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`}
-              className="h-[320px] w-full border-0 md:h-[400px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+          <a
+            href={siteConfig.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-12 flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:border-brand-green/40 hover:shadow-lift sm:p-6"
+          >
+            <span className="flex items-center gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
+                <MapPin className="h-6 w-6" />
+              </span>
+              <span>
+                <span className="block font-display font-semibold text-foreground">Find us on Google Maps</span>
+                <span className="block text-sm text-muted-foreground">{siteConfig.address.city}, {siteConfig.address.state} — tap for directions</span>
+              </span>
+            </span>
+            <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-colors group-hover:text-brand-green" />
+          </a>
         </Reveal>
       </div>
     </section>
