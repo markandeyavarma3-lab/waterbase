@@ -1,4 +1,3 @@
-import { Star, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { MediaSlot } from "@/components/site/media-slot";
 import { CountUp } from "@/components/sections/count-up";
@@ -57,16 +56,7 @@ export function Hero() {
               <ContactActions onDark size="xl" className="mt-8" />
             </Reveal>
             <Reveal delay={320}>
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-0.5 text-amber-400">
-                    {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
-                  </div>
-                  <span className="text-sm text-white/70">Trusted by <strong className="font-semibold text-white">15,000+</strong> customers</span>
-                </div>
-                <span className="hidden h-4 w-px bg-white/20 sm:block" />
-                <p className="text-sm text-white/55">Jain · KSB · Netafim — 20+ leading brands</p>
-              </div>
+              <p className="mt-7 text-sm text-white/55">Jain · KSB · Netafim — 20+ leading brands</p>
             </Reveal>
           </div>
 
@@ -77,15 +67,6 @@ export function Hero() {
             <div className="motion-float absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-card p-4 text-foreground shadow-lift sm:block" style={{ animation: "float-y 6s ease-in-out infinite" }}>
               <p className="font-display text-2xl font-extrabold text-brand-green"><CountUp end={50000} suffix="+" /></p>
               <p className="text-xs font-medium text-muted-foreground">acres irrigated</p>
-            </div>
-
-            {/* Floating trust badge — top right */}
-            <div className="motion-float absolute -right-4 top-6 hidden items-center gap-2.5 rounded-2xl border border-border bg-card p-3 pr-4 text-foreground shadow-lift md:flex" style={{ animation: "float-y 7s ease-in-out infinite 0.8s" }}>
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green"><ShieldCheck className="h-5 w-5" /></span>
-              <div>
-                <p className="text-sm font-bold leading-tight">Authorized dealer</p>
-                <p className="text-xs text-muted-foreground">Genuine · warranty-backed</p>
-              </div>
             </div>
           </Reveal>
         </div>
