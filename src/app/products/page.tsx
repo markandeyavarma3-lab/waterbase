@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { ProductCategories } from "@/components/sections/product-categories";
-import { Brands } from "@/components/sections/brands";
+import { BrandsMarquee } from "@/components/sections/brands-marquee";
 import { ContactCTA } from "@/components/sections/contact-cta";
 import { Reveal } from "@/components/sections/reveal";
 import { pageMeta } from "@/lib/seo";
@@ -40,7 +40,7 @@ export default function ProductsPage() {
         </Container>
       </Section>
 
-      <Brands />
+      <BrandsMarquee twoRows />
       <ContactCTA />
     </main>
   );

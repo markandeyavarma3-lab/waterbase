@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
-import { CropCard } from "@/components/sections/crop-card";
+import { CropsGrid } from "@/components/sections/crops-grid";
 import { listLogos } from "@/lib/logos";
 
 const cropNames = [
@@ -40,13 +40,7 @@ export function Crops({ limit }: { limit?: number }) {
             ) : null}
           </div>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {crops.map((c, i) => (
-            <Reveal key={c.name} delay={i * 50} className="h-full">
-              <CropCard name={c.name} images={c.images} />
-            </Reveal>
-          ))}
-        </div>
+        <CropsGrid crops={crops} />
       </div>
     </section>
   );

@@ -1,17 +1,10 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Sprout } from "lucide-react";
 
-export function CropCard({ name, images }: { name: string; images: string[] }) {
-  const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    if (images.length <= 1) return;
-    const id = setInterval(() => setIdx((i) => (i + 1) % images.length), 2000);
-    return () => clearInterval(id);
-  }, [images.length]);
+// Presentational only — which image shows is controlled by the parent grid
+// so cards can be cycled in a synchronized, column-by-column sequence.
+export function CropCard({ name, images, index = 0 }: { name: string; images: string[]; index?: number }) {
+  const active = images.length ? ((index % images.length) + images.length) % images.length : 0;
 
   return (
     <div className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
@@ -26,7 +19,7 @@ export function CropCard({ name, images }: { name: string; images: string[] }) {
               sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw"
               unoptimized
               className="object-cover transition-opacity duration-700 ease-out-expo"
-              style={{ opacity: i === idx ? 1 : 0 }}
+              style={{ opacity: i === active ? 1 : 0 }}
             />
           ))
         ) : (
@@ -41,7 +34,7 @@ export function CropCard({ name, images }: { name: string; images: string[] }) {
             {images.map((_, i) => (
               <span
                 key={i}
-                className={"h-1.5 rounded-full bg-white shadow transition-all duration-300 " + (i === idx ? "w-4 opacity-100" : "w-1.5 opacity-60")}
+                className={"h-1.5 rounded-full bg-white shadow transition-all duration-300 " + (i === active ? "w-4 opacity-100" : "w-1.5 opacity-60")}
                 aria-hidden="true"
               />
             ))}

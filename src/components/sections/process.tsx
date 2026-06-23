@@ -18,55 +18,65 @@ const steps: { icon: LucideIcon; title: string; desc: string }[] = [
 ];
 
 export function Process() {
-  const [active, setActive] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setActive(true);
+      setProgress(1);
       return;
     }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setActive(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const rect = el.getBoundingClientRect();
+        const trigger = window.innerHeight * 0.82; // line near the lower third of the screen
+        const p = (trigger - rect.top) / rect.height;
+        setProgress(Math.min(1, Math.max(0, p)));
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
+
+  const reached = progress * steps.length;
 
   return (
     <div ref={ref} className="relative mx-auto mt-14 max-w-3xl">
       {/* rail track */}
       <span className="pointer-events-none absolute left-8 top-8 bottom-8 w-1 -translate-x-1/2 rounded-full bg-border md:left-1/2" aria-hidden="true" />
-      {/* rail fill — draws on scroll, sunrise gradient */}
+      {/* rail fill — follows scroll, sunrise gradient */}
       <span
-        className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-sun transition-all duration-[1400ms] ease-out-expo md:left-1/2"
-        style={{ height: active ? "calc(100% - 4rem)" : "0px" }}
+        className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-sun md:left-1/2"
+        style={{ height: `calc((100% - 4rem) * ${progress})` }}
         aria-hidden="true"
       />
 
       <ol className="relative">
         {steps.map((step, i) => {
           const left = i % 2 === 0;
+          const active = reached >= i + 0.25;
           return (
             <li key={step.title} className="relative pb-11 last:pb-0 md:pb-16">
               {/* node */}
               <span
                 className={cn(
-                  "absolute left-8 top-0 z-10 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full transition-all duration-700 ease-out-expo md:left-1/2",
+                  "absolute left-8 top-0 z-10 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full transition-all duration-500 ease-out-expo md:left-1/2",
                   active ? "scale-100 opacity-100" : "scale-50 opacity-0"
                 )}
-                style={{ transitionDelay: `${i * 100}ms` }}
               >
                 {/* glow */}
-                <span className="absolute inset-0 rounded-full bg-brand-green/25 blur-md" aria-hidden="true" />
+                <span className={cn("absolute inset-0 rounded-full bg-brand-green/30 blur-md transition-opacity duration-500", active ? "opacity-100" : "opacity-0")} aria-hidden="true" />
                 {/* disc */}
                 <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-brand-green to-brand-green-dark text-white shadow-lift ring-4 ring-background">
                   <step.icon className="h-6 w-6" aria-hidden="true" />
@@ -80,11 +90,10 @@ export function Process() {
               {/* content card */}
               <div
                 className={cn(
-                  "ml-20 transition-all duration-700 ease-out-expo md:ml-0 md:w-[calc(50%-3.5rem)]",
+                  "ml-20 transition-all duration-500 ease-out-expo md:ml-0 md:w-[calc(50%-3.5rem)]",
                   left ? "md:mr-auto md:pr-14" : "md:ml-auto md:pl-14",
-                  active ? "translate-x-0 opacity-100" : cn("opacity-0", left ? "md:-translate-x-4" : "md:translate-x-4", "max-md:translate-x-3")
+                  active ? "translate-x-0 opacity-100" : cn("opacity-0", left ? "md:-translate-x-5" : "md:translate-x-5", "max-md:translate-x-4")
                 )}
-                style={{ transitionDelay: `${i * 100 + 150}ms` }}
               >
                 <div className={cn("group rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift", left && "md:text-right")}>
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-green/70">Step {i + 1}</p>

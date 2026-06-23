@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Archivo, Sora } from "next/font/google";
+import { Inter, Archivo, Outfit } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
@@ -15,8 +15,8 @@ const archivo = Archivo({
   weight: ["500", "600", "700", "800"],
 });
 
-// 👇 The wordmark / logo font. Swap "Sora" for another Google font to change the look.
-const logoFont = Sora({
+// 👇 The wordmark / logo font. Swap "Outfit" for another Google font to change the look.
+const logoFont = Outfit({
   subsets: ["latin"],
   variable: "--font-logo",
   display: "swap",

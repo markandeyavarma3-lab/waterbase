@@ -55,9 +55,6 @@ export function Hero() {
             <Reveal delay={240}>
               <ContactActions onDark size="xl" className="mt-8" />
             </Reveal>
-            <Reveal delay={320}>
-              <p className="mt-7 text-sm text-white/55">Jain · KSB · Netafim — 20+ leading brands</p>
-            </Reveal>
           </div>
 
           <Reveal delay={200} className="relative">

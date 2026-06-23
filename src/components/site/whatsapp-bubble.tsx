@@ -12,7 +12,7 @@ export function WhatsAppBubble() {
       rel="noopener noreferrer"
       onClick={trackContactClick}
       aria-label="Click to connect on WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 hidden flex-col items-center gap-1.5 md:flex"
+      className="group fixed bottom-4 right-3 z-50 hidden flex-col items-center gap-1.5 md:flex"
     >
       <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lift transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
         {/* Pulse ring */}
