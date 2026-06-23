@@ -8,6 +8,12 @@ import { sendLeadNotification } from "@/lib/notify";
 export type LeadResult = { ok: true } | { ok: false; message: string };
 
 export async function submitLead(input: unknown): Promise<LeadResult> {
+  // Honeypot: real users never see the hidden "company" field. A bot that fills
+  // it gets a fake success and nothing is saved.
+  if (input && typeof input === "object" && (input as { company?: unknown }).company) {
+    return { ok: true };
+  }
+
   const parsed = leadSchema.safeParse(input);
   if (!parsed.success) {
     return { ok: false, message: "Please check the form and try again." };

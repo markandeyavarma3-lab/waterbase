@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export function LeadForm() {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
@@ -23,7 +24,7 @@ export function LeadForm() {
 
   async function onSubmit(values: LeadInput) {
     setServerError(null);
-    const result = await submitLead(values);
+    const result = await submitLead({ ...values, company: honeypotRef.current?.value ?? "" });
     if (result.ok) {
       form.reset();
       router.push("/thank-you?ref=lead");
@@ -35,6 +36,16 @@ export function LeadForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        {/* Honeypot — hidden from real users; bots that fill it are silently dropped. */}
+        <input
+          ref={honeypotRef}
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="absolute left-[-9999px] h-0 w-0 opacity-0"
+        />
         <FormField control={form.control} name="name" render={({ field }) => (
           <FormItem>
             <FormLabel>Name</FormLabel>
