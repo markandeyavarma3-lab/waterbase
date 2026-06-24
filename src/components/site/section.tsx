@@ -16,17 +16,18 @@ const toneClass: Record<Tone, string> = {
 
 export function Section({ tone = "default", id, className, children }: { tone?: Tone; id?: string; className?: string; children: ReactNode }) {
   return (
-    <section id={id} className={cn("py-20 md:py-28", toneClass[tone], className)}>
+    <section id={id} className={cn("py-24 md:py-32", toneClass[tone], className)}>
       {children}
     </section>
   );
 }
 
-export function Eyebrow({ children, onDark = false, className }: { children: ReactNode; onDark?: boolean; className?: string }) {
+export function Eyebrow({ children, onDark = false, align = "left", className }: { children: ReactNode; onDark?: boolean; align?: "left" | "center"; className?: string }) {
   return (
-    <p className={cn("text-xs font-semibold uppercase tracking-[0.14em] md:text-sm", onDark ? "text-brand-green-light" : "text-brand-green", className)}>
+    <span className={cn("inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] md:text-[0.8125rem]", align === "center" && "justify-center", onDark ? "text-brand-green-light" : "text-brand-green", className)}>
+      <span className={cn("h-px w-6", onDark ? "bg-brand-green-light/60" : "bg-brand-green/50")} aria-hidden="true" />
       {children}
-    </p>
+    </span>
   );
 }
 
@@ -34,9 +35,9 @@ export function SectionHeading({ eyebrow, title, lead, align = "left", onDark = 
   return (
     <div className={cn("flex flex-col gap-4", align === "center" && "items-center text-center", action && "md:flex-row md:items-end md:justify-between md:gap-10", className)}>
       <div className={cn("max-w-2xl", align === "center" && "mx-auto")}>
-        {eyebrow ? <Eyebrow onDark={onDark}>{eyebrow}</Eyebrow> : null}
-        <h2 className={cn("mt-3 font-display text-3xl font-bold leading-[1.1] tracking-tight text-balance md:text-[2.5rem]", onDark ? "text-white" : "text-foreground")}>{title}</h2>
-        {lead ? <p className={cn("mt-4 text-lg leading-relaxed", onDark ? "text-white/80" : "text-muted-foreground")}>{lead}</p> : null}
+        {eyebrow ? <Eyebrow onDark={onDark} align={align}>{eyebrow}</Eyebrow> : null}
+        <h2 className={cn("mt-4 font-display text-[1.75rem] font-bold leading-[1.08] text-balance sm:text-3xl md:text-[2.6rem]", onDark ? "text-white" : "text-foreground")}>{title}</h2>
+        {lead ? <p className={cn("mt-4 text-lg leading-relaxed", onDark ? "text-white/75" : "text-muted-foreground")}>{lead}</p> : null}
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}
     </div>

@@ -21,7 +21,7 @@ export function AnimatedWord() {
 
   return (
     <span
-      className="text-brand-green-light"
+      className="bg-gradient-to-r from-brand-green-light via-brand-blue-light to-brand-green-light bg-clip-text text-transparent"
       style={{
         display: "inline-block",
         opacity: fading ? 0 : 1,

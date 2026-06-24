@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Archivo, Outfit } from "next/font/google";
+import { Inter, Sora } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
@@ -8,19 +8,14 @@ import { LocalBusinessJsonLd } from "@/components/seo/local-business-jsonld";
 import { ConversionTracker } from "@/components/site/conversion-tracker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const archivo = Archivo({
+
+// 👇 Display + wordmark font — Sora (modern geometric sans, premium-minimal).
+// Drives all headings (--font-sora → --font-display) and the logo (--font-logo).
+const sora = Sora({
   subsets: ["latin"],
-  variable: "--font-archivo",
+  variable: "--font-sora",
   display: "swap",
   weight: ["500", "600", "700", "800"],
-});
-
-// 👇 The wordmark / logo font. Swap "Outfit" for another Google font to change the look.
-const logoFont = Outfit({
-  subsets: ["latin"],
-  variable: "--font-logo",
-  display: "swap",
-  weight: ["600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -52,7 +47,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${archivo.variable} ${logoFont.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${sora.variable}`}>
       <body className="antialiased">
         <LocalBusinessJsonLd />
         <ConversionTracker />

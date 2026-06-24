@@ -7,8 +7,9 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-border bg-brand-green-deep text-white/80">
       {/* Soft brand glow */}
-      <div className="pointer-events-none absolute -top-24 right-0 -z-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.18),transparent_65%)] blur-2xl" aria-hidden="true" />
-      <div className="h-1 w-full bg-gradient-to-r from-brand-green via-brand-sun to-brand-blue" />
+      <div className="pointer-events-none absolute -top-24 right-0 -z-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(70,184,136,0.2),transparent_65%)] blur-2xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -top-20 left-[10%] -z-0 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(20,136,194,0.16),transparent_65%)] blur-2xl" aria-hidden="true" />
+      <div className="h-1 w-full bg-gradient-to-r from-brand-green via-brand-blue to-brand-green-light" />
       <div className="relative z-10 mx-auto grid max-w-6xl gap-x-8 gap-y-10 px-6 py-14 md:grid-cols-12">
         <Reveal className="md:col-span-4">
           <span className="font-[family-name:var(--font-logo)] text-lg font-extrabold text-white">Waterbase Technologies</span>

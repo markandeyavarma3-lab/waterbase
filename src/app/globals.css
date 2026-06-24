@@ -7,7 +7,7 @@
 @theme inline {
   /* Fonts — wired to the variables set in layout.tsx */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
 
   /* Radius scale */
   --radius-sm: calc(var(--radius) - 4px);
@@ -49,87 +49,92 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* 🌅 Brand palette — sunrise over the fields:
-     green (crop) · sky blue (water) · soil (earth) · sun (sunrise) */
+  /* 💧 Brand palette — premium minimal: refined emerald + crisp water blue.
+     green (growth) · water blue (irrigation, accent) · neutral stone · subtle sun */
 
-  /* Green — softened & fresh (primary) */
-  --color-brand-green: #2E9466;
-  --color-brand-green-dark: #237352;
-  --color-brand-green-darker: #1A5740;
-  --color-brand-green-deep: #123D2C;
-  --color-brand-green-light: #6BC097;
-  --color-brand-green-soft: #E7F3EC;
+  /* Green — refined deep emerald (primary) */
+  --color-brand-green: #11875A;
+  --color-brand-green-dark: #0C6A47;
+  --color-brand-green-darker: #084E35;
+  --color-brand-green-deep: #04261A;
+  --color-brand-green-light: #46B888;
+  --color-brand-green-soft: #E8F4EE;
 
-  /* Sky blue — water */
-  --color-brand-blue: #3FA3DA;
-  --color-brand-blue-dark: #2A7CAC;
-  --color-brand-blue-light: #93CEEE;
-  --color-brand-blue-soft: #E8F4FB;
+  /* Water blue — crisp accent */
+  --color-brand-blue: #1488C2;
+  --color-brand-blue-dark: #0C6A9B;
+  --color-brand-blue-light: #6FC0E6;
+  --color-brand-blue-soft: #E6F3FB;
 
-  /* Soil — warm earth */
-  --color-brand-soil: #A06E45;
-  --color-brand-soil-dark: #7A5232;
-  --color-brand-soil-light: #CDA079;
-  --color-brand-soil-soft: #F3EADF;
+  /* Soil — refined taupe (kept for legacy refs) */
+  --color-brand-soil: #8C6B4F;
+  --color-brand-soil-dark: #6B5039;
+  --color-brand-soil-light: #C2A78C;
+  --color-brand-soil-soft: #F1EBE3;
 
-  /* Sun — sunrise orange */
-  --color-brand-sun: #F4A24C;
-  --color-brand-sun-dark: #A85F16;
-  --color-brand-sun-light: #F9C589;
-  --color-brand-sun-soft: #FDF1E0;
+  /* Sun — restrained warm amber (kept for legacy refs) */
+  --color-brand-sun: #E89A3C;
+  --color-brand-sun-dark: #B4711C;
+  --color-brand-sun-light: #F5C887;
+  --color-brand-sun-soft: #FBF0E1;
 
-  /* Warm neutrals */
-  --color-ink: #2A2622;
-  --color-stone-50: #FAF6EF;
-  --color-stone-100: #F3EEE5;
-  --color-stone-200: #E9E1D5;
+  /* Cool premium neutrals */
+  --color-ink: #0E1512;
+  --color-stone-50: #F8FAF9;
+  --color-stone-100: #F1F5F3;
+  --color-stone-200: #E4EAE7;
 
-  /* Premium soft shadows (warm-tinted) */
-  --shadow-soft: 0 1px 2px rgba(58, 44, 30, 0.05), 0 6px 20px rgba(58, 44, 30, 0.07);
-  --shadow-lift: 0 2px 6px rgba(58, 44, 30, 0.06), 0 16px 40px rgba(58, 44, 30, 0.12);
+  /* Premium soft shadows (cool green-tinted, refined) */
+  --shadow-soft: 0 1px 2px rgba(8, 40, 28, 0.04), 0 8px 24px rgba(8, 40, 28, 0.06);
+  --shadow-lift: 0 2px 8px rgba(8, 40, 28, 0.05), 0 20px 48px rgba(8, 40, 28, 0.12);
+  --shadow-glow: 0 0 0 1px rgba(17, 135, 90, 0.08), 0 12px 40px rgba(17, 135, 90, 0.16);
 
   /* Smooth easing for reveals & micro-interactions */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.625rem;
+
+  /* Wordmark font alias → Sora (set in layout.tsx) */
+  --font-logo: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
 
   --background: #FFFFFF;
-  --foreground: #2A2622;
+  --foreground: #0E1512;
   --card: #FFFFFF;
-  --card-foreground: #2A2622;
+  --card-foreground: #0E1512;
   --popover: #FFFFFF;
-  --popover-foreground: #2A2622;
-  --primary: #2E9466;
+  --popover-foreground: #0E1512;
+  --primary: #11875A;
   --primary-foreground: #FFFFFF;
-  --secondary: #F3EEE5;
-  --secondary-foreground: #1F5740;
-  --muted: #F7F2EA;
-  --muted-foreground: #6F6458;
-  --accent: #E7F3EC;
-  --accent-foreground: #1F6A49;
+  --secondary: #EEF3F1;
+  --secondary-foreground: #0C5A3D;
+  --muted: #F4F7F6;
+  --muted-foreground: #5A6661;
+  --accent: #E8F4EE;
+  --accent-foreground: #0C6A47;
   --destructive: #C0392B;
-  --border: #EAE2D6;
-  --input: #E6DDD0;
-  --ring: #2E9466;
+  --border: #E4EAE7;
+  --input: #DEE6E2;
+  --ring: #11875A;
 
-  /* Charts — full brand palette */
-  --chart-1: #2E9466;
-  --chart-2: #3FA3DA;
-  --chart-3: #F4A24C;
-  --chart-4: #A06E45;
-  --chart-5: #6BC097;
+  /* Charts — refined brand palette */
+  --chart-1: #11875A;
+  --chart-2: #1488C2;
+  --chart-3: #46B888;
+  --chart-4: #6FC0E6;
+  --chart-5: #E89A3C;
 
   /* Sidebar — admin dashboard */
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #2A2622;
-  --sidebar-primary: #2E9466;
+  --sidebar-foreground: #0E1512;
+  --sidebar-primary: #11875A;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #E7F3EC;
-  --sidebar-accent-foreground: #1F6A49;
-  --sidebar-border: #EAE2D6;
-  --sidebar-ring: #2E9466;
+  --sidebar-accent: #E8F4EE;
+  --sidebar-accent-foreground: #0C6A47;
+  --sidebar-border: #E4EAE7;
+  --sidebar-ring: #11875A;
 }
 
 .dark {
@@ -199,10 +204,69 @@
   100% { opacity: 0; transform: translateY(9px); }
 }
 
+/* ── Animated gradient pan (headings, accents) ────────────────── */
+@keyframes gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ── Sheen sweep (buttons / premium cards on hover) ───────────── */
+@keyframes sheen {
+  0%   { transform: translateX(-120%) skewX(-12deg); }
+  100% { transform: translateX(220%) skewX(-12deg); }
+}
+
+/* ── Soft pulse ring (badges / live dots) ─────────────────────── */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.85); opacity: 0.7; }
+  70%  { transform: scale(1.6); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ── Slow conic spin (decorative rings) ───────────────────────── */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+/* Utility helpers */
+.animate-gradient-pan {
+  background-size: 220% 220%;
+  animation: gradient-pan 8s ease-in-out infinite;
+}
+.motion-spin-slow { animation: spin-slow 28s linear infinite; }
+
+/* Premium sheen overlay — drop onto a relative, overflow-hidden element */
+.sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%) skewX(-12deg);
+  pointer-events: none;
+}
+.sheen:hover::after {
+  animation: sheen 0.9s ease-out;
+}
+
+/* Hairline gradient divider */
+.divider-gradient {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-aurora,
   .motion-float,
-  .motion-cue { animation: none !important; }
+  .motion-cue,
+  .motion-spin-slow,
+  .animate-gradient-pan { animation: none !important; }
+  .sheen:hover::after { animation: none !important; }
 }
 
 @layer base {
@@ -212,14 +276,18 @@
   body {
     @apply bg-background text-foreground antialiased;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01", "cv01", "cv11";
   }
   html {
     @apply font-sans scroll-smooth;
   }
   h1, h2, h3 {
-    @apply font-display tracking-tight;
+    @apply font-display;
+    letter-spacing: -0.022em;
     text-wrap: balance;
   }
+  h1 { letter-spacing: -0.032em; }
   p {
     text-wrap: pretty;
   }
