@@ -39,7 +39,7 @@ export function ProductCategories() {
         <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {categories.map((c, i) => (
             <Reveal key={c.title} delay={i * 40} className="h-full">
-              <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+              <div className="sheen group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
                 <div className="flex items-start gap-4">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
                     <c.icon className="h-6 w-6" />

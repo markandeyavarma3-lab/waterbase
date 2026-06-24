@@ -1,5 +1,6 @@
 import { MapPin } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
+import { Eyebrow } from "@/components/site/section";
 
 const regions = [
   { title: "Product Supply", areas: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha", "Pan India (large orders)"] },
@@ -9,15 +10,15 @@ const regions = [
 
 export function ServiceAreas() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
+    <section className="mx-auto max-w-6xl px-6 py-24">
       <Reveal className="max-w-2xl">
-        <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Service areas</p>
-        <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Where we work</h2>
+        <Eyebrow>Service areas</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Where we work</h2>
       </Reveal>
       <div className="mt-10 grid gap-6 md:grid-cols-3">
         {regions.map((r, i) => (
           <Reveal key={r.title} delay={i * 80} className="h-full">
-            <div className="group h-full rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lg hover:shadow-brand-green-darker/5">
+            <div className="sheen group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
               <h3 className="font-display text-lg font-bold text-brand-green">{r.title}</h3>
               <ul className="mt-4 space-y-2">
                 {r.areas.map((a) => (

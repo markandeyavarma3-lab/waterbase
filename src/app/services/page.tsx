@@ -148,8 +148,8 @@ export default function ServicesPage() {
       <Section tone="brand-dark">
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">Start your project</p>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl">Ready to plan your irrigation?</h2>
+            <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-light md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />Start your project</span>
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Ready to plan your irrigation?</h2>
             <p className="mt-4 text-lg text-white/75">Tell us about your land and we&apos;ll recommend the right system — and help you access any available government subsidy.</p>
             <ContactActions onDark size="xl" className="mt-7 justify-center" />
           </Reveal>

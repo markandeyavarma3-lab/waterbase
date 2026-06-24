@@ -12,12 +12,12 @@ export default function AdminLoginPage() {
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-16">
-      <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-8 shadow-sm">
-        <div className="mb-6 flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-green text-white">
+      <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-8 shadow-lift">
+        <div className="mb-6 flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand-green to-brand-green-dark text-white shadow-soft">
             <Sprout className="h-5 w-5" />
           </span>
-          <span className="font-display text-lg font-extrabold">Admin Login</span>
+          <span className="font-display text-lg font-bold tracking-tight">Admin Login</span>
         </div>
         <form action={formAction} className="space-y-4">
           <div className="grid gap-2">

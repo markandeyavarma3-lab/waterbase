@@ -1,6 +1,7 @@
 "use client";
 
 import { Star } from "lucide-react";
+import { Eyebrow } from "@/components/site/section";
 
 const testimonials = [
   { quote: "They surveyed our 50-acre banana farm, designed the entire drip layout and installed it on time. Water use dropped and yield improved noticeably in the first season.", name: "Ravi Kumar", role: "Banana farmer · West Godavari", rating: 5 },
@@ -50,17 +51,17 @@ function Card({ t }: { t: typeof testimonials[number] }) {
 
 export function Testimonials() {
   return (
-    <section className="overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
+    <section className="overflow-hidden border-y border-border bg-muted py-24">
       <div className="mx-auto max-w-6xl px-6 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Testimonials</p>
-        <h2 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">Trusted by farmers &amp; businesses</h2>
+        <Eyebrow align="center">Testimonials</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Trusted by farmers &amp; businesses</h2>
         <p className="mt-3 text-muted-foreground">From smallholder farms to corporate campuses across South India.</p>
       </div>
 
       <div className="relative mt-12 space-y-4">
         {/* Edge fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#f0f7f3] to-transparent" aria-hidden="true" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#f0f7f3] to-transparent" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-muted to-transparent" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-muted to-transparent" aria-hidden="true" />
 
         {/* Row 1 — scrolls left */}
         <div className="group flex gap-4 overflow-hidden">

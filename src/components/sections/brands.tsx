@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/sections/reveal";
+import { Eyebrow } from "@/components/site/section";
 
 const brands = ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNet"];
 
@@ -7,8 +8,8 @@ export function Brands() {
     <section className="border-y border-border bg-brand-green-soft/40">
       <div className="mx-auto max-w-6xl px-6 py-14 text-center">
         <Reveal>
-          <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Authorized Dealer &amp; Distributor</p>
-          <h2 className="mt-2 font-display text-2xl font-extrabold md:text-3xl">Trusted, genuine brands</h2>
+          <Eyebrow align="center">Authorized Dealer &amp; Distributor</Eyebrow>
+          <h2 className="mt-3 font-display text-2xl font-bold md:text-3xl">Trusted, genuine brands</h2>
         </Reveal>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           {brands.map((b, i) => (

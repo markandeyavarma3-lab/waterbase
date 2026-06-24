@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
-import { Container } from "@/components/site/section";
+import { Container, Eyebrow } from "@/components/site/section";
 import { listLogos, type Logo } from "@/lib/logos";
 
 // Number of empty placeholder cards shown until real logos are added.
@@ -43,8 +43,8 @@ export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
     <section className="border-y border-border bg-background py-16">
       <Container>
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Authorized Distributor &amp; Dealer</p>
-          <h2 className="mt-3 font-display text-2xl font-bold tracking-tight md:text-3xl">Genuine products from 20+ leading brands</h2>
+          <Eyebrow align="center">Authorized Distributor &amp; Dealer</Eyebrow>
+          <h2 className="mt-3 font-display text-2xl font-bold md:text-3xl">Genuine products from 20+ leading brands</h2>
         </div>
       </Container>
 

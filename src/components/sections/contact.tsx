@@ -12,11 +12,11 @@ export function Contact() {
         <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <Reveal>
-              <p className="mb-3 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-green">
+              <p className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green md:text-[0.8125rem]">
                 <Sprout className="h-4 w-4" />
                 Get in touch
               </p>
-              <h2 className="font-display text-3xl font-bold text-brand-green-darker sm:text-4xl">Request a callback</h2>
+              <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Request a callback</h2>
               <p className="mt-4 max-w-md text-muted-foreground">Tell us what you need and our team will call you back — usually within a few working hours. From product supply to full project execution and APMIP subsidy assistance, we&apos;ve got you covered.</p>
             </Reveal>
 

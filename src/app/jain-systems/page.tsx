@@ -42,18 +42,22 @@ export default function JainSystemsPage() {
     <main>
       {/* HERO */}
       <section className="relative overflow-hidden bg-brand-green-deep text-white">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_70%_at_80%_0%,rgba(63,160,108,0.22),transparent_60%)]" aria-hidden="true" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+          <div className="motion-aurora absolute -right-[8%] -top-[30%] h-[42vw] w-[42vw] rounded-full bg-[radial-gradient(circle,rgba(70,184,136,0.24),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 24s ease-in-out infinite" }} />
+          <div className="motion-aurora absolute -left-[10%] top-[12%] h-[36vw] w-[36vw] rounded-full bg-[radial-gradient(circle,rgba(20,136,194,0.2),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 28s ease-in-out infinite" }} />
+        </div>
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:24px_24px] [mask-image:linear-gradient(to_bottom,black,transparent)]" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden="true" />
         <Container className="py-16 md:py-24">
           <div className="grid items-start gap-10 lg:grid-cols-[1fr_420px]">
 
             {/* Left: headline + CTAs + trust points */}
             <div>
               <Reveal>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">Jain Authorized Distributor · Eluru, AP</span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-sm font-medium backdrop-blur-md">Jain Authorized Distributor · Eluru, AP</span>
               </Reveal>
               <Reveal delay={80}>
-                <h1 className="mt-5 max-w-xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-5xl">Jain Drip & Sprinkler Systems — Survey, Supply & Installation</h1>
+                <h1 className="mt-5 max-w-xl font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-5xl">Jain Drip & Sprinkler Systems — Survey, Supply & Installation</h1>
               </Reveal>
               <Reveal delay={160}>
                 <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/80">We're the authorized Jain Irrigation dealer in Eluru. One team handles your site visit, system design, product supply and complete installation — for paddy, banana, sugarcane, nurseries and corporate farms.</p>
@@ -135,8 +139,8 @@ export default function JainSystemsPage() {
       <Section tone="brand-dark">
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">Ready to install?</p>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl">Get your Jain drip system up and running</h2>
+            <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-light md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />Ready to install?</span>
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Get your Jain drip system up and running</h2>
             <p className="mt-4 text-lg text-white/75">Call us now or send a WhatsApp — we'll schedule your free site survey within 24 hours.</p>
             <ContactActions showCall onDark size="xl" className="mt-7 justify-center" />
           </Reveal>

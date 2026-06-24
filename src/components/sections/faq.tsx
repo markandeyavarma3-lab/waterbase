@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
+import { Eyebrow } from "@/components/site/section";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -64,11 +65,11 @@ export function FAQ() {
   };
 
   return (
-    <section className="mx-auto max-w-3xl px-6 py-20">
+    <section className="mx-auto max-w-3xl px-6 py-24">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Reveal className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">FAQ</p>
-        <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Frequently asked questions</h2>
+        <Eyebrow align="center">FAQ</Eyebrow>
+        <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Frequently asked questions</h2>
         <p className="mt-3 text-muted-foreground">Everything you need to know before starting your irrigation project.</p>
       </Reveal>
       <div className="mt-10 space-y-3">

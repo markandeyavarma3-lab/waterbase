@@ -75,8 +75,8 @@ export function ThankYou() {
             </span>
           </Reveal>
           <Reveal delay={80}>
-            <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-white/70">Request received</p>
-            <h1 className="mt-2 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">Thank you — we&apos;ll be in touch soon.</h1>
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-white/70 md:text-[0.8125rem]">Request received</p>
+            <h1 className="mt-3 font-display text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Thank you — we&apos;ll be in touch soon.</h1>
           </Reveal>
           <Reveal delay={160}>
             <p className="mt-4 max-w-xl text-white/80">
@@ -101,17 +101,17 @@ export function ThankYou() {
       </section>
 
       {/* What happens next */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-6xl px-6 py-24">
         <Reveal className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">What happens next</p>
-          <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Here&apos;s how we&apos;ll handle it</h2>
+          <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green/50" aria-hidden="true" />What happens next</span>
+          <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Here&apos;s how we&apos;ll handle it</h2>
         </Reveal>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {nextSteps.map((step, i) => {
             const Icon = step.icon;
             return (
               <Reveal key={step.title} delay={i * 80}>
-                <div className="relative h-full rounded-2xl border border-border bg-card p-6">
+                <div className="relative h-full rounded-2xl border border-border bg-card p-6 shadow-soft">
                   <span className="absolute -top-3 left-6 inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-green text-xs font-bold text-white">
                     {i + 1}
                   </span>
@@ -126,11 +126,11 @@ export function ThankYou() {
       </section>
 
       {/* While you wait */}
-      <section className="bg-muted/30">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="bg-muted">
+        <div className="mx-auto max-w-6xl px-6 py-24">
           <Reveal className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">While you wait</p>
-            <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Have a look around</h2>
+            <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green/50" aria-hidden="true" />While you wait</span>
+            <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Have a look around</h2>
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {exploreCards.map((card, i) => {
@@ -139,7 +139,7 @@ export function ThankYou() {
                 <Reveal key={card.href} delay={i * 80}>
                   <Link
                     href={card.href}
-                    className="group block h-full rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-brand-green/40 hover:shadow-md"
+                    className="sheen group block h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift"
                   >
                     <Icon className="h-8 w-8 text-brand-green" />
                     <h3 className="mt-4 font-display text-lg font-bold">{card.title}</h3>
