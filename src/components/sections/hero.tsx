@@ -45,7 +45,7 @@ export function Hero() {
               </span>
             </Reveal>
             <Reveal delay={90}>
-              <h1 className="mt-6 max-w-xl font-display text-[2.6rem] font-extrabold leading-[1.04] tracking-[-0.035em] md:text-6xl">
+              <h1 className="mt-6 max-w-xl font-display text-[2.6rem] font-bold leading-[1.04] tracking-[-0.035em] md:text-6xl">
                 Complete <AnimatedWord />,<br />engineered end to end.
               </h1>
             </Reveal>

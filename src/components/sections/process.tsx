@@ -57,7 +57,7 @@ export function Process() {
       <span className="pointer-events-none absolute left-8 top-8 bottom-8 w-1 -translate-x-1/2 rounded-full bg-border md:left-1/2" aria-hidden="true" />
       {/* rail fill — follows scroll, sunrise gradient */}
       <span
-        className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-sun md:left-1/2"
+        className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-blue md:left-1/2"
         style={{ height: `calc((100% - 4rem) * ${progress})` }}
         aria-hidden="true"
       />
@@ -82,7 +82,7 @@ export function Process() {
                   <step.icon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 {/* number badge */}
-                <span className="absolute -right-0.5 -top-1 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-brand-sun font-display text-[11px] font-extrabold text-brand-green-deep shadow-soft ring-2 ring-background">
+                <span className="absolute -right-0.5 -top-1 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-brand-blue font-display text-[11px] font-extrabold text-white shadow-soft ring-2 ring-background">
                   {i + 1}
                 </span>
               </span>

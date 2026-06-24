@@ -24,13 +24,13 @@ export function Crops({ limit }: { limit?: number }) {
   }));
 
   return (
-    <section className="border-y border-border bg-brand-soil-soft/50">
-      <div className="mx-auto max-w-6xl px-6 py-20">
+    <section className="border-y border-border bg-muted">
+      <div className="mx-auto max-w-6xl px-6 py-24">
         <Reveal>
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Crop solutions</p>
-              <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Irrigation tailored to your crop</h2>
+              <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green/50" aria-hidden="true" />Crop solutions</span>
+              <h2 className="mt-3 font-display text-[1.75rem] font-bold leading-[1.08] md:text-4xl">Irrigation tailored to your crop</h2>
               <p className="mt-3 text-muted-foreground">Every crop has different water needs. We design systems matched to what you grow — for higher yield and lower water use.</p>
             </div>
             {limit ? (

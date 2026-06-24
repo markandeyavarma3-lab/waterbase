@@ -19,13 +19,13 @@ const items = [
     icon: Award,
     title: "Genuine, Warranty-Backed",
     desc: "Only verified, brand-certified products — no duplicates — backed by manufacturer warranty.",
-    tone: "text-brand-sun-dark bg-brand-sun-soft group-hover:bg-brand-sun",
+    tone: "text-brand-green-dark bg-brand-green-soft group-hover:bg-brand-green-dark",
   },
   {
     icon: FileCheck,
     title: "Registered Proprietorship",
     desc: "An established, accountable local business serving farmers and companies across South India.",
-    tone: "text-brand-soil-dark bg-brand-soil-soft group-hover:bg-brand-soil",
+    tone: "text-brand-blue-dark bg-brand-blue-soft group-hover:bg-brand-blue-dark",
   },
 ];
 

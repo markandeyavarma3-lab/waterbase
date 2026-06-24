@@ -6,11 +6,11 @@ import { cn } from "@/lib/utils";
 type RevealFrom = "up" | "down" | "left" | "right" | "scale";
 
 const fromHidden: Record<RevealFrom, string> = {
-  up: "translate-y-8 opacity-0",
-  down: "-translate-y-8 opacity-0",
-  left: "translate-x-8 opacity-0",
-  right: "-translate-x-8 opacity-0",
-  scale: "scale-[0.96] opacity-0",
+  up: "translate-y-6 opacity-0",
+  down: "-translate-y-6 opacity-0",
+  left: "translate-x-6 opacity-0",
+  right: "-translate-x-6 opacity-0",
+  scale: "scale-[0.97] opacity-0",
 };
 
 export function Reveal({
@@ -57,7 +57,7 @@ export function Reveal({
       ref={ref}
       style={{
         transitionProperty: "opacity, transform, filter",
-        transitionDuration: "850ms",
+        transitionDuration: "700ms",
         transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         transitionDelay: `${delay}ms`,
       }}
@@ -65,7 +65,7 @@ export function Reveal({
         "will-change-[opacity,transform] motion-reduce:transition-none motion-reduce:transform-none",
         shown
           ? "translate-x-0 translate-y-0 scale-100 opacity-100 blur-0"
-          : cn(fromHidden[from], blur && "blur-[6px]"),
+          : cn(fromHidden[from], blur && "blur-[4px]"),
         className
       )}
     >
