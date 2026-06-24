@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { CheckCircle2, Layers, Package, Package2, Wrench, Link2, Settings2, Award, MapPin, BadgePercent, Truck } from "lucide-react";
+import { CheckCircle2, Layers, Package, Package2, Wrench, Link2, Settings2, Award, BadgePercent, Truck } from "lucide-react";
 import { Container, Section, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { Stats } from "@/components/sections/stats";
@@ -79,7 +79,7 @@ export default function HeavyPipesPage() {
             <Reveal delay={120}>
               <div className="rounded-2xl bg-white p-6 text-foreground shadow-lift ring-1 ring-black/5">
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">Get a Quote</h2>
-                <p className="mt-1 text-sm text-muted-foreground">Tell us what you need and we'll give you the best price — retail or bulk.</p>
+                <p className="mt-1 text-sm text-muted-foreground">Tell us what you need and we&apos;ll give you the best price — retail or bulk.</p>
                 <div className="mt-5">
                   <LeadForm />
                 </div>

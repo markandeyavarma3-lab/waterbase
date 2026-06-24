@@ -60,7 +60,7 @@ export default function JainSystemsPage() {
                 <h1 className="mt-5 max-w-xl font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-5xl">Jain Drip & Sprinkler Systems — Survey, Supply & Installation</h1>
               </Reveal>
               <Reveal delay={160}>
-                <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/80">We're the authorized Jain Irrigation dealer in Eluru. One team handles your site visit, system design, product supply and complete installation — for paddy, banana, sugarcane, nurseries and corporate farms.</p>
+                <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/80">We&apos;re the authorized Jain Irrigation dealer in Eluru. One team handles your site visit, system design, product supply and complete installation — for paddy, banana, sugarcane, nurseries and corporate farms.</p>
               </Reveal>
               <Reveal delay={240}>
                 <ContactActions showCall onDark size="xl" className="mt-7" />
@@ -81,7 +81,7 @@ export default function JainSystemsPage() {
             <Reveal delay={120}>
               <div className="rounded-2xl bg-white p-6 text-foreground shadow-lift ring-1 ring-black/5">
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">Get a Free Site Survey</h2>
-                <p className="mt-1 text-sm text-muted-foreground">We'll visit your field and design the right Jain system — no commitment needed.</p>
+                <p className="mt-1 text-sm text-muted-foreground">We&apos;ll visit your field and design the right Jain system — no commitment needed.</p>
                 <div className="mt-5">
                   <LeadForm />
                 </div>
@@ -141,7 +141,7 @@ export default function JainSystemsPage() {
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-light md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />Ready to install?</span>
             <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Get your Jain drip system up and running</h2>
-            <p className="mt-4 text-lg text-white/75">Call us now or send a WhatsApp — we'll schedule your free site survey within 24 hours.</p>
+            <p className="mt-4 text-lg text-white/75">Call us now or send a WhatsApp — we&apos;ll schedule your free site survey within 24 hours.</p>
             <ContactActions showCall onDark size="xl" className="mt-7 justify-center" />
           </Reveal>
         </Container>

@@ -59,7 +59,7 @@ export default function ApmipSubsidyPage() {
                 <h1 className="mt-5 max-w-xl font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] md:text-5xl">90% Government Subsidy on Drip Irrigation — Apply Now</h1>
               </Reveal>
               <Reveal delay={160}>
-                <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/80">Under the APMIP scheme, eligible farmers in Andhra Pradesh pay only 10% of the drip or sprinkler system cost. We're a certified vendor and handle everything — from application to installation.</p>
+                <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/80">Under the APMIP scheme, eligible farmers in Andhra Pradesh pay only 10% of the drip or sprinkler system cost. We&apos;re a certified vendor and handle everything — from application to installation.</p>
               </Reveal>
               <Reveal delay={240}>
                 <ContactActions showCall onDark size="xl" className="mt-7" />
@@ -79,7 +79,7 @@ export default function ApmipSubsidyPage() {
             <Reveal delay={120}>
               <div className="rounded-2xl bg-white p-6 text-foreground shadow-lift ring-1 ring-black/5">
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">Check Your Eligibility</h2>
-                <p className="mt-1 text-sm text-muted-foreground">Leave your details and we'll call you back to check if your land qualifies for the subsidy.</p>
+                <p className="mt-1 text-sm text-muted-foreground">Leave your details and we&apos;ll call you back to check if your land qualifies for the subsidy.</p>
                 <div className="mt-5">
                   <LeadForm />
                 </div>
@@ -140,9 +140,9 @@ export default function ApmipSubsidyPage() {
       <Section tone="brand-dark">
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-light md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />Don't miss the subsidy</span>
+            <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-light md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />Don&apos;t miss the subsidy</span>
             <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Find out if your land qualifies — call us now</h2>
-            <p className="mt-4 text-lg text-white/75">Eligibility check is free. We'll confirm within minutes and guide you through the next steps.</p>
+            <p className="mt-4 text-lg text-white/75">Eligibility check is free. We&apos;ll confirm within minutes and guide you through the next steps.</p>
             <ContactActions showCall onDark size="xl" className="mt-7 justify-center" />
           </Reveal>
         </Container>

@@ -25,8 +25,8 @@ export function Process() {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setProgress(1);
-      return;
+      const raf = requestAnimationFrame(() => setProgress(1));
+      return () => cancelAnimationFrame(raf);
     }
     let raf = 0;
     const onScroll = () => {

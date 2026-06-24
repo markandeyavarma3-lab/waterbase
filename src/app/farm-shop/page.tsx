@@ -79,7 +79,7 @@ export default function FarmShopPage() {
             <Reveal delay={120}>
               <div className="rounded-2xl bg-white p-6 text-foreground shadow-lift ring-1 ring-black/5">
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">Ask About Stock & Pricing</h2>
-                <p className="mt-1 text-sm text-muted-foreground">Tell us what you need and we'll confirm availability and best price before your visit.</p>
+                <p className="mt-1 text-sm text-muted-foreground">Tell us what you need and we&apos;ll confirm availability and best price before your visit.</p>
                 <div className="mt-5">
                   <LeadForm />
                 </div>
@@ -138,7 +138,7 @@ export default function FarmShopPage() {
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-light md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />Visit or call us</span>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Need farm supplies? We're open today</h2>
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Need farm supplies? We&apos;re open today</h2>
             <p className="mt-4 text-lg text-white/75">Call ahead to confirm stock or just walk in — Monday to Saturday, 10 AM to 7 PM, Kandrikagudem, Eluru.</p>
             <ContactActions showCall onDark size="xl" className="mt-7 justify-center" />
           </Reveal>

@@ -79,7 +79,7 @@ export default function CommercialIrrigationPage() {
             <Reveal delay={120}>
               <div className="rounded-2xl bg-white p-6 text-foreground shadow-lift ring-1 ring-black/5">
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">Request a Project Discussion</h2>
-                <p className="mt-1 text-sm text-muted-foreground">Share your requirement and we'll get back with a site visit and preliminary plan.</p>
+                <p className="mt-1 text-sm text-muted-foreground">Share your requirement and we&apos;ll get back with a site visit and preliminary plan.</p>
                 <div className="mt-5">
                   <LeadForm />
                 </div>
@@ -138,8 +138,8 @@ export default function CommercialIrrigationPage() {
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-light md:text-[0.8125rem]"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />Start your project</span>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Let's discuss your commercial irrigation project</h2>
-            <p className="mt-4 text-lg text-white/75">Call us directly or send a WhatsApp — we'll arrange a site visit and proposal within 48 hours.</p>
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white md:text-4xl">Let&apos;s discuss your commercial irrigation project</h2>
+            <p className="mt-4 text-lg text-white/75">Call us directly or send a WhatsApp — we&apos;ll arrange a site visit and proposal within 48 hours.</p>
             <ContactActions showCall onDark size="xl" className="mt-7 justify-center" />
           </Reveal>
         </Container>
