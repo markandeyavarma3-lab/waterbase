@@ -1,28 +1,25 @@
-BRAND LOGOS — scrolling strip on the homepage
-=============================================
+BRAND LOGOS — scrolling strips
+==============================
 
-Drop your product-brand logo images into THIS folder
-(public/brands/). They automatically appear in the scrolling
-"20+ leading brands" strip on the homepage.
+Logos are split into TWO folders, one per scrolling row:
 
-HOW TO USE
-----------
-1. Save each logo as a JPG.  (JPG is the standard format for the
-   whole site.)  Logos look best on a WHITE background — the cards
-   they sit on are white, so they blend in cleanly.
-2. Recommended size: about 200 x 80 px, logo centered on white.
-3. Name the file after the brand, e.g.:
-      jain-irrigation.jpg
-      ksb-pumps.jpg
-      netafim.jpg
-4. Drop 15-20 of them here.
-5. Commit + push (or tell Claude to push) -> Vercel rebuilds and
-   the logos go live.
+   public/brands/row-1/   ->  FIRST  row  (Jain, KSB, Acurain, Naandanjain ...)
+   public/brands/row-2/   ->  SECOND row  (Netafim, Automat, Kasta, etc.)
 
-NOTES
------
-- The filename is only used internally (for alt text). It is NOT
-  shown on screen for brand logos.
-- Until you add real files here, empty placeholder cards are shown
-  so the section still looks complete.
-- You can add or remove logos any time — just re-push.
+WHERE THINGS SHOW
+-----------------
+- Products page: BOTH rows scroll (row-1 on top, row-2 below).
+- Home page: a single strip showing all logos (row-1 + row-2 combined).
+
+HOW TO ADD / MOVE A LOGO
+------------------------
+1. Save the logo as a JPG on a WHITE background (~200 x 80 px).
+2. Drop it into row-1/ to put it on the first row, or row-2/ for the
+   second row. To move a brand between rows, just move its file
+   between the two folders.
+3. Commit + push (or tell Claude to push) -> Vercel rebuilds.
+
+NOTE
+----
+The filename is only used for alt text (not shown on screen for brand
+logos), so name it after the brand, e.g. jain-drip.jpg, ksb.jpg.
