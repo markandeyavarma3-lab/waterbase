@@ -107,7 +107,7 @@ export function Header() {
         {/* Right: wordmark */}
         <Link href="/" className={cn(
           "whitespace-nowrap font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-foreground transition-all duration-300",
-          scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+          scrolled ? "text-xl md:text-3xl" : "text-2xl md:text-4xl"
         )}>
           Waterbase Technologies
         </Link>

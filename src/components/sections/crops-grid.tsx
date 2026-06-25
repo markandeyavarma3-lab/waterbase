@@ -11,7 +11,7 @@ function colsForWidth(w: number) {
   return w >= 1024 ? 4 : w >= 640 ? 3 : 2;
 }
 
-const INTERVAL = 2200;
+const INTERVAL = 850;
 
 export function CropsGrid({ crops }: { crops: Crop[] }) {
   const [indices, setIndices] = useState<number[]>(() => crops.map(() => 0));

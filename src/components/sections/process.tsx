@@ -24,10 +24,6 @@ export function Process() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setProgress(1);
-      return;
-    }
     let raf = 0;
     const onScroll = () => {
       if (raf) return;

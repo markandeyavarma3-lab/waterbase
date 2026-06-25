@@ -18,7 +18,7 @@ export function CropCard({ name, images, index = 0 }: { name: string; images: st
               fill
               sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw"
               unoptimized
-              className="object-cover transition-opacity duration-1000 ease-in-out"
+              className="object-cover transition-opacity duration-700 ease-in-out"
               style={{ opacity: i === active ? 1 : 0 }}
             />
           ))
