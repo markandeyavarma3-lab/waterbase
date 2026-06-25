@@ -23,7 +23,7 @@ export default function Home() {
 
       {/* Part 2 — Products we supply */}
       <Supply />
-      <BrandsMarquee />
+      <BrandsMarquee twoRows />
 
       {/* Part 3 — Why choose us */}
       <WhyWaterbase />

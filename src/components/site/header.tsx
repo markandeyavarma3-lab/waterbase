@@ -44,33 +44,7 @@ export function Header() {
         "mx-auto flex max-w-6xl items-center justify-between px-4 transition-all duration-300 ease-out-expo md:px-6",
         scrolled ? "h-14" : "h-16"
       )}>
-        <Link href="/" className={cn(
-          "whitespace-nowrap font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-foreground transition-all duration-300",
-          scrolled ? "text-base md:text-lg" : "text-lg"
-        )}>
-          Waterbase Technologies
-        </Link>
-
-        <nav className="hidden items-center gap-1 lg:flex">
-          {navLinks.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={cn(
-                "relative rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                isActive(l.href)
-                  ? "text-brand-green"
-                  : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
-              )}
-            >
-              {l.label}
-              {isActive(l.href) && (
-                <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-brand-green" aria-hidden="true" />
-              )}
-            </Link>
-          ))}
-        </nav>
-
+        {/* Left: desktop nav + mobile menu button */}
         <div className="flex items-center gap-2">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -107,7 +81,36 @@ export function Header() {
               </div>
             </SheetContent>
           </Sheet>
+
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={cn(
+                  "relative rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  isActive(l.href)
+                    ? "text-brand-green"
+                    : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                )}
+              >
+                {l.label}
+                {isActive(l.href) && (
+                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-brand-green" aria-hidden="true" />
+                )}
+              </Link>
+            ))}
+          </nav>
         </div>
+
+        {/* Right: wordmark */}
+        <Link href="/" className={cn(
+          "whitespace-nowrap font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-foreground transition-all duration-300",
+          scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+        )}>
+          Waterbase Technologies
+        </Link>
       </div>
     </header>
   );
