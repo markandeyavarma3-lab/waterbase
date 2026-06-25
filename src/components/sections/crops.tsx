@@ -4,24 +4,28 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
 import { CropsGrid } from "@/components/sections/crops-grid";
 import { listLogos } from "@/lib/logos";
+import { whatsappLink } from "@/lib/site-config";
 
+// Crops we have photos for — order matters (first 8 are featured on the homepage).
 const cropNames = [
-  // First 8 are featured on the homepage (these have photos)
-  "Banana", "Coconut", "Oil Palm", "Cocoa", "Lemon", "Guava", "Papaya", "Dragon Fruit",
-  // The rest appear on the "View all crops" page
-  "Watermelon", "Muskmelon", "Chilli", "Maize", "Sugarcane", "Paddy",
-  "Tomato", "Mango", "Turmeric", "Vegetables", "Flowers", "Plantations",
+  "Banana", "Coconut", "Oil Palm", "Cocoa", "Lemon", "Sweet Lime", "Guava", "Papaya",
+  "Dragon Fruit", "Watermelon", "Muskmelon", "Mango", "Chilli", "Tomato", "Maize", "Groundnut",
+];
+
+// Shown as text on the full page — crops we serve but don't have photos for yet.
+const MORE = [
+  "All vegetables", "All flowers", "Plantation crops", "Sugarcane", "Paddy / Rice",
+  "Turmeric", "Cotton", "Pulses & oilseeds", "Spices", "Orchards",
 ];
 
 const slug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
 
 export function Crops({ limit }: { limit?: number }) {
-  // Each crop's photos live in /public/crops/<slug>/ — drop images there.
-  const names = limit ? cropNames.slice(0, limit) : cropNames;
-  const crops = names.map((name) => ({
-    name,
-    images: listLogos(`crops/${slug(name)}`).map((l) => l.src),
-  }));
+  // Only show crops that actually have photos in /public/crops/<slug>/.
+  const all = cropNames
+    .map((name) => ({ name, images: listLogos(`crops/${slug(name)}`).map((l) => l.src) }))
+    .filter((c) => c.images.length > 0);
+  const crops = limit ? all.slice(0, limit) : all;
 
   return (
     <section className="border-y border-border bg-brand-soil-soft/50">
@@ -40,7 +44,27 @@ export function Crops({ limit }: { limit?: number }) {
             ) : null}
           </div>
         </Reveal>
+
         <CropsGrid crops={crops} />
+
+        {!limit && (
+          <Reveal>
+            <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-border bg-card p-7 text-center shadow-soft sm:p-9">
+              <h3 className="font-display text-xl font-bold md:text-2xl">…and many more</h3>
+              <p className="mt-2 text-sm text-muted-foreground">We design irrigation for far more than the crops above — including:</p>
+              <div className="mt-5 flex flex-wrap justify-center gap-2">
+                {MORE.map((m) => (
+                  <span key={m} className="rounded-full border border-brand-green/20 bg-brand-green-soft px-3.5 py-1.5 text-sm font-medium text-brand-green-dark">{m}</span>
+                ))}
+              </div>
+              <p className="mt-6 text-sm text-muted-foreground">
+                Growing something else?{" "}
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-green hover:underline">Message us</a>{" "}
+                — we&apos;ll design a system for your crop.
+              </p>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );
