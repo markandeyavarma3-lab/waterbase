@@ -33,7 +33,9 @@ function LogoRow({ logos, duration }: { logos: Logo[]; duration: string }) {
   );
 }
 
-const isJain = (l: Logo) => /jain/i.test(l.src) || /jain/i.test(l.name);
+// Row 1 = Jain (all), KSB, Acurain, Naandanjain; row 2 = everything else.
+const ROW1 = /jain|ksb|acurain|naandan/i;
+const inRow1 = (l: Logo) => ROW1.test(l.src) || ROW1.test(l.name);
 
 export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
   const logos = listLogos("brands");
@@ -64,8 +66,8 @@ export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
           </div>
         ) : twoRows ? (
           <>
-            <LogoRow logos={logos.filter(isJain)} duration="38s" />
-            <LogoRow logos={logos.filter((l) => !isJain(l))} duration="46s" />
+            <LogoRow logos={logos.filter(inRow1)} duration="38s" />
+            <LogoRow logos={logos.filter((l) => !inRow1(l))} duration="46s" />
           </>
         ) : (
           <LogoRow logos={logos} duration="45s" />

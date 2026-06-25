@@ -28,7 +28,6 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
 
   // Every tick, advance the next column's cards together (a11+a21, then a12+a22, ...).
   useEffect(() => {
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => {
       const cols = colsRef.current;
       const nextCol = (colRef.current + 1) % cols;
