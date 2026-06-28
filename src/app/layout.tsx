@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Archivo, Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { SiteChrome } from "@/components/site/site-chrome";
@@ -57,8 +58,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LocalBusinessJsonLd />
         <ConversionTracker />
         <SiteChrome>{children}</SiteChrome>
+        <Analytics />
       </body>
       <GoogleAnalytics gaId="G-RP33RYTKFF" />
+      <GoogleAnalytics gaId="G-DH17D92KBV" />
       <GoogleAnalytics gaId="AW-874230546" />
     </html>
   );
