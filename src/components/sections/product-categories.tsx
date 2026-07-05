@@ -4,7 +4,8 @@ import {
   PencilRuler, Layers, Sprout,
 } from "lucide-react";
 import { Section, Container, SectionHeading } from "@/components/site/section";
-import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 
 const categories = [
   { icon: Droplets, title: "Drip Irrigation", desc: "Inline & online drippers, laterals and emitters — water straight to the root zone." },
@@ -36,10 +37,10 @@ export function ProductCategories() {
           lead="From a single dripper to turnkey micro-irrigation projects — everything we supply, design and install, all under one roof from 20+ trusted brands."
         />
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {categories.map((c, i) => (
-            <Reveal key={c.title} delay={i * 40} className="h-full">
-              <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+        <Stagger className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {categories.map((c) => (
+            <StaggerItem key={c.title}>
+              <InteractiveCard className="p-6">
                 <div className="flex items-start gap-4">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
                     <c.icon className="h-6 w-6" />
@@ -49,10 +50,10 @@ export function ProductCategories() {
                     <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
                   </div>
                 </div>
-              </div>
-            </Reveal>
+              </InteractiveCard>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </Container>
     </Section>
   );

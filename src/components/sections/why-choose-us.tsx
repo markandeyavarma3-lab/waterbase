@@ -1,5 +1,7 @@
 import { Award, ShieldCheck, Users, Map, BadgePercent, LifeBuoy } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 import { siteConfig } from "@/lib/site-config";
 
 const reasons = [
@@ -19,19 +21,19 @@ export function WhyChooseUs() {
         <h2 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-[2.5rem]">A partner you can rely on</h2>
         <p className="mt-3 text-muted-foreground">Not just a supplier — a complete irrigation partner from planning to long-term support.</p>
       </Reveal>
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {reasons.map((r, i) => (
-          <Reveal key={r.title} delay={i * 70} className="h-full">
-            <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+      <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {reasons.map((r) => (
+          <StaggerItem key={r.title}>
+            <InteractiveCard className="p-6">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
                 <r.icon className="h-6 w-6" />
               </span>
               <h3 className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-brand-green">{r.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
-            </div>
-          </Reveal>
+            </InteractiveCard>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
     </section>
   );
 }

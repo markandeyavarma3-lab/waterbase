@@ -1,21 +1,39 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { ContactActions } from "@/components/site/contact-actions";
 import { AnimatedWord } from "@/components/sections/animated-word";
 import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+
+  const yUp = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -60]);
+  const yDown = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 70]);
+
   return (
-    <section className="relative overflow-hidden bg-brand-green-deep text-white">
-      {/* Aurora — slow drifting gradient blobs */}
+    <section ref={sectionRef} className="relative overflow-hidden bg-brand-green-deep text-white">
+      {/* Aurora — slow drifting gradient blobs, plus a subtle scroll-linked parallax */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        {/* green field glow */}
-        <div className="motion-aurora absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(107,192,151,0.22),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 24s ease-in-out infinite" }} />
+        {/* green field glow — outer div carries scroll parallax, inner div keeps its own drift animation */}
+        <motion.div style={{ y: yUp }} className="absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw]">
+          <div className="motion-aurora h-full w-full rounded-full bg-[radial-gradient(circle,rgba(107,192,151,0.22),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 24s ease-in-out infinite" }} />
+        </motion.div>
         {/* sky-blue glow */}
-        <div className="motion-aurora absolute -left-[12%] top-[8%] h-[45vw] w-[45vw] rounded-full bg-[radial-gradient(circle,rgba(63,163,218,0.16),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 28s ease-in-out infinite" }} />
+        <motion.div style={{ y: yDown }} className="absolute -left-[12%] top-[8%] h-[45vw] w-[45vw]">
+          <div className="motion-aurora h-full w-full rounded-full bg-[radial-gradient(circle,rgba(63,163,218,0.16),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 28s ease-in-out infinite" }} />
+        </motion.div>
         {/* sunrise-orange glow on the horizon */}
-        <div className="motion-aurora absolute -bottom-[30%] left-[18%] h-[55vw] w-[55vw] rounded-full bg-[radial-gradient(circle,rgba(244,162,76,0.18),transparent_60%)] blur-3xl" style={{ animation: "aurora-1 26s ease-in-out infinite" }} />
+        <motion.div style={{ y: yUp }} className="absolute -bottom-[30%] left-[18%] h-[55vw] w-[55vw]">
+          <div className="motion-aurora h-full w-full rounded-full bg-[radial-gradient(circle,rgba(244,162,76,0.18),transparent_60%)] blur-3xl" style={{ animation: "aurora-1 26s ease-in-out infinite" }} />
+        </motion.div>
       </div>
       {/* Subtle dot grid texture */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
@@ -47,16 +65,14 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <Reveal delay={120}>
-          <div className="mt-14 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 sm:grid-cols-3 md:mt-16 lg:grid-cols-5">
-            {siteConfig.stats.map((s) => (
-              <div key={s.label}>
-                <p className="font-display text-3xl font-extrabold tracking-tight md:text-4xl"><CountUp end={s.value} suffix={s.suffix} /></p>
-                <p className="mt-1 text-sm text-white/60">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+        <Stagger className="mt-14 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 sm:grid-cols-3 md:mt-16 lg:grid-cols-5">
+          {siteConfig.stats.map((s) => (
+            <StaggerItem key={s.label}>
+              <p className="font-display text-3xl font-extrabold tracking-tight md:text-4xl"><CountUp end={s.value} suffix={s.suffix} /></p>
+              <p className="mt-1 text-sm text-white/60">{s.label}</p>
+            </StaggerItem>
+          ))}
+        </Stagger>
       </Container>
     </section>
   );

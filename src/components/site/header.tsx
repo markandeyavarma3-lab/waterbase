@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Menu, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -97,7 +98,12 @@ export function Header() {
               >
                 {l.label}
                 {isActive(l.href) && (
-                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-brand-green" aria-hidden="true" />
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-brand-green"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    aria-hidden="true"
+                  />
                 )}
               </Link>
             ))}

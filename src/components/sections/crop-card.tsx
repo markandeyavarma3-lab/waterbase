@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Sprout } from "lucide-react";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 
 // Presentational only — which image shows is controlled by the parent grid
 // so cards can be cycled in a synchronized, column-by-column sequence.
@@ -7,7 +8,7 @@ export function CropCard({ name, images, index = 0 }: { name: string; images: st
   const active = images.length ? ((index % images.length) + images.length) % images.length : 0;
 
   return (
-    <div className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+    <InteractiveCard glow={false} className="rounded-2xl">
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-green-soft/40">
         {images.length > 0 ? (
           images.map((src, i) => (
@@ -44,6 +45,6 @@ export function CropCard({ name, images, index = 0 }: { name: string; images: st
       <div className="px-4 py-3 text-center">
         <span className="text-sm font-semibold transition-colors group-hover:text-brand-green">{name}</span>
       </div>
-    </div>
+    </InteractiveCard>
   );
 }

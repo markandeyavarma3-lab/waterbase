@@ -1,5 +1,7 @@
 import { MapPin } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 
 const regions = [
   { title: "Product Supply", areas: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha", "Pan India (large orders)"] },
@@ -14,10 +16,10 @@ export function ServiceAreas() {
         <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Service areas</p>
         <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Where we work</h2>
       </Reveal>
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
-        {regions.map((r, i) => (
-          <Reveal key={r.title} delay={i * 80} className="h-full">
-            <div className="group h-full rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lg hover:shadow-brand-green-darker/5">
+      <Stagger className="mt-10 grid gap-6 md:grid-cols-3">
+        {regions.map((r) => (
+          <StaggerItem key={r.title}>
+            <InteractiveCard glow={false} className="rounded-xl p-6">
               <h3 className="font-display text-lg font-bold text-brand-green">{r.title}</h3>
               <ul className="mt-4 space-y-2">
                 {r.areas.map((a) => (
@@ -26,10 +28,10 @@ export function ServiceAreas() {
                   </li>
                 ))}
               </ul>
-            </div>
-          </Reveal>
+            </InteractiveCard>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
     </section>
   );
 }

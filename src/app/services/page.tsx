@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, Container, SectionHeading, Eyebrow } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 import { Process } from "@/components/sections/process";
 import { ContactActions } from "@/components/site/contact-actions";
 import { pageMeta } from "@/lib/seo";
@@ -62,17 +64,17 @@ export default function ServicesPage() {
       <Section tone="default">
         <Container>
           <SectionHeading eyebrow="What we do" title="Complete solutions, not just products" lead="From the first survey to the final installation and subsidy paperwork, we handle every part of your irrigation project." />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {solutions.map((s, i) => (
-              <Reveal key={s.title} delay={i * 70} className="h-full">
-                <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+          <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {solutions.map((s) => (
+              <StaggerItem key={s.title}>
+                <InteractiveCard className="p-6">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white"><s.icon className="h-6 w-6" /></span>
                   <h3 className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-brand-green">{s.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-                </div>
-              </Reveal>
+                </InteractiveCard>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </Section>
 
@@ -131,17 +133,17 @@ export default function ServicesPage() {
       <Section tone="muted">
         <Container>
           <SectionHeading align="center" eyebrow="Why choose us" title="A partner you can rely on" lead="Not just a supplier — a complete irrigation partner from planning to long-term support." />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {reasons.map((r, i) => (
-              <Reveal key={r.title} delay={i * 70} className="h-full">
-                <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+          <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {reasons.map((r) => (
+              <StaggerItem key={r.title}>
+                <InteractiveCard className="p-6">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white"><r.icon className="h-6 w-6" /></span>
                   <h3 className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-brand-green">{r.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
-                </div>
-              </Reveal>
+                </InteractiveCard>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </Section>
 

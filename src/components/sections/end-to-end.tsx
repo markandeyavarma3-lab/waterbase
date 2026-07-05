@@ -1,6 +1,8 @@
 import { Section, Container, SectionHeading, Eyebrow } from "@/components/site/section";
 import { MediaSlot } from "@/components/site/media-slot";
 import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 import { Process } from "@/components/sections/process";
 import { ContactActions } from "@/components/site/contact-actions";
 
@@ -17,19 +19,19 @@ export function EndToEnd() {
       <Container>
         <SectionHeading eyebrow="What we do" title="Complete irrigation, handled from start to finish" lead="Whether it's a farm field, a corporate lawn or a commercial nursery — and whether you're an individual farmer or a large company — we own the entire journey, so you work with one accountable team from the first call to after-sales." />
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {serve.map((s, i) => (
-            <Reveal key={s.title} delay={i * 90}>
-              <div className="group h-full overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:shadow-lift">
+        <Stagger className="mt-12 grid gap-6 md:grid-cols-3">
+          {serve.map((s) => (
+            <StaggerItem key={s.title}>
+              <InteractiveCard glow={false}>
                 <MediaSlot src={s.img} alt={s.title} ratio="video" label={s.label} sizes="(min-width: 768px) 33vw, 100vw" className="rounded-none border-0" />
                 <div className="p-5">
                   <h3 className="font-display text-lg font-semibold">{s.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
                 </div>
-              </div>
-            </Reveal>
+              </InteractiveCard>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
 
         <div className="mt-20">
           <Reveal>

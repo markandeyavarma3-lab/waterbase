@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { CropCard } from "@/components/sections/crop-card";
 
 type Crop = { name: string; images: string[] };
@@ -44,12 +44,12 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
   }, [crops]);
 
   return (
-    <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+    <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
       {crops.map((c, i) => (
-        <Reveal key={c.name} delay={i * 50} className="h-full">
+        <StaggerItem key={c.name}>
           <CropCard name={c.name} images={c.images} index={indices[i]} />
-        </Reveal>
+        </StaggerItem>
       ))}
-    </div>
+    </Stagger>
   );
 }

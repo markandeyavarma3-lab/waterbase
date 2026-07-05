@@ -1,6 +1,7 @@
 import { ShieldCheck, BadgeCheck, Award, FileCheck } from "lucide-react";
 import { Section, Container, SectionHeading } from "@/components/site/section";
-import { Reveal } from "@/components/sections/reveal";
+import { Stagger, StaggerItem } from "@/components/sections/stagger";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 
 const items = [
   {
@@ -39,19 +40,19 @@ export function Credentials() {
           title="Authorized, certified & accountable"
           lead="Every claim we make is backed by real authorization. Certificates and dealer authorization letters are available on request."
         />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((it, i) => (
-            <Reveal key={it.title} delay={i * 70} className="h-full">
-              <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:shadow-lift">
+        <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((it) => (
+            <StaggerItem key={it.title}>
+              <InteractiveCard className="p-6">
                 <span className={`flex h-12 w-12 items-center justify-center rounded-xl transition-colors duration-300 group-hover:text-white ${it.tone}`}>
                   <it.icon className="h-6 w-6" />
                 </span>
                 <h3 className="mt-4 font-display text-base font-semibold">{it.title}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{it.desc}</p>
-              </div>
-            </Reveal>
+              </InteractiveCard>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </Container>
     </Section>
   );

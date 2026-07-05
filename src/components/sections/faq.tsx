@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
 import { cn } from "@/lib/utils";
@@ -37,15 +38,28 @@ function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
     <div className={cn("rounded-2xl border bg-card shadow-soft transition-colors", open ? "border-brand-green/40" : "border-border hover:border-brand-green/30")}>
       <button onClick={onToggle} aria-expanded={open} className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left">
         <span className="font-display text-base font-semibold md:text-lg">{q}</span>
-        <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-brand-green transition-transform duration-300", open && "rotate-45")}>
+        <motion.span
+          animate={{ rotate: open ? 45 : 0 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-brand-green"
+        >
           <Plus className="h-4 w-4" />
-        </span>
+        </motion.span>
       </button>
-      <div className={cn("grid transition-all duration-300 ease-out-expo", open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
-        <div className="overflow-hidden">
-          <p className="px-6 pb-5 text-sm leading-relaxed text-muted-foreground">{a}</p>
-        </div>
-      </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="px-6 pb-5 text-sm leading-relaxed text-muted-foreground">{a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

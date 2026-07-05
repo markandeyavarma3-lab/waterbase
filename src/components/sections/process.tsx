@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, useSpring, useTransform } from "framer-motion";
 import { Handshake, MapPin, Ruler, PencilRuler, FileText, Truck, Wrench, Settings, LifeBuoy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { InteractiveCard } from "@/components/ui/interactive-card";
 import { cn } from "@/lib/utils";
 
 const steps: { icon: LucideIcon; title: string; desc: string }[] = [
@@ -20,6 +22,12 @@ const steps: { icon: LucideIcon; title: string; desc: string }[] = [
 export function Process() {
   const ref = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const smoothProgress = useSpring(0, { stiffness: 120, damping: 26, mass: 0.5 });
+  const railHeight = useTransform(smoothProgress, (v) => `calc((100% - 4rem) * ${v})`);
+
+  useEffect(() => {
+    smoothProgress.set(progress);
+  }, [progress, smoothProgress]);
 
   useEffect(() => {
     const el = ref.current;
@@ -52,9 +60,9 @@ export function Process() {
       {/* rail track */}
       <span className="pointer-events-none absolute left-8 top-8 bottom-8 w-1 -translate-x-1/2 rounded-full bg-border md:left-1/2" aria-hidden="true" />
       {/* rail fill — follows scroll, sunrise gradient */}
-      <span
+      <motion.span
         className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-sun md:left-1/2"
-        style={{ height: `calc((100% - 4rem) * ${progress})` }}
+        style={{ height: railHeight }}
         aria-hidden="true"
       />
 
@@ -91,11 +99,11 @@ export function Process() {
                   active ? "translate-x-0 opacity-100" : cn("opacity-0", left ? "md:-translate-x-5" : "md:translate-x-5", "max-md:translate-x-4")
                 )}
               >
-                <div className={cn("group rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift", left && "md:text-right")}>
+                <InteractiveCard glow={false} className={cn("p-5", left && "md:text-right")}>
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-green/70">Step {i + 1}</p>
                   <h3 className="mt-1 font-display text-base font-semibold leading-tight transition-colors group-hover:text-brand-green md:text-lg">{step.title}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
-                </div>
+                </InteractiveCard>
               </div>
             </li>
           );
