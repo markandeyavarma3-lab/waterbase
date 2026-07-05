@@ -56,7 +56,7 @@ The site has **three** separate tracking systems wired up in `src/app/layout.tsx
 3. **APMIP Subsidy** — 90% govt subsidy hook
 4. **Farm Shop** — local accessories, mulching sheets
 5. **Commercial Irrigation** — B2B (corporate lawns, nurseries, factories)
-6. **KSB Pumps & Motors** — *not launched yet (no landing page built)*
+6. **KSB Pumps & Motors** — landing page built; campaign not yet launched in Google Ads
 
 ### Ad landing pages (built & live)
 Each has Call Now + WhatsApp + callback form above the fold, plus a mobile sticky call bar:
@@ -65,7 +65,7 @@ Each has Call Now + WhatsApp + callback form above the fold, plus a mobile stick
 - `/apmip-subsidy`
 - `/farm-shop`
 - `/commercial-irrigation`
-- `/ksb-pumps` — **not built yet** (pending campaign 6)
+- `/ksb-pumps`
 
 ### Conversion tracking — how it works
 All conversion events live in `src/lib/analytics.ts` and fire through the Google Ads tag:
