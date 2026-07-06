@@ -25,12 +25,12 @@ export function ContactActions({
     <div className={cn("flex flex-col gap-3 sm:flex-row", className)}>
       {showCall ? (
         <>
-          <MotionPress>
+          <MotionPress magnetic>
             <Button asChild size={size} className={onDark ? "bg-white text-brand-green-dark shadow-lift hover:bg-white/90" : "shadow-soft"}>
               <a href={telLink(siteConfig.phones.sales.primary)} onClick={trackCallClick}><Phone /> Call Now</a>
             </Button>
           </MotionPress>
-          <MotionPress>
+          <MotionPress magnetic>
             <Button asChild size={size} variant="outline" className={onDark ? "border-white/30 bg-white/5 text-white hover:bg-white/15 hover:text-white" : ""}>
               <a href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer"><MessageCircle /> WhatsApp</a>
             </Button>
@@ -38,12 +38,12 @@ export function ContactActions({
         </>
       ) : (
         <>
-          <MotionPress>
+          <MotionPress magnetic>
             <Button asChild size={size} className={onDark ? "bg-white text-brand-green-dark shadow-lift hover:bg-white/90" : "shadow-soft"}>
               <a href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer"><MessageCircle /> Message on WhatsApp</a>
             </Button>
           </MotionPress>
-          <MotionPress>
+          <MotionPress magnetic>
             <Button asChild size={size} variant="outline" className={onDark ? "border-white/30 bg-white/5 text-white hover:bg-white/15 hover:text-white" : ""}>
               <Link href="/contact"><PhoneCall /> Request a callback</Link>
             </Button>

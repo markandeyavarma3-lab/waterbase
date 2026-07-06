@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
@@ -22,10 +25,21 @@ export function ServiceAreas() {
             <InteractiveCard glow={false} className="rounded-xl p-6">
               <h3 className="font-display text-lg font-bold text-brand-green">{r.title}</h3>
               <ul className="mt-4 space-y-2">
-                {r.areas.map((a) => (
-                  <li key={a} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4 shrink-0 text-brand-green" /> {a}
-                  </li>
+                {r.areas.map((a, i) => (
+                  <motion.li
+                    key={a}
+                    className="flex items-center gap-2 text-sm text-muted-foreground"
+                    initial={{ opacity: 0, y: -6 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.35, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <span className="relative flex h-4 w-4 shrink-0 items-center justify-center">
+                      <span className="absolute h-1.5 w-1.5 animate-ping rounded-full bg-brand-green/60" aria-hidden="true" />
+                      <MapPin className="relative h-4 w-4 text-brand-green" />
+                    </span>
+                    {a}
+                  </motion.li>
                 ))}
               </ul>
             </InteractiveCard>

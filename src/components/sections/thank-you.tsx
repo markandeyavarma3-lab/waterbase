@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle2, Phone, MessageCircle, FileText, Package, Wrench, Sprout, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Phone, MessageCircle, FileText, Package, Wrench, Sprout, ArrowRight } from "lucide-react";
 import { trackFormSubmit } from "@/lib/analytics";
 import { siteConfig, whatsappLink } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
@@ -71,9 +72,20 @@ export function ThankYou() {
         <AuroraGlow variant="hero" />
         <div className="mx-auto flex max-w-3xl flex-col items-center px-6 py-20 text-center sm:py-24">
           <Reveal>
-            <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-2 ring-white/30">
-              <CheckCircle2 className="h-9 w-9" />
-            </span>
+            <div className="relative flex h-20 w-20 items-center justify-center">
+              <span className="motion-ripple absolute inset-0 rounded-full border-2 border-white/40" style={{ animation: "ripple-ping 1.8s ease-out infinite" }} aria-hidden="true" />
+              <span className="motion-ripple absolute inset-0 rounded-full border-2 border-white/40" style={{ animation: "ripple-ping 1.8s ease-out 0.6s infinite" }} aria-hidden="true" />
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-2 ring-white/30">
+                <motion.svg viewBox="0 0 24 24" className="h-9 w-9" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <motion.path
+                    d="M20 6 9 17l-5-5"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                  />
+                </motion.svg>
+              </span>
+            </div>
           </Reveal>
           <Reveal delay={80}>
             <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-white/70">Request received</p>

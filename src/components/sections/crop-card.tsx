@@ -29,6 +29,18 @@ export function CropCard({ name, images, index = 0 }: { name: string; images: st
           </div>
         )}
 
+        {/* Growth accent — a sprout that "grows in" on hover */}
+        <div className="pointer-events-none absolute left-2 top-2 z-10 opacity-0 drop-shadow transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <path
+              d="M12 20V10M12 10c0-3.2-2.2-5.2-5.2-5.2 0 3.2 2.2 5.2 5.2 5.2Zm0 0c0-3.2 2.2-5.2 5.2-5.2 0 3.2-2.2 5.2-5.2 5.2Z"
+              pathLength={1}
+              strokeDasharray={1}
+              className="[stroke-dashoffset:1] transition-[stroke-dashoffset] duration-700 ease-out group-hover:[stroke-dashoffset:0]"
+            />
+          </svg>
+        </div>
+
         {/* Slide dots */}
         {images.length > 1 && (
           <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1">

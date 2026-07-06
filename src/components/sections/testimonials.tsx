@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { AuroraGlow } from "@/components/site/aurora-glow";
 
@@ -49,6 +51,36 @@ function Card({ t }: { t: typeof testimonials[number] }) {
   );
 }
 
+function MarqueeRow({ items, direction, duration }: { items: typeof testimonials; direction: "left" | "right"; duration: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [dragging, setDragging] = useState(false);
+  const [minX, setMinX] = useState(-800);
+
+  useEffect(() => {
+    if (ref.current) setMinX(-(ref.current.scrollWidth / 2));
+  }, []);
+
+  return (
+    <div className="group flex gap-4 overflow-hidden">
+      <motion.div
+        ref={ref}
+        className="motion-marquee flex cursor-grab gap-4 group-hover:[animation-play-state:paused] active:cursor-grabbing"
+        style={{
+          animation: `marquee-${direction} ${duration}s linear infinite`,
+          animationPlayState: dragging ? "paused" : undefined,
+        }}
+        drag="x"
+        dragConstraints={{ left: minX, right: 0 }}
+        dragElastic={0.15}
+        onDragStart={() => setDragging(true)}
+        onDragEnd={() => setDragging(false)}
+      >
+        {items.map((t, i) => <Card key={i} t={t} />)}
+      </motion.div>
+    </div>
+  );
+}
+
 export function Testimonials() {
   return (
     <section className="relative overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
@@ -56,7 +88,7 @@ export function Testimonials() {
       <div className="mx-auto max-w-6xl px-6 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Testimonials</p>
         <h2 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">Trusted by farmers &amp; businesses</h2>
-        <p className="mt-3 text-muted-foreground">From smallholder farms to corporate campuses across South India.</p>
+        <p className="mt-3 text-muted-foreground">From smallholder farms to corporate campuses across South India. Drag a row to browse at your own pace.</p>
       </div>
 
       <div className="relative mt-12 space-y-4">
@@ -64,25 +96,8 @@ export function Testimonials() {
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#f0f7f3] to-transparent" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#f0f7f3] to-transparent" aria-hidden="true" />
 
-        {/* Row 1 — scrolls left */}
-        <div className="group flex gap-4 overflow-hidden">
-          <div
-            className="motion-marquee flex gap-4 group-hover:[animation-play-state:paused]"
-            style={{ animation: "marquee-left 65s linear infinite" }}
-          >
-            {row1.map((t, i) => <Card key={i} t={t} />)}
-          </div>
-        </div>
-
-        {/* Row 2 — scrolls right */}
-        <div className="group flex gap-4 overflow-hidden">
-          <div
-            className="motion-marquee flex gap-4 group-hover:[animation-play-state:paused]"
-            style={{ animation: "marquee-right 58s linear infinite" }}
-          >
-            {row2.map((t, i) => <Card key={i} t={t} />)}
-          </div>
-        </div>
+        <MarqueeRow items={row1} direction="left" duration={65} />
+        <MarqueeRow items={row2} direction="right" duration={58} />
       </div>
     </section>
   );

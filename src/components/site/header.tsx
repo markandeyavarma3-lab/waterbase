@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { Menu, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,22 +25,46 @@ const navLinks = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
   const pathname = usePathname();
 
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.3 });
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      const y = window.scrollY;
+      const delta = y - lastY.current;
+      setScrolled(y > 8);
+      // Ignore small deltas — the header's own height change (scrolled state)
+      // triggers a few px of browser scroll-anchoring that would otherwise
+      // be misread as "scrolling up".
+      if (!open) {
+        if (y <= 140) setHidden(false);
+        else if (delta > 10) setHidden(true);
+        else if (delta < -10) setHidden(false);
+      }
+      lastY.current = y;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [open]);
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href));
 
   return (
     <header className={cn(
       "sticky top-0 z-50 border-b backdrop-blur transition-all duration-300 ease-out-expo",
-      scrolled ? "border-border/70 bg-background/90 shadow-soft" : "border-border/40 bg-background/70"
+      scrolled ? "border-border/70 bg-background/90 shadow-soft" : "border-border/40 bg-background/70",
+      hidden ? "-translate-y-full" : "translate-y-0"
     )}>
+      <motion.div
+        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-brand-green via-brand-blue to-brand-sun"
+        style={{ scaleX: progress }}
+        aria-hidden="true"
+      />
       <div className={cn(
         "mx-auto flex max-w-6xl items-center justify-between px-4 transition-all duration-300 ease-out-expo md:px-6",
         scrolled ? "h-14" : "h-16"
@@ -58,28 +82,46 @@ export function Header() {
                 <SheetTitle className="font-display">Menu</SheetTitle>
                 <SheetDescription className="sr-only">Site navigation</SheetDescription>
               </SheetHeader>
-              <nav className="mt-2 flex flex-col gap-1 px-2">
-                {navLinks.map((l) => (
-                  <Link
-                    key={l.href}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
-                      isActive(l.href) && "bg-accent text-brand-green"
-                    )}
+              <AnimatePresence>
+                {open && (
+                  <motion.nav
+                    className="mt-2 flex flex-col gap-1 px-2"
+                    initial="hidden"
+                    animate="show"
+                    variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } } }}
                   >
-                    {l.label}
-                  </Link>
-                ))}
-              </nav>
-              <div className="mt-4 px-2">
-                <Button asChild className="w-full bg-brand-green text-white hover:bg-brand-green-dark">
-                  <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="h-4 w-4" /> Message on WhatsApp
-                  </a>
-                </Button>
-              </div>
+                    {navLinks.map((l) => (
+                      <motion.div
+                        key={l.href}
+                        variants={{ hidden: { opacity: 0, x: 16 }, show: { opacity: 1, x: 0 } }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      >
+                        <Link
+                          href={l.href}
+                          onClick={() => setOpen(false)}
+                          className={cn(
+                            "block rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
+                            isActive(l.href) && "bg-accent text-brand-green"
+                          )}
+                        >
+                          {l.label}
+                        </Link>
+                      </motion.div>
+                    ))}
+                    <motion.div
+                      className="mt-3 px-1"
+                      variants={{ hidden: { opacity: 0, x: 16 }, show: { opacity: 1, x: 0 } }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <Button asChild className="w-full bg-brand-green text-white hover:bg-brand-green-dark">
+                        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
+                          <MessageCircle className="h-4 w-4" /> Message on WhatsApp
+                        </a>
+                      </Button>
+                    </motion.div>
+                  </motion.nav>
+                )}
+              </AnimatePresence>
             </SheetContent>
           </Sheet>
 

@@ -225,10 +225,16 @@
   100% { transform: translateX(220%) skewX(-12deg); }
 }
 
-/* ── Ripple ping — expanding rings (CSS fallback for canvas ripple) ── */
+/* ── Ripple ping — expanding rings (CSS fallback for canvas ripple + button ripple) ── */
 @keyframes ripple-ping {
   0%   { transform: scale(0.4); opacity: 0.5; }
   100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* ── Flow dash — diagonal stripes drifting along a filled rail (Process line) ── */
+@keyframes flow-dash {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 -32px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -237,7 +243,8 @@
   .motion-cue,
   .motion-wave,
   .motion-shimmer,
-  .motion-ripple { animation: none !important; }
+  .motion-ripple,
+  .motion-flow { animation: none !important; }
 }
 
 @layer base {

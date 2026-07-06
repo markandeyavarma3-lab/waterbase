@@ -61,10 +61,19 @@ export function Process() {
       <span className="pointer-events-none absolute left-8 top-8 bottom-8 w-1 -translate-x-1/2 rounded-full bg-border md:left-1/2" aria-hidden="true" />
       {/* rail fill — follows scroll, sunrise gradient */}
       <motion.span
-        className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-sun md:left-1/2"
+        className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 overflow-hidden rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-sun md:left-1/2"
         style={{ height: railHeight }}
         aria-hidden="true"
-      />
+      >
+        {/* flowing shimmer — reads as water moving down the filled rail */}
+        <span
+          className="motion-flow absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: "repeating-linear-gradient(180deg, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 4px, transparent 4px, transparent 16px)",
+            animation: "flow-dash 700ms linear infinite",
+          }}
+        />
+      </motion.span>
 
       <ol className="relative">
         {steps.map((step, i) => {
