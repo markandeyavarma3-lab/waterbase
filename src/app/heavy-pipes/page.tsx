@@ -6,6 +6,7 @@ import { Stats } from "@/components/sections/stats";
 import { LeadForm } from "@/components/sections/lead-form";
 import { ContactActions } from "@/components/site/contact-actions";
 import { StickyCallBar } from "@/components/site/sticky-call-bar";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -41,8 +42,8 @@ export default function HeavyPipesPage() {
   return (
     <main>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-brand-green-deep text-white">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_70%_at_80%_0%,rgba(63,160,108,0.22),transparent_60%)]" aria-hidden="true" />
+      <section className="relative overflow-hidden bg-brand-green-deeper text-white">
+        <AuroraGlow variant="hero" />
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
         <Container className="py-16 md:py-24">
           <div className="grid items-start gap-10 lg:grid-cols-[1fr_420px]">
@@ -110,7 +111,8 @@ export default function HeavyPipesPage() {
       </Section>
 
       {/* WHY WATERBASE */}
-      <Section tone="brand">
+      <Section tone="brand" className="relative overflow-hidden">
+        <AuroraGlow variant="cool" />
         <Container>
           <SectionHeading eyebrow="Why choose us" title="Your reliable pipe supplier in Eluru" lead="Genuine materials, competitive pricing and fast local availability — for farms, contractors and industries." align="center" />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -130,7 +132,8 @@ export default function HeavyPipesPage() {
       </Section>
 
       {/* BOTTOM CTA */}
-      <Section tone="brand-dark">
+      <Section tone="brand-deep" className="relative overflow-hidden">
+        <AuroraGlow variant="dark-converge" />
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">Ready to order?</p>

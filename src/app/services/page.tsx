@@ -8,6 +8,7 @@ import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { Process } from "@/components/sections/process";
 import { ContactActions } from "@/components/site/contact-actions";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 import { pageMeta } from "@/lib/seo";
 import { siteConfig, whatsappLink } from "@/lib/site-config";
 
@@ -130,7 +131,8 @@ export default function ServicesPage() {
         </Container>
       </Section>
 
-      <Section tone="muted">
+      <Section tone="muted" className="relative overflow-hidden">
+        <AuroraGlow variant="cool" />
         <Container>
           <SectionHeading align="center" eyebrow="Why choose us" title="A partner you can rely on" lead="Not just a supplier — a complete irrigation partner from planning to long-term support." />
           <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -147,7 +149,8 @@ export default function ServicesPage() {
         </Container>
       </Section>
 
-      <Section tone="brand-dark">
+      <Section tone="brand-deep" className="relative overflow-hidden">
+        <AuroraGlow variant="dark-converge" />
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">Start your project</p>

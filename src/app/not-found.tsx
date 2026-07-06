@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Home, Sprout } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ContactActions } from "@/components/site/contact-actions";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 
 export const metadata = {
   title: "Page not found",
@@ -10,8 +11,8 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <section className="relative isolate overflow-hidden bg-brand-green-deep text-white">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08),transparent_60%)]" />
+    <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
+      <AuroraGlow variant="hero" />
       <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
         <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/70">
           <Sprout className="h-4 w-4" />

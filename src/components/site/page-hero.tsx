@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/sections/reveal";
 import { Container } from "@/components/site/section";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 import { siteConfig } from "@/lib/site-config";
 
 export function PageHero({ eyebrow, title, description }: { eyebrow?: string; title: string; description?: string }) {
@@ -16,15 +17,16 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
   };
 
   return (
-    <section className="relative overflow-hidden bg-brand-green-deep text-white">
+    <section className="relative overflow-hidden bg-brand-green-deeper text-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <motion.div
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_70%_at_80%_0%,rgba(63,160,108,0.22),transparent_60%)]"
+        className="absolute inset-0 -z-10"
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-        aria-hidden="true"
-      />
+      >
+        <AuroraGlow variant="dark-teal" />
+      </motion.div>
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
       <Container className="py-16 md:py-20">
         <Reveal>

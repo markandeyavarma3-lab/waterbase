@@ -8,6 +8,7 @@ import { trackFormSubmit } from "@/lib/analytics";
 import { siteConfig, whatsappLink } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 
 const nextSteps = [
   {
@@ -66,8 +67,8 @@ export function ThankYou() {
   return (
     <main>
       {/* Hero confirmation */}
-      <section className="relative isolate overflow-hidden bg-brand-green-deep text-white">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.08),transparent_60%)]" />
+      <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
+        <AuroraGlow variant="hero" />
         <div className="mx-auto flex max-w-3xl flex-col items-center px-6 py-20 text-center sm:py-24">
           <Reveal>
             <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-2 ring-white/30">
