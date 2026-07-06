@@ -2,6 +2,7 @@ import { Award, ShieldCheck, Users, Map, BadgePercent, LifeBuoy } from "lucide-r
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 import { siteConfig } from "@/lib/site-config";
 
 const reasons = [
@@ -15,7 +16,8 @@ const reasons = [
 
 export function WhyWaterbase() {
   return (
-    <Section tone="muted">
+    <Section tone="muted" className="relative overflow-hidden">
+      <AuroraGlow variant="cool" />
       <Container>
         <SectionHeading align="center" eyebrow="Why Waterbase" title="One accountable partner, end to end" lead="Not just a supplier — we own the entire journey, from the first survey to long-term support." />
         <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

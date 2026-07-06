@@ -57,12 +57,14 @@
   --color-brand-green-dark: #237352;
   --color-brand-green-darker: #1A5740;
   --color-brand-green-deep: #123D2C;
+  --color-brand-green-deeper: #0A2419;
   --color-brand-green-light: #6BC097;
   --color-brand-green-soft: #E7F3EC;
 
   /* Sky blue — water */
   --color-brand-blue: #3FA3DA;
   --color-brand-blue-dark: #2A7CAC;
+  --color-brand-blue-deep: #123049;
   --color-brand-blue-light: #93CEEE;
   --color-brand-blue-soft: #E8F4FB;
 
@@ -77,6 +79,10 @@
   --color-brand-sun-dark: #A85F16;
   --color-brand-sun-light: #F9C589;
   --color-brand-sun-soft: #FDF1E0;
+
+  /* Water glow — bright teal/cyan shimmer accent for ripple + glow effects */
+  --color-brand-glow: #4FE0C4;
+  --color-brand-glow-dim: #2BA893;
 
   /* Warm neutrals */
   --color-ink: #2A2622;
@@ -185,6 +191,10 @@
   0%, 100% { transform: translate(0, 0) scale(1.05); }
   50%      { transform: translate(-7%, 5%) scale(1); }
 }
+@keyframes aurora-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-5%, -7%) scale(1.12); }
+}
 
 /* ── Gentle float (floating badge cards) ──────────────────────── */
 @keyframes float-y {
@@ -199,10 +209,35 @@
   100% { opacity: 0; transform: translateY(9px); }
 }
 
+/* ── Water surface — layered SVG wave drift (CSS-only fallback / dividers) ── */
+@keyframes wave-drift-1 {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes wave-drift-2 {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ── Shimmer sweep — a soft highlight passing across a surface ── */
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-120%) skewX(-12deg); }
+  100% { transform: translateX(220%) skewX(-12deg); }
+}
+
+/* ── Ripple ping — expanding rings (CSS fallback for canvas ripple) ── */
+@keyframes ripple-ping {
+  0%   { transform: scale(0.4); opacity: 0.5; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-aurora,
   .motion-float,
-  .motion-cue { animation: none !important; }
+  .motion-cue,
+  .motion-wave,
+  .motion-shimmer,
+  .motion-ripple { animation: none !important; }
 }
 
 @layer base {

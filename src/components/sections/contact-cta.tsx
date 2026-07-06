@@ -1,11 +1,12 @@
 import { Section, Container } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 
 export function ContactCTA() {
   return (
-    <Section tone="brand-dark" id="contact" className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_60%_at_50%_0%,rgba(63,160,108,0.2),transparent_60%)]" aria-hidden="true" />
+    <Section tone="brand-deep" id="contact" className="relative overflow-hidden">
+      <AuroraGlow variant="dark-converge" />
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>

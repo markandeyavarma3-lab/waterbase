@@ -8,6 +8,9 @@ import { Reveal } from "@/components/sections/reveal";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { ContactActions } from "@/components/site/contact-actions";
 import { AnimatedWord } from "@/components/sections/animated-word";
+import { AuroraGlow } from "@/components/site/aurora-glow";
+import { WaterRipple } from "@/components/site/water-ripple";
+import { WaveDivider } from "@/components/site/wave-divider";
 import { siteConfig } from "@/lib/site-config";
 
 export function Hero() {
@@ -15,37 +18,27 @@ export function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
 
-  const yUp = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -60]);
-  const yDown = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 70]);
+  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -40]);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-brand-green-deep text-white">
-      {/* Aurora — slow drifting gradient blobs, plus a subtle scroll-linked parallax */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        {/* green field glow — outer div carries scroll parallax, inner div keeps its own drift animation */}
-        <motion.div style={{ y: yUp }} className="absolute -right-[10%] -top-[20%] h-[55vw] w-[55vw]">
-          <div className="motion-aurora h-full w-full rounded-full bg-[radial-gradient(circle,rgba(107,192,151,0.22),transparent_65%)] blur-3xl" style={{ animation: "aurora-1 24s ease-in-out infinite" }} />
-        </motion.div>
-        {/* sky-blue glow */}
-        <motion.div style={{ y: yDown }} className="absolute -left-[12%] top-[8%] h-[45vw] w-[45vw]">
-          <div className="motion-aurora h-full w-full rounded-full bg-[radial-gradient(circle,rgba(63,163,218,0.16),transparent_65%)] blur-3xl" style={{ animation: "aurora-2 28s ease-in-out infinite" }} />
-        </motion.div>
-        {/* sunrise-orange glow on the horizon */}
-        <motion.div style={{ y: yUp }} className="absolute -bottom-[30%] left-[18%] h-[55vw] w-[55vw]">
-          <div className="motion-aurora h-full w-full rounded-full bg-[radial-gradient(circle,rgba(244,162,76,0.18),transparent_60%)] blur-3xl" style={{ animation: "aurora-1 26s ease-in-out infinite" }} />
-        </motion.div>
-      </div>
+    <section ref={sectionRef} className="relative overflow-hidden bg-brand-green-deeper text-white">
+      {/* Aurora — slow drifting gradient blobs, with a subtle scroll-linked parallax */}
+      <motion.div style={{ y }} className="absolute inset-0 -z-10">
+        <AuroraGlow variant="hero" />
+      </motion.div>
+      {/* Ambient + pointer-reactive water ripple (desktop only — see WaterRipple) */}
+      <WaterRipple className="pointer-events-none absolute inset-0 -z-10 h-full w-full" />
       {/* Subtle dot grid texture */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
 
-      <Container className="py-14 md:py-20">
+      <Container className="py-14 pb-24 md:py-20 md:pb-32">
         <div className="max-w-3xl">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium shadow-[0_0_0_1px_rgba(79,224,196,0.08)] backdrop-blur">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-green-light opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-green-light" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-glow opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-glow" />
               </span>
               {siteConfig.heroBadge}
             </span>
@@ -74,6 +67,8 @@ export function Hero() {
           ))}
         </Stagger>
       </Container>
+
+      <WaveDivider fill="var(--background)" />
     </section>
   );
 }

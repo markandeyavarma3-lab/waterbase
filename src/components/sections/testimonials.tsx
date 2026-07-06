@@ -1,6 +1,7 @@
 "use client";
 
 import { Star } from "lucide-react";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 
 const testimonials = [
   { quote: "They surveyed our 50-acre banana farm, designed the entire drip layout and installed it on time. Water use dropped and yield improved noticeably in the first season.", name: "Ravi Kumar", role: "Banana farmer · West Godavari", rating: 5 },
@@ -50,7 +51,8 @@ function Card({ t }: { t: typeof testimonials[number] }) {
 
 export function Testimonials() {
   return (
-    <section className="overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
+    <section className="relative overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
+      <AuroraGlow variant="cool" />
       <div className="mx-auto max-w-6xl px-6 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Testimonials</p>
         <h2 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">Trusted by farmers &amp; businesses</h2>

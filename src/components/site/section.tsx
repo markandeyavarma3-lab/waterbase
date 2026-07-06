@@ -5,13 +5,14 @@ export function Container({ className, children }: { className?: string; childre
   return <div className={cn("mx-auto w-full max-w-6xl px-6 md:px-8", className)}>{children}</div>;
 }
 
-type Tone = "default" | "muted" | "brand" | "brand-dark";
+type Tone = "default" | "muted" | "brand" | "brand-dark" | "brand-deep";
 
 const toneClass: Record<Tone, string> = {
   default: "bg-background",
   muted: "bg-muted",
   brand: "bg-brand-green-soft",
   "brand-dark": "bg-brand-green-deep text-white",
+  "brand-deep": "bg-brand-green-deeper text-white",
 };
 
 export function Section({ tone = "default", id, className, children }: { tone?: Tone; id?: string; className?: string; children: ReactNode }) {
