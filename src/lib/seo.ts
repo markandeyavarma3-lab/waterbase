@@ -44,7 +44,7 @@ export function localBusinessJsonLd() {
       postalCode: address.pin,
       addressCountry: "IN",
     },
-    areaServed: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"],
+    areaServed: siteConfig.areasServed,
     openingHoursSpecification,
     hasMap: siteConfig.mapsUrl,
     knowsAbout: [
@@ -72,8 +72,22 @@ export function pageMeta({ title, description, path }: { title: string; descript
       description,
       url,
       siteName: siteConfig.name,
+      images: [
+        {
+          url: `${siteConfig.url}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+        }
+      ],
       type: "website",
       locale: "en_IN",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${siteConfig.name}`,
+      description,
+      images: [`${siteConfig.url}/opengraph-image`],
     },
   };
 }

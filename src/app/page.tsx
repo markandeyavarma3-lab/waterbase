@@ -9,10 +9,18 @@ import { Apmip } from "@/components/sections/apmip";
 import { Testimonials } from "@/components/sections/testimonials";
 import { FAQ } from "@/components/sections/faq";
 import { ContactCTA } from "@/components/sections/contact-cta";
+import { pageMeta } from "@/lib/seo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = pageMeta({
+  title: "Complete Irrigation & Water Management Solutions",
+  description: "Waterbase Technologies is a complete irrigation and agricultural water management solutions provider.",
+  path: "/",
+});
 
 export default function Home() {
   return (
-    <main>
+    <>
       {/* Intro */}
       <Hero />
 
@@ -39,6 +47,6 @@ export default function Home() {
 
       {/* Contact */}
       <ContactCTA />
-    </main>
+    </>
   );
 }

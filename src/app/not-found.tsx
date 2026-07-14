@@ -4,9 +4,13 @@ import { Button } from "@/components/ui/button";
 import { ContactActions } from "@/components/site/contact-actions";
 import { AuroraGlow } from "@/components/site/aurora-glow";
 
-export const metadata = {
+import type { Metadata } from "next";
+import { siteConfig } from "@/lib/site-config";
+
+export const metadata: Metadata = {
   title: "Page not found",
   description: "The page you’re looking for doesn’t exist or has been moved.",
+  robots: { index: false, follow: false },
 };
 
 export default function NotFound() {
@@ -16,7 +20,7 @@ export default function NotFound() {
       <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
         <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/70">
           <Sprout className="h-4 w-4" />
-          Waterbase Technologies
+          {siteConfig.name}
         </p>
         <h1 className="mt-4 font-display text-6xl font-extrabold tracking-tight sm:text-7xl">404</h1>
         <h2 className="mt-4 font-display text-2xl font-bold sm:text-3xl">This field is fallow.</h2>

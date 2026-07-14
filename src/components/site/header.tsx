@@ -4,23 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
-import { Menu, MessageCircle } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
 } from "@/components/ui/sheet";
-import { whatsappLink } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Products", href: "/products" },
-  { label: "Services", href: "/services" },
-  { label: "Crops", href: "/crops" },
-  { label: "Projects", href: "/projects" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+import { NAV_LINKS } from "@/lib/nav";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -37,9 +28,6 @@ export function Header() {
       const y = window.scrollY;
       const delta = y - lastY.current;
       setScrolled(y > 8);
-      // Ignore small deltas — the header's own height change (scrolled state)
-      // triggers a few px of browser scroll-anchoring that would otherwise
-      // be misread as "scrolling up".
       if (!open) {
         if (y <= 140) setHidden(false);
         else if (delta > 10) setHidden(true);
@@ -66,18 +54,18 @@ export function Header() {
         aria-hidden="true"
       />
       <div className={cn(
-        "mx-auto flex max-w-6xl items-center justify-between px-4 transition-all duration-300 ease-out-expo md:px-6",
+        "mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 transition-all duration-300 ease-out-expo md:px-6",
         scrolled ? "h-14" : "h-16"
       )}>
-        {/* Left: desktop nav + mobile menu button */}
-        <div className="flex items-center gap-2">
+        {/* Logo — left */}
+        <div className="flex min-w-0 items-center gap-3">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="lg:hidden" aria-label="Open menu">
+              <Button variant="outline" size="icon" className="shrink-0 lg:hidden" aria-label="Open menu">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72">
+            <SheetContent side="left" className="w-72">
               <SheetHeader>
                 <SheetTitle className="font-display">Menu</SheetTitle>
                 <SheetDescription className="sr-only">Site navigation</SheetDescription>
@@ -85,15 +73,16 @@ export function Header() {
               <AnimatePresence>
                 {open && (
                   <motion.nav
+                    aria-label="Mobile navigation"
                     className="mt-2 flex flex-col gap-1 px-2"
                     initial="hidden"
                     animate="show"
                     variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } } }}
                   >
-                    {navLinks.map((l) => (
+                    {NAV_LINKS.map((l) => (
                       <motion.div
                         key={l.href}
-                        variants={{ hidden: { opacity: 0, x: 16 }, show: { opacity: 1, x: 0 } }}
+                        variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       >
                         <Link
@@ -108,57 +97,47 @@ export function Header() {
                         </Link>
                       </motion.div>
                     ))}
-                    <motion.div
-                      className="mt-3 px-1"
-                      variants={{ hidden: { opacity: 0, x: 16 }, show: { opacity: 1, x: 0 } }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      <Button asChild className="w-full bg-brand-green text-white hover:bg-brand-green-dark">
-                        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer">
-                          <MessageCircle className="h-4 w-4" /> Message on WhatsApp
-                        </a>
-                      </Button>
-                    </motion.div>
+                    {/* Removed APMIP and WhatsApp mobile buttons as requested */}
                   </motion.nav>
                 )}
               </AnimatePresence>
             </SheetContent>
           </Sheet>
 
-          {/* Desktop nav */}
-          <nav className="hidden items-center gap-1 lg:flex">
-            {navLinks.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={cn(
-                  "relative rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  isActive(l.href)
-                    ? "text-brand-green"
-                    : "text-foreground/80 hover:bg-accent hover:text-accent-foreground"
-                )}
-              >
-                {l.label}
-                {isActive(l.href) && (
-                  <motion.span
-                    layoutId="nav-underline"
-                    className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-brand-green"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    aria-hidden="true"
-                  />
-                )}
-              </Link>
-            ))}
-          </nav>
+          <Link href="/" className={cn(
+            "min-w-0 truncate font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-brand-blue transition-all duration-300",
+            scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+          )}>
+            Waterbase
+            <span className="hidden sm:inline"> Technologies</span>
+          </Link>
         </div>
 
-        {/* Right: wordmark */}
-        <Link href="/" className={cn(
-          "whitespace-nowrap font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-foreground transition-all duration-300",
-          scrolled ? "text-xl md:text-3xl" : "text-2xl md:text-4xl"
-        )}>
-          Waterbase Technologies
-        </Link>
+        {/* Desktop nav — center */}
+        <nav aria-label="Main navigation" className="hidden items-center gap-0.5 lg:flex">
+          {NAV_LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={cn(
+                "relative rounded-md px-2.5 py-2 text-sm font-medium transition-colors xl:px-3",
+                isActive(l.href)
+                  ? "text-brand-green"
+                  : "text-foreground/75 hover:bg-accent hover:text-accent-foreground"
+              )}
+            >
+              {l.label}
+              {isActive(l.href) && (
+                <motion.span
+                  layoutId="nav-underline"
+                  className="absolute inset-x-2.5 -bottom-px h-0.5 rounded-full bg-brand-green xl:inset-x-3"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  aria-hidden="true"
+                />
+              )}
+            </Link>
+          ))}
+        </nav>
       </div>
     </header>
   );

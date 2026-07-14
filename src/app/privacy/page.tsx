@@ -13,7 +13,7 @@ const LAST_UPDATED = "June 2026";
 
 export default function PrivacyPage() {
   return (
-    <main>
+    <>
       <PageHero eyebrow="Legal" title="Privacy Policy" description={`How we handle the information you share with us. Last updated: ${LAST_UPDATED}.`} />
 
       <Section tone="default">
@@ -105,6 +105,6 @@ export default function PrivacyPage() {
           </div>
         </Container>
       </Section>
-    </main>
+    </>
   );
 }

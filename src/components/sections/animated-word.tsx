@@ -1,14 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const WORDS = ["drip irrigation", "sprinkler systems", "water management", "micro-irrigation"];
+const WORDS = ["water management"];
 
 export function AnimatedWord() {
   const [index, setIndex] = useState(0);
   const [fading, setFading] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(([e]) => setIsVisible(e.isIntersecting));
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
     const id = setInterval(() => {
       setFading(true);
       setTimeout(() => {
@@ -17,10 +27,12 @@ export function AnimatedWord() {
       }, 320);
     }, 2800);
     return () => clearInterval(id);
-  }, []);
+  }, [isVisible]);
 
   return (
     <span
+      ref={ref}
+      aria-live="polite"
       className="text-brand-green-light"
       style={{
         display: "inline-block",

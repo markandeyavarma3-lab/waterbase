@@ -34,9 +34,19 @@ export function BeforeAfter({ beforeSrc, afterSrc, beforeLabel = "Before", after
   return (
     <div
       ref={containerRef}
-      className="relative aspect-video w-full select-none overflow-hidden rounded-2xl border border-border shadow-lift cursor-ew-resize"
+      role="slider"
+      aria-valuenow={Math.round(pct)}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label="Before and after image comparison slider"
+      tabIndex={0}
+      className="relative aspect-video w-full select-none overflow-hidden rounded-2xl border border-border shadow-lift cursor-ew-resize focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
       onMouseDown={(e) => { dragging.current = true; move(e.clientX); }}
       onTouchMove={(e) => move(e.touches[0].clientX)}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowLeft") setPct((p) => Math.max(5, p - 5));
+        else if (e.key === "ArrowRight") setPct((p) => Math.min(95, p + 5));
+      }}
     >
       {/* After image (full width, base layer) */}
       <div className="absolute inset-0">

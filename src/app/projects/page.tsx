@@ -14,7 +14,7 @@ export const metadata = pageMeta({
 
 export default function ProjectsPage() {
   return (
-    <main>
+    <>
       <PageHero eyebrow="Projects" title="Our irrigation projects" description="From smallholder farms to large commercial developments — work we're proud of across South India." />
       <Projects />
 
@@ -36,6 +36,6 @@ export default function ProjectsPage() {
 
       <Testimonials />
       <ContactCTA />
-    </main>
+    </>
   );
 }

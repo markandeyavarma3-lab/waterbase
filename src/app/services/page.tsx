@@ -20,13 +20,32 @@ export const metadata: Metadata = pageMeta({
 });
 
 const solutions = [
-  { icon: Package, title: "Product supply", desc: "Drip, sprinkler, pipes, pumps, filters and automation from 20+ leading brands." },
-  { icon: Ruler, title: "Survey & design", desc: "Field survey, hydraulic planning and complete irrigation system design." },
-  { icon: Wrench, title: "Installation", desc: "Professional installation by trained field teams and technicians." },
-  { icon: Workflow, title: "Project execution", desc: "End-to-end execution of farm and commercial irrigation projects." },
-  { icon: Building2, title: "Corporate & landscape", desc: "Landscape and campus irrigation for industries, resorts and corporates." },
-  { icon: Sprout, title: "Nursery irrigation", desc: "Specialised micro-irrigation systems for nurseries and plantations." },
-  { icon: BadgePercent, title: "APMIP subsidy", desc: "End-to-end help with APMIP subsidy irrigation work in West Godavari." },
+  {
+    icon: Workflow,
+    title: "Complete Irrigation Projects",
+    desc: "End-to-end irrigation execution from survey to commissioning.",
+    links: [
+      { name: "Agri Farms (Small, Mid, Large)", href: "/services/agri-farms" },
+      { name: "Commercial (Factories, Nurseries, Lawns)", href: "/services/commercial" },
+      { name: "View Our Past Projects", href: "/projects" },
+    ],
+  },
+  {
+    icon: Package,
+    title: "Product Supply",
+    desc: "We supply drip, sprinkler, pipes, pumps, filters and automation from 20+ leading brands.",
+    links: [
+      { name: "Learn About Product Supply", href: "/services/product-supply" },
+    ],
+  },
+  {
+    icon: BadgePercent,
+    title: "APMIP Services",
+    desc: "End-to-end assistance with APMIP subsidy irrigation work in West Godavari.",
+    links: [
+      { name: "APMIP Subsidy Assistance", href: "/apmip-subsidy" },
+    ],
+  },
 ];
 
 const scope = [
@@ -59,19 +78,27 @@ const reasons = [
 
 export default function ServicesPage() {
   return (
-    <main>
-      <PageHero eyebrow="Services" title="End-to-end irrigation services, from survey to support" description="One accountable team for the whole project — we survey, design, supply, install and maintain irrigation for fields, lawns and nurseries, and handle APMIP subsidy work too." />
+    <>
+      <PageHero eyebrow="Services" title="Our Core Services" description="We organize our expertise into three main areas: Complete Irrigation Projects (for farms and commercial spaces), Product Supply, and APMIP Subsidy services." />
 
       <Section tone="default">
         <Container>
           <SectionHeading eyebrow="What we do" title="Complete solutions, not just products" lead="From the first survey to the final installation and subsidy paperwork, we handle every part of your irrigation project." />
-          <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="mt-12 grid gap-6 sm:grid-cols-1 lg:grid-cols-3">
             {solutions.map((s) => (
               <StaggerItem key={s.title}>
-                <InteractiveCard className="p-6">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white"><s.icon className="h-6 w-6" /></span>
-                  <h3 className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-brand-green">{s.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+                <InteractiveCard className="flex h-full flex-col p-8">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white"><s.icon className="h-6 w-6" /></span>
+                  <h3 className="mt-6 font-display text-xl font-semibold transition-colors group-hover:text-brand-green">{s.title}</h3>
+                  <p className="mt-3 leading-relaxed text-muted-foreground">{s.desc}</p>
+                  
+                  <div className="mt-6 flex flex-col gap-2 border-t border-border/50 pt-6">
+                    {s.links.map((link, idx) => (
+                      <a key={idx} href={link.href} className="text-sm font-medium text-brand-green hover:text-brand-green-dark hover:underline">
+                        → {link.name}
+                      </a>
+                    ))}
+                  </div>
                 </InteractiveCard>
               </StaggerItem>
             ))}
@@ -160,6 +187,6 @@ export default function ServicesPage() {
           </Reveal>
         </Container>
       </Section>
-    </main>
+    </>
   );
 }

@@ -15,6 +15,15 @@ function requirementLabel(value: string) {
   return REQUIREMENT_OPTIONS.find((o) => o.value === value)?.label ?? value;
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function row(label: string, value: string) {
   return `<tr><td style="padding:4px 12px 4px 0;color:#666">${label}</td><td><strong>${value}</strong></td></tr>`;
 }
@@ -43,18 +52,23 @@ export async function sendLeadNotification(lead: LeadNotification) {
   ].filter(Boolean).join("\n");
 
   const htmlRows = [
-    row("Name", lead.name),
-    row("Mobile", lead.mobile),
-    row("Requirement", label),
-    location ? row("Location", location) : "",
-    landSize ? row("Land size", landSize) : "",
+    row("Name", escapeHtml(lead.name)),
+    row("Mobile", escapeHtml(lead.mobile)),
+    row("Requirement", escapeHtml(label)),
+    location ? row("Location", escapeHtml(location)) : "",
+    landSize ? row("Land size", escapeHtml(landSize)) : "",
   ].join("");
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
+    // Make sure LEAD_FROM_EMAIL is set to a verified domain in Resend
     from: process.env.LEAD_FROM_EMAIL ?? "Waterbase Leads <onboarding@resend.dev>",
     to,
-    subject: `New website lead — ${lead.name} (${label})`,
-    text: `New callback request from the website:\n\n${textLines}\n\nCall: tel:${lead.mobile}\nWhatsApp: https://wa.me/91${lead.mobile}`,
-    html: `<div style="font-family:system-ui,sans-serif;max-width:480px"><h2 style="color:#15803d;margin:0 0 12px">New website lead</h2><table style="border-collapse:collapse;font-size:15px">${htmlRows}</table><p style="margin:16px 0 0"><a href="tel:${lead.mobile}" style="background:#15803d;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;margin-right:8px">Call back</a><a href="https://wa.me/91${lead.mobile}" style="background:#25d366;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none">WhatsApp</a></p></div>`,
+    subject: `New website lead — ${escapeHtml(lead.name)} (${escapeHtml(label)})`,
+    text: `New callback request from the website:\n\n${textLines}\n\nCall: tel:${lead.mobile}\nWhatsApp: https://wa.me/${siteConfig.countryCode || "91"}${lead.mobile}`,
+    html: `<div style="font-family:system-ui,sans-serif;max-width:480px"><h2 style="color:#15803d;margin:0 0 12px">New website lead</h2><table style="border-collapse:collapse;font-size:15px">${htmlRows}</table><p style="margin:16px 0 0"><a href="tel:${lead.mobile}" style="background:#15803d;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;margin-right:8px">Call back</a><a href="https://wa.me/${siteConfig.countryCode || "91"}${lead.mobile}" style="background:#25d366;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none">WhatsApp</a></p></div>`,
   });
+  
+  if (error) {
+    console.error("Resend email failed:", error);
+  }
 }

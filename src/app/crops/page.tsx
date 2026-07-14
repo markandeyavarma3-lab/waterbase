@@ -11,10 +11,10 @@ export const metadata = pageMeta({
 
 export default function CropsPage() {
   return (
-    <main>
+    <>
       <PageHero eyebrow="Crops" title="Crops we design for" description="Every crop has different water needs. We design systems matched to what you grow — for higher yield and lower water use." />
       <Crops />
       <ContactCTA />
-    </main>
+    </>
   );
 }

@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Download, Loader2 } from "lucide-react";
-import { LEAD_STATUSES, REQUIREMENT_OPTIONS, type Lead } from "@/lib/leads";
+import { LEAD_STATUSES, REQUIREMENT_OPTIONS, type Lead, type LeadStatus } from "@/lib/leads";
 import { updateLeadStatus } from "@/lib/actions/leads";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
     });
   }, [leads, query, statusFilter]);
 
-  function onStatusChange(id: string, status: string) {
+  function onStatusChange(id: string, status: LeadStatus) {
     setUpdatingId(id);
     startTransition(async () => {
       await updateLeadStatus(id, status);
@@ -64,11 +64,11 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
     <div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-xs">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search name or mobile" className="pl-9" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+          <Input aria-label="Search leads by name or mobile" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search name or mobile" className="pl-9" />
         </div>
         <div className="flex items-center gap-2">
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="h-9 rounded-md border border-input bg-transparent px-2.5 text-sm">
+          <select aria-label="Filter leads by status" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="h-9 rounded-md border border-input bg-transparent px-2.5 text-sm">
             <option value="all">All statuses</option>
             {LEAD_STATUSES.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
@@ -112,7 +112,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusClasses(l.status)}`}>{LEAD_STATUSES.find((s) => s.value === l.status)?.label ?? l.status}</span>
-                      <select value={l.status} disabled={pending && updatingId === l.id} onChange={(e) => onStatusChange(l.id, e.target.value)} className="h-8 rounded-md border border-input bg-transparent px-2 text-xs">
+                      <select aria-label="Change lead status" value={l.status} disabled={pending && updatingId === l.id} onChange={(e) => onStatusChange(l.id, e.target.value as LeadStatus)} className="h-8 rounded-md border border-input bg-transparent px-2 text-xs">
                         {LEAD_STATUSES.map((s) => (
                           <option key={s.value} value={s.value}>{s.label}</option>
                         ))}

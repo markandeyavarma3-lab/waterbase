@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Fraunces, Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { SiteChrome } from "@/components/site/site-chrome";
@@ -11,7 +12,7 @@ import { ConversionTracker } from "@/components/site/conversion-tracker";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-archivo",
+  variable: "--font-fraunces",
   display: "swap",
   axes: ["opsz", "SOFT"],
 });
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     default: `${siteConfig.name} — ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.name}`,
   },
+  description: siteConfig.description,
   alternates: { canonical: siteConfig.url },
   keywords: [
     "Drip Irrigation Dealer Andhra Pradesh",
@@ -59,10 +61,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ConversionTracker />
         <SiteChrome>{children}</SiteChrome>
         <Analytics />
+        <GoogleAnalytics gaId="G-RP33RYTKFF" />
+        <GoogleAnalytics gaId="G-DH17D92KBV" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-874230546"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-874230546');
+          `}
+        </Script>
       </body>
-      <GoogleAnalytics gaId="G-RP33RYTKFF" />
-      <GoogleAnalytics gaId="G-DH17D92KBV" />
-      <GoogleAnalytics gaId="AW-874230546" />
     </html>
   );
 }

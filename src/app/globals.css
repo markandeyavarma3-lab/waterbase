@@ -244,7 +244,96 @@
   .motion-wave,
   .motion-shimmer,
   .motion-ripple,
-  .motion-flow { animation: none !important; }
+  .motion-flow,
+  .motion-marquee { animation: none !important; }
+}
+
+@layer utilities {
+  /* Subtle film grain — adds depth without looking flat */
+  .bg-grain {
+    position: relative;
+  }
+  .bg-grain::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+  }
+
+  /* Brand gradient text */
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #6BC097 0%, #4FE0C4 45%, #93CEEE 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Decorative heading accent */
+  .heading-accent {
+    position: relative;
+    display: inline-block;
+  }
+  .heading-accent::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.35rem;
+    height: 3px;
+    width: 2.5rem;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, var(--color-brand-green), var(--color-brand-glow));
+  }
+  .heading-accent-center::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Glass panel — frosted cards on dark backgrounds */
+  .glass-panel {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Mesh section backgrounds */
+  .bg-mesh-warm {
+    background-image:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(244, 162, 76, 0.08), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 90% 80%, rgba(46, 148, 102, 0.07), transparent 55%);
+  }
+  .bg-mesh-cool {
+    background-image:
+      radial-gradient(ellipse 75% 55% at 85% 15%, rgba(63, 163, 218, 0.09), transparent 55%),
+      radial-gradient(ellipse 65% 45% at 5% 85%, rgba(46, 148, 102, 0.06), transparent 55%);
+  }
+
+  /* Card shine sweep on hover */
+  .card-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .card-shine::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.12) 50%, transparent 60%);
+    transform: translateX(-120%) skewX(-12deg);
+    transition: transform 0.7s var(--ease-out-expo);
+  }
+  .card-shine:hover::after {
+    transform: translateX(120%) skewX(-12deg);
+  }
+
+  /* Safe area for notched phones */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }
 
 @layer base {

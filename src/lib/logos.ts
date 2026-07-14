@@ -13,7 +13,13 @@ export type Logo = { src: string; name: string };
  *   "nuziveedu-seeds.jpg"  ->  "Nuziveedu Seeds"
  */
 export function listLogos(dir: string): Logo[] {
-  const full = path.join(process.cwd(), "public", dir);
+  const publicDir = path.join(process.cwd(), "public");
+  const full = path.join(publicDir, dir);
+  
+  if (!path.resolve(full).startsWith(path.resolve(publicDir))) {
+    return [];
+  }
+  
   let files: string[] = [];
   try {
     files = fs.readdirSync(full);

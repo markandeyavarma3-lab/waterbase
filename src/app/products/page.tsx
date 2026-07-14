@@ -17,7 +17,7 @@ const reach = ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"];
 
 export default function ProductsPage() {
   return (
-    <main>
+    <>
       <PageHero eyebrow="Products" title="Irrigation products & supplies" description="A complete range of irrigation and water-management products from 20+ trusted brands, supplied across South India and pan-India for bulk orders." />
 
       <ProductCategories />
@@ -42,6 +42,6 @@ export default function ProductsPage() {
 
       <BrandsMarquee twoRows />
       <ContactCTA />
-    </main>
+    </>
   );
 }

@@ -2,12 +2,23 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient as createServerSupabase } from "@/lib/supabase/server";
-import { leadSchema, LEAD_STATUSES } from "@/lib/leads";
+import { leadSchema, LEAD_STATUSES, LeadStatus } from "@/lib/leads";
 import { sendLeadNotification } from "@/lib/notify";
 
 export type LeadResult = { ok: true } | { ok: false; message: string };
 
+let submissions = 0;
+let lastReset = Date.now();
+
 export async function submitLead(input: unknown): Promise<LeadResult> {
+  if (Date.now() - lastReset > 60000) {
+    submissions = 0;
+    lastReset = Date.now();
+  }
+  if (submissions >= 30) {
+    return { ok: false, message: "Too many requests. Please try again later." };
+  }
+  submissions++;
   // Honeypot: real users never see the hidden "company" field. A bot that fills
   // it gets a fake success and nothing is saved.
   if (input && typeof input === "object" && (input as { company?: unknown }).company) {
@@ -49,7 +60,11 @@ export async function submitLead(input: unknown): Promise<LeadResult> {
   return { ok: true };
 }
 
-export async function updateLeadStatus(id: string, status: string): Promise<{ ok: boolean }> {
+export async function updateLeadStatus(id: string, status: LeadStatus): Promise<{ ok: boolean }> {
+  // UUID check
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(id)) return { ok: false };
+  
   // Server actions are public endpoints — verify an admin is logged in.
   const authClient = await createServerSupabase();
   const { data: { user } } = await authClient.auth.getUser();

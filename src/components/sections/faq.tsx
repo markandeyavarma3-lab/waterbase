@@ -33,15 +33,22 @@ const faqs = [
   },
 ];
 
-function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
+function FaqItem({ id, q, a, open, onToggle }: { id: string; q: string; a: string; open: boolean; onToggle: () => void }) {
   return (
     <div className={cn("rounded-2xl border bg-card shadow-soft transition-colors", open ? "border-brand-green/40" : "border-border hover:border-brand-green/30")}>
-      <button onClick={onToggle} aria-expanded={open} className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left">
+      <button
+        id={`${id}-trigger`}
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={`${id}-panel`}
+        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+      >
         <span className="font-display text-base font-semibold md:text-lg">{q}</span>
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-brand-green"
+          aria-hidden="true"
         >
           <Plus className="h-4 w-4" />
         </motion.span>
@@ -49,6 +56,9 @@ function FaqItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
+            id={`${id}-panel`}
+            role="region"
+            aria-labelledby={`${id}-trigger`}
             key="content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -81,14 +91,17 @@ export function FAQ() {
     <section className="mx-auto max-w-3xl px-6 py-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Reveal className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">FAQ</p>
-        <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Frequently asked questions</h2>
+        <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-green">
+          <span className="h-px w-6 bg-brand-green/40" aria-hidden="true" />
+          FAQ
+        </p>
+        <h2 className="heading-accent heading-accent-center mt-4 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Frequently asked questions</h2>
         <p className="mt-3 text-muted-foreground">Everything you need to know before starting your irrigation project.</p>
       </Reveal>
       <div className="mt-10 space-y-3">
         {faqs.map((f, i) => (
           <Reveal key={f.q} delay={i * 50}>
-            <FaqItem q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
+            <FaqItem id={`faq-${i}`} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
           </Reveal>
         ))}
       </div>

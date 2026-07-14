@@ -11,7 +11,7 @@ function LogoCard({ logo, large = false }: { logo: Logo; large?: boolean }) {
   return (
     <div className={cn("flex shrink-0 items-center justify-center rounded-2xl border border-border bg-card shadow-soft transition-shadow hover:shadow-lift", large ? "h-32 w-60 px-8" : "h-24 w-44 px-6")}>
       <div className={cn("relative w-full", large ? "h-20" : "h-14")}>
-        <Image src={logo.src} alt={logo.name} fill sizes={large ? "240px" : "180px"} unoptimized className="object-contain" />
+        <Image src={logo.src} alt={logo.name} fill sizes={large ? "240px" : "180px"} className="object-contain" />
       </div>
     </div>
   );
@@ -66,8 +66,8 @@ export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
           </div>
         ) : twoRows ? (
           <>
-            <LogoRow logos={row1} duration="60s" large />
-            <LogoRow logos={row2} duration="66s" />
+            <LogoRow logos={row1} duration="80s" large />
+            <LogoRow logos={row2} duration="50s" />
           </>
         ) : (
           <LogoRow logos={logos} duration="60s" />

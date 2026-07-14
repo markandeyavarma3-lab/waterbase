@@ -27,9 +27,9 @@ export default function OpengraphImage() {
         {/* warm sunrise glow */}
         <div style={{ position: "absolute", bottom: -220, left: 260, width: 760, height: 760, display: "flex", borderRadius: 9999, background: "radial-gradient(circle, rgba(244,162,76,0.40), transparent 60%)" }} />
 
-        <div style={{ display: "flex", fontSize: 34, fontWeight: 700 }}>Waterbase Technologies</div>
+        <div style={{ display: "flex", fontSize: 34, fontWeight: 700 }}>{siteConfig.name}</div>
         <div style={{ display: "flex", fontSize: 66, fontWeight: 800, lineHeight: 1.08, marginTop: 24, maxWidth: 980 }}>
-          Complete Irrigation & Agricultural Water Management
+          {siteConfig.tagline}
         </div>
         <div style={{ display: "flex", fontSize: 30, marginTop: 28, color: "rgba(255,255,255,0.88)" }}>
           Product supply · Design · Installation · APMIP subsidy assistance

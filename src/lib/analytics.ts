@@ -8,21 +8,26 @@ function getGtag(): GtagFn | null {
   return typeof g === "function" ? g : null;
 }
 
-/** Fired on WhatsApp clicks (direct-contact intent). */
 export function trackContactClick() {
-  getGtag()?.("event", "ads_conversion_Contact_Us_1", {});
+  try {
+    getGtag()?.("event", "ads_conversion_Contact_Us_1", {});
+  } catch (err) {
+    console.error("Gtag error:", err);
+  }
 }
 
-/** Fired on /thank-you page load after successful form submit. */
 export function trackFormSubmit() {
-  getGtag()?.("event", "ads_conversion_Form_1", {});
+  try {
+    getGtag()?.("event", "ads_conversion_Form_1", {});
+  } catch (err) {
+    console.error("Gtag error:", err);
+  }
 }
 
-/**
- * Fired when a visitor taps "Call Now" on an ad landing page.
- * TODO: Replace "ads_conversion_Call_1" with the actual event name from your
- * Google Ads "Phone Call" conversion action (Goals → Conversions → New → Website).
- */
 export function trackCallClick() {
-  getGtag()?.("event", "ads_conversion_Call_1", {});
+  try {
+    getGtag()?.("event", "ads_conversion_Call_1", {});
+  } catch (err) {
+    console.error("Gtag error:", err);
+  }
 }

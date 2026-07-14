@@ -26,8 +26,20 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  const [isVisible, setIsVisible] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(([e]) => setIsVisible(e.isIntersecting));
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   // Every tick, advance the next column's cards together (a11+a21, then a12+a22, ...).
   useEffect(() => {
+    if (!isVisible) return;
+
     const id = setInterval(() => {
       const cols = colsRef.current;
       const nextCol = (colRef.current + 1) % cols;
@@ -44,12 +56,14 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
   }, [crops]);
 
   return (
-    <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-      {crops.map((c, i) => (
+    <div ref={containerRef}>
+      <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {crops.map((c, i) => (
         <StaggerItem key={c.name}>
           <CropCard name={c.name} images={c.images} index={indices[i]} />
         </StaggerItem>
       ))}
-    </Stagger>
+      </Stagger>
+    </div>
   );
 }

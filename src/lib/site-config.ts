@@ -1,13 +1,16 @@
 
+const currentYear = new Date().getFullYear();
+const yearsOfExp = currentYear - 2000;
+
 export const siteConfig = {
   name: "Waterbase Technologies",
   legalName: "Waterbase Technologies",
   businessType: "Proprietorship",
   since: 2000,
-  experienceYears: "25+",
+  experienceYears: `${yearsOfExp}+`,
 
   // 👇 Edit this one line anytime to change the hero badge text.
-  heroBadge: "Serving farmers for over 25 years",
+  heroBadge: "Serving farmers from 25 + years",
 
   domain: "waterbasetechnologies.com",
   url: "https://waterbasetechnologies.com",
@@ -16,6 +19,10 @@ export const siteConfig = {
     "Waterbase Technologies is a complete irrigation and agricultural water management solutions provider — product supply, survey & design, installation, project execution, corporate & nursery landscaping irrigation, and APMIP subsidy assistance. Authorized dealer of Jain Irrigation, KSB and Netafim, serving farmers, nurseries, industries and large agricultural projects across South India.",
 
   email: "waterbasetechnologies@gmail.com",
+
+  countryCode: "91",
+  areasServed: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"],
+  brandPartners: ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNet"],
 
   // Internal reference only — these are NOT displayed anywhere on the site.
   // Public contact is WhatsApp (whatsappNumber) + the request-a-callback form.
@@ -83,7 +90,7 @@ export const siteConfig = {
 } as const;
 
 export function telLink(number: string) {
-  return `tel:+91${number}`;
+  return `tel:+${siteConfig.countryCode}${number}`;
 }
 
 export function whatsappLink(
@@ -94,7 +101,7 @@ export function whatsappLink(
     message ??
       "Hello Waterbase Technologies, I am interested in your irrigation solutions.\n\nMy requirement is: \n\nPlease contact me."
   );
-  return `https://wa.me/91${number}?text=${text}`;
+  return `https://wa.me/${siteConfig.countryCode}${number}?text=${text}`;
 }
 
 export const fullAddress = `${siteConfig.address.buildingName}, ${siteConfig.address.road}, near ${siteConfig.address.landmark}, ${siteConfig.address.locality}, ${siteConfig.address.city}, ${siteConfig.address.state} ${siteConfig.address.pin}`;

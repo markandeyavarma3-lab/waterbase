@@ -2,11 +2,14 @@ import { Suspense } from "react";
 import { ThankYou } from "@/components/sections/thank-you";
 import { pageMeta } from "@/lib/seo";
 
-export const metadata = pageMeta({
-  title: "Thank you",
-  description: "Your callback request has reached Waterbase Technologies. Our team will get in touch shortly to discuss your irrigation requirement.",
-  path: "/thank-you",
-});
+export const metadata = {
+  ...pageMeta({
+    title: "Thank you",
+    description: "Your callback request has reached Waterbase Technologies. Our team will get in touch shortly to discuss your irrigation requirement.",
+    path: "/thank-you",
+  }),
+  robots: { index: false, follow: false },
+};
 
 export default function ThankYouPage() {
   return (

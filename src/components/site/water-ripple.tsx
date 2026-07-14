@@ -59,7 +59,18 @@ export function WaterRipple({ className }: { className?: string }) {
       spawnRipple(x, y);
     }
 
+    let isVisible = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    });
+    observer.observe(canvas);
+
     function frame(t: number) {
+      if (!isVisible) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+
       ctx!.clearRect(0, 0, width, height);
 
       if (t - ambientTimer > 2400) {
@@ -92,6 +103,7 @@ export function WaterRipple({ className }: { className?: string }) {
     window.addEventListener("pointermove", onPointerMove);
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);

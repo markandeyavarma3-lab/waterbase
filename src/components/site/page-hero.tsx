@@ -1,23 +1,28 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
 import { Container } from "@/components/site/section";
 import { AuroraGlow } from "@/components/site/aurora-glow";
+import { WaveDivider } from "@/components/site/wave-divider";
 import { siteConfig } from "@/lib/site-config";
 
 export function PageHero({ eyebrow, title, description }: { eyebrow?: string; title: string; description?: string }) {
+  const pathname = usePathname();
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-      { "@type": "ListItem", position: 2, name: title },
+      { "@type": "ListItem", position: 2, name: title, item: `${siteConfig.url}${pathname}` },
     ],
   };
 
   return (
-    <section className="relative overflow-hidden bg-brand-green-deeper text-white">
+    <section className="relative overflow-hidden bg-brand-green-deeper text-white bg-grain">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <motion.div
         className="absolute inset-0 -z-10"
@@ -27,14 +32,21 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
       >
         <AuroraGlow variant="dark-teal" />
       </motion.div>
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
-      <Container className="py-16 md:py-20">
+      <Container className="relative z-10 py-14 md:py-20">
         <Reveal>
-          {eyebrow ? <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light md:text-sm">{eyebrow}</p> : null}
-          <h1 className="mt-3 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight md:text-5xl">{title}</h1>
-          {description ? <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/80">{description}</p> : null}
+          <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-1 text-sm text-white/55">
+            <Link href="/" className="transition-colors hover:text-white">Home</Link>
+            <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="font-medium text-white/90">{title}</span>
+          </nav>
+          {eyebrow ? <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light md:text-sm"><span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />{eyebrow}</p> : null}
+          <h1 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.06] tracking-tight md:text-5xl lg:text-[3.25rem]">{title}</h1>
+          {description ? <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">{description}</p> : null}
         </Reveal>
       </Container>
+      <WaveDivider fill="var(--background)" />
     </section>
   );
 }

@@ -5,6 +5,12 @@ import { signOut } from "@/lib/actions/auth";
 import { LEAD_STATUSES, type Lead } from "@/lib/leads";
 import { LeadsTable } from "@/components/admin/leads-table";
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Admin",
+  robots: { index: false, follow: false },
+};
 
 export const dynamic = "force-dynamic";
 

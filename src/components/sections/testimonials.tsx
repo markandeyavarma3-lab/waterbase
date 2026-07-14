@@ -93,8 +93,8 @@ export function Testimonials() {
 
       <div className="relative mt-12 space-y-4">
         {/* Edge fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#f0f7f3] to-transparent" aria-hidden="true" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#f0f7f3] to-transparent" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" aria-hidden="true" />
 
         <MarqueeRow items={row1} direction="left" duration={65} />
         <MarqueeRow items={row2} direction="right" duration={58} />

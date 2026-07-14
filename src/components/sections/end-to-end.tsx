@@ -45,7 +45,7 @@ export function EndToEnd() {
         </div>
 
         <Reveal>
-          <div className="mt-16 flex flex-col items-start gap-5 rounded-2xl border border-brand-green/15 bg-brand-green-soft p-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-16 flex flex-col items-start gap-5 rounded-3xl border border-brand-green/20 bg-gradient-to-br from-brand-green-soft via-white to-brand-blue-soft p-8 shadow-soft sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h3 className="font-display text-xl font-bold text-brand-green-dark">Planning an irrigation project?</h3>
               <p className="mt-1 text-sm text-brand-green-dark/80">Tell us about your land and we&apos;ll recommend the right system.</p>

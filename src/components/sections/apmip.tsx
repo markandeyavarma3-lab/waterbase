@@ -1,4 +1,5 @@
-import { BadgeCheck } from "lucide-react";
+import Link from "next/link";
+import { BadgeCheck, ArrowRight } from "lucide-react";
 import { Section, Container, Eyebrow } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
@@ -36,7 +37,12 @@ export function Apmip() {
               <ContactActions onDark size="xl" waMessage={apmipMessage} className="mt-8" />
             </Reveal>
             <Reveal delay={320}>
-              <p className="mt-6 text-sm text-white/55">APMIP assistance for West Godavari and across Andhra Pradesh.</p>
+              <div className="mt-6 flex flex-wrap items-center gap-4">
+                <p className="text-sm text-white/55">APMIP assistance for West Godavari and across Andhra Pradesh.</p>
+                <Link href="/apmip-subsidy" className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-sun-light transition-colors hover:text-white">
+                  Full APMIP guide <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </Reveal>
           </div>
 
