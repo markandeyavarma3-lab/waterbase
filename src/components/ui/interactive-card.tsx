@@ -17,7 +17,7 @@ export function InteractiveCard({ children, className, glow = true }: { children
     >
       {glow ? (
         <div
-          className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-brand-green-soft opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full bg-brand-green/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
           aria-hidden="true"
         />
       ) : null}

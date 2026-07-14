@@ -4,16 +4,16 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveCard } from "@/components/ui/interactive-card";
+import { PlaceholderPlate } from "@/components/site/media-slot";
 
 interface ProductCardProps {
   title: string;
   description: string;
-  iconBig: React.ReactNode;
   iconSmall: React.ReactNode;
   images: string[];
 }
 
-export function ProductCard({ title, description, iconBig, iconSmall, images }: ProductCardProps) {
+export function ProductCard({ title, description, iconSmall, images }: ProductCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export function ProductCard({ title, description, iconBig, iconSmall, images }: 
 
   return (
     <InteractiveCard className="group flex h-full min-h-[280px] flex-col overflow-hidden p-0">
-      <div className="relative h-48 w-full shrink-0 overflow-hidden bg-brand-green-soft">
+      <div className="relative h-48 w-full shrink-0 overflow-hidden bg-graphite-50">
         {images.length > 0 ? (
           <AnimatePresence mode="popLayout">
             <motion.div
@@ -49,9 +49,7 @@ export function ProductCard({ title, description, iconBig, iconSmall, images }: 
             </motion.div>
           </AnimatePresence>
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-brand-green/30">
-            {iconBig}
-          </div>
+          <PlaceholderPlate label={title} />
         )}
         {/* Overlay gradient so text is readable if we want to overlay, or just for a nice shadow */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -59,7 +57,7 @@ export function ProductCard({ title, description, iconBig, iconSmall, images }: 
 
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border text-graphite-700 transition-colors duration-300 group-hover:border-brand-green/40 group-hover:bg-brand-green group-hover:text-white">
             {iconSmall}
           </span>
           <h3 className="font-display text-base font-semibold leading-tight text-foreground transition-colors group-hover:text-brand-green">

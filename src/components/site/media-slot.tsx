@@ -15,6 +15,43 @@ const ratioClass: Record<Ratio, string> = {
   tall: "aspect-[4/5]",
 };
 
+const BLUEPRINT_GRID = {
+  backgroundImage:
+    "linear-gradient(to right, rgba(166,173,176,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(166,173,176,0.08) 1px, transparent 1px)",
+  backgroundSize: "22px 22px",
+};
+
+const SHIMMER = {
+  backgroundImage: "linear-gradient(105deg, transparent 40%, rgba(15,19,22,0.05) 50%, transparent 60%)",
+  animation: "shimmer-sweep 3.4s ease-in-out infinite",
+};
+
+/**
+ * The "no photo yet" state, shared by MediaSlot, ProductCard and AwardsList —
+ * a blueprint plate rather than an apologetic "coming soon" empty-state.
+ */
+export function PlaceholderPlate({ label, className }: { label?: string; className?: string }) {
+  return (
+    <div className={cn("absolute inset-0 overflow-hidden bg-graphite-50", className)}>
+      <div className="absolute inset-0" style={BLUEPRINT_GRID} aria-hidden="true" />
+      <span className="motion-shimmer pointer-events-none absolute inset-0 opacity-60" style={SHIMMER} aria-hidden="true" />
+
+      {/* register-mark corners */}
+      <span className="absolute left-2 top-2 h-3 w-3 border-l-2 border-t-2 border-graphite-300" aria-hidden="true" />
+      <span className="absolute right-2 top-2 h-3 w-3 border-r-2 border-t-2 border-graphite-300" aria-hidden="true" />
+      <span className="absolute bottom-2 left-2 h-3 w-3 border-b-2 border-l-2 border-graphite-300" aria-hidden="true" />
+      <span className="absolute bottom-2 right-2 h-3 w-3 border-b-2 border-r-2 border-graphite-300" aria-hidden="true" />
+
+      <div className="absolute inset-0 flex items-center justify-center">
+        <ImageIcon className="h-5 w-5 text-graphite-300" aria-hidden="true" />
+      </div>
+      <span className="absolute left-3 top-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-graphite-500">
+        {label ?? "Image pending"}
+      </span>
+    </div>
+  );
+}
+
 export function MediaSlot({
   src,
   fallbackSrc,
@@ -45,10 +82,7 @@ export function MediaSlot({
       {current ? (
         <Image key={current} src={current} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" onError={() => setIdx((i) => i + 1)} />
       ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[linear-gradient(135deg,var(--color-brand-green-soft),#ffffff)] text-brand-green-dark">
-          <ImageIcon className="h-7 w-7 opacity-50" aria-hidden="true" />
-          <span className="px-3 text-center text-xs font-medium text-brand-green-dark/70">{label ?? "Photo coming soon"}</span>
-        </div>
+        <PlaceholderPlate label={label} />
       )}
     </div>
   );

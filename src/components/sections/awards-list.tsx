@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 import Image from "next/image";
-import { Trophy } from "lucide-react";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
+import { PlaceholderPlate } from "@/components/site/media-slot";
 
 function getAwards(): string[] {
   try {
@@ -30,7 +30,7 @@ export function AwardsList() {
         <SectionHeading
           eyebrow="Excellence"
           title="Our Achievements"
-          lead="Drop images of your certificates, trophies, and awards into the public/awards folder to display them here automatically."
+          lead="Recognitions and certifications earned over 25 years in the field."
         />
 
         <div className="mt-12">
@@ -52,11 +52,8 @@ export function AwardsList() {
               ))}
             </Stagger>
           ) : (
-            <div className="flex h-64 w-full flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-border bg-card">
-              <Trophy className="h-12 w-12 text-brand-green/40" />
-              <p className="text-sm font-medium text-muted-foreground">
-                No awards added yet. Drop images into the <code>public/awards/</code> folder!
-              </p>
+            <div className="relative h-64 w-full overflow-hidden rounded-2xl border border-border">
+              <PlaceholderPlate label="Awards & certificates pending" />
             </div>
           )}
         </div>

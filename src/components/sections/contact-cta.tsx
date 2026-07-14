@@ -31,39 +31,39 @@ export function ContactCTA() {
           </div>
 
           <Reveal delay={160}>
-            <div className="glass-panel card-shine grid gap-3 rounded-3xl p-6 md:p-8">
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition-colors hover:border-brand-glow/30 hover:bg-white/8">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green text-white"><MessageCircle className="h-5 w-5" /></span>
-                <span>
-                  <span className="block text-sm font-semibold text-white">WhatsApp us</span>
-                  <span className="text-sm text-white/65">Fastest way to get a quote</span>
+            <div className="glass-panel overflow-hidden rounded-3xl">
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 border-b border-white/10 px-6 py-4 transition-colors hover:bg-white/5">
+                <MessageCircle className="h-4 w-4 shrink-0 text-white/50" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-white">WhatsApp us</span>
+                  <span className="text-sm text-white/60">Fastest way to get a quote</span>
                 </span>
               </a>
-              <Link href="/contact" className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition-colors hover:border-brand-glow/30 hover:bg-white/8">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-blue text-white"><PhoneCall className="h-5 w-5" /></span>
-                <span>
-                  <span className="block text-sm font-semibold text-white">Request a callback</span>
-                  <span className="text-sm text-white/65">We&apos;ll call you back</span>
+              <Link href="/contact" className="flex items-center gap-4 border-b border-white/10 px-6 py-4 transition-colors hover:bg-white/5">
+                <PhoneCall className="h-4 w-4 shrink-0 text-white/50" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-white">Request a callback</span>
+                  <span className="text-sm text-white/60">We&apos;ll call you back</span>
                 </span>
               </Link>
-              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition-colors hover:border-brand-glow/30 hover:bg-white/8">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-sun text-white"><Mail className="h-5 w-5" /></span>
-                <span>
-                  <span className="block text-sm font-semibold text-white">Email</span>
-                  <span className="text-sm text-white/65">{siteConfig.email}</span>
+              <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-4 border-b border-white/10 px-6 py-4 transition-colors hover:bg-white/5">
+                <Mail className="h-4 w-4 shrink-0 text-white/50" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-white">Email</span>
+                  <span className="text-sm text-white/60">{siteConfig.email}</span>
                 </span>
               </a>
-              <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition-colors hover:border-brand-glow/30 hover:bg-white/8">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white"><MapPin className="h-5 w-5" /></span>
-                <span>
-                  <span className="block text-sm font-semibold text-white">Visit us <span aria-hidden="true" className="ml-1 opacity-70">↗</span></span>
-                  <span className="mt-1 block text-sm leading-relaxed text-white/65">{fullAddress}</span>
+              <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 px-6 py-4 transition-colors hover:bg-white/5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white/50" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-white">Visit us <span aria-hidden="true" className="opacity-70">↗</span></span>
+                  <span className="mt-0.5 block text-sm leading-relaxed text-white/60">{fullAddress}</span>
                 </span>
               </a>
-              <div className="mt-2 flex items-center gap-3 px-2 py-3 rounded-xl bg-brand-green-deep/50 border border-brand-green-light/20 shadow-[0_0_15px_rgba(79,224,196,0.15)]">
-                <Clock className="h-5 w-5 text-brand-green-light" />
-                <p className="text-base font-bold tracking-wide text-white drop-shadow-md">
-                  {siteConfig.hoursSummary.days} <span className="text-brand-green-light font-black mx-1">·</span> {siteConfig.hoursSummary.time}
+              <div className="flex items-center gap-3 border-t border-white/10 bg-white/[0.03] px-6 py-3.5">
+                <Clock className="h-4 w-4 shrink-0 text-brand-green-light" aria-hidden="true" />
+                <p className="text-sm font-semibold tracking-wide text-white">
+                  {siteConfig.hoursSummary.days} <span className="mx-1 text-brand-green-light">·</span> {siteConfig.hoursSummary.time}
                 </p>
               </div>
             </div>

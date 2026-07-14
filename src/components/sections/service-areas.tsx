@@ -1,15 +1,15 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { MapPin } from "lucide-react";
+import { Check } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
-import { Stagger, StaggerItem } from "@/components/sections/stagger";
-import { InteractiveCard } from "@/components/ui/interactive-card";
+import { cn } from "@/lib/utils";
 
-const regions = [
-  { title: "Product Supply", areas: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha", "Pan India (large orders)"] },
-  { title: "Design & Installation", areas: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"] },
-  { title: "APMIP Assistance", areas: ["West Godavari District", "Andhra Pradesh"] },
+const SERVICES = ["Product Supply", "Design & Installation", "APMIP Assistance"] as const;
+
+const regions: { name: string; coverage: boolean[]; note?: string }[] = [
+  { name: "Andhra Pradesh", coverage: [true, true, true], note: "APMIP: West Godavari district" },
+  { name: "Telangana", coverage: [true, true, false] },
+  { name: "Karnataka", coverage: [true, true, false] },
+  { name: "Odisha", coverage: [true, true, false] },
+  { name: "Pan-India", coverage: [true, false, false], note: "Bulk & large orders" },
 ];
 
 export function ServiceAreas() {
@@ -19,33 +19,41 @@ export function ServiceAreas() {
         <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Service areas</p>
         <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Where we work</h2>
       </Reveal>
-      <Stagger className="mt-10 grid gap-6 md:grid-cols-3">
-        {regions.map((r) => (
-          <StaggerItem key={r.title}>
-            <InteractiveCard glow={false} className="rounded-xl p-6">
-              <h3 className="font-display text-lg font-bold text-brand-green">{r.title}</h3>
-              <ul className="mt-4 space-y-2">
-                {r.areas.map((a, i) => (
-                  <motion.li
-                    key={a}
-                    className="flex items-center gap-2 text-sm text-muted-foreground"
-                    initial={{ opacity: 0, y: -6 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 0.35, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <span className="relative flex h-4 w-4 shrink-0 items-center justify-center">
-                      <span className="absolute h-1.5 w-1.5 animate-ping rounded-full bg-brand-green/60" aria-hidden="true" />
-                      <MapPin className="relative h-4 w-4 text-brand-green" />
-                    </span>
-                    {a}
-                  </motion.li>
+
+      <Reveal delay={100} className="mt-10 overflow-x-auto rounded-2xl border border-border">
+        <table className="w-full min-w-[560px] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-border bg-muted/60 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <th className="px-5 py-3.5">Region</th>
+              {SERVICES.map((s) => (
+                <th key={s} className="px-5 py-3.5 text-center">{s}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {regions.map((r, i) => (
+              <tr key={r.name} className={cn(i !== regions.length - 1 && "border-b border-border")}>
+                <td className="px-5 py-4">
+                  <div className="font-display text-sm font-semibold">{r.name}</div>
+                  {r.note ? <div className="mt-0.5 text-xs text-muted-foreground">{r.note}</div> : null}
+                </td>
+                {r.coverage.map((covered, ci) => (
+                  <td key={ci} className="px-5 py-4 text-center">
+                    {covered ? (
+                      <span className="relative mx-auto flex h-6 w-6 items-center justify-center">
+                        <span className="absolute h-1.5 w-1.5 animate-ping rounded-full bg-brand-green/50" aria-hidden="true" />
+                        <Check className="relative h-4 w-4 text-brand-green" />
+                      </span>
+                    ) : (
+                      <span className="text-graphite-300">—</span>
+                    )}
+                  </td>
                 ))}
-              </ul>
-            </InteractiveCard>
-          </StaggerItem>
-        ))}
-      </Stagger>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Reveal>
     </section>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces, Poppins } from "next/font/google";
+import { Inter, Archivo, Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
@@ -10,11 +10,11 @@ import { LocalBusinessJsonLd } from "@/components/seo/local-business-jsonld";
 import { ConversionTracker } from "@/components/site/conversion-tracker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const fraunces = Fraunces({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-archivo",
   display: "swap",
-  axes: ["opsz", "SOFT"],
+  weight: ["500", "600", "700", "800"],
 });
 
 // 👇 The wordmark / logo font. Swap "Poppins" for another Google font to change the look.
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${fraunces.variable} ${logoFont.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${archivo.variable} ${logoFont.variable}`}>
       <body className="antialiased">
         <LocalBusinessJsonLd />
         <ConversionTracker />

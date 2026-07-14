@@ -60,12 +60,11 @@ export function Supply() {
             return (
               <StaggerItem key={c.title}>
                 <Link href="/products" className="block h-full">
-                  <ProductCard 
-                    title={c.title} 
-                    description={c.desc} 
-                    iconBig={<c.icon className="h-16 w-16" strokeWidth={1} />}
+                  <ProductCard
+                    title={c.title}
+                    description={c.desc}
                     iconSmall={<c.icon className="h-5 w-5" />}
-                    images={images} 
+                    images={images}
                   />
                 </Link>
               </StaggerItem>

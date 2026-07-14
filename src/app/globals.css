@@ -56,8 +56,10 @@
   --color-brand-green: #2E9466;
   --color-brand-green-dark: #237352;
   --color-brand-green-darker: #1A5740;
-  --color-brand-green-deep: #123D2C;
-  --color-brand-green-deeper: #0A2419;
+  /* Dark-section base — graphite-leaning near-black, green kept only as a whisper of tint so
+     it still reads as "brand dark," not a forest-at-night wash (control room, not canopy). */
+  --color-brand-green-deep: #1B2422;
+  --color-brand-green-deeper: #10161A;
   --color-brand-green-light: #6BC097;
   --color-brand-green-soft: #E7F3EC;
 
@@ -84,40 +86,50 @@
   --color-brand-glow: #4FE0C4;
   --color-brand-glow-dim: #2BA893;
 
-  /* Warm neutrals */
+  /* Warm neutrals — kept for back-compat, no longer the default UI neutral */
   --color-ink: #2A2622;
   --color-stone-50: #FAF6EF;
   --color-stone-100: #F3EEE5;
   --color-stone-200: #E9E1D5;
 
-  /* Premium soft shadows (warm-tinted) */
-  --shadow-soft: 0 1px 2px rgba(58, 44, 30, 0.05), 0 6px 20px rgba(58, 44, 30, 0.07);
-  --shadow-lift: 0 2px 6px rgba(58, 44, 30, 0.06), 0 16px 40px rgba(58, 44, 30, 0.12);
+  /* Graphite/steel — the default structural neutral (industrial, not warm-paper) */
+  --color-graphite-950: #0F1316;
+  --color-graphite-900: #171B1E;
+  --color-graphite-700: #2E3438;
+  --color-graphite-500: #5C6569;
+  --color-graphite-300: #A6ADB0;
+  --color-graphite-100: #E7EAEB;
+  --color-graphite-50: #F4F5F6;
+
+  /* Crisp, cool-tinted shadows — a defined edge, not a soft warm glow */
+  --shadow-soft: 0 1px 2px rgba(15, 19, 22, 0.06), 0 2px 6px rgba(15, 19, 22, 0.08);
+  --shadow-lift: 0 1px 3px rgba(15, 19, 22, 0.10), 0 8px 20px rgba(15, 19, 22, 0.14);
 
   /* Smooth easing for reveals & micro-interactions */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
-  --radius: 0.75rem;
+  /* Tight, machined corner radius — cascades to every card/button/input via calc() above */
+  --radius: 0.3125rem;
 
-  --background: #FFFFFF;
-  --foreground: #2A2622;
+  --background: #F4F5F6;
+  --foreground: #171B1E;
   --card: #FFFFFF;
-  --card-foreground: #2A2622;
+  --card-foreground: #171B1E;
   --popover: #FFFFFF;
-  --popover-foreground: #2A2622;
+  --popover-foreground: #171B1E;
   --primary: #2E9466;
   --primary-foreground: #FFFFFF;
-  --secondary: #F3EEE5;
-  --secondary-foreground: #1F5740;
-  --muted: #F7F2EA;
-  --muted-foreground: #6F6458;
+  --secondary: #E7EAEB;
+  --secondary-foreground: #171B1E;
+  --muted: #F4F5F6;
+  --muted-foreground: #5C6569;
   --accent: #E7F3EC;
   --accent-foreground: #1F6A49;
   --destructive: #C0392B;
-  --border: #EAE2D6;
-  --input: #E6DDD0;
+  --border: #E7EAEB;
+  --input: #DDE1E2;
   --ring: #2E9466;
 
   /* Charts — full brand palette */
@@ -264,15 +276,15 @@
     background-size: 128px 128px;
   }
 
-  /* Brand gradient text */
+  /* Brand gradient text — two-stop, restrained (not a three-stop candy rainbow) */
   .text-gradient-brand {
-    background: linear-gradient(135deg, #6BC097 0%, #4FE0C4 45%, #93CEEE 100%);
+    background: linear-gradient(135deg, #6BC097 0%, #93CEEE 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Decorative heading accent */
+  /* Heading accent — a thin, square-ended rule (technical dimension mark, not a decorative swoosh) */
   .heading-accent {
     position: relative;
     display: inline-block;
@@ -282,10 +294,9 @@
     position: absolute;
     left: 0;
     bottom: -0.35rem;
-    height: 3px;
+    height: 2px;
     width: 2.5rem;
-    border-radius: 9999px;
-    background: linear-gradient(90deg, var(--color-brand-green), var(--color-brand-glow));
+    background: var(--color-brand-green);
   }
   .heading-accent-center::after {
     left: 50%;
@@ -300,16 +311,16 @@
     -webkit-backdrop-filter: blur(12px);
   }
 
-  /* Mesh section backgrounds */
+  /* Mesh section backgrounds — quieted to a faint signal, not a warm ambient wash */
   .bg-mesh-warm {
     background-image:
-      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(244, 162, 76, 0.08), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 90% 80%, rgba(46, 148, 102, 0.07), transparent 55%);
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(244, 162, 76, 0.04), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 90% 80%, rgba(46, 148, 102, 0.035), transparent 55%);
   }
   .bg-mesh-cool {
     background-image:
-      radial-gradient(ellipse 75% 55% at 85% 15%, rgba(63, 163, 218, 0.09), transparent 55%),
-      radial-gradient(ellipse 65% 45% at 5% 85%, rgba(46, 148, 102, 0.06), transparent 55%);
+      radial-gradient(ellipse 75% 55% at 85% 15%, rgba(63, 163, 218, 0.045), transparent 55%),
+      radial-gradient(ellipse 65% 45% at 5% 85%, rgba(46, 148, 102, 0.03), transparent 55%);
   }
 
   /* Card shine sweep on hover */
