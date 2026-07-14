@@ -86,6 +86,12 @@
   --color-brand-glow: #4FE0C4;
   --color-brand-glow-dim: #2BA893;
 
+  /* Olive — earthy leaf green, distinct from the primary brand-green */
+  --color-olive: #7D8B4A;
+  --color-olive-dark: #5F6A38;
+  --color-olive-light: #A8B073;
+  --color-olive-soft: #EEF1E1;
+
   /* Warm neutrals — kept for back-compat, no longer the default UI neutral */
   --color-ink: #2A2622;
   --color-stone-50: #FAF6EF;
@@ -148,6 +154,36 @@
   --sidebar-accent-foreground: #1F6A49;
   --sidebar-border: #EAE2D6;
   --sidebar-ring: #2E9466;
+}
+
+/*
+ * Warm theme — a scoped override for light sections that swaps the graphite/
+ * industrial neutral system for a warm, natural one (cream base, olive/green/
+ * blue/sunshine accents). Dark sections (hero, header, footer, dark CTAs) use
+ * hardcoded colors, not these tokens, so wrapping around them is harmless —
+ * only descendants that reference --background/--border/--color-graphite-*
+ * etc. pick up the new values.
+ */
+.theme-warm {
+  --background: #FAF6EF;
+  --foreground: #2A2622;
+  --card: #FFFFFF;
+  --card-foreground: #2A2622;
+  --popover: #FFFFFF;
+  --popover-foreground: #2A2622;
+  --secondary: #F3EEE5;
+  --secondary-foreground: #2A2622;
+  --muted: #F3EEE5;
+  --muted-foreground: #6F6458;
+  --border: #E9E1D5;
+  --input: #E6DDD0;
+
+  --color-graphite-50: #F3EEE5;
+  --color-graphite-100: #E9E1D5;
+  --color-graphite-300: #A8B073;
+  --color-graphite-500: #7D8B4A;
+  --color-graphite-700: #5F6A38;
+  --color-graphite-900: #332C22;
 }
 
 .dark {

@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
-import { Reveal } from "@/components/sections/reveal";
 import { CropCard } from "@/components/sections/crop-card";
+import { EASE_OUT_EXPO } from "@/lib/motion";
 
 type Crop = { name: string; images: string[] };
 
@@ -70,41 +71,39 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
   );
 }
 
-const BUBBLE_ROW_SIZE = 3;
-const BUBBLE_BASE = 96;
-const BUBBLE_INTERVAL = 1100;
+const SHOWCASE_INTERVAL = 1000;
 
-function CropBubble({ name, images, index, size }: { name: string; images: string[]; index: number; size: number }) {
+function CropTile({ name, images, index, delay }: { name: string; images: string[]; index: number; delay: number }) {
   const active = images.length ? ((index % images.length) + images.length) % images.length : 0;
-  const px = `clamp(60px, 20vw, ${size}px)`;
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div
-        className="group relative shrink-0 overflow-hidden rounded-full shadow-lift ring-1 ring-black/5 transition-transform duration-300 hover:scale-105"
-        style={{ width: px, height: px }}
-      >
-        {images.map((src, i) => (
-          <Image
-            key={src}
-            src={src}
-            alt={name}
-            fill
-            sizes={`${size}px`}
-            unoptimized
-            className="object-cover transition-opacity duration-700 ease-in-out"
-            style={{ opacity: i === active ? 1 : 0 }}
-          />
-        ))}
-        <div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/25" aria-hidden="true" />
-      </div>
-      <span className="text-xs font-semibold text-foreground/80 sm:text-sm">{name}</span>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.92, y: 24 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ duration: 0.55, delay, ease: EASE_OUT_EXPO }}
+      className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-graphite-50 shadow-soft"
+    >
+      {images.map((src, i) => (
+        <Image
+          key={src}
+          src={src}
+          alt={name}
+          fill
+          sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw"
+          unoptimized
+          className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
+          style={{ opacity: i === active ? 1 : 0, transitionProperty: "opacity, transform" }}
+        />
+      ))}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" aria-hidden="true" />
+      <span className="absolute bottom-3 left-4 right-4 font-display text-base font-semibold text-white drop-shadow">{name}</span>
+    </motion.div>
   );
 }
 
-/** Apple-Watch-style honeycomb cluster — for a small, fixed set of crops (homepage). */
-export function CropsHoneycomb({ crops }: { crops: Crop[] }) {
+/** A bigger, cleaner photo-tile grid — each tile animates in as it's scrolled to. */
+export function CropsShowcase({ crops }: { crops: Crop[] }) {
   const [indices, setIndices] = useState<number[]>(() => crops.map(() => 0));
   const [isVisible, setIsVisible] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -123,36 +122,15 @@ export function CropsHoneycomb({ crops }: { crops: Crop[] }) {
         const n = crops[i]?.images.length ?? 0;
         return n > 1 ? (idx + 1) % n : idx;
       }));
-    }, BUBBLE_INTERVAL);
+    }, SHOWCASE_INTERVAL);
     return () => clearInterval(id);
   }, [isVisible, crops]);
 
-  const rows: { crop: Crop; idx: number }[][] = [];
-  for (let cursor = 0, idx = 0; cursor < crops.length; cursor += BUBBLE_ROW_SIZE) {
-    rows.push(crops.slice(cursor, cursor + BUBBLE_ROW_SIZE).map((crop) => ({ crop, idx: idx++ })));
-  }
-  const midRow = (rows.length - 1) / 2;
-
   return (
-    <div ref={containerRef} className="mx-auto mt-10 flex max-w-2xl flex-col items-center">
-      {rows.map((row, r) => {
-        const dist = Math.abs(r - midRow);
-        const scale = Math.max(0.72, 1 - dist * 0.14);
-        const offsetPx = r % 2 === 1 ? 34 : 0;
-        return (
-          <div
-            key={r}
-            className="flex justify-center gap-3 sm:gap-5"
-            style={{ marginTop: r === 0 ? 0 : -16, transform: `translateX(${offsetPx}px)` }}
-          >
-            {row.map(({ crop, idx }) => (
-              <Reveal key={crop.name} delay={idx * 60}>
-                <CropBubble name={crop.name} images={crop.images} index={indices[idx]} size={Math.round(BUBBLE_BASE * scale)} />
-              </Reveal>
-            ))}
-          </div>
-        );
-      })}
+    <div ref={containerRef} className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {crops.map((c, i) => (
+        <CropTile key={c.name} name={c.name} images={c.images} index={indices[i]} delay={(i % 4) * 0.08} />
+      ))}
     </div>
   );
 }

@@ -9,10 +9,11 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-border bg-brand-green-deep text-white/80">
       <div className="pointer-events-none absolute -top-24 right-0 -z-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.18),transparent_65%)] blur-2xl" aria-hidden="true" />
-      <div className="h-1 w-full bg-gradient-to-r from-brand-green via-brand-sun to-brand-blue" />
+      <div className="h-1 w-full bg-gradient-to-r from-brand-green to-brand-blue" />
       <div className="relative z-10 mx-auto grid max-w-6xl gap-x-8 gap-y-10 px-6 py-14 md:grid-cols-12">
         <Reveal className="md:col-span-5">
-          <span className="font-[family-name:var(--font-logo)] text-2xl font-extrabold tracking-tight text-brand-blue-light">
+          <span className="inline-flex items-center gap-2 font-display text-2xl font-extrabold tracking-tight text-white">
+            <span className="h-2 w-2 shrink-0 rounded-[2px] bg-brand-green" aria-hidden="true" />
             Waterbase Technologies
           </span>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">

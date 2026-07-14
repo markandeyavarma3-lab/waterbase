@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
-import { CropsGrid, CropsHoneycomb } from "@/components/sections/crops-grid";
+import { CropsGrid, CropsShowcase } from "@/components/sections/crops-grid";
 import { listLogos } from "@/lib/logos";
 import { whatsappLink } from "@/lib/site-config";
 
@@ -45,7 +45,7 @@ export function Crops({ limit }: { limit?: number }) {
           </div>
         </Reveal>
 
-        {limit ? <CropsHoneycomb crops={crops} /> : <CropsGrid crops={crops} />}
+        {limit ? <CropsShowcase crops={crops} /> : <CropsGrid crops={crops} />}
 
         {!limit && (
           <Reveal>

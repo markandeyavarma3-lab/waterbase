@@ -106,10 +106,10 @@ export function Header() {
           <Link href="/" className="group flex min-w-0 items-center gap-2">
             <span className="h-2 w-2 shrink-0 rounded-[2px] bg-brand-green transition-transform duration-300 group-hover:scale-125" aria-hidden="true" />
             <span className={cn(
-              "min-w-0 truncate font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-white transition-all duration-300",
+              "min-w-0 truncate font-display font-extrabold tracking-tight text-white transition-all duration-300",
               scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
             )}>
-              Waterbase<span className="hidden text-white/60 sm:inline"> Technologies</span>
+              Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>
           </Link>
         </div>

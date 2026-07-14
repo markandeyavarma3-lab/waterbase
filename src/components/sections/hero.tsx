@@ -42,8 +42,8 @@ export function Hero() {
           </Reveal>
           <Reveal delay={80}>
             <h1 className="mx-auto mt-6 max-w-2xl font-display text-[2.65rem] font-extrabold leading-[1.02] tracking-tight md:text-6xl lg:text-[4.25rem]">
-              Complete <span className="text-brand-green-light">water management</span>,{" "}
-              <span className="text-gradient-brand">engineered end to end.</span>
+              <span className="block">Complete <span className="text-brand-green-light">water management</span>,</span>
+              <span className="block text-gradient-brand">engineered end to end.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
@@ -53,21 +53,15 @@ export function Hero() {
           </Reveal>
 
           <Reveal delay={220}>
-            <div className="relative mt-9 inline-flex">
-              <span
-                className="pointer-events-none absolute inset-0 animate-ping rounded-lg bg-brand-green/40 [animation-duration:2.4s]"
-                aria-hidden="true"
-              />
-              <MotionPress magnetic>
-                <Link
-                  href="/contact"
-                  className="group relative inline-flex items-center gap-2 rounded-lg bg-brand-green px-8 py-4 text-base font-semibold text-white shadow-[0_0_0_1px_rgba(79,224,196,0.3),0_0_32px_-4px_rgba(79,224,196,0.6)] transition-shadow duration-300 hover:shadow-[0_0_0_1px_rgba(79,224,196,0.45),0_0_46px_-2px_rgba(79,224,196,0.8)]"
-                >
-                  Request a Callback
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              </MotionPress>
-            </div>
+            <MotionPress magnetic className="mt-9">
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-2 rounded-lg bg-brand-green px-8 py-4 text-base font-semibold text-white shadow-[0_0_24px_-4px_rgba(79,224,196,0.55)] transition-shadow duration-300 hover:shadow-[0_0_32px_-2px_rgba(79,224,196,0.75)]"
+              >
+                Request a Callback
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            </MotionPress>
           </Reveal>
 
           {/* Stats window */}

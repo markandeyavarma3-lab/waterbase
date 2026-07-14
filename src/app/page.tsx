@@ -20,13 +20,13 @@ export const metadata: Metadata = pageMeta({
 
 export default function Home() {
   return (
-    <>
+    <div className="theme-warm">
       {/* Intro */}
       <Hero />
 
       {/* Part 1 — Commercial & large-scale irrigation */}
       <EndToEnd />
-      <Crops limit={8} />
+      <Crops limit={12} />
       <Clients />
 
       {/* Part 2 — Products we supply */}
@@ -47,6 +47,6 @@ export default function Home() {
 
       {/* Contact */}
       <ContactCTA />
-    </>
+    </div>
   );
 }
