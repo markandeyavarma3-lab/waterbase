@@ -44,12 +44,12 @@ export function Header() {
 
   return (
     <header className={cn(
-      "sticky top-0 z-50 border-b backdrop-blur transition-all duration-300 ease-out-expo",
-      scrolled ? "border-border/70 bg-background/90 shadow-soft" : "border-border/40 bg-background/70",
+      "sticky top-0 z-50 border-b border-white/10 bg-graphite-950/92 backdrop-blur transition-all duration-300 ease-out-expo",
+      scrolled && "shadow-lift",
       hidden ? "-translate-y-full" : "translate-y-0"
     )}>
       <motion.div
-        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-brand-green via-brand-blue to-brand-sun"
+        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-brand-green to-brand-blue"
         style={{ scaleX: progress }}
         aria-hidden="true"
       />
@@ -97,19 +97,20 @@ export function Header() {
                         </Link>
                       </motion.div>
                     ))}
-                    {/* Removed APMIP and WhatsApp mobile buttons as requested */}
                   </motion.nav>
                 )}
               </AnimatePresence>
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className={cn(
-            "min-w-0 truncate font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-brand-blue transition-all duration-300",
-            scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
-          )}>
-            Waterbase
-            <span className="hidden sm:inline"> Technologies</span>
+          <Link href="/" className="group flex min-w-0 items-center gap-2">
+            <span className="h-2 w-2 shrink-0 rounded-[2px] bg-brand-green transition-transform duration-300 group-hover:scale-125" aria-hidden="true" />
+            <span className={cn(
+              "min-w-0 truncate font-[family-name:var(--font-logo)] font-extrabold tracking-tight text-white transition-all duration-300",
+              scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+            )}>
+              Waterbase<span className="hidden text-white/60 sm:inline"> Technologies</span>
+            </span>
           </Link>
         </div>
 
@@ -122,15 +123,15 @@ export function Header() {
               className={cn(
                 "relative rounded-md px-2.5 py-2 text-sm font-medium transition-colors xl:px-3",
                 isActive(l.href)
-                  ? "text-brand-green"
-                  : "text-foreground/75 hover:bg-accent hover:text-accent-foreground"
+                  ? "text-brand-green-light"
+                  : "text-white/65 hover:bg-white/10 hover:text-white"
               )}
             >
               {l.label}
               {isActive(l.href) && (
                 <motion.span
                   layoutId="nav-underline"
-                  className="absolute inset-x-2.5 -bottom-px h-0.5 rounded-full bg-brand-green xl:inset-x-3"
+                  className="absolute inset-x-2.5 -bottom-px h-0.5 rounded-full bg-brand-green-light xl:inset-x-3"
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   aria-hidden="true"
                 />
