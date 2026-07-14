@@ -78,6 +78,7 @@ export function LeadForm() {
 
   return (
     <Form {...form}>
+      {/* eslint-disable-next-line react-hooks/refs -- honeypotRef.current is only read inside onSubmit, which react-hook-form invokes as an event handler after submit, never during render */}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         {/* Honeypot — hidden from real users; bots that fill it are silently dropped. */}
         <input

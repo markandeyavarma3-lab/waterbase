@@ -6,12 +6,18 @@ import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { StickyMobileCTA } from "@/components/site/sticky-mobile-cta";
 import { WhatsAppBubble } from "@/components/site/whatsapp-bubble";
+import { SOLUTION_LINKS } from "@/lib/nav";
+
+// Ad landing pages render their own StickyCallBar (Call Now + WhatsApp) —
+// the generic StickyMobileCTA would otherwise stack on top of it on mobile.
+const LANDING_PAGE_HREFS = new Set(SOLUTION_LINKS.map((l) => l.href));
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   if (pathname?.startsWith("/admin")) {
     return <>{children}</>;
   }
+  const isLandingPage = pathname ? LANDING_PAGE_HREFS.has(pathname) : false;
   return (
     <>
       <a
@@ -24,7 +30,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <main id="main">{children}</main>
       <div aria-hidden className="h-16 pb-safe md:hidden" />
       <Footer />
-      <StickyMobileCTA />
+      {isLandingPage ? null : <StickyMobileCTA />}
       <WhatsAppBubble />
     </>
   );

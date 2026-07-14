@@ -3,6 +3,7 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { EASE_OUT_EXPO } from "@/lib/motion";
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -19,7 +20,7 @@ export function Reveal({ children, className, delay = 0 }: { children: ReactNode
       whileInView="show"
       viewport={{ once: true, amount: 0.12, margin: "0px 0px -8% 0px" }}
       variants={variants}
-      transition={{ duration: 0.8, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, delay: delay / 1000, ease: EASE_OUT_EXPO }}
     >
       {children}
     </motion.div>
