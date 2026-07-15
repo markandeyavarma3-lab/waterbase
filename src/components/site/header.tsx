@@ -44,7 +44,7 @@ export function Header() {
 
   return (
     <header className={cn(
-      "sticky top-0 z-50 border-b border-white/10 bg-olive-deep/92 backdrop-blur transition-all duration-300 ease-out-expo",
+      "sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-olive-deep via-brand-green-deep to-olive-deep backdrop-blur transition-all duration-300 ease-out-expo",
       scrolled && "shadow-lift",
       hidden ? "-translate-y-full" : "translate-y-0"
     )}>
@@ -103,11 +103,11 @@ export function Header() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="group flex min-w-0 items-center gap-2">
-            <span className="h-2 w-2 shrink-0 rounded-[2px] bg-brand-green transition-transform duration-300 group-hover:scale-125" aria-hidden="true" />
+          <Link href="/" className="group flex min-w-0 items-center gap-2.5">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-[2px] bg-brand-sun transition-transform duration-300 group-hover:scale-125" aria-hidden="true" />
             <span className={cn(
               "min-w-0 truncate font-display font-extrabold tracking-tight text-white transition-all duration-300",
-              scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+              scrolled ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
             )}>
               Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>
@@ -121,21 +121,21 @@ export function Header() {
               key={l.href}
               href={l.href}
               className={cn(
-                "relative rounded-md px-2.5 py-2 text-sm font-medium transition-colors xl:px-3",
+                "relative rounded-full px-3 py-2 text-sm font-medium transition-colors xl:px-3.5",
                 isActive(l.href)
-                  ? "text-brand-green-light"
+                  ? "text-white"
                   : "text-white/65 hover:bg-white/10 hover:text-white"
               )}
             >
-              {l.label}
               {isActive(l.href) && (
                 <motion.span
-                  layoutId="nav-underline"
-                  className="absolute inset-x-2.5 -bottom-px h-0.5 rounded-full bg-brand-green-light xl:inset-x-3"
+                  layoutId="nav-pill"
+                  className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-brand-green to-brand-blue/80"
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   aria-hidden="true"
                 />
               )}
+              {l.label}
             </Link>
           ))}
         </nav>

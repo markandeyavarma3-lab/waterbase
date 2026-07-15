@@ -56,10 +56,10 @@
   --color-brand-green: #2E9466;
   --color-brand-green-dark: #237352;
   --color-brand-green-darker: #1A5740;
-  /* Dark-section base — graphite-leaning near-black, green kept only as a whisper of tint so
-     it still reads as "brand dark," not a forest-at-night wash (control room, not canopy). */
-  --color-brand-green-deep: #1B2422;
-  --color-brand-green-deeper: #10161A;
+  /* Dark-section base — the same medium olive-green used on the hero/header,
+     applied everywhere else a dark section appears (footer, CTAs, page heroes). */
+  --color-brand-green-deep: #3B531F;
+  --color-brand-green-deeper: #2E4020;
   --color-brand-green-light: #6BC097;
   --color-brand-green-soft: #E7F3EC;
 
