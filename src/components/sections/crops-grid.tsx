@@ -70,12 +70,16 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
   );
 }
 
-const HONEYCOMB_ROW_SIZES = [5, 4]; // alternating row length — see note below
-const HONEYCOMB_SIZE = 150; // uniform circle diameter — kept uniform so the hex-packing math is exact
-const HONEYCOMB_GAP = 8;
+// Tapering row pattern — narrow at top and bottom, widest in the middle — so
+// the cluster's overall silhouette reads as a circle/sphere, not a rectangle.
+// Each step differs by exactly 1, which is what keeps the hex-nesting math
+// (below) exact regardless of row length.
+const HONEYCOMB_PATTERN = [2, 3, 4, 3, 2];
+const HONEYCOMB_SIZE = 176; // uniform circle diameter — kept uniform so the hex-packing math is exact
+const HONEYCOMB_GAP = 6;
 // Correct hex packing: circles in adjacent rows sit exactly (SIZE + GAP) apart
 // center-to-center — touching with a consistent gap, never overlapping. Rows
-// alternating between N and N-1 items, each independently centered, land each
+// differing by exactly 1 item, each independently centered, land each
 // shorter row's circles exactly between the longer row's circles above/below
 // — true honeycomb nesting with no manual horizontal offset needed.
 const HONEYCOMB_PITCH = (HONEYCOMB_SIZE + HONEYCOMB_GAP) * (Math.sqrt(3) / 2);
@@ -83,7 +87,7 @@ const HONEYCOMB_STEP_MS = 350; // how often ONE bubble (in row-major order) adva
 
 function CropBubble({ name, images, index, delay }: { name: string; images: string[]; index: number; delay: number }) {
   const active = images.length ? ((index % images.length) + images.length) % images.length : 0;
-  const px = `clamp(76px, 22vw, ${HONEYCOMB_SIZE}px)`;
+  const px = `clamp(88px, 26vw, ${HONEYCOMB_SIZE}px)`;
 
   return (
     <motion.div
@@ -145,7 +149,9 @@ export function CropsHoneycomb({ crops }: { crops: Crop[] }) {
 
   const rows: { crop: Crop; idx: number }[][] = [];
   for (let cursor = 0, idx = 0, r = 0; cursor < crops.length; r++) {
-    const take = Math.min(HONEYCOMB_ROW_SIZES[r % 2], crops.length - cursor);
+    // Once the curated taper is used up, keep alternating by 1 (still nests correctly).
+    const target = r < HONEYCOMB_PATTERN.length ? HONEYCOMB_PATTERN[r] : HONEYCOMB_PATTERN[HONEYCOMB_PATTERN.length - 2];
+    const take = Math.min(target, crops.length - cursor);
     rows.push(crops.slice(cursor, cursor + take).map((crop) => ({ crop, idx: idx++ })));
     cursor += take;
   }
