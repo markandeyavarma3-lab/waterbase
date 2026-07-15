@@ -91,6 +91,7 @@
   --color-olive-dark: #5F6A38;
   --color-olive-light: #A8B073;
   --color-olive-soft: #EEF1E1;
+  --color-olive-deep: #23260F;
 
   /* Warm neutrals — kept for back-compat, no longer the default UI neutral */
   --color-ink: #2A2622;

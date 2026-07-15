@@ -21,7 +21,7 @@ export function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -40]);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-brand-green-deeper text-white bg-grain">
+    <section ref={sectionRef} className="relative overflow-hidden bg-olive-deep text-white bg-grain">
       <motion.div style={{ y }} className="absolute inset-0 -z-10">
         <AuroraGlow variant="hero" />
       </motion.div>
@@ -42,8 +42,8 @@ export function Hero() {
           </Reveal>
           <Reveal delay={80}>
             <h1 className="mx-auto mt-6 font-display text-[2.65rem] font-extrabold leading-[1.02] tracking-tight md:text-5xl lg:text-6xl">
-              <span className="block lg:whitespace-nowrap">Complete <span className="text-olive-light">water management</span>,</span>
-              <span className="block text-olive">engineered end to end.</span>
+              <span className="block lg:whitespace-nowrap">Complete <span className="text-brand-green-light">water management</span>,</span>
+              <span className="block text-gradient-brand">engineered end to end.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
