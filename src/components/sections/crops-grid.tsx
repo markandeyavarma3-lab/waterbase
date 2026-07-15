@@ -71,14 +71,16 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
 }
 
 const HONEYCOMB_ROW_SIZE = 3;
-const HONEYCOMB_BASE = 128;
-const HONEYCOMB_INTERVAL = 1100;
+const HONEYCOMB_SIZE = 150; // uniform circle diameter — kept uniform so the hex-packing math is exact
+const HONEYCOMB_GAP = 14;
+// Correct hex packing: circles in adjacent rows sit exactly (SIZE + GAP) apart
+// center-to-center — touching with a consistent gap, never overlapping.
+const HONEYCOMB_PITCH = (HONEYCOMB_SIZE + HONEYCOMB_GAP) * (Math.sqrt(3) / 2);
+const HONEYCOMB_STEP_MS = 350; // how often ONE bubble (in row-major order) advances to its next photo
 
-// The name is overlaid *inside* the circle (not a caption below it) so rows
-// can safely overlap for the honeycomb effect without colliding with text.
-function CropBubble({ name, images, index, size, delay }: { name: string; images: string[]; index: number; size: number; delay: number }) {
+function CropBubble({ name, images, index, delay }: { name: string; images: string[]; index: number; delay: number }) {
   const active = images.length ? ((index % images.length) + images.length) % images.length : 0;
-  const px = `clamp(64px, 20vw, ${size}px)`;
+  const px = `clamp(76px, 22vw, ${HONEYCOMB_SIZE}px)`;
 
   return (
     <motion.div
@@ -95,7 +97,7 @@ function CropBubble({ name, images, index, size, delay }: { name: string; images
           src={src}
           alt={name}
           fill
-          sizes={`${size}px`}
+          sizes={`${HONEYCOMB_SIZE}px`}
           unoptimized
           className="object-cover transition-opacity duration-700 ease-in-out"
           style={{ opacity: i === active ? 1 : 0 }}
@@ -113,6 +115,7 @@ export function CropsHoneycomb({ crops }: { crops: Crop[] }) {
   const [indices, setIndices] = useState<number[]>(() => crops.map(() => 0));
   const [isVisible, setIsVisible] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const turnRef = useRef(0);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -121,14 +124,19 @@ export function CropsHoneycomb({ crops }: { crops: Crop[] }) {
     return () => observer.disconnect();
   }, []);
 
+  // Advance exactly one bubble's photo per tick, in row-major order (row 1 left-to-right,
+  // then row 2, ...) — a cascading wave across the cluster instead of everything at once.
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || crops.length === 0) return;
     const id = setInterval(() => {
+      const turn = turnRef.current % crops.length;
+      turnRef.current += 1;
       setIndices((prev) => prev.map((idx, i) => {
+        if (i !== turn) return idx;
         const n = crops[i]?.images.length ?? 0;
         return n > 1 ? (idx + 1) % n : idx;
       }));
-    }, HONEYCOMB_INTERVAL);
+    }, HONEYCOMB_STEP_MS);
     return () => clearInterval(id);
   }, [isVisible, crops]);
 
@@ -136,27 +144,24 @@ export function CropsHoneycomb({ crops }: { crops: Crop[] }) {
   for (let cursor = 0, idx = 0; cursor < crops.length; cursor += HONEYCOMB_ROW_SIZE) {
     rows.push(crops.slice(cursor, cursor + HONEYCOMB_ROW_SIZE).map((crop) => ({ crop, idx: idx++ })));
   }
-  const midRow = (rows.length - 1) / 2;
 
   return (
-    <div ref={containerRef} className="mx-auto mt-10 flex max-w-2xl flex-col items-center">
-      {rows.map((row, r) => {
-        const dist = Math.abs(r - midRow);
-        const scale = Math.max(0.68, 1 - dist * 0.16);
-        const rowSize = Math.round(HONEYCOMB_BASE * scale);
-        const offsetPx = r % 2 === 1 ? rowSize * 0.42 : 0;
-        return (
-          <div
-            key={r}
-            className="flex justify-center gap-3 sm:gap-4"
-            style={{ marginTop: r === 0 ? 0 : -rowSize * 0.32, transform: `translateX(${offsetPx}px)` }}
-          >
-            {row.map(({ crop, idx }) => (
-              <CropBubble key={crop.name} name={crop.name} images={crop.images} index={indices[idx]} size={rowSize} delay={(idx % HONEYCOMB_ROW_SIZE) * 0.08} />
-            ))}
-          </div>
-        );
-      })}
+    <div ref={containerRef} className="mx-auto mt-10 flex max-w-3xl flex-col items-center">
+      {rows.map((row, r) => (
+        <div
+          key={r}
+          className="flex justify-center"
+          style={{
+            gap: HONEYCOMB_GAP,
+            marginTop: r === 0 ? 0 : HONEYCOMB_PITCH - HONEYCOMB_SIZE,
+            transform: r % 2 === 1 ? `translateX(${(HONEYCOMB_SIZE + HONEYCOMB_GAP) / 2}px)` : undefined,
+          }}
+        >
+          {row.map(({ crop, idx }) => (
+            <CropBubble key={crop.name} name={crop.name} images={crop.images} index={indices[idx]} delay={idx * 0.06} />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
