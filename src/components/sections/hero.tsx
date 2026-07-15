@@ -30,7 +30,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
 
       <Container className="relative z-10 py-16 pb-28 text-center md:py-24 md:pb-36">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-5xl">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium shadow-[0_0_0_1px_rgba(79,224,196,0.08)] backdrop-blur">
               <span className="relative flex h-2 w-2">
@@ -41,9 +41,9 @@ export function Hero() {
             </span>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mx-auto mt-6 max-w-2xl font-display text-[2.65rem] font-extrabold leading-[1.02] tracking-tight md:text-6xl lg:text-[4.25rem]">
-              <span className="block">Complete <span className="text-brand-green-light">water management</span>,</span>
-              <span className="block text-gradient-brand">engineered end to end.</span>
+            <h1 className="mx-auto mt-6 font-display text-[2.65rem] font-extrabold leading-[1.02] tracking-tight md:text-5xl lg:text-6xl">
+              <span className="block lg:whitespace-nowrap">Complete <span className="text-olive-light">water management</span>,</span>
+              <span className="block text-olive">engineered end to end.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
