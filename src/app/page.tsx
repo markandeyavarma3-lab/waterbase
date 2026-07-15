@@ -26,7 +26,7 @@ export default function Home() {
 
       {/* Part 1 — Commercial & large-scale irrigation */}
       <EndToEnd />
-      <Crops limit={12} />
+      <Crops limit={14} />
       <Clients />
 
       {/* Part 2 — Products we supply */}

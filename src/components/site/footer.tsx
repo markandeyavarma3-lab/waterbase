@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { MapPin, MessageCircle, Mail, PhoneCall } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
-import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 
 import { NAV_LINKS } from "@/lib/nav";
 
@@ -11,7 +10,7 @@ export function Footer() {
       <div className="pointer-events-none absolute -top-24 right-0 -z-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(63,160,108,0.18),transparent_65%)] blur-2xl" aria-hidden="true" />
       <div className="h-1 w-full bg-gradient-to-r from-brand-green to-brand-blue" />
       <div className="relative z-10 mx-auto grid max-w-6xl gap-x-8 gap-y-10 px-6 py-14 md:grid-cols-12">
-        <Reveal className="md:col-span-5">
+        <Reveal className="md:col-span-7">
           <span className="inline-flex items-center gap-2 font-display text-2xl font-extrabold tracking-tight text-white">
             <span className="h-2 w-2 shrink-0 rounded-[2px] bg-brand-green" aria-hidden="true" />
             Waterbase Technologies
@@ -24,7 +23,7 @@ export function Footer() {
           </p>
         </Reveal>
 
-        <Reveal delay={60} className="md:col-span-3">
+        <Reveal delay={60} className="md:col-span-5">
           <h4 className="font-display text-sm font-bold uppercase tracking-wide text-white">Explore</h4>
           <ul className="mt-4 space-y-2 text-sm">
             {NAV_LINKS.filter(l => l.label !== "Home").map((x) => (
@@ -34,30 +33,6 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-          </ul>
-        </Reveal>
-
-        <Reveal delay={120} className="md:col-span-4">
-          <h4 className="font-display text-sm font-bold uppercase tracking-wide text-white">Get in touch</h4>
-          <ul className="mt-4 space-y-3 text-sm">
-            <li>
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white">
-                <MessageCircle className="h-4 w-4 shrink-0" /> Message us on WhatsApp
-              </a>
-            </li>
-            <li>
-              <Link href="/contact" className="inline-flex items-center gap-2 text-white/80 transition-colors hover:text-white">
-                <PhoneCall className="h-4 w-4 shrink-0" /> Request a callback
-              </Link>
-            </li>
-            <li className="flex items-start gap-2">
-              <Mail className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`mailto:${siteConfig.email}`} className="min-w-0 break-words hover:text-white">{siteConfig.email}</a>
-            </li>
-            <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="leading-relaxed hover:text-white hover:underline">{fullAddress}</a>
-            </li>
           </ul>
         </Reveal>
       </div>
