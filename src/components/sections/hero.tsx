@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Users, Sprout, Building2, MapPin, Globe2 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
@@ -12,6 +13,14 @@ import { WaterRipple } from "@/components/site/water-ripple";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig } from "@/lib/site-config";
+
+const STAT_ICONS: Record<string, LucideIcon> = {
+  "Customers served": Users,
+  "Acres irrigated": Sprout,
+  "Corporate projects": Building2,
+  "Districts served": MapPin,
+  "States served": Globe2,
+};
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -56,7 +65,7 @@ export function Hero() {
             <MotionPress magnetic className="mt-9">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 rounded-lg bg-brand-sun px-8 py-4 text-base font-semibold text-white shadow-[0_0_24px_-4px_rgba(244,162,76,0.55)] transition-shadow duration-300 hover:shadow-[0_0_32px_-2px_rgba(244,162,76,0.75)]"
+                className="group inline-flex items-center gap-2 rounded-full bg-brand-sun px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-black/25 ring-1 ring-white/15 transition-colors duration-300 hover:bg-brand-sun-dark"
               >
                 Request a Callback
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -66,19 +75,23 @@ export function Hero() {
 
           {/* Stats window */}
           <Reveal delay={280}>
-            <div className="glass-panel card-shine mx-auto mt-10 max-w-3xl overflow-hidden rounded-2xl">
-              <p className="border-b border-white/10 px-5 py-3 text-left text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">
+            <div className="glass-panel mx-auto mt-10 max-w-3xl overflow-hidden rounded-2xl">
+              <p className="border-b border-white/10 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">
                 Trusted across South India
               </p>
               <div className="grid grid-cols-2 divide-x divide-y divide-white/10 sm:grid-cols-3 lg:grid-cols-5 lg:divide-y-0">
-                {siteConfig.stats.map((s) => (
-                  <div key={s.label} className="flex flex-col items-center justify-center gap-1 px-4 py-6 text-center">
-                    <p className="font-display text-2xl font-extrabold tracking-tight md:text-3xl">
-                      <CountUp end={s.value} suffix={s.suffix} />
-                    </p>
-                    <p className="text-xs leading-snug text-white/60 md:text-sm">{s.label}</p>
-                  </div>
-                ))}
+                {siteConfig.stats.map((s) => {
+                  const Icon = STAT_ICONS[s.label];
+                  return (
+                    <div key={s.label} className="flex flex-col items-center justify-center gap-1.5 px-4 py-7 text-center transition-colors hover:bg-white/5">
+                      {Icon ? <Icon className="h-5 w-5 text-brand-green-light" aria-hidden="true" /> : null}
+                      <p className="font-display text-2xl font-extrabold tracking-tight md:text-3xl">
+                        <CountUp end={s.value} suffix={s.suffix} />
+                      </p>
+                      <p className="text-xs leading-snug text-white/60 md:text-sm">{s.label}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </Reveal>
