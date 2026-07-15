@@ -91,7 +91,7 @@
   --color-olive-dark: #5F6A38;
   --color-olive-light: #A8B073;
   --color-olive-soft: #EEF1E1;
-  --color-olive-deep: #23260F;
+  --color-olive-deep: #2E4020;
 
   /* Warm neutrals — kept for back-compat, no longer the default UI neutral */
   --color-ink: #2A2622;
@@ -166,18 +166,18 @@
  * etc. pick up the new values.
  */
 .theme-warm {
-  --background: #FAF6EF;
+  --background: #F3EEE1;
   --foreground: #2A2622;
   --card: #FFFFFF;
   --card-foreground: #2A2622;
   --popover: #FFFFFF;
   --popover-foreground: #2A2622;
-  --secondary: #F3EEE5;
+  --secondary: #EEE7D6;
   --secondary-foreground: #2A2622;
-  --muted: #F3EEE5;
+  --muted: #EEE7D6;
   --muted-foreground: #6F6458;
-  --border: #E9E1D5;
-  --input: #E6DDD0;
+  --border: #E3D8C2;
+  --input: #DED2B9;
 
   --color-graphite-50: #F3EEE5;
   --color-graphite-100: #E9E1D5;

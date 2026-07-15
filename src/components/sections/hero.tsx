@@ -56,7 +56,7 @@ export function Hero() {
             <MotionPress magnetic className="mt-9">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 rounded-lg bg-brand-green px-8 py-4 text-base font-semibold text-white shadow-[0_0_24px_-4px_rgba(79,224,196,0.55)] transition-shadow duration-300 hover:shadow-[0_0_32px_-2px_rgba(79,224,196,0.75)]"
+                className="group inline-flex items-center gap-2 rounded-lg bg-brand-sun px-8 py-4 text-base font-semibold text-white shadow-[0_0_24px_-4px_rgba(244,162,76,0.55)] transition-shadow duration-300 hover:shadow-[0_0_32px_-2px_rgba(244,162,76,0.75)]"
               >
                 Request a Callback
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
