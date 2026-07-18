@@ -106,7 +106,7 @@ export function Header() {
           <Link href="/" className="flex min-w-0 items-center">
             <span className={cn(
               "min-w-0 truncate font-[family-name:var(--font-logo)] font-bold tracking-tight text-white transition-all duration-300",
-              scrolled ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+              scrolled ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
             )}>
               Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>

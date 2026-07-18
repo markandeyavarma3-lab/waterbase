@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
-import { Handshake, MapPin, Ruler, PencilRuler, FileText, Truck, Wrench, Settings, LifeBuoy } from "lucide-react";
+import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
+import { Handshake, MapPin, Ruler, PencilRuler, FileText, Truck, Wrench, Settings, LifeBuoy, Check } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { cn } from "@/lib/utils";
@@ -62,9 +62,21 @@ export function Process() {
   }, []);
 
   const reached = progress * steps.length;
+  const currentStep = Math.min(steps.length, Math.max(1, Math.ceil(reached)));
 
   return (
     <div ref={ref} className="relative mx-auto mt-14 max-w-3xl">
+      {/* live step counter — tracks scroll position through the timeline */}
+      <div className="sticky top-20 z-30 mb-6 flex justify-center">
+        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/90 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-soft backdrop-blur">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-green opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-green" />
+          </span>
+          Step {currentStep} of {steps.length}
+        </span>
+      </div>
+
       {/* rail track */}
       <span className="pointer-events-none absolute left-8 top-8 bottom-8 w-1 -translate-x-1/2 rounded-full bg-border md:left-1/2" aria-hidden="true" />
       {/* rail fill — follows scroll */}
@@ -96,6 +108,7 @@ export function Process() {
         {steps.map((step, i) => {
           const left = i % 2 === 0;
           const active = reached >= i + 0.25;
+          const completed = reached >= i + 1;
           return (
             <li key={step.title} className="relative pb-11 last:pb-0 md:pb-16">
               {/* node */}
@@ -107,8 +120,29 @@ export function Process() {
                 {/* glow */}
                 <span className={cn("absolute inset-0 rounded-full bg-brand-green/30 blur-md transition-opacity duration-500", active ? "opacity-100" : "opacity-0")} aria-hidden="true" />
                 {/* disc */}
-                <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-brand-green to-brand-green-dark text-white shadow-lift ring-4 ring-background">
-                  <step.icon className="h-6 w-6" aria-hidden="true" />
+                <span className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand-green to-brand-green-dark text-white shadow-lift ring-4 ring-background">
+                  <AnimatePresence mode="wait" initial={false}>
+                    {completed ? (
+                      <motion.span
+                        key="done"
+                        initial={{ scale: 0.4, opacity: 0, rotate: -90 }}
+                        animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                      >
+                        <Check className="h-6 w-6" aria-hidden="true" />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="icon"
+                        initial={{ scale: 0.4, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.4, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <step.icon className="h-6 w-6" aria-hidden="true" />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </span>
                 {/* number badge */}
                 <span className="absolute -right-0.5 -top-1 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-graphite-900 font-display text-[11px] font-extrabold text-white shadow-soft ring-2 ring-background">
@@ -123,7 +157,7 @@ export function Process() {
                   left ? "md:mr-auto md:pr-14" : "md:ml-auto md:pl-14"
                 )}
                 style={{ transformPerspective: 800 }}
-                animate={active ? { opacity: 1, x: 0, rotateY: 0 } : { opacity: 0, x: left ? -16 : 16, rotateY: left ? 6 : -6 }}
+                animate={active ? { opacity: 1, x: 0, scale: 1, rotateY: 0 } : { opacity: 0, x: left ? -16 : 16, scale: 0.96, rotateY: left ? 6 : -6 }}
                 transition={{ type: "spring", stiffness: 220, damping: 24 }}
               >
                 <InteractiveCard glow={false} className={cn("p-5", left && "md:text-right")}>

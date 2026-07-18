@@ -8,6 +8,7 @@ import { siteConfig } from "@/lib/site-config";
 import { SiteChrome } from "@/components/site/site-chrome";
 import { LocalBusinessJsonLd } from "@/components/seo/local-business-jsonld";
 import { ConversionTracker } from "@/components/site/conversion-tracker";
+import { RouteProgress } from "@/components/site/route-progress";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const archivo = Archivo({
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased">
         <LocalBusinessJsonLd />
         <ConversionTracker />
+        <RouteProgress />
         <SiteChrome>{children}</SiteChrome>
         <Analytics />
         <GoogleAnalytics gaId="G-RP33RYTKFF" />

@@ -47,6 +47,16 @@ export function Crops({ limit }: { limit?: number }) {
 
         {limit ? <CropsHoneycomb crops={crops} /> : <CropsGrid crops={crops} />}
 
+        {limit ? (
+          <Reveal>
+            <div className="mt-10 flex justify-center">
+              <Button asChild variant="outline">
+                <Link href="/crops">View all crops <ArrowRight className="h-4 w-4" /></Link>
+              </Button>
+            </div>
+          </Reveal>
+        ) : null}
+
         {!limit && (
           <Reveal>
             <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-border bg-card p-7 text-center shadow-soft sm:p-9">

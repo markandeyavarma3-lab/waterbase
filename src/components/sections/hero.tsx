@@ -9,6 +9,7 @@ import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
 import { AuroraGlow } from "@/components/site/aurora-glow";
+import { CursorGlow } from "@/components/site/cursor-glow";
 import { WaterRipple } from "@/components/site/water-ripple";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
@@ -34,6 +35,7 @@ export function Hero() {
       <motion.div style={{ y }} className="absolute inset-0 -z-10">
         <AuroraGlow variant="hero" />
       </motion.div>
+      <CursorGlow />
       <WaterRipple className="pointer-events-none absolute inset-0 -z-10 h-full w-full" />
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />

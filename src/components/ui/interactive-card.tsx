@@ -1,12 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import type { PointerEvent, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export function InteractiveCard({ children, className, glow = true }: { children: ReactNode; className?: string; glow?: boolean }) {
+  const px = useMotionValue(0.5);
+  const py = useMotionValue(0.5);
+  const spring = { stiffness: 300, damping: 30, mass: 0.5 };
+  const rotateX = useSpring(useTransform(py, [0, 1], [7, -7]), spring);
+  const rotateY = useSpring(useTransform(px, [0, 1], [-7, 7]), spring);
+
+  function onPointerMove(e: PointerEvent<HTMLDivElement>) {
+    if (e.pointerType !== "mouse") return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    px.set((e.clientX - rect.left) / rect.width);
+    py.set((e.clientY - rect.top) / rect.height);
+  }
+
+  function onPointerLeave() {
+    px.set(0.5);
+    py.set(0.5);
+  }
+
   return (
     <motion.div
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
       whileHover={{ y: -6 }}
       whileTap={{ y: -2 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}

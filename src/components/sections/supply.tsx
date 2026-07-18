@@ -1,48 +1,31 @@
-import fs from "fs";
-import path from "path";
+import Image from "next/image";
 import Link from "next/link";
-import { 
-  Droplets, CloudRain, Filter, Gauge, Cpu, Workflow, 
-  ArrowRight, Check, Waves, Layers, Leaf, Route, Box, Cable, CircleDashed 
+import {
+  Droplets, CloudRain, Filter, Gauge, Cpu, Workflow,
+  ArrowRight, Check, Waves, Layers, Leaf, Route, Box, Cable, CircleDashed,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
-import { ProductCard } from "@/components/ui/product-card";
 
-// Helper function to get images dynamically from the folder
-function getProductImages(folderName: string): string[] {
-  try {
-    const dir = path.join(process.cwd(), "public/products", folderName);
-    if (!fs.existsSync(dir)) return [];
-    
-    const files = fs.readdirSync(dir);
-    const validExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
-    return files
-      .filter((file) => validExts.has(path.extname(file).toLowerCase()))
-      .map((file) => `/products/${folderName}/${file}`);
-  } catch (error) {
-    return [];
-  }
-}
-
-const categories = [
-  { folder: "drip-irrigation", icon: Droplets, title: "Drip Irrigation Systems", desc: "Inline & online drippers, laterals, and complete drip systems." },
-  { folder: "micro-mini-sprinklers", icon: CloudRain, title: "Micro & Mini Sprinklers", desc: "Low-volume sprinklers for nurseries and horticulture." },
-  { folder: "sprinkler-irrigation", icon: CloudRain, title: "Sprinkler Irrigation", desc: "Overhead sprinkler systems for field crops." },
-  { folder: "rainguns", icon: Waves, title: "Rainguns", desc: "High-discharge rainguns for large coverage areas." },
-  { folder: "pvc-pipes", icon: Workflow, title: "PVC Pipes & Fittings", desc: "Durable PVC mains, sub-mains, and matching fittings." },
-  { folder: "pe-pipes", icon: Route, title: "PE Pipes & Fittings", desc: "Flexible polyethylene pipes and compression fittings." },
-  { folder: "hose-pipes", icon: Cable, title: "Hose Pipes & Fittings", desc: "Flexible hoses for portable and auxiliary watering." },
-  { folder: "column-pipes", icon: CircleDashed, title: "Column Pipes & Fittings", desc: "High-strength pipes for submersible borewell pumps." },
-  { folder: "casing-pipes", icon: Box, title: "Casing Pipes", desc: "Reliable casing pipes to protect borewells." },
-  { folder: "motors-pumps", icon: Gauge, title: "Motors & Pumps", desc: "Submersible, monoblock, and open-well pumps." },
-  { folder: "filters-dosing-injectors", icon: Filter, title: "Filters, Dosing Pump & Injectors", desc: "Screen, disc, sand filters and fertigation tools." },
-  { folder: "starters-others", icon: Cpu, title: "Starters & Others", desc: "Pump starters, electrical panels, and automation." },
-  { folder: "mulching-sheets", icon: Layers, title: "Mulching Sheets", desc: "Agricultural mulching films for weed control and moisture." },
-  { folder: "planting-material", icon: Leaf, title: "Planting Material", desc: "High-quality seeds and saplings for optimal yield." },
+const categories: { icon: LucideIcon; title: string; desc: string }[] = [
+  { icon: Droplets, title: "Drip Irrigation Systems", desc: "Inline & online drippers, laterals, and complete drip systems." },
+  { icon: CloudRain, title: "Micro & Mini Sprinklers", desc: "Low-volume sprinklers for nurseries and horticulture." },
+  { icon: CloudRain, title: "Sprinkler Irrigation", desc: "Overhead sprinkler systems for field crops." },
+  { icon: Waves, title: "Rainguns", desc: "High-discharge rainguns for large coverage areas." },
+  { icon: Workflow, title: "PVC Pipes & Fittings", desc: "Durable PVC mains, sub-mains, and matching fittings." },
+  { icon: Route, title: "PE Pipes & Fittings", desc: "Flexible polyethylene pipes and compression fittings." },
+  { icon: Cable, title: "Hose Pipes & Fittings", desc: "Flexible hoses for portable and auxiliary watering." },
+  { icon: CircleDashed, title: "Column Pipes & Fittings", desc: "High-strength pipes for submersible borewell pumps." },
+  { icon: Box, title: "Casing Pipes", desc: "Reliable casing pipes to protect borewells." },
+  { icon: Gauge, title: "Motors & Pumps", desc: "Submersible, monoblock, and open-well pumps." },
+  { icon: Filter, title: "Filters, Dosing Pump & Injectors", desc: "Screen, disc, sand filters and fertigation tools." },
+  { icon: Cpu, title: "Starters & Others", desc: "Pump starters, electrical panels, and automation." },
+  { icon: Layers, title: "Mulching Sheets", desc: "Agricultural mulching films for weed control and moisture." },
+  { icon: Leaf, title: "Planting Material", desc: "High-quality seeds and saplings for optimal yield." },
 ];
 
 const reach = ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"];
@@ -54,22 +37,34 @@ export function Supply() {
       <Container>
         <SectionHeading eyebrow="What we supply" title="The complete agricultural range" lead="Every component for your farm — from drip and sprinkler systems to pumps, pipes, and planting materials." action={<Button asChild variant="outline"><Link href="/products">Browse all products <ArrowRight /></Link></Button>} />
 
-        <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {categories.map((c) => {
-            const images = getProductImages(c.folder);
-            return (
-              <StaggerItem key={c.title}>
-                <Link href="/products" className="block h-full">
-                  <ProductCard
-                    title={c.title}
-                    description={c.desc}
-                    iconSmall={<c.icon className="h-5 w-5" />}
-                    images={images}
-                  />
-                </Link>
-              </StaggerItem>
-            );
-          })}
+        <Reveal delay={40}>
+          <div className="relative mt-10 overflow-hidden rounded-2xl border border-border shadow-lift">
+            <Image
+              src="/images/irrigation-product-range.jpg"
+              alt="Complete irrigation product range — borewell motor and pump, casing and HDPE pipe, starters and electrical equipment, filters and dosing pumps, PVC pipes, drip, sprinkler, raingun, foggers and landscape irrigation"
+              width={1672}
+              height={941}
+              className="h-auto w-full"
+              sizes="(min-width: 1024px) 1152px, 100vw"
+              priority={false}
+            />
+          </div>
+        </Reveal>
+
+        <Stagger className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((c) => (
+            <StaggerItem key={c.title}>
+              <Link href="/products" className="block h-full">
+                <InteractiveCard className="group h-full p-6">
+                  <span className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white">
+                    <c.icon className="h-6 w-6" />
+                  </span>
+                  <h3 className="relative mt-4 font-display text-base font-semibold transition-colors group-hover:text-brand-green">{c.title}</h3>
+                  <p className="relative mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
+                </InteractiveCard>
+              </Link>
+            </StaggerItem>
+          ))}
         </Stagger>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
