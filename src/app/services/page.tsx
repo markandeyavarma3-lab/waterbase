@@ -78,7 +78,7 @@ const reasons = [
 
 export default function ServicesPage() {
   return (
-    <>
+    <div className="theme-warm">
       <PageHero eyebrow="Services" title="Our Core Services" description="We organize our expertise into three main areas: Complete Irrigation Projects (for farms and commercial spaces), Product Supply, and APMIP Subsidy services." />
 
       <Section tone="default">
@@ -187,6 +187,6 @@ export default function ServicesPage() {
           </Reveal>
         </Container>
       </Section>
-    </>
+    </div>
   );
 }

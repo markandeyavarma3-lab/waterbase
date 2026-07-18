@@ -13,7 +13,7 @@ const LAST_UPDATED = "June 2026";
 
 export default function TermsPage() {
   return (
-    <>
+    <div className="theme-warm">
       <PageHero eyebrow="Legal" title="Terms of Use" description={`The terms that apply when you use this website. Last updated: ${LAST_UPDATED}.`} />
 
       <Section tone="default">
@@ -90,6 +90,6 @@ export default function TermsPage() {
           </div>
         </Container>
       </Section>
-    </>
+    </div>
   );
 }

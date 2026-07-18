@@ -13,6 +13,10 @@ function colsForWidth(w: number) {
   return w >= 1024 ? 4 : w >= 640 ? 3 : 2;
 }
 
+function prefersReducedMotion() {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 const INTERVAL = 850;
 
 export function CropsGrid({ crops }: { crops: Crop[] }) {
@@ -40,7 +44,7 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
 
   // Every tick, advance the next column's cards together (a11+a21, then a12+a22, ...).
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || prefersReducedMotion()) return;
 
     const id = setInterval(() => {
       const cols = colsRef.current;
@@ -134,7 +138,7 @@ export function CropsHoneycomb({ crops }: { crops: Crop[] }) {
   // Advance exactly one bubble's photo per tick, in row-major order (row 1 left-to-right,
   // then row 2, ...) — a cascading wave across the cluster instead of everything at once.
   useEffect(() => {
-    if (!isVisible || crops.length === 0) return;
+    if (!isVisible || crops.length === 0 || prefersReducedMotion()) return;
     const id = setInterval(() => {
       const turn = turnRef.current % crops.length;
       turnRef.current += 1;

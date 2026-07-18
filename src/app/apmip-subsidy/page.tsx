@@ -1,11 +1,10 @@
-import type { LucideIcon } from "lucide-react";
 import { Search, FileText, MapPin, FileCheck, Hammer, BadgePercent, Award, ShieldCheck, Zap } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "APMIP Subsidy on Drip Irrigation — 90% Off | Waterbase Technologies",
-  description: "Certified APMIP vendor in West Godavari. Eligible AP farmers pay only 10% — we handle the full application, survey assistance and installation of your subsidized drip or sprinkler system.",
+  description: "Certified APMIP vendor in West Godavari — eligible AP farmers pay only 10%. We handle the full subsidy application and installation.",
   path: "/apmip-subsidy",
 });
 
@@ -34,7 +33,8 @@ const WHY = [
 
 export default function ApmipSubsidyPage() {
   return (
-    <LandingPageTemplate
+    <div className="theme-warm">
+      <LandingPageTemplate
       badge="APMIP Certified Vendor · West Godavari, AP"
       title="90% Government Subsidy on Drip Irrigation — Apply Now"
       description="Under the APMIP scheme, eligible farmers in Andhra Pradesh pay only 10% of the drip or sprinkler system cost. We're a certified vendor and handle everything — from application to installation."
@@ -43,6 +43,7 @@ export default function ApmipSubsidyPage() {
       whyReasons={WHY}
       formTitle="Check Your Eligibility"
       formDesc="Leave your details and we'll call you back to check if your land qualifies for the subsidy."
+      formRequirement="apmip_subsidy"
       productsEyebrow="How it works"
       productsTitle="From application to installation — we handle it"
       productsLead="Six straightforward steps. You provide the land and crop details; we do the rest."
@@ -53,5 +54,6 @@ export default function ApmipSubsidyPage() {
       ctaTitle="Find out if your land qualifies — call us now"
       ctaDesc="Eligibility check is free. We'll confirm within minutes and guide you through the next steps."
     />
+    </div>
   );
 }

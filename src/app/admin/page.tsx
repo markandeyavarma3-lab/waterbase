@@ -20,8 +20,14 @@ export default async function AdminPage() {
   if (!user) redirect("/admin/login");
 
   const admin = createAdminClient();
-  const { data } = await admin.from("leads").select("*").order("created_at", { ascending: false });
+  // Exact count covers the true total even once `rows` itself is capped below.
+  const { data, count } = await admin
+    .from("leads")
+    .select("*", { count: "exact" })
+    .order("created_at", { ascending: false })
+    .limit(500);
   const rows = (data ?? []) as Lead[];
+  const totalCount = count ?? rows.length;
 
   const metrics = LEAD_STATUSES.map((s) => ({ label: s.label, count: rows.filter((l) => l.status === s.value).length }));
 
@@ -42,7 +48,7 @@ export default async function AdminPage() {
       <main className="mx-auto max-w-6xl px-6 py-8">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           <div className="rounded-xl border border-border bg-card p-4">
-            <div className="font-display text-2xl font-extrabold text-brand-green">{rows.length}</div>
+            <div className="font-display text-2xl font-extrabold text-brand-green">{totalCount}</div>
             <div className="mt-0.5 text-xs text-muted-foreground">Total</div>
           </div>
           {metrics.map((m) => (

@@ -1,11 +1,10 @@
-import type { LucideIcon } from "lucide-react";
 import { Layers, Droplets, Wind, Settings2, Wrench, FlaskConical, Package, Award, BadgePercent, Clock } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Farm Supplies & Irrigation Accessories in Eluru | Waterbase Technologies",
-  description: "Farm shop in Eluru selling mulching film, drip tape, sprinkler heads, PVC fittings, venturi units and all irrigation accessories. Retail and wholesale. Open Mon–Sat 10 AM–7 PM.",
+  description: "Farm shop in Eluru — mulching film, drip tape, sprinkler heads, fittings and irrigation accessories. Retail & wholesale. Open Mon–Sat.",
   path: "/farm-shop",
 });
 
@@ -34,7 +33,8 @@ const WHY = [
 
 export default function FarmShopPage() {
   return (
-    <LandingPageTemplate
+    <div className="theme-warm">
+      <LandingPageTemplate
       badge="Farm Supplies · Eluru, AP"
       title="Farm Accessories & Irrigation Supplies — Eluru"
       description="From mulching sheets and drip tape to PVC fittings, sprinkler heads and fertilizer applicators — everything your farm needs, available in our Eluru store. Retail and wholesale."
@@ -43,6 +43,7 @@ export default function FarmShopPage() {
       whyReasons={WHY}
       formTitle="Ask About Stock & Pricing"
       formDesc="Tell us what you need and we'll confirm availability and best price before your visit."
+      formRequirement="product_supply"
       productsEyebrow="What's in our store"
       productsTitle="Irrigation Accessories for Every Farm Need"
       productsLead="Stocked year-round for paddy, banana, vegetable, sugarcane and horticulture farmers across West Godavari."
@@ -53,5 +54,6 @@ export default function FarmShopPage() {
       ctaTitle="Need farm supplies? We're open today"
       ctaDesc="Call ahead to confirm stock or just walk in — Monday to Saturday, 10 AM to 7 PM, Kandrikagudem, Eluru."
     />
+    </div>
   );
 }

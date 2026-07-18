@@ -10,13 +10,15 @@ import { cn } from "@/lib/utils";
 
 const CATEGORIES = ["All", "Farm", "APMIP", "Corporate", "Nursery"];
 
+// Representative categories of work, not specific case studies — real project
+// photos and details go here once available (drop into public/images/projects/).
 const projects = [
-  { category: "Farm", title: "50-acre banana drip system", location: "West Godavari, AP", area: "50 acres", img: "/images/projects/banana-drip.jpg" },
-  { category: "APMIP", title: "Subsidy-assisted micro irrigation", location: "Eluru District, AP", area: "120 acres", img: "/images/projects/apmip-micro.jpg" },
-  { category: "Corporate", title: "Campus landscape irrigation", location: "Hyderabad, Telangana", area: "8 acres", img: "/images/projects/campus-landscape.jpg" },
-  { category: "Nursery", title: "Poly-house mist & drip system", location: "Kadiyam, AP", area: "3 acres", img: "/images/projects/nursery-drip.jpg" },
-  { category: "Farm", title: "Chilli crop drip installation", location: "Bhimavaram, AP", area: "35 acres", img: "/images/projects/chilli-drip.jpg" },
-  { category: "APMIP", title: "Paddy sprinkler project", location: "Narsapur, AP", area: "85 acres", img: "/images/projects/paddy-sprinkler.jpg" },
+  { category: "Farm", title: "Banana & horticulture drip systems", location: "West Godavari & Krishna districts", img: "/images/projects/banana-drip.jpg" },
+  { category: "APMIP", title: "Subsidy-assisted micro irrigation", location: "West Godavari district", img: "/images/projects/apmip-micro.jpg" },
+  { category: "Corporate", title: "Campus & landscape irrigation", location: "Telangana & Andhra Pradesh", img: "/images/projects/campus-landscape.jpg" },
+  { category: "Nursery", title: "Poly-house mist & drip systems", location: "Kadiyam nursery belt", img: "/images/projects/nursery-drip.jpg" },
+  { category: "Farm", title: "Chilli & field-crop drip installation", location: "Bhimavaram & surrounding areas", img: "/images/projects/chilli-drip.jpg" },
+  { category: "APMIP", title: "Paddy & field-crop sprinkler systems", location: "West Godavari district", img: "/images/projects/paddy-sprinkler.jpg" },
 ];
 
 export function Projects() {
@@ -26,7 +28,7 @@ export function Projects() {
   return (
     <Section tone="default">
       <Container>
-        <SectionHeading eyebrow="Portfolio" title="Work we're proud of" lead="From smallholder farms to large commercial developments across South India — 25+ years of irrigation projects." />
+        <SectionHeading eyebrow="What we build" title="The kind of projects we take on" lead="From smallholder farms to large commercial developments — representative categories of the work we do across South India." />
 
         {/* Filter tabs */}
         <div className="mt-8 flex flex-wrap gap-2">
@@ -72,9 +74,8 @@ export function Projects() {
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="font-display text-lg font-semibold leading-snug transition-colors group-hover:text-brand-green">{p.title}</h3>
-                    <div className="mt-auto flex items-center justify-between pt-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {p.location}</span>
-                      <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">{p.area}</span>
+                    <div className="mt-auto flex items-center gap-1.5 pt-4 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 shrink-0" /> {p.location}
                     </div>
                   </div>
                 </InteractiveCard>

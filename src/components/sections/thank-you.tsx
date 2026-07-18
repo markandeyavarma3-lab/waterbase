@@ -66,7 +66,7 @@ export function ThankYou() {
   );
 
   return (
-    <>
+    <div className="theme-warm">
       {/* Hero confirmation */}
       <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
         <AuroraGlow variant="hero" />
@@ -167,6 +167,6 @@ export function ThankYou() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

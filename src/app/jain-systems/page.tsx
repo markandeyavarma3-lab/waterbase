@@ -1,11 +1,10 @@
-import type { LucideIcon } from "lucide-react";
 import { Droplets, Gauge, Wind, CloudRain, Layers, Filter, Award, MapPin, LifeBuoy, BadgePercent } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Jain Drip Irrigation in Eluru | Waterbase Technologies",
-  description: "Authorized Jain Irrigation dealer in Eluru. Survey, design, supply & installation of drip and sprinkler systems for farms, nurseries and corporate projects across West Godavari, AP.",
+  description: "Authorized Jain Irrigation dealer in Eluru — survey, design, supply and installation of drip and sprinkler systems for farms and nurseries.",
   path: "/jain-systems",
 });
 
@@ -34,7 +33,8 @@ const WHY = [
 
 export default function JainSystemsPage() {
   return (
-    <LandingPageTemplate
+    <div className="theme-warm">
+      <LandingPageTemplate
       badge="Jain Authorized Distributor · Eluru, AP"
       title="Jain Drip & Sprinkler Systems — Survey, Supply & Installation"
       description="We're the authorized Jain Irrigation dealer in Eluru. One team handles your site visit, system design, product supply and complete installation — for paddy, banana, sugarcane, nurseries and corporate farms."
@@ -43,6 +43,7 @@ export default function JainSystemsPage() {
       whyReasons={WHY}
       formTitle="Get a Free Site Survey"
       formDesc="We'll visit your field and design the right Jain system — no commitment needed."
+      formRequirement="product_supply"
       productsEyebrow="What we supply"
       productsTitle="Complete Jain Irrigation Systems"
       productsLead="Every component sourced directly from Jain Irrigation — genuine quality for paddy, sugarcane, banana, horticulture and corporate projects."
@@ -53,5 +54,6 @@ export default function JainSystemsPage() {
       ctaTitle="Get your Jain drip system up and running"
       ctaDesc="Call us now or send a WhatsApp — we'll schedule your free site survey within 24 hours."
     />
+    </div>
   );
 }

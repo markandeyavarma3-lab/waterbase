@@ -1,11 +1,10 @@
-import type { LucideIcon } from "lucide-react";
 import { Layers, Package, Package2, Wrench, Link2, Settings2, Award, BadgePercent, Truck } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "HDPE & PVC Pipes Bulk Supply in Eluru | Waterbase Technologies",
-  description: "Authorized pipe dealer in Eluru. HDPE mainline, PVC column pipes, borewell casing, GI pipes and fittings — retail and bulk pricing for farms, borewells and industries across AP.",
+  description: "Authorized pipe dealer in Eluru — HDPE, PVC and casing pipes with fittings, retail and bulk pricing for farms and borewells across AP.",
   path: "/heavy-pipes",
 });
 
@@ -34,7 +33,8 @@ const WHY = [
 
 export default function HeavyPipesPage() {
   return (
-    <LandingPageTemplate
+    <div className="theme-warm">
+      <LandingPageTemplate
       badge="Authorized Pipe Dealer · Eluru, AP"
       title="HDPE, PVC & Casing Pipes — Bulk Supply in Eluru"
       description="We supply HDPE mainline, PVC column pipes, borewell casing, GI pipes and all fittings for farms, borewells, industries and construction — retail walk-in and contractor bulk pricing."
@@ -43,6 +43,7 @@ export default function HeavyPipesPage() {
       whyReasons={WHY}
       formTitle="Get a Quote"
       formDesc="Tell us what you need and we'll give you the best price — retail or bulk."
+      formRequirement="product_supply"
       productsEyebrow="What we supply"
       productsTitle="Pipes & Fittings for Every Application"
       productsLead="From farm mainlines to borewell casings — all types, all sizes, genuine brands, ready to dispatch from Eluru."
@@ -53,5 +54,6 @@ export default function HeavyPipesPage() {
       ctaTitle="Call us for pricing and availability"
       ctaDesc="Walk in to our Eluru store or call now — bulk orders can be arranged for same-day dispatch."
     />
+    </div>
   );
 }

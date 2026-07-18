@@ -1,11 +1,10 @@
-import type { LucideIcon } from "lucide-react";
 import { Gauge, Waves, ArrowUpFromLine, Zap, Sun, SlidersHorizontal, Award, MapPin, LifeBuoy, BadgePercent } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "KSB Pumps & Motors Dealer in Eluru | Waterbase Technologies",
-  description: "Authorized KSB Pumps & Motors dealer in Eluru. Submersible, monoblock, openwell and solar pumps with genuine warranty, correct sizing and expert installation across West Godavari, AP.",
+  description: "Authorized KSB Pumps & Motors dealer in Eluru — submersible, monoblock, openwell and solar pumps with genuine warranty and expert installation.",
   path: "/ksb-pumps",
 });
 
@@ -34,7 +33,8 @@ const WHY = [
 
 export default function KsbPumpsPage() {
   return (
-    <LandingPageTemplate
+    <div className="theme-warm">
+      <LandingPageTemplate
       badge="KSB Authorized Dealer · Eluru, AP"
       title="KSB Pumps & Motors — Genuine, Correctly Sized, Installed Right"
       description="We're the authorized KSB Pumps & Motors dealer in Eluru. One team handles pump selection, supply and installation — submersible, monoblock, openwell and solar — for farms, homes and industries."
@@ -43,15 +43,17 @@ export default function KsbPumpsPage() {
       whyReasons={WHY}
       formTitle="Get the Right Pump for Your Borewell"
       formDesc="Tell us your requirement and we'll recommend the right KSB pump — no commitment needed."
+      formRequirement="product_supply"
       productsEyebrow="What we supply"
       productsTitle="Complete KSB Pump Range"
       productsLead="Every pump sourced directly from KSB — genuine quality for borewells, open wells, farms, homes and industrial use."
       whyEyebrow="Why choose us"
-      whyTitle="One local partner for the complete project"
+      whyTitle="The pump partner farmers trust in Eluru"
       whyLead="From pump selection to the day water flows through your system — we handle everything."
       ctaSubtitle="Ready to install?"
       ctaTitle="Get the right KSB pump for your borewell"
       ctaDesc="Call us now or send a WhatsApp — we'll recommend the right pump and schedule installation."
     />
+    </div>
   );
 }

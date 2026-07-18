@@ -2,11 +2,13 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Search, Download, Loader2 } from "lucide-react";
+import { Search, Download, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { LEAD_STATUSES, REQUIREMENT_OPTIONS, type Lead, type LeadStatus } from "@/lib/leads";
 import { updateLeadStatus } from "@/lib/actions/leads";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
+const PAGE_SIZE = 25;
 
 function requirementLabel(value: string) {
   return REQUIREMENT_OPTIONS.find((o) => o.value === value)?.label ?? value;
@@ -28,6 +30,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [pageState, setPageState] = useState(1);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -37,6 +40,12 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
       return matchesQuery && matchesStatus;
     });
   }, [leads, query, statusFilter]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  // Derived, not stored — clamps automatically once a narrower search/status
+  // filter makes the stored page number too high, no reset effect needed.
+  const page = Math.min(pageState, pageCount);
+  const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function onStatusChange(id: string, status: LeadStatus) {
     setUpdatingId(id);
@@ -94,12 +103,12 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 ? (
+            {visible.length === 0 ? (
               <tr>
                 <td colSpan={7} className="px-4 py-10 text-center text-muted-foreground">No leads found.</td>
               </tr>
             ) : (
-              filtered.map((l) => (
+              visible.map((l) => (
                 <tr key={l.id} className="border-t border-border">
                   <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{new Date(l.created_at).toLocaleDateString("en-IN")}</td>
                   <td className="px-4 py-3 font-medium">{l.name}</td>
@@ -126,7 +135,22 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
           </tbody>
         </table>
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">{filtered.length} of {leads.length} leads</p>
+      <div className="mt-3 flex flex-col items-center justify-between gap-2 sm:flex-row">
+        <p className="text-xs text-muted-foreground">
+          {filtered.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length} leads
+        </p>
+        {pageCount > 1 ? (
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="icon-sm" onClick={() => setPageState(Math.max(1, page - 1))} disabled={page === 1} aria-label="Previous page">
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <span className="text-xs text-muted-foreground">Page {page} of {pageCount}</span>
+            <Button variant="outline" size="icon-sm" onClick={() => setPageState(Math.min(pageCount, page + 1))} disabled={page === pageCount} aria-label="Next page">
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

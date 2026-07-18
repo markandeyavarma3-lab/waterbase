@@ -14,7 +14,7 @@ export const metadata = pageMeta({
 
 export default function ProjectsPage() {
   return (
-    <>
+    <div className="theme-warm">
       <PageHero eyebrow="Projects" title="Our irrigation projects" description="From smallholder farms to large commercial developments — work we're proud of across South India." />
       <Projects />
 
@@ -29,13 +29,12 @@ export default function ProjectsPage() {
               afterLabel="After"
               alt="Farm field before and after drip irrigation installation"
             />
-            <p className="mt-4 text-center text-sm text-muted-foreground">West Godavari banana farm — installed 2023 · 12 acres · Jain inline drip system</p>
           </div>
         </Container>
       </Section>
 
       <Testimonials />
       <ContactCTA />
-    </>
+    </div>
   );
 }

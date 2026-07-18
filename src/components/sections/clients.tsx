@@ -13,7 +13,7 @@ export function Clients() {
           align="center"
           eyebrow="Our work"
           title="Companies we've delivered for"
-          lead="Irrigation and water-management projects completed on time — and backed by years of after-sales support, with not a single complaint to date."
+          lead="Irrigation and water-management projects completed on time — backed by years of after-sales support."
         />
       </Container>
 

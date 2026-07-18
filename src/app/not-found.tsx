@@ -36,9 +36,6 @@ export default function NotFound() {
               Back to home
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10">
-            <Link href="/contact">Request a callback</Link>
-          </Button>
         </div>
 
         <div className="mt-10">

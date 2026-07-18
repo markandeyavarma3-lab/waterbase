@@ -1,11 +1,10 @@
-import type { LucideIcon } from "lucide-react";
 import { Building2, Sprout, Factory, Ruler, Zap, Settings2, Award, LifeBuoy, MapPin, ShieldCheck } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Commercial & Industrial Irrigation in AP | Waterbase Technologies",
-  description: "Turnkey irrigation for corporate lawns, nurseries, factories, resorts and large agricultural developments. Authorized Jain and Netafim dealer serving Vijayawada, Hyderabad, CRDA and beyond.",
+  description: "Turnkey irrigation for corporate lawns, nurseries, factories and resorts. Authorized Jain and Netafim dealer serving AP and Telangana.",
   path: "/commercial-irrigation",
 });
 
@@ -34,7 +33,8 @@ const WHY = [
 
 export default function CommercialIrrigationPage() {
   return (
-    <LandingPageTemplate
+    <div className="theme-warm">
+      <LandingPageTemplate
       badge="Commercial Irrigation · AP & Telangana"
       title="Irrigation for Corporate Lawns, Nurseries & Industrial Sites"
       description="We design, supply and install irrigation systems for corporate campuses, nurseries, factories, resorts and large agricultural developments. Authorized Jain Irrigation and Netafim dealer with 100+ commercial projects delivered."
@@ -43,6 +43,7 @@ export default function CommercialIrrigationPage() {
       whyReasons={WHY}
       formTitle="Request a Project Discussion"
       formDesc="Share your requirement and we'll get back with a site visit and preliminary plan."
+      formRequirement="project_execution"
       productsEyebrow="What we do"
       productsTitle="Complete Commercial Irrigation Solutions"
       productsLead="From landscape design to pump integration — everything handled in-house for corporate clients, institutions and large developers."
@@ -53,5 +54,6 @@ export default function CommercialIrrigationPage() {
       ctaTitle="Let's discuss your commercial irrigation project"
       ctaDesc="Call us directly or send a WhatsApp — we'll arrange a site visit and proposal within 48 hours."
     />
+    </div>
   );
 }

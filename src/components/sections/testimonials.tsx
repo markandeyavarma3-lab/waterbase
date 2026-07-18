@@ -5,16 +5,10 @@ import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { AuroraGlow } from "@/components/site/aurora-glow";
 
-const testimonials = [
-  { quote: "They surveyed our 50-acre banana farm, designed the entire drip layout and installed it on time. Water use dropped and yield improved noticeably in the first season.", name: "Ravi Kumar", role: "Banana farmer · West Godavari", rating: 5 },
-  { quote: "Handled our APMIP subsidy application end to end — documents, field visit coordination, everything. Very professional and saved us weeks of effort.", name: "Srinivasa Rao", role: "Micro-irrigation beneficiary · Eluru", rating: 4.5 },
-  { quote: "We needed sprinklers for a 3-acre corporate lawn at our campus. The Waterbase team designed, installed and handed it over fully working within a week.", name: "Prasad Reddy", role: "Facility manager · Hyderabad", rating: 5 },
-  { quote: "Genuine Jain products, competitive pricing. The installation team was disciplined and the drip system has been running without issues for two years.", name: "Venkata Rao", role: "Sugarcane grower · Krishna District", rating: 4 },
-  { quote: "My nursery at Kadiyam needed a precise misting and drip setup. The design they gave fits our plant density perfectly. Excellent technical knowledge.", name: "Lakshmi Devi", role: "Nursery owner · Kadiyam", rating: 5 },
-  { quote: "They advised us on the right filter setup for our borewell water quality. No emitter clogging since installation. Worth every rupee.", name: "Suresh Babu", role: "Horticulture farmer · Vijayawada", rating: 4.5 },
-  { quote: "The APMIP process seemed complicated but their team knew every step. We got the sanction order in 45 days and installation was done within a week after that.", name: "Chandra Sekhar", role: "Paddy & horticulture farmer · Narsapur", rating: 4 },
-  { quote: "Waterbase supplied us pipes and fittings for a large borewell project. Genuine ISI-marked material, delivered fast, contractor pricing on bulk. Highly recommended.", name: "Kishore Varma", role: "Civil contractor · Eluru", rating: 5 },
-];
+// No fabricated reviews — add real customer testimonials here (with their
+// permission) to bring this section back. Until then it renders nothing.
+type Testimonial = { quote: string; name: string; role: string; rating: number };
+const testimonials: Testimonial[] = [];
 
 const row1 = [...testimonials.slice(0, 5), ...testimonials.slice(0, 5)];
 const row2 = [...testimonials.slice(3), ...testimonials.slice(3)];
@@ -82,6 +76,8 @@ function MarqueeRow({ items, direction, duration }: { items: typeof testimonials
 }
 
 export function Testimonials() {
+  if (testimonials.length === 0) return null;
+
   return (
     <section className="relative overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
       <AuroraGlow variant="cool" />

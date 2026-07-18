@@ -7,6 +7,7 @@ import { LeadForm } from "@/components/sections/lead-form";
 import { ContactActions } from "@/components/site/contact-actions";
 import { StickyCallBar } from "@/components/site/sticky-call-bar";
 import { AuroraGlow } from "@/components/site/aurora-glow";
+import type { RequirementValue } from "@/lib/leads";
 
 export interface LandingPageTemplateProps {
   badge: string;
@@ -20,6 +21,7 @@ export interface LandingPageTemplateProps {
   ctaDesc: string;
   formTitle?: string;
   formDesc?: string;
+  formRequirement?: RequirementValue;
   productsEyebrow?: string;
   productsTitle?: string;
   productsLead?: string;
@@ -40,6 +42,7 @@ export function LandingPageTemplate({
   ctaDesc,
   formTitle = "Get a Free Quote",
   formDesc = "Tell us what you need and we'll give you the best price.",
+  formRequirement,
   productsEyebrow = "What we supply",
   productsTitle = "Complete Systems",
   productsLead,
@@ -85,7 +88,7 @@ export function LandingPageTemplate({
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">{formTitle}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">{formDesc}</p>
                 <div className="mt-5">
-                  <LeadForm />
+                  <LeadForm defaultRequirement={formRequirement} />
                 </div>
               </div>
             </Reveal>

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { Loader2, ArrowLeft, ArrowRight } from "lucide-react";
-import { leadSchema, type LeadInput, REQUIREMENT_OPTIONS } from "@/lib/leads";
+import { leadSchema, type LeadInput, type RequirementValue, REQUIREMENT_OPTIONS } from "@/lib/leads";
 import { submitLead } from "@/lib/actions/leads";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,7 +39,7 @@ function ShakeField({ error, children }: { error?: string; children: ReactNode }
   return <motion.div animate={controls}>{children}</motion.div>;
 }
 
-export function LeadForm() {
+export function LeadForm({ defaultRequirement }: { defaultRequirement?: RequirementValue } = {}) {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
   const [step, setStep] = useState(0);
@@ -48,7 +48,7 @@ export function LeadForm() {
 
   const form = useForm<LeadInput>({
     resolver: zodResolver(leadSchema),
-    defaultValues: { name: "", mobile: "", requirement: "", location: "", landSize: "" },
+    defaultValues: { name: "", mobile: "", requirement: defaultRequirement ?? "", location: "", landSize: "" },
   });
 
   const { errors } = form.formState;

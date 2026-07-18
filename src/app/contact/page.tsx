@@ -11,10 +11,10 @@ export const metadata = pageMeta({
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="theme-warm">
       <PageHero eyebrow="Contact us" title="Let's plan your irrigation project" description="Tell us what you need — product supply, design, installation, or APMIP subsidy help — and our team will call you back." />
       <Contact />
       <FAQ />
-    </>
+    </div>
   );
 }

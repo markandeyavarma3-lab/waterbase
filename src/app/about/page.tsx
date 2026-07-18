@@ -16,7 +16,7 @@ export const metadata = pageMeta({
 
 export default function AboutPage() {
   return (
-    <>
+    <div className="theme-warm">
       <PageHero eyebrow="About us" title="Complete irrigation partners for over 25 years" description="Product supply, survey & design, installation and full project execution — for farmers, nurseries, industries and large developments across South India." />
       <Stats />
       <WhyChooseUs />
@@ -25,6 +25,6 @@ export default function AboutPage() {
       <AwardsList />
       <ServiceAreas />
       <ContactCTA />
-    </>
+    </div>
   );
 }
