@@ -92,9 +92,11 @@ export default function ServicesPage() {
                   <h3 className="mt-6 font-display text-xl font-semibold transition-colors group-hover:text-brand-green">{s.title}</h3>
                   <p className="mt-3 leading-relaxed text-muted-foreground">{s.desc}</p>
                   
+                  {/* tap-target-y: these link rows were 20px tall — hard to hit with a
+                      thumb. The hit area grows on touch; desktop spacing is unchanged. */}
                   <div className="mt-6 flex flex-col gap-2 border-t border-border/50 pt-6">
                     {s.links.map((link, idx) => (
-                      <a key={idx} href={link.href} className="text-sm font-medium text-brand-green hover:text-brand-green-dark hover:underline">
+                      <a key={idx} href={link.href} className="tap-target-y flex items-center text-sm font-medium text-brand-green hover:text-brand-green-dark hover:underline">
                         → {link.name}
                       </a>
                     ))}

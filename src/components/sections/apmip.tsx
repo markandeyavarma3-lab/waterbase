@@ -39,7 +39,7 @@ export function Apmip() {
             <Reveal delay={320}>
               <div className="mt-6 flex flex-wrap items-center gap-4">
                 <p className="text-sm text-white/55">APMIP assistance for West Godavari and across Andhra Pradesh.</p>
-                <Link href="/apmip-subsidy" className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-sun-light transition-colors hover:text-white">
+                <Link href="/apmip-subsidy" className="tap-target-y inline-flex items-center gap-1.5 text-sm font-semibold text-brand-sun-light transition-colors hover:text-white">
                   Full APMIP guide <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>

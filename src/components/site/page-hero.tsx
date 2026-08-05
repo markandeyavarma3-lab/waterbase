@@ -38,8 +38,8 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
         <Reveal>
           {/* min-w-0 + truncate: a long page title in the trail would otherwise
               push the breadcrumb row past the edge of a narrow phone. */}
-          <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-1 text-sm text-white/55">
-            <Link href="/" className="shrink-0 transition-colors hover:text-white">Home</Link>
+          <nav aria-label="Breadcrumb" className="-mt-2 mb-3 flex items-center gap-1 text-sm text-white/55">
+            <Link href="/" className="tap-target-y flex shrink-0 items-center pr-1 transition-colors hover:text-white">Home</Link>
             <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <span className="min-w-0 truncate font-medium text-white/90">{title}</span>
           </nav>
