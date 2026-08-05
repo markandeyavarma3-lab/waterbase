@@ -40,7 +40,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
 
-      <Container className="relative z-10 py-16 pb-28 text-center md:py-24 md:pb-36">
+      <Container className="relative z-10 py-12 pb-24 text-center sm:py-16 sm:pb-28 md:py-24 md:pb-36">
         <div className="mx-auto max-w-5xl">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium shadow-[0_0_0_1px_rgba(79,224,196,0.08)] backdrop-blur">
@@ -52,13 +52,15 @@ export function Hero() {
             </span>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mx-auto mt-6 font-display text-[2.65rem] font-extrabold leading-[1.02] tracking-tight md:text-5xl lg:text-6xl">
+            {/* Fluid headline: 2.65rem was fixed until the md breakpoint, so it
+                overflowed narrow phones and under-filled tablets. */}
+            <h1 className="mx-auto mt-6 font-display text-[clamp(2rem,7.5vw,3.75rem)] font-extrabold leading-[1.05] tracking-tight">
               <span className="block lg:whitespace-nowrap">Complete <span className="text-brand-green-light">water management</span>,</span>
               <span className="block text-gradient-brand">engineered end to end.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
-            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/80 md:text-xl">
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg md:text-xl">
               From the first site survey to lifelong after-sales support — we design, supply and install drip, sprinkler and water-management systems for fields, lawns and nurseries.
             </p>
           </Reveal>

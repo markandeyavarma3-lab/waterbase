@@ -89,8 +89,10 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
         </div>
       </div>
 
-      <div className="mt-4 overflow-x-auto rounded-xl border border-border">
-        <table className="w-full text-sm">
+      {/* 7 columns can't compress into a phone without the cells turning into
+          one-word-per-line mush — scroll the table instead of squashing it. */}
+      <div className="scroll-touch mt-4 overflow-x-auto rounded-xl border border-border">
+        <table className="w-full min-w-[820px] text-sm">
           <thead className="bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>
               <th className="px-4 py-3 font-semibold">Date</th>

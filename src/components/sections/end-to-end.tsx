@@ -37,7 +37,7 @@ export function EndToEnd() {
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
               <Eyebrow>How we work</Eyebrow>
-              <h3 className="mt-3 font-display text-2xl font-bold tracking-tight md:text-3xl">Nine steps, one accountable team</h3>
+              <h3 className="mt-3 font-display text-[clamp(1.375rem,3.6vw,1.875rem)] font-bold tracking-tight">Nine steps, one accountable team</h3>
               <p className="mt-3 text-muted-foreground">No hand-offs, no finger-pointing. Every stage — from understanding your land to servicing it years later — is handled in-house.</p>
             </div>
           </Reveal>

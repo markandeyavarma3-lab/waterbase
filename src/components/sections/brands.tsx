@@ -6,10 +6,10 @@ const brands = ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNe
 export function Brands() {
   return (
     <section className="border-y border-border bg-brand-green-soft/40">
-      <div className="mx-auto max-w-6xl px-6 py-14 text-center">
+      <div className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 sm:py-14">
         <Reveal>
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Authorized Dealer &amp; Distributor</p>
-          <h2 className="mt-2 font-display text-2xl font-extrabold md:text-3xl">Trusted, genuine brands</h2>
+          <h2 className="mt-2 font-display text-[clamp(1.375rem,3.6vw,1.875rem)] font-extrabold">Trusted, genuine brands</h2>
         </Reveal>
         <Stagger className="mt-8 flex flex-wrap items-center justify-center gap-4">
           {brands.map((b) => (

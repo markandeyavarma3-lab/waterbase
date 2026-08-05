@@ -33,8 +33,10 @@ function Stars({ rating }: { rating: number }) {
 }
 
 function Card({ t }: { t: typeof testimonials[number] }) {
+  // min(20rem,85vw): a flat w-80 is exactly a 320px phone's full width, which
+  // would leave the card edge-to-edge once real testimonials are added.
   return (
-    <figure className="w-80 shrink-0 rounded-2xl border border-border bg-card p-6 shadow-soft">
+    <figure className="w-[min(20rem,85vw)] shrink-0 rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6">
       <Stars rating={t.rating} />
       <blockquote className="mt-3 text-sm leading-relaxed text-foreground/85 line-clamp-4">&ldquo;{t.quote}&rdquo;</blockquote>
       <figcaption className="mt-4 border-t border-border pt-3">
@@ -81,9 +83,9 @@ export function Testimonials() {
   return (
     <section className="relative overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
       <AuroraGlow variant="cool" />
-      <div className="mx-auto max-w-6xl px-6 text-center">
+      <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Testimonials</p>
-        <h2 className="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">Trusted by farmers &amp; businesses</h2>
+        <h2 className="mt-3 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-bold tracking-tight">Trusted by farmers &amp; businesses</h2>
         <p className="mt-3 text-muted-foreground">From smallholder farms to corporate campuses across South India. Drag a row to browse at your own pace.</p>
       </div>
 

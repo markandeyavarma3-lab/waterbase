@@ -14,13 +14,15 @@ const regions: { name: string; coverage: boolean[]; note?: string }[] = [
 
 export function ServiceAreas() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
+    <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <Reveal className="max-w-2xl">
         <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Service areas</p>
-        <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Where we work</h2>
+        <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight">Where we work</h2>
       </Reveal>
 
-      <Reveal delay={100} className="mt-10 overflow-x-auto rounded-2xl border border-border">
+      {/* The table can't collapse below ~560px and stay readable, so it scrolls
+          horizontally inside its own container — the page itself never does. */}
+      <Reveal delay={100} className="scroll-touch mt-10 overflow-x-auto rounded-2xl border border-border">
         <table className="w-full min-w-[560px] border-collapse text-sm">
           <thead>
             <tr className="border-b border-border bg-muted/60 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">

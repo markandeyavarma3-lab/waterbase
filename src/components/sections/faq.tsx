@@ -88,14 +88,14 @@ export function FAQ() {
   };
 
   return (
-    <section className="mx-auto max-w-3xl px-6 py-20">
+    <section className="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Reveal className="text-center">
         <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-green">
           <span className="h-px w-6 bg-brand-green/40" aria-hidden="true" />
           FAQ
         </p>
-        <h2 className="heading-accent heading-accent-center mt-4 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Frequently asked questions</h2>
+        <h2 className="heading-accent heading-accent-center mt-4 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight">Frequently asked questions</h2>
         <p className="mt-3 text-muted-foreground">Everything you need to know before starting your irrigation project.</p>
       </Reveal>
       <div className="mt-10 space-y-3">

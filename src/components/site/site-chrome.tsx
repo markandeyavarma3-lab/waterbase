@@ -27,8 +27,11 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       </a>
       <Header />
       <main id="main">{children}</main>
-      <div aria-hidden className="h-16 pb-safe md:hidden" />
       <Footer />
+      {/* Spacer that reserves room for the fixed mobile CTA bar. It has to sit
+          AFTER the footer — placed before it, the bar still overlapped the
+          footer's legal links at the bottom of every page on a phone. */}
+      <div aria-hidden className="h-mobile-cta md:hidden" />
       {isLandingPage ? null : <StickyMobileCTA />}
     </>
   );

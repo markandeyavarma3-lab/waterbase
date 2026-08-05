@@ -92,12 +92,14 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
             type="button"
             onClick={() => go(-1)}
             aria-label="Previous company"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground/70 shadow-soft transition-colors hover:border-brand-green/40 hover:text-brand-green"
+            className="tap-target flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground/70 shadow-soft transition-colors hover:border-brand-green/40 hover:text-brand-green"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
 
-          <div className="flex items-center gap-1.5" role="tablist" aria-label="Select company">
+          {/* The dot is 6px tall, which is untappable on its own — so the button
+              is a transparent 44px-tall hit area with the dot drawn inside it. */}
+          <div className="flex items-center" role="tablist" aria-label="Select company">
             {items.map((item, i) => (
               <button
                 key={i}
@@ -106,11 +108,15 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
                 aria-selected={i === activeIndex}
                 aria-label={item.name}
                 onClick={() => setActiveIndex(i)}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
-                  i === activeIndex ? "w-6 bg-brand-green" : "w-1.5 bg-border hover:bg-brand-green/40"
-                )}
-              />
+                className="tap-target-y group/dot flex h-8 items-center justify-center px-1.5"
+              >
+                <span
+                  className={cn(
+                    "block h-1.5 rounded-full transition-all duration-300",
+                    i === activeIndex ? "w-6 bg-brand-green" : "w-1.5 bg-border group-hover/dot:bg-brand-green/40"
+                  )}
+                />
+              </button>
             ))}
           </div>
 
@@ -118,7 +124,7 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
             type="button"
             onClick={() => go(1)}
             aria-label="Next company"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground/70 shadow-soft transition-colors hover:border-brand-green/40 hover:text-brand-green"
+            className="tap-target flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-foreground/70 shadow-soft transition-colors hover:border-brand-green/40 hover:text-brand-green"
           >
             <ChevronRight className="h-4 w-4" />
           </button>

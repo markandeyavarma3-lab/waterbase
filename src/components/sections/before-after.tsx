@@ -40,8 +40,12 @@ export function BeforeAfter({ beforeSrc, afterSrc, beforeLabel = "Before", after
       aria-valuemax={100}
       aria-label="Before and after image comparison slider"
       tabIndex={0}
-      className="relative aspect-video w-full select-none overflow-hidden rounded-2xl border border-border shadow-lift cursor-ew-resize focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
+      // touch-pan-y hands the browser the vertical axis (so the page still
+      // scrolls normally over the image) while we take the horizontal one —
+      // without it, dragging the handle on a phone fought the page scroll.
+      className="relative aspect-video w-full touch-pan-y select-none overflow-hidden rounded-2xl border border-border shadow-lift cursor-ew-resize focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
       onMouseDown={(e) => { dragging.current = true; move(e.clientX); }}
+      onTouchStart={(e) => move(e.touches[0].clientX)}
       onTouchMove={(e) => move(e.touches[0].clientX)}
       onKeyDown={(e) => {
         if (e.key === "ArrowLeft") setPct((p) => Math.max(5, p - 5));

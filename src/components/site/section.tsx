@@ -2,7 +2,9 @@ import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cn("mx-auto w-full max-w-6xl px-6 md:px-8", className)}>{children}</div>;
+  // px-4 on small phones (not px-6) — on a 320px screen that returns 16px of
+  // content width, which is the difference between a cramped and a readable line.
+  return <div className={cn("mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8", className)}>{children}</div>;
 }
 
 type Tone = "default" | "muted" | "brand" | "brand-dark" | "brand-deep";
@@ -17,7 +19,7 @@ const toneClass: Record<Tone, string> = {
 
 export function Section({ tone = "default", id, className, children }: { tone?: Tone; id?: string; className?: string; children: ReactNode }) {
   return (
-    <section id={id} className={cn("relative py-20 md:py-28", toneClass[tone], className)}>
+    <section id={id} className={cn("relative py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
       {children}
     </section>
   );
@@ -41,8 +43,10 @@ export function SectionHeading({ eyebrow, title, lead, align = "left", onDark = 
     <div className={cn("flex flex-col gap-4", align === "center" && "items-center text-center", action && "md:flex-row md:items-end md:justify-between md:gap-10", className)}>
       <div className={cn("max-w-2xl", align === "center" && "mx-auto")}>
         {eyebrow ? <Eyebrow onDark={onDark} className={align === "center" ? "justify-center" : undefined}>{eyebrow}</Eyebrow> : null}
+        {/* Fluid size: scales continuously between phone and desktop instead of
+            snapping at the md breakpoint, which is what made tablet widths look off. */}
         <h2 className={cn(
-          "mt-4 font-display text-3xl font-bold leading-[1.1] tracking-tight text-balance md:text-[2.65rem]",
+          "mt-4 font-display text-[clamp(1.625rem,4.4vw,2.65rem)] font-bold leading-[1.12] tracking-tight text-balance",
           onDark ? "text-white" : "text-foreground",
           align === "center" && "heading-accent heading-accent-center"
         )}>{title}</h2>

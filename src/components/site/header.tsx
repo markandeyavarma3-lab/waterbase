@@ -54,18 +54,19 @@ export function Header() {
         aria-hidden="true"
       />
       <div className={cn(
-        "mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 transition-all duration-300 ease-out-expo md:px-6",
+        "mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 transition-all duration-300 ease-out-expo sm:gap-4 sm:px-4 md:px-6",
         scrolled ? "h-14" : "h-16"
       )}>
         {/* Logo — left */}
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="shrink-0 lg:hidden" aria-label="Open menu">
+              <Button variant="outline" size="icon" className="size-11 shrink-0 lg:hidden" aria-label="Open menu">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-72">
+            {/* Never wider than the screen — w-72 alone overflowed a 320px phone */}
+            <SheetContent side="left" className="w-[min(18rem,85vw)]">
               <SheetHeader>
                 <SheetTitle className="font-display">Menu</SheetTitle>
                 <SheetDescription className="sr-only">Site navigation</SheetDescription>
@@ -89,7 +90,7 @@ export function Header() {
                           href={l.href}
                           onClick={() => setOpen(false)}
                           className={cn(
-                            "block rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
+                            "flex min-h-11 items-center rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
                             isActive(l.href) && "bg-accent text-brand-green"
                           )}
                         >
@@ -103,10 +104,14 @@ export function Header() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="flex min-w-0 items-center">
+          <Link href="/" className="tap-target-y flex min-w-0 items-center">
+            {/* Fluid wordmark — on a 320px phone a fixed text-3xl left no room
+                beside the menu button; this scales down to fit and back up on desktop. */}
             <span className={cn(
               "min-w-0 truncate font-[family-name:var(--font-logo)] font-bold tracking-tight text-white transition-all duration-300",
-              scrolled ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
+              scrolled
+                ? "text-[clamp(1.25rem,5.5vw,1.875rem)]"
+                : "text-[clamp(1.375rem,6vw,2.25rem)]"
             )}>
               Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>
@@ -120,7 +125,9 @@ export function Header() {
               key={l.href}
               href={l.href}
               className={cn(
-                "relative rounded-md px-2.5 py-2 font-display text-sm font-semibold uppercase tracking-wide transition-colors xl:px-3",
+                // tap-target-y: an iPad Pro is wide enough to get the desktop nav
+                // but is still a finger-driven device, so these need the 44px height.
+                "tap-target-y relative flex items-center rounded-md px-2.5 py-2 font-display text-sm font-semibold uppercase tracking-wide transition-colors xl:px-3",
                 isActive(l.href)
                   ? "text-brand-sun"
                   : "text-white/60 hover:bg-white/10 hover:text-white"

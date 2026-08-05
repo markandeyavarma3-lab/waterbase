@@ -382,6 +382,42 @@
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
+
+  /* Horizontal safe-area padding — for full-bleed bars on landscape notched phones */
+  .px-safe {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* Height of the fixed mobile CTA bar, used by the spacer that keeps the footer
+     clear of it. 3.5rem is the bar's min-h-14 content box, +1px for its border-t,
+     + the home-indicator inset. Miss the border and the footer sits 1px under it. */
+  .h-mobile-cta {
+    height: calc(3.5rem + 1px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Explicit 44px hit area on touch devices only — keyed off the *pointer*, not
+     the viewport, because a 1024px iPad is a touch device while a 1024px laptop
+     window is not. Desktop keeps the tighter, more refined control sizes. */
+  @media (pointer: coarse) {
+    .tap-target {
+      min-width: 44px;
+      min-height: 44px;
+    }
+    /* Height-only variant, for controls in a row where a 44px *width* each would
+       overflow a phone (e.g. carousel dots). Those keep a compact width and rely
+       on a full-size equivalent control — the prev/next arrows — alongside them. */
+    .tap-target-y {
+      min-height: 44px;
+    }
+  }
+
+  /* Opt a horizontally-scrolling region into momentum scrolling + snap on touch */
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
 }
 
 @layer base {
@@ -391,9 +427,17 @@
   body {
     @apply bg-background text-foreground antialiased;
     text-rendering: optimizeLegibility;
+    /* A decorative element that overhangs the viewport must never turn the whole
+       page into a horizontal scroller. `clip` (unlike `hidden`) does this without
+       creating a scroll container, so `position: sticky` on the header still works. */
+    overflow-x: clip;
   }
   html {
     @apply font-sans scroll-smooth;
+    /* Stop iOS Safari from inflating text when a phone is rotated to landscape */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-x: clip;
   }
   h1, h2, h3 {
     @apply font-display tracking-tight;
@@ -405,5 +449,47 @@
   ::selection {
     background-color: var(--color-brand-green-soft);
     color: var(--color-brand-green-deep);
+  }
+
+  /* Long unbroken strings (phone numbers, emails, URLs) must not force a
+     horizontal scroll on a 320px phone. */
+  a[href^="mailto:"],
+  a[href^="tel:"] {
+    overflow-wrap: anywhere;
+  }
+
+  /* Media is fluid by default — a stray fixed-width image can't widen the page */
+  img, svg, video, canvas, iframe {
+    max-width: 100%;
+  }
+  img, video, canvas {
+    height: auto;
+  }
+
+  /* Touch devices: enforce the ~44px minimum hit area recommended by both
+     Apple's HIG and WCAG 2.5.8. Applied only for coarse pointers so mouse-driven
+     desktop layouts keep their tighter, more refined proportions. Padding-based
+     (not min-height) on inline links so text flow is unaffected. */
+  @media (pointer: coarse) {
+    button:not([data-slot="select-item"]),
+    [role="button"],
+    input[type="button"],
+    input[type="submit"],
+    a[data-slot="button"],
+    button[data-slot="button"],
+    [data-slot="select-trigger"] {
+      min-height: 44px;
+    }
+    button[data-size="icon"],
+    a[data-size="icon"],
+    button[data-size="icon-sm"],
+    [data-slot="button"][data-size="icon"] {
+      min-width: 44px;
+    }
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+      min-height: 44px;
+    }
   }
 }

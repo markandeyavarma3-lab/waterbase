@@ -21,7 +21,7 @@ export function WhyWaterbase() {
       <AuroraGlow variant="cool" />
       <Container>
         <SectionHeading eyebrow="Why Waterbase" title="One accountable partner, end to end" lead="Not just a supplier — we own the entire journey, from the first survey to long-term support." />
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_360px] lg:gap-14">
+        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-14">
           <ol>
             {reasons.map((r, i) => (
               <Reveal key={r.title} delay={i * 60}>

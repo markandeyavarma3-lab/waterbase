@@ -56,17 +56,19 @@ export function LandingPageTemplate({
       <section className="relative overflow-hidden bg-brand-green-deeper text-white">
         <AuroraGlow variant="hero" />
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
-        <Container className="py-16 md:py-24">
-          <div className="grid items-start gap-10 lg:grid-cols-[1fr_420px]">
+        <Container className="py-12 sm:py-16 md:py-24">
+          {/* minmax(0,1fr) rather than 1fr — a bare 1fr track has min-width:auto,
+              so a wide child (the form) can push the grid past the viewport. */}
+          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_420px]">
             <div>
               <Reveal>
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">{badge}</span>
               </Reveal>
               <Reveal delay={80}>
-                <h1 className="mt-5 max-w-xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-5xl">{title}</h1>
+                <h1 className="mt-5 max-w-xl font-display text-[clamp(1.875rem,6vw,3rem)] font-extrabold leading-[1.06] tracking-tight">{title}</h1>
               </Reveal>
               <Reveal delay={160}>
-                <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/80">{description}</p>
+                <p className="mt-4 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">{description}</p>
               </Reveal>
               <Reveal delay={240}>
                 <ContactActions showCall onDark size="xl" className="mt-7" />
@@ -84,7 +86,7 @@ export function LandingPageTemplate({
             </div>
 
             <Reveal delay={120}>
-              <div className="rounded-2xl bg-white p-6 text-foreground shadow-lift ring-1 ring-black/5">
+              <div className="rounded-2xl bg-white p-5 text-foreground shadow-lift ring-1 ring-black/5 sm:p-6">
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">{formTitle}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">{formDesc}</p>
                 <div className="mt-5">
@@ -146,7 +148,7 @@ export function LandingPageTemplate({
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">{ctaSubtitle}</p>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl">{ctaTitle}</h2>
+            <h2 className="mt-3 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-bold leading-tight tracking-tight text-white">{ctaTitle}</h2>
             <p className="mt-4 text-lg text-white/75">{ctaDesc}</p>
             <ContactActions showCall onDark size="xl" className="mt-7 justify-center" />
           </Reveal>

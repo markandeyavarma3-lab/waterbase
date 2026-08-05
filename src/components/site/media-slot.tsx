@@ -45,7 +45,9 @@ export function PlaceholderPlate({ label, className }: { label?: string; classNa
       <div className="absolute inset-0 flex items-center justify-center">
         <ImageIcon className="h-5 w-5 text-graphite-300" aria-hidden="true" />
       </div>
-      <span className="absolute left-3 top-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-graphite-500">
+      {/* 11px floor with a slightly tighter track — 10px uppercase is below the
+          legible minimum on a phone, especially at this contrast. */}
+      <span className="absolute left-3 top-3 pr-3 text-[11px] font-semibold uppercase tracking-[0.1em] text-graphite-500 sm:tracking-[0.14em]">
         {label ?? "Image pending"}
       </span>
     </div>

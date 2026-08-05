@@ -70,7 +70,7 @@ export function ThankYou() {
       {/* Hero confirmation */}
       <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
         <AuroraGlow variant="hero" />
-        <div className="mx-auto flex max-w-3xl flex-col items-center px-6 py-20 text-center sm:py-24">
+        <div className="mx-auto flex max-w-3xl flex-col items-center px-4 py-14 sm:px-6 sm:py-20 text-center sm:py-24">
           <Reveal>
             <div className="relative flex h-20 w-20 items-center justify-center">
               <span className="motion-ripple absolute inset-0 rounded-full border-2 border-white/40" style={{ animation: "ripple-ping 1.8s ease-out infinite" }} aria-hidden="true" />
@@ -114,10 +114,10 @@ export function ThankYou() {
       </section>
 
       {/* What happens next */}
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+      <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
         <Reveal className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">What happens next</p>
-          <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Here&apos;s how we&apos;ll handle it</h2>
+          <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight">Here&apos;s how we&apos;ll handle it</h2>
         </Reveal>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {nextSteps.map((step, i) => {
@@ -140,10 +140,10 @@ export function ThankYou() {
 
       {/* While you wait */}
       <section className="bg-muted/30">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24">
           <Reveal className="text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">While you wait</p>
-            <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Have a look around</h2>
+            <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight">Have a look around</h2>
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {exploreCards.map((card, i) => {

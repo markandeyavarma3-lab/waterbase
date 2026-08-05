@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Archivo, Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
@@ -52,6 +52,21 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
+};
+
+// `viewportFit: "cover"` is what makes env(safe-area-inset-*) resolve to real
+// values on notched/rounded phones — without it the `pb-safe` padding on the
+// sticky mobile CTA is always 0 and the bar sits under the home indicator.
+// `maximumScale`/`userScalable` are deliberately left at the defaults so
+// visitors can still pinch-zoom (an accessibility requirement).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#2E4020" },
+    { media: "(prefers-color-scheme: dark)", color: "#2E4020" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

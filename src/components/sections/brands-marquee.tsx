@@ -46,7 +46,7 @@ export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
       <Container>
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Authorized Distributor &amp; Dealer</p>
-          <h2 className="mt-3 font-display text-2xl font-bold tracking-tight md:text-3xl">Genuine products from 20+ leading brands</h2>
+          <h2 className="mt-3 font-display text-[clamp(1.375rem,3.6vw,1.875rem)] font-bold tracking-tight">Genuine products from 20+ leading brands</h2>
         </div>
       </Container>
 

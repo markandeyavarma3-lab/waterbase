@@ -21,11 +21,11 @@ export function Services() {
     <section className="relative overflow-hidden bg-brand-green-darker text-white">
       <div className="pointer-events-none absolute -left-20 top-0 h-72 w-72 rounded-full bg-brand-green-light/15 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-brand-green/20 blur-3xl" />
-      <div className="relative z-10 mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-2 lg:items-center">
+      <div className="relative z-10 mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:items-center">
         <div>
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-wide text-brand-green-light">Our services</p>
-            <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">End-to-end irrigation services, handled by experts</h2>
+            <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight">End-to-end irrigation services, handled by experts</h2>
             <p className="mt-4 text-white/80">With a 20+ member team, 15+ field technicians and 5+ installation teams, we take projects from concept to commissioning — and keep them running.</p>
           </Reveal>
           <Reveal delay={150}>

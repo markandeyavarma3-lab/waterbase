@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export function Stats() {
   return (
-    <section className="relative z-10 px-6">
+    <section className="relative z-10 px-4 sm:px-6">
       <div className="mx-auto -mt-10 max-w-6xl overflow-hidden rounded-2xl border border-border bg-border shadow-lift">
         <Stagger className="grid grid-cols-2 gap-px sm:grid-cols-3 lg:grid-cols-5">
           {siteConfig.stats.map((s) => (

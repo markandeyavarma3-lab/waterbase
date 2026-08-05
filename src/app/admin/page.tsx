@@ -34,7 +34,7 @@ export default async function AdminPage() {
   return (
     <div className="min-h-screen bg-muted/30">
       <header className="border-b border-border bg-card">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <h1 className="font-display text-lg font-extrabold">Waterbase · Leads</h1>
           <div className="flex items-center gap-3">
             <span className="hidden text-sm text-muted-foreground sm:inline">{user.email}</span>
@@ -45,7 +45,7 @@ export default async function AdminPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-8">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           <div className="rounded-xl border border-border bg-card p-4">
             <div className="font-display text-2xl font-extrabold text-brand-green">{totalCount}</div>

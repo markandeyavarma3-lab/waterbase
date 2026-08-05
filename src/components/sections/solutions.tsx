@@ -13,10 +13,10 @@ const solutions = [
 
 export function Solutions() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
+    <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <Reveal className="max-w-2xl">
         <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">What we do</p>
-        <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">Complete solutions, not just products</h2>
+        <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight">Complete solutions, not just products</h2>
         <p className="mt-3 text-muted-foreground">From the first survey to the final installation and subsidy paperwork — we handle every part of your irrigation project.</p>
       </Reveal>
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
