@@ -61,7 +61,15 @@ export function Header() {
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="size-11 shrink-0 lg:hidden" aria-label="Open menu">
+              {/* Ghost, not the light `outline` variant — on the dark header that
+                  rendered as a solid white box, which read as a stray UI chip
+                  rather than part of the bar. */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-11 shrink-0 border border-white/15 bg-white/[0.06] text-white hover:bg-white/15 hover:text-white lg:hidden"
+                aria-label="Open menu"
+              >
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
@@ -104,14 +112,18 @@ export function Header() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="tap-target-y flex min-w-0 items-center">
-            {/* Fluid wordmark — on a 320px phone a fixed text-3xl left no room
-                beside the menu button; this scales down to fit and back up on desktop. */}
+          <Link href="/" className="tap-target-y group/logo flex min-w-0 items-center">
+            {/* Wordmark. Both words are deliberately identical in weight and size.
+                What was wrong before was scale and weight, not hierarchy: 36px
+                ExtraBold against a 14px nav is a 2.6:1 ratio that swamped the bar.
+                Now ~26px at 600 with a touch of negative tracking, which is how a
+                wordmark is normally set — tight enough to read as one object. */}
             <span className={cn(
-              "min-w-0 truncate font-[family-name:var(--font-logo)] font-bold tracking-tight text-white transition-all duration-300",
+              "min-w-0 truncate font-[family-name:var(--font-logo)] font-semibold tracking-[-0.022em] text-white",
+              "transition-[font-size] duration-300 ease-out-expo",
               scrolled
-                ? "text-[clamp(1.25rem,5.5vw,1.875rem)]"
-                : "text-[clamp(1.375rem,6vw,2.25rem)]"
+                ? "text-[clamp(1.125rem,4.6vw,1.375rem)]"
+                : "text-[clamp(1.25rem,5vw,1.625rem)]"
             )}>
               Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>

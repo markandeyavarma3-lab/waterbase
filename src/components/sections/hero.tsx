@@ -8,9 +8,7 @@ import type { LucideIcon } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
-import { AuroraGlow } from "@/components/site/aurora-glow";
-import { CursorGlow } from "@/components/site/cursor-glow";
-import { WaterRipple } from "@/components/site/water-ripple";
+import { WaterCaustics } from "@/components/site/water-caustics";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig } from "@/lib/site-config";
@@ -31,32 +29,43 @@ export function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -40]);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-olive-deep text-white bg-grain">
-      <motion.div style={{ y }} className="absolute inset-0 -z-10">
-        <AuroraGlow variant="hero" />
+    // `isolate` creates a stacking context on the section. Without it the
+    // decorative layers below (which sat at -z-10) painted BEHIND this element's
+    // own bg-olive-deep fill and were invisible — which is why the old aurora,
+    // canvas ripple and cursor glow all rendered as flat dark green.
+    <section ref={sectionRef} className="relative isolate overflow-hidden bg-olive-deep text-white bg-grain">
+      {/* ONE signature effect, replacing three that competed and none of which
+          were actually visible: an aurora at 0.08 alpha behind blur-3xl, a
+          canvas water-ripple, and a cursor glow (which does nothing on touch). */}
+      <motion.div style={{ y }} className="absolute inset-0 z-0">
+        <WaterCaustics />
       </motion.div>
-      <CursorGlow />
-      <WaterRipple className="pointer-events-none absolute inset-0 -z-10 h-full w-full" />
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-px bg-white/10" aria-hidden="true" />
 
       <Container className="relative z-10 py-12 pb-24 text-center sm:py-16 sm:pb-28 md:py-24 md:pb-36">
         <div className="mx-auto max-w-5xl">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium shadow-[0_0_0_1px_rgba(79,224,196,0.08)] backdrop-blur">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-glow opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-glow" />
-              </span>
+            {/* The dot no longer pulses. A looping ping next to the headline
+                competes with the caustic and pulls the eye off the message —
+                a steady dot with a soft halo reads as considered, not busy. */}
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-sm font-medium tracking-[-0.01em] text-white/85 backdrop-blur">
+              <span className="relative inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-brand-glow shadow-[0_0_0_3px_rgba(79,224,196,0.15)]" />
               {siteConfig.heroBadge}
             </span>
           </Reveal>
           <Reveal delay={80}>
             {/* Fluid headline: 2.65rem was fixed until the md breakpoint, so it
                 overflowed narrow phones and under-filled tablets. */}
-            <h1 className="mx-auto mt-6 font-display text-[clamp(2rem,7.5vw,3.75rem)] font-extrabold leading-[1.05] tracking-tight">
+            {/* ONE accent colour, on the two words that carry the offer. The
+                previous version ran white -> green -> a green/blue gradient
+                across two lines; gradient headline text in particular is the
+                most recognisable "generated site" signature there is.
+                Tracking is slightly tighter than the old -0.025em default:
+                at 60px, display type wants to be set tighter than body. */}
+            <h1 className="mx-auto mt-6 font-display text-[clamp(2rem,7.5vw,3.75rem)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               <span className="block lg:whitespace-nowrap">Complete <span className="text-brand-green-light">water management</span>,</span>
-              <span className="block text-gradient-brand">engineered end to end.</span>
+              <span className="block text-white/90">engineered end to end.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>

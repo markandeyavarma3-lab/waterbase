@@ -4,14 +4,12 @@ import { Section, Container } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
 import { AuroraGlow } from "@/components/site/aurora-glow";
-import { CursorGlow } from "@/components/site/cursor-glow";
 import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
 
 export function ContactCTA() {
   return (
     <section id="contact" className="relative overflow-hidden bg-brand-green-deeper text-white bg-grain py-20 md:py-28">
       <AuroraGlow variant="dark-converge" />
-      <CursorGlow />
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div>

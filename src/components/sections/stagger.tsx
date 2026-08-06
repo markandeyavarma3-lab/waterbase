@@ -3,18 +3,18 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { EASE_OUT_EXPO } from "@/lib/motion";
+import { DUR, EASE_OUT_EXPO, REVEAL_Y, STAGGER_STEP } from "@/lib/motion";
 
 const containerVariants: Variants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.09, delayChildren: 0.05 },
+    transition: { staggerChildren: STAGGER_STEP, delayChildren: 0.04 },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT_EXPO } },
+  hidden: { opacity: 0, y: REVEAL_Y },
+  show: { opacity: 1, y: 0, transition: { duration: DUR.settle, ease: EASE_OUT_EXPO } },
 };
 
 /** Wraps a grid/row of children and orchestrates a staggered entrance for `StaggerItem` children. */

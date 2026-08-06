@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Archivo, Poppins } from "next/font/google";
+import { Inter, Archivo } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
@@ -18,12 +18,14 @@ const archivo = Archivo({
   weight: ["500", "600", "700", "800"],
 });
 
-// 👇 The wordmark / logo font. Swap "Poppins" for another Google font to change the look.
-const logoFont = Poppins({
+// The wordmark uses the same family as the headings (Archivo). Running a third
+// font purely for the logo is what made it read as bolted-on rather than part of
+// the identity — and it cost an extra font download on every page load.
+const logoFont = Archivo({
   subsets: ["latin"],
   variable: "--font-logo",
   display: "swap",
-  weight: ["600", "700", "800"],
+  weight: ["600", "700"],
 });
 
 export const metadata: Metadata = {
