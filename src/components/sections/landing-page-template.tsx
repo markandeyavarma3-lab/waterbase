@@ -53,7 +53,7 @@ export function LandingPageTemplate({
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-brand-green-deeper text-white">
+      <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
         <AuroraGlow variant="hero" />
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
         <Container className="py-12 sm:py-16 md:py-24">

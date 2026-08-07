@@ -22,7 +22,7 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
   };
 
   return (
-    <section className="relative overflow-hidden bg-brand-green-deeper text-white bg-grain">
+    <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white bg-grain">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <motion.div
         className="absolute inset-0 -z-10"

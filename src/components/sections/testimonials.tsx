@@ -81,7 +81,7 @@ export function Testimonials() {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
+    <section className="relative isolate overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
       <AuroraGlow variant="cool" />
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Testimonials</p>

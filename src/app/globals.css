@@ -495,8 +495,12 @@
     overflow-wrap: anywhere;
   }
 
-  /* Media is fluid by default — a stray fixed-width image can't widen the page */
-  img, svg, video, canvas, iframe {
+  /* Media is fluid by default — a stray fixed-width image can't widen the page.
+     NOTE: svg is deliberately NOT in this list. Decorative SVGs are legitimately
+     wider than their container (the wave divider is 200% wide so it can tile as
+     it drifts), and capping them at 100% silently breaks that. SVGs here are
+     sized by utility classes and were never the source of overflow. */
+  img, video, canvas, iframe {
     max-width: 100%;
   }
   img, video, canvas {

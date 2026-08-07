@@ -19,7 +19,11 @@ const toneClass: Record<Tone, string> = {
 
 export function Section({ tone = "default", id, className, children }: { tone?: Tone; id?: string; className?: string; children: ReactNode }) {
   return (
-    <section id={id} className={cn("relative py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
+    // `isolate` makes this element form a stacking context, so decorative layers
+    // placed at -z-10 (AuroraGlow and friends) paint ABOVE this section's own
+    // tone background rather than behind it. Without it they were drawn under
+    // the fill and were invisible everywhere on the site.
+    <section id={id} className={cn("relative isolate py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
       {children}
     </section>
   );
