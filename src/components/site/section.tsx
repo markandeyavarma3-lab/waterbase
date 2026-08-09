@@ -31,8 +31,12 @@ export function Section({ tone = "default", id, className, children }: { tone?: 
 
 export function Eyebrow({ children, onDark = false, className }: { children: ReactNode; onDark?: boolean; className?: string }) {
   return (
+    // `flex w-fit`, NOT inline-flex. When a centered SectionHeading applies
+    // .heading-accent (display:inline-block) to the h2, an inline-level eyebrow
+    // shares a line with the heading and the two overlap. Block-level here,
+    // w-fit so it still hugs its text.
     <p className={cn(
-      "inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] md:text-sm",
+      "flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] md:text-sm",
       onDark ? "text-brand-green-light" : "text-brand-green",
       className
     )}>
@@ -46,7 +50,9 @@ export function SectionHeading({ eyebrow, title, lead, align = "left", onDark = 
   return (
     <div className={cn("flex flex-col gap-4", align === "center" && "items-center text-center", action && "md:flex-row md:items-end md:justify-between md:gap-10", className)}>
       <div className={cn("max-w-2xl", align === "center" && "mx-auto")}>
-        {eyebrow ? <Eyebrow onDark={onDark} className={align === "center" ? "justify-center" : undefined}>{eyebrow}</Eyebrow> : null}
+        {/* mx-auto (not justify-center) now that Eyebrow is `w-fit`: it hugs its
+            text, so it has to be centred by margin rather than by justification. */}
+        {eyebrow ? <Eyebrow onDark={onDark} className={align === "center" ? "mx-auto" : undefined}>{eyebrow}</Eyebrow> : null}
         {/* Fluid size: scales continuously between phone and desktop instead of
             snapping at the md breakpoint, which is what made tablet widths look off. */}
         <h2 className={cn(

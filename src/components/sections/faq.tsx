@@ -91,7 +91,10 @@ export function FAQ() {
     <section className="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <Reveal className="text-center">
-        <p className="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-green">
+        {/* `flex`, not `inline-flex`. The h2 below carries .heading-accent, which
+            is display:inline-block — so an inline-level eyebrow sat on the SAME
+            line as the heading and the two overlapped. */}
+        <p className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-green">
           <span className="h-px w-6 bg-brand-green/40" aria-hidden="true" />
           FAQ
         </p>

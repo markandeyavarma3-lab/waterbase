@@ -11,8 +11,8 @@ export function Footer() {
             reliably with a thumb. Negative margin keeps the visual spacing identical
             on desktop while the hit area grows to 44px on touch devices. */}
         <nav aria-label="Legal" className="-my-2 flex items-center gap-4 sm:gap-5">
-          <Link href="/privacy" className="tap-target-y flex items-center px-1 transition-colors hover:text-white">Privacy Policy</Link>
-          <Link href="/terms" className="tap-target-y flex items-center px-1 transition-colors hover:text-white">Terms of Use</Link>
+          <Link href="/privacy" className="tap-target-y link-underline flex items-center px-1 transition-colors hover:text-white">Privacy Policy</Link>
+          <Link href="/terms" className="tap-target-y link-underline flex items-center px-1 transition-colors hover:text-white">Terms of Use</Link>
         </nav>
       </div>
     </footer>
