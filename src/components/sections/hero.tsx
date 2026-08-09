@@ -8,6 +8,7 @@ import type { LucideIcon } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
+import { DUR, EASE_OUT_EXPO } from "@/lib/motion";
 import { WaterCaustics } from "@/components/site/water-caustics";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
@@ -86,28 +87,55 @@ export function Hero() {
             </MotionPress>
           </Reveal>
 
-          {/* Stats window */}
+          {/* Stats — five independent floating cards rather than one joined
+              panel. Each settles in on its own delay, then drifts continuously
+              on its own slow cycle so the group never locks into a rigid grid.
+              Phase offsets are prime-ish multiples so the cards don't visibly
+              sync up and start moving as one block. */}
           <Reveal delay={280}>
-            <div className="glass-panel mx-auto mt-10 max-w-3xl overflow-hidden rounded-2xl">
-              <p className="border-b border-white/10 py-3 text-center text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">
-                Trusted across South India
-              </p>
-              <div className="grid grid-cols-2 divide-x divide-y divide-white/10 sm:grid-cols-3 lg:grid-cols-5 lg:divide-y-0">
-                {siteConfig.stats.map((s) => {
-                  const Icon = STAT_ICONS[s.label];
-                  return (
-                    <div key={s.label} className="flex flex-col items-center justify-center gap-1.5 px-4 py-7 text-center transition-colors hover:bg-white/5">
-                      {Icon ? <Icon className="h-5 w-5 text-brand-green-light" aria-hidden="true" /> : null}
-                      <p className="font-display text-2xl font-extrabold tracking-tight md:text-3xl">
-                        <CountUp end={s.value} suffix={s.suffix} />
-                      </p>
-                      <p className="text-xs leading-snug text-white/60 md:text-sm">{s.label}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <p className="mt-12 text-center text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">
+              Trusted across South India
+            </p>
           </Reveal>
+
+          {/* Grid, not flex-wrap: with flex the 5th card wrapped onto its own row
+              and stretched to full width. A grid gives predictable columns, and
+              on the 2-column phone layout the odd 5th card spans both so the
+              block doesn't end on a lopsided single tile. */}
+          <div className="mx-auto mt-6 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 [&>*:nth-child(5)]:col-span-2 sm:[&>*:nth-child(5)]:col-span-1">
+            {siteConfig.stats.map((s, i) => {
+              const Icon = STAT_ICONS[s.label];
+              return (
+                <motion.div
+                  key={s.label}
+                  className="group/stat relative"
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 18, scale: 0.94 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: DUR.settle, delay: 0.34 + i * 0.07, ease: EASE_OUT_EXPO }}
+                >
+                  <div
+                    className="motion-float-card glass-panel flex h-full flex-col items-center justify-center gap-2 rounded-2xl px-4 py-6 text-center transition-colors duration-300 hover:bg-white/[0.11]"
+                    style={{
+                      // Each card drifts on its own period/phase — see comment above.
+                      animation: `stat-float ${7 + i * 1.3}s var(--ease-in-out-soft) ${i * 0.9}s infinite`,
+                    }}
+                  >
+                    {Icon ? (
+                      <Icon
+                        className="h-5 w-5 text-brand-green-light transition-transform duration-300 group-hover/stat:scale-110"
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                    <p className="font-display text-2xl font-extrabold tracking-tight tabular-nums md:text-3xl">
+                      <CountUp end={s.value} suffix={s.suffix} />
+                    </p>
+                    <p className="text-xs leading-snug text-white/60 md:text-sm">{s.label}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </Container>
 

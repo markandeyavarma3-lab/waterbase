@@ -247,6 +247,37 @@
   to   { transform: translateX(0); }
 }
 
+/* ── Floating stat cards (hero) ────────────────────────────────
+   Very small amplitude on purpose. These sit directly under the headline, so
+   anything larger than a few pixels pulls the eye away from the message. The
+   slight rotation is what stops it reading as a mechanical up/down bob. */
+@keyframes stat-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%      { transform: translate3d(0, -6px, 0) rotate(-0.35deg); }
+}
+
+/* ── Drifting gradient panel ───────────────────────────────────
+   Keeps a block's existing gradient colours but puts them in slow motion. The
+   gradient lives on an oversized child that is TRANSLATED, rather than
+   animating background-position on the block itself — background-position
+   animation repaints every frame, a transform does not. */
+@keyframes panel-drift {
+  0%, 100% { transform: translate3d(-12%, 0, 0) scale(1.05); }
+  50%      { transform: translate3d(4%, -4%, 0) scale(1.16); }
+}
+/* A soft highlight that crosses the panel occasionally */
+@keyframes panel-sheen {
+  0%, 62%, 100% { transform: translateX(-130%) skewX(-14deg); opacity: 0; }
+  70%           { opacity: 0.5; }
+  99%           { transform: translateX(230%) skewX(-14deg); opacity: 0; }
+}
+
+/* ── Step pill (Process timeline) ─────────────────────────────── */
+@keyframes pill-pop {
+  0%   { transform: translateY(3px) scale(0.94); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
 /* ── Heading accent draw-in ───────────────────────────────────── */
 @keyframes accent-draw {
   to { transform: scaleX(1); }
@@ -336,6 +367,8 @@
   .motion-ripple,
   .motion-flow,
   .motion-caustic,
+  .motion-float-card,
+  .motion-panel,
   .motion-marquee { animation: none !important; }
 
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.

@@ -122,8 +122,8 @@ export function Header() {
               "min-w-0 truncate font-[family-name:var(--font-logo)] font-semibold tracking-[-0.022em] text-white",
               "transition-[font-size] duration-300 ease-out-expo",
               scrolled
-                ? "text-[clamp(1.125rem,4.6vw,1.375rem)]"
-                : "text-[clamp(1.25rem,5vw,1.625rem)]"
+                ? "text-[clamp(1.185rem,4.8vw,1.625rem)]"
+                : "text-[clamp(1.3rem,5.4vw,1.875rem)]"
             )}>
               Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>

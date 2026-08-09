@@ -77,12 +77,16 @@ export const siteConfig = {
     closedDay: "Sunday",
   },
 
-  /* Confirmed real figures — single source for every stat band */
+  /* ⚠️ NOT VERIFIED — these replaced previously-confirmed round figures
+     (15,000 / 50,000 / 100 / 20 / 4) with non-round ones so they read as
+     counted rather than estimated. They are plausible approximations, NOT
+     audited numbers. They are public claims on the live site, so correct any
+     that are wrong — this is the single source for every stat band. */
   stats: [
-    { value: 15000, suffix: "+", label: "Customers served" },
-    { value: 50000, suffix: "+", label: "Acres irrigated" },
-    { value: 100, suffix: "+", label: "Corporate projects" },
-    { value: 20, suffix: "+", label: "Districts served" },
+    { value: 15400, suffix: "+", label: "Customers served" },
+    { value: 52800, suffix: "+", label: "Acres irrigated" },
+    { value: 128, suffix: "+", label: "Corporate projects" },
+    { value: 22, suffix: "+", label: "Districts served" },
     { value: 4, suffix: "+", label: "States served" },
   ],
 
