@@ -18,8 +18,12 @@ export function ContactCTA() {
                 <span className="h-px w-6 bg-brand-green-light/60" aria-hidden="true" />
                 Get started
               </p>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-balance text-white md:text-[2.75rem]">
-                Let&apos;s plan your <span className="text-gradient-brand">irrigation</span>
+              {/* Solid accent, not gradient text. This CTA renders on every page,
+                  so the one remaining gradient headline was quietly undoing the
+                  hero change across the whole site. Now matches the hero: white
+                  plus a single accent colour. */}
+              <h2 className="mt-4 font-display text-[clamp(1.75rem,4.6vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em] text-balance text-white">
+                Let&apos;s plan your <span className="text-brand-green-light">irrigation</span>
               </h2>
               <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/80">
                 Products, design, installation or APMIP subsidy — message us on WhatsApp, or request a callback and our team will reach out.
