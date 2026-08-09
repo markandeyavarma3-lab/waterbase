@@ -3,16 +3,18 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Users, Sprout, Building2, MapPin, Globe2 } from "lucide-react";
+import { ArrowRight, Users, Sprout, Building2, MapPin, Globe2, Phone, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
 import { DUR, EASE_OUT_EXPO } from "@/lib/motion";
 import { WaterCaustics } from "@/components/site/water-caustics";
+import { IrrigationSchematic } from "@/components/site/irrigation-schematic";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, telLink } from "@/lib/site-config";
+import { trackCallClick } from "@/lib/analytics";
 
 const STAT_ICONS: Record<string, LucideIcon> = {
   "Customers served": Users,
@@ -40,6 +42,9 @@ export function Hero() {
           canvas water-ripple, and a cursor glow (which does nothing on touch). */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <WaterCaustics />
+        {/* The schematic sits on top of the caustic light, so the pipes read as
+            lit by it rather than as a flat overlay. */}
+        <IrrigationSchematic />
       </motion.div>
       <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-px bg-white/10" aria-hidden="true" />
@@ -75,16 +80,47 @@ export function Hero() {
             </p>
           </Reveal>
 
+          {/* Two actions, not one. ~65% of conversions are phone calls, so the
+              call route is given equal footing rather than being buried in the
+              header — but the callback stays visually primary. */}
           <Reveal delay={220}>
-            <MotionPress magnetic className="mt-9">
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-brand-sun px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-black/25 ring-1 ring-white/15 transition-colors duration-300 hover:bg-brand-sun-dark"
-              >
-                Request a Callback
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-              </Link>
-            </MotionPress>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <MotionPress magnetic>
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 rounded-full bg-brand-sun px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-black/25 ring-1 ring-white/15 transition-colors duration-300 hover:bg-brand-sun-dark"
+                >
+                  Request a Callback
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              </MotionPress>
+              <MotionPress>
+                <a
+                  href={telLink(siteConfig.phones.sales.primary)}
+                  onClick={trackCallClick}
+                  className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.07] px-6 py-3.5 text-base font-semibold text-white backdrop-blur transition-colors duration-300 hover:bg-white/15"
+                >
+                  <Phone className="h-4 w-4 text-brand-green-light" aria-hidden="true" />
+                  Call now
+                </a>
+              </MotionPress>
+            </div>
+          </Reveal>
+
+          {/* Proof, immediately under the actions — the "is this a serious
+              operator?" question answered before any scrolling. Wording matches
+              the claims already used elsewhere on the site. */}
+          <Reveal delay={280}>
+            <p className="mx-auto mt-6 flex max-w-xl flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs text-white/55 sm:text-sm">
+              <ShieldCheck className="h-4 w-4 shrink-0 text-brand-green-light" aria-hidden="true" />
+              <span>Authorised distributor &amp; dealer</span>
+              <span className="text-white/25">·</span>
+              <span>Jain Irrigation</span>
+              <span className="text-white/25">·</span>
+              <span>KSB Pumps</span>
+              <span className="text-white/25">·</span>
+              <span>20+ brands</span>
+            </p>
           </Reveal>
 
           {/* Stats — five independent floating cards rather than one joined
