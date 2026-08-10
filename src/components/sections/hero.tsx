@@ -48,13 +48,11 @@ export function Hero() {
             </span>
           </Reveal>
           <Reveal delay={80}>
-            {/* Authority-led and in plain words: "complete water management,
-                engineered end to end" was abstract corporate language. This names
-                the actual span of the work — the pump in the ground through to
-                the emitter at the plant — which is the real differentiator. */}
-            <h1 className="mx-auto mt-7 max-w-4xl font-display text-[clamp(2.25rem,8vw,4.25rem)] font-extrabold leading-[0.98] tracking-[-0.035em]">
-              <span className="block">From borewell to dripper.</span>
-              <span className="block text-brand-green-light">One team.</span>
+            {/* Original tagline, restored at the owner's request. Keeps the
+                improved typographic treatment (larger, tighter, single accent). */}
+            <h1 className="mx-auto mt-7 max-w-5xl font-display text-[clamp(2rem,7.2vw,3.9rem)] font-extrabold leading-[1.02] tracking-[-0.032em]">
+              <span className="block lg:whitespace-nowrap">Complete <span className="text-brand-green-light">water management</span>,</span>
+              <span className="block text-white/90">engineered end to end.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>

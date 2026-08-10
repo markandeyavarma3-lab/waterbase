@@ -113,17 +113,18 @@ export function Header() {
           </Sheet>
 
           <Link href="/" className="tap-target-y group/logo flex min-w-0 items-center">
-            {/* Wordmark. Both words are deliberately identical in weight and size.
-                What was wrong before was scale and weight, not hierarchy: 36px
-                ExtraBold against a 14px nav is a 2.6:1 ratio that swamped the bar.
-                Now ~26px at 600 with a touch of negative tracking, which is how a
-                wordmark is normally set — tight enough to read as one object. */}
+            {/* Wordmark: all caps, uniform size, heavier weight.
+                Caps need POSITIVE tracking — the negative tracking that suits
+                lowercase jams capitals into each other, which is what makes a
+                caps wordmark look amateur. Cap-height also reads larger than
+                lowercase at the same px, so the size is pulled back slightly to
+                keep the same optical weight against the 14px nav. */}
             <span className={cn(
-              "min-w-0 truncate font-[family-name:var(--font-logo)] font-semibold tracking-[-0.022em] text-white",
+              "min-w-0 truncate font-[family-name:var(--font-logo)] font-bold uppercase tracking-[0.055em] text-white",
               "transition-[font-size] duration-300 ease-out-expo",
               scrolled
-                ? "text-[clamp(1.185rem,4.8vw,1.625rem)]"
-                : "text-[clamp(1.3rem,5.4vw,1.875rem)]"
+                ? "text-[clamp(0.95rem,4vw,1.25rem)]"
+                : "text-[clamp(1.05rem,4.4vw,1.4rem)]"
             )}>
               Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>
