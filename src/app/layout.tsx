@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Archivo } from "next/font/google";
+import { Inter, Archivo, Outfit } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
@@ -18,10 +18,12 @@ const archivo = Archivo({
   weight: ["500", "600", "700", "800"],
 });
 
-// The wordmark uses the same family as the headings (Archivo). Running a third
-// font purely for the logo is what made it read as bolted-on rather than part of
-// the identity — and it cost an extra font download on every page load.
-const logoFont = Archivo({
+// Wordmark face. Geometric — wider, rounder and more open than the Archivo used
+// for headings, which gives the logo its own identity without drifting into the
+// generic. Deliberately NOT Poppins: that was the original logo font and it read
+// as blobby at heavy weights. Only two weights are pulled, so the extra download
+// is small.
+const logoFont = Outfit({
   subsets: ["latin"],
   variable: "--font-logo",
   display: "swap",

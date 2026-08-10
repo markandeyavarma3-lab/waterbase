@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
+import { Wordmark } from "@/components/site/wordmark";
+
 import { NAV_LINKS } from "@/lib/nav";
 
 export function Header() {
@@ -127,15 +129,16 @@ export function Header() {
                 caps wordmark look amateur. Cap-height also reads larger than
                 lowercase at the same px, so the size is pulled back slightly to
                 keep the same optical weight against the 14px nav. */}
-            <span key={logoRun} className={cn(
-              "logo-fill min-w-0 truncate font-[family-name:var(--font-logo)] font-bold uppercase tracking-[0.042em]",
-              "transition-[font-size] duration-300 ease-out-expo",
-              scrolled
-                ? "text-[clamp(1.05rem,4.4vw,1.4rem)]"
-                : "text-[clamp(1.15rem,4.9vw,1.6rem)]"
-            )}>
-              Waterbase<span className="hidden sm:inline"> Technologies</span>
-            </span>
+            <Wordmark
+              key={logoRun}
+              className={cn(
+                "font-[family-name:var(--font-logo)] font-bold uppercase tracking-[0.042em] text-white",
+                "transition-[font-size] duration-300 ease-out-expo",
+                scrolled
+                  ? "text-[clamp(1.05rem,4.4vw,1.4rem)]"
+                  : "text-[clamp(1.15rem,4.9vw,1.6rem)]"
+              )}
+            />
           </Link>
         </div>
 

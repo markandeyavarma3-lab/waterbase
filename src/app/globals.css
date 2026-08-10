@@ -268,9 +268,34 @@
    unbearable within a minute. */
 @keyframes logo-fill {
   0%   { background-position: 0% 0%; }
-  80%  { background-position: 0% 103%; }  /* overshoot — water surges past level */
-  91%  { background-position: 0% 97%; }   /* slosh back */
+  72%  { background-position: 0% 103%; }  /* overshoot — water surges past level */
+  84%  { background-position: 0% 97%; }   /* slosh back */
   100% { background-position: 0% 100%; }  /* settle */
+}
+
+/* The mark's droplet fills on the same clock as the letters */
+@keyframes drop-fill {
+  0%   { transform: translateY(105%); }
+  72%  { transform: translateY(-4%); }
+  84%  { transform: translateY(4%); }
+  100% { transform: translateY(0%); }
+}
+/* Droplet outline brightens as it fills */
+@keyframes drop-glow {
+  0%   { opacity: 0.35; }
+  70%  { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+/* A ring leaves the droplet once it is full */
+@keyframes drop-ripple {
+  0%, 62%  { transform: scale(0.55); opacity: 0; }
+  72%      { opacity: 0.55; }
+  100%     { transform: scale(2.3); opacity: 0; }
+}
+/* Light crosses the finished wordmark */
+@keyframes logo-shine {
+  0%, 58%  { background-position: -140% 0; }
+  100%     { background-position: 240% 0; }
 }
 
 /* ── Step pill (Process timeline) ─────────────────────────────── */
@@ -544,16 +569,52 @@
          compounds and the level is ~90% full by the halfway point. Real water
          rising at a constant rate is linear anyway; the character comes from the
          overshoot/slosh keyframes, not from the curve. */
-      animation: logo-fill 1.8s linear forwards;
+      animation: logo-fill 2.2s linear forwards;
+    }
+
+    /* Shine layer — a duplicate of the wordmark stacked exactly on top, carrying
+       only a moving highlight. Two background-clip:text treatments cannot live on
+       one element, hence the second layer rather than a second background. */
+    .logo-shine {
+      background-image: linear-gradient(
+        100deg,
+        transparent 42%,
+        rgba(255, 255, 255, 0.95) 50%,
+        transparent 58%
+      );
+      background-size: 220% 100%;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: logo-shine 2.2s ease-out forwards;
     }
   }
   /* Reduced motion: no fill animation, just the solid wordmark. The background
      must be cleared too — leaving it would freeze the logo half-dim. */
   @media (prefers-reduced-motion: reduce) {
     .logo-fill {
-      animation: none;
+      animation: none !important;
       background-image: none;
       color: #fff;
+    }
+    /* The shine layer is pure decoration sitting on top of the real wordmark —
+       hide it outright rather than freezing it mid-sweep. */
+    .logo-shine {
+      display: none;
+    }
+    /* Droplet: stopping these leaves the element at its untransformed base
+       state, which is a full drop at full opacity — exactly the resting look.
+       !important is required because these animations are set as INLINE styles
+       in wordmark.tsx, and an inline style beats a class rule. */
+    .logo-drop-water,
+    .logo-drop-glow {
+      animation: none !important;
+    }
+    /* The ripple ring only reads as motion. Its resting state is a visible
+       circle around the mark, so it has to be removed, not merely stopped. */
+    .logo-ripple {
+      display: none;
     }
   }
 
