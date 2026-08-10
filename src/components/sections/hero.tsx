@@ -3,8 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Users, Sprout, Building2, MapPin, Globe2, Phone, ShieldCheck } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ArrowRight, Phone, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
@@ -14,14 +13,6 @@ import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig, telLink } from "@/lib/site-config";
 import { trackCallClick } from "@/lib/analytics";
-
-const STAT_ICONS: Record<string, LucideIcon> = {
-  "Customers served": Users,
-  "Acres irrigated": Sprout,
-  "Corporate projects": Building2,
-  "Districts served": MapPin,
-  "States served": Globe2,
-};
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -57,48 +48,47 @@ export function Hero() {
             </span>
           </Reveal>
           <Reveal delay={80}>
-            {/* Fluid headline: 2.65rem was fixed until the md breakpoint, so it
-                overflowed narrow phones and under-filled tablets. */}
-            {/* ONE accent colour, on the two words that carry the offer. The
-                previous version ran white -> green -> a green/blue gradient
-                across two lines; gradient headline text in particular is the
-                most recognisable "generated site" signature there is.
-                Tracking is slightly tighter than the old -0.025em default:
-                at 60px, display type wants to be set tighter than body. */}
-            <h1 className="mx-auto mt-6 font-display text-[clamp(2rem,7.5vw,3.75rem)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              <span className="block lg:whitespace-nowrap">Complete <span className="text-brand-green-light">water management</span>,</span>
-              <span className="block text-white/90">engineered end to end.</span>
+            {/* Authority-led and in plain words: "complete water management,
+                engineered end to end" was abstract corporate language. This names
+                the actual span of the work — the pump in the ground through to
+                the emitter at the plant — which is the real differentiator. */}
+            <h1 className="mx-auto mt-7 max-w-4xl font-display text-[clamp(2.25rem,8vw,4.25rem)] font-extrabold leading-[0.98] tracking-[-0.035em]">
+              <span className="block">From borewell to dripper.</span>
+              <span className="block text-brand-green-light">One team.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
-            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg md:text-xl">
-              From the first site survey to lifelong after-sales support — we design, supply and install drip, sprinkler and water-management systems for fields, lawns and nurseries.
+            {/* One line, not three. A long paragraph directly under a headline
+                competes with it instead of supporting it. */}
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
+              Design, supply, installation and after-sales — for farms, nurseries and
+              corporate landscapes across South India.
             </p>
           </Reveal>
 
-          {/* Two actions, not one. ~65% of conversions are phone calls, so the
-              call route is given equal footing rather than being buried in the
-              header — but the callback stays visually primary. */}
           <Reveal delay={220}>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              {/* Calling is the PRIMARY action: it is roughly two-thirds of this
+                  business's conversions, so it gets the filled button. The amber
+                  is the muted token — full-strength brand-sun read as neon here. */}
               <MotionPress magnetic>
-                <Link
-                  href="/contact"
-                  className="group inline-flex items-center gap-2 rounded-full bg-brand-sun px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-black/25 ring-1 ring-white/15 transition-colors duration-300 hover:bg-brand-sun-dark"
-                >
-                  Request a Callback
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              </MotionPress>
-              <MotionPress>
                 <a
                   href={telLink(siteConfig.phones.sales.primary)}
                   onClick={trackCallClick}
-                  className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.07] px-6 py-3.5 text-base font-semibold text-white backdrop-blur transition-colors duration-300 hover:bg-white/15"
+                  className="group inline-flex items-center gap-2.5 rounded-full bg-brand-sun-muted px-8 py-4 text-base font-semibold text-white shadow-lg shadow-black/30 transition-colors duration-300 hover:bg-brand-sun-muted-hover"
                 >
-                  <Phone className="h-4 w-4 text-brand-green-light" aria-hidden="true" />
+                  <Phone className="h-[1.05rem] w-[1.05rem]" aria-hidden="true" />
                   Call now
                 </a>
+              </MotionPress>
+              <MotionPress>
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 rounded-full border border-white/25 px-7 py-4 text-base font-semibold text-white/90 transition-colors duration-300 hover:border-white/40 hover:bg-white/[0.06] hover:text-white"
+                >
+                  Request a callback
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
               </MotionPress>
             </div>
           </Reveal>
@@ -119,54 +109,29 @@ export function Hero() {
             </p>
           </Reveal>
 
-          {/* Stats — five independent floating cards rather than one joined
-              panel. Each settles in on its own delay, then drifts continuously
-              on its own slow cycle so the group never locks into a rigid grid.
-              Phase offsets are prime-ish multiples so the cards don't visibly
-              sync up and start moving as one block. */}
-          <Reveal delay={280}>
-            <p className="mt-12 text-center text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">
-              Trusted across South India
-            </p>
-          </Reveal>
-
-          {/* Grid, not flex-wrap: with flex the 5th card wrapped onto its own row
-              and stretched to full width. A grid gives predictable columns, and
-              on the 2-column phone layout the odd 5th card spans both so the
-              block doesn't end on a lopsided single tile. */}
-          <div className="mx-auto mt-6 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 [&>*:nth-child(5)]:col-span-2 sm:[&>*:nth-child(5)]:col-span-1">
-            {siteConfig.stats.map((s, i) => {
-              const Icon = STAT_ICONS[s.label];
-              return (
+          {/* Stats as plain figures, not cards. The boxes were doing the work
+              that the numbers should do themselves — five glass tiles read as UI
+              chrome, whereas bare numerals separated by hairlines read as a fact
+              sheet. Icons dropped for the same reason: they added colour and
+              noise without adding meaning. */}
+          <div className="mx-auto mt-16 max-w-4xl border-t border-white/10 pt-8">
+            <div className="grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-white/10">
+              {siteConfig.stats.map((s, i) => (
                 <motion.div
                   key={s.label}
-                  className="group/stat relative"
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 18, scale: 0.94 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  className="px-2 text-center"
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.4 }}
-                  transition={{ duration: DUR.settle, delay: 0.34 + i * 0.07, ease: EASE_OUT_EXPO }}
+                  transition={{ duration: DUR.settle, delay: 0.3 + i * 0.06, ease: EASE_OUT_EXPO }}
                 >
-                  <div
-                    className="motion-float-card glass-panel flex h-full flex-col items-center justify-center gap-2 rounded-2xl px-4 py-6 text-center transition-colors duration-300 hover:bg-white/[0.11]"
-                    style={{
-                      // Each card drifts on its own period/phase — see comment above.
-                      animation: `stat-float ${7 + i * 1.3}s var(--ease-in-out-soft) ${i * 0.9}s infinite`,
-                    }}
-                  >
-                    {Icon ? (
-                      <Icon
-                        className="h-5 w-5 text-brand-green-light transition-transform duration-300 group-hover/stat:scale-110"
-                        aria-hidden="true"
-                      />
-                    ) : null}
-                    <p className="font-display text-2xl font-extrabold tracking-tight tabular-nums md:text-3xl">
-                      <CountUp end={s.value} suffix={s.suffix} />
-                    </p>
-                    <p className="text-xs leading-snug text-white/60 md:text-sm">{s.label}</p>
-                  </div>
+                  <p className="font-display text-[clamp(1.5rem,3.4vw,2rem)] font-extrabold leading-none tracking-[-0.02em] tabular-nums text-white">
+                    <CountUp end={s.value} suffix={s.suffix} />
+                  </p>
+                  <p className="mt-2 text-xs leading-snug text-white/45 sm:text-[0.8125rem]">{s.label}</p>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
       </Container>

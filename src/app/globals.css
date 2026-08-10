@@ -81,6 +81,11 @@
   --color-brand-sun-dark: #A85F16;
   --color-brand-sun-light: #F9C589;
   --color-brand-sun-soft: #FDF1E0;
+  /* Muted amber for the primary action on dark sections. The full-strength
+     brand-sun reads as neon against the olive; this keeps the same hue family
+     but drops the brightness so it leads without shouting. */
+  --color-brand-sun-muted: #CE8440;
+  --color-brand-sun-muted-hover: #B87033;
 
   /* Water glow — bright teal/cyan shimmer accent for ripple + glow effects */
   --color-brand-glow: #4FE0C4;
@@ -247,31 +252,6 @@
   to   { transform: translateX(0); }
 }
 
-/* ── Floating stat cards (hero) ────────────────────────────────
-   Very small amplitude on purpose. These sit directly under the headline, so
-   anything larger than a few pixels pulls the eye away from the message. The
-   slight rotation is what stops it reading as a mechanical up/down bob. */
-@keyframes stat-float {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  50%      { transform: translate3d(0, -6px, 0) rotate(-0.35deg); }
-}
-
-/* ── Drifting gradient panel ───────────────────────────────────
-   Keeps a block's existing gradient colours but puts them in slow motion. The
-   gradient lives on an oversized child that is TRANSLATED, rather than
-   animating background-position on the block itself — background-position
-   animation repaints every frame, a transform does not. */
-@keyframes panel-drift {
-  0%, 100% { transform: translate3d(-12%, 0, 0) scale(1.05); }
-  50%      { transform: translate3d(4%, -4%, 0) scale(1.16); }
-}
-/* A soft highlight that crosses the panel occasionally */
-@keyframes panel-sheen {
-  0%, 62%, 100% { transform: translateX(-130%) skewX(-14deg); opacity: 0; }
-  70%           { opacity: 0.5; }
-  99%           { transform: translateX(230%) skewX(-14deg); opacity: 0; }
-}
-
 /* ── Step pill (Process timeline) ─────────────────────────────── */
 @keyframes pill-pop {
   0%   { transform: translateY(3px) scale(0.94); opacity: 0; }
@@ -367,7 +347,6 @@
   .motion-ripple,
   .motion-flow,
   .motion-caustic,
-  .motion-float-card,
   .motion-panel,
   .motion-marquee { animation: none !important; }
 

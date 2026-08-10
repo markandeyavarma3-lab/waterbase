@@ -10,7 +10,7 @@ export const siteConfig = {
   experienceYears: `${yearsOfExp}+`,
 
   // 👇 Edit this one line anytime to change the hero badge text.
-  heroBadge: "Serving farmers from 25 + years",
+  heroBadge: "Serving farmers for 25+ years",
 
   domain: "waterbasetechnologies.com",
   url: "https://waterbasetechnologies.com",

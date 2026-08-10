@@ -53,6 +53,17 @@ export function WaterCaustics({ className }: { className?: string }) {
           animation: "caustic-b calc(var(--dur-drift, 26s) * 1.45) var(--ease-in-out-soft) infinite",
         }}
       />
+      {/* Depth: a top-down light fall-off plus a corner vignette. This is what
+          stops the section reading as one flat slab of green — the eye needs the
+          ground to be darker at the edges than behind the headline. */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 85% at 50% 0%, rgba(255,255,255,0.09), transparent 55%)," +
+            "radial-gradient(100% 100% at 50% 42%, transparent 45%, rgba(8,18,10,0.42) 100%)",
+        }}
+      />
       {/* Fine horizontal banding — the surface line pattern, kept very faint */}
       <div
         className="motion-caustic absolute inset-0 will-change-transform"
