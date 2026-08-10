@@ -252,50 +252,71 @@
   to   { transform: translateX(0); }
 }
 
-/* ── Wordmark water-fill ───────────────────────────────────────
-   The letters start dim and a waterline rises through them until they are
-   full, overshooting slightly and sloshing back so it settles like liquid
-   rather than stopping dead.
+/* ── Wordmark intro sequence ───────────────────────────────────
+   A five-beat story rather than two things fading at once:
+     1. a droplet forms above the name and falls (the drop distance is
+        limited by the 64px header - it cannot start far above it or the
+        fall happens off-screen)
+     2. it lands on the first letter and squashes
+     3. the impact throws a ring, and the letters jolt
+     4. its water washes across the wordmark, left to right
+     5. the droplet drains to nothing - absorbed into the name
 
-   How it works: the gradient image is twice the element's height — water in
-   its lower half, dim in its upper half, with a teal glint at the boundary.
-   Scrolling background-position from 0% to 100% brings the water half up into
-   view, so the boundary reads as a rising water level. background-clip:text
-   paints all of that inside the letterforms.
+   The letters themselves stay SOLID WHITE the whole time. The water is a
+   coloured highlight passing through them, not a fill, so the logo is legible
+   at every frame and can never appear half-drawn or missing.
 
-   Plays once on load; the header remounts the span to replay it on hover. It
-   never loops — the header is on every page, and a looping logo would be
-   unbearable within a minute. */
-@keyframes logo-fill {
-  0%   { background-position: 0% 0%; }
-  72%  { background-position: 0% 103%; }  /* overshoot — water surges past level */
-  84%  { background-position: 0% 97%; }   /* slosh back */
-  100% { background-position: 0% 100%; }  /* settle */
+   Plays once on load and replays on hover; it never loops, because this header
+   is on every page. */
+
+/* 1-2-5: fall, squash, then drain away */
+@keyframes drop-fall {
+  0%   { transform: translateY(-155%) scale(0.62); opacity: 0; }
+  8%   { opacity: 1; }
+  24%  { transform: translateY(0) scale(1, 1); opacity: 1; }
+  28%  { transform: translateY(8%) scale(1.22, 0.78); }   /* squash on impact */
+  34%  { transform: translateY(0) scale(0.94, 1.06); }    /* rebound */
+  42%  { transform: translateY(0) scale(1); }
+  56%  { transform: translateY(0) scale(0); opacity: 0; } /* absorbed */
+  100% { transform: translateY(0) scale(0); opacity: 0; }
 }
 
-/* The mark's droplet fills on the same clock as the letters */
-@keyframes drop-fill {
-  0%   { transform: translateY(105%); }
-  72%  { transform: translateY(-4%); }
-  84%  { transform: translateY(4%); }
-  100% { transform: translateY(0%); }
+/* 3: ring thrown out by the impact */
+@keyframes impact-ring {
+  0%, 25%  { transform: scale(0.3); opacity: 0; }
+  30%      { opacity: 0.5; }
+  58%      { transform: scale(1.9); opacity: 0; }
+  100%     { transform: scale(1.9); opacity: 0; }
 }
-/* Droplet outline brightens as it fills */
-@keyframes drop-glow {
-  0%   { opacity: 0.35; }
-  70%  { opacity: 1; }
-  100% { opacity: 0.9; }
+
+/* 3: the letters take the hit */
+@keyframes letters-jolt {
+  0%, 25% { transform: translateY(0); }
+  29%     { transform: translateY(2.5px); }
+  36%     { transform: translateY(-1.5px); }
+  44%     { transform: translateY(0.5px); }
+  52%     { transform: translateY(0); }
+  100%    { transform: translateY(0); }
 }
-/* A ring leaves the droplet once it is full */
-@keyframes drop-ripple {
-  0%, 62%  { transform: scale(0.55); opacity: 0; }
-  72%      { opacity: 0.55; }
-  100%     { transform: scale(2.3); opacity: 0; }
+
+/* 4: the water itself, travelling through the letterforms */
+/* NOTE the direction. Increasing background-position scrolls the image LEFT,
+   so a highlight travels right-to-left as the value rises. The droplet lands on
+   the first letter, so the water has to spread rightwards from there — which
+   means counting DOWN, not up. */
+@keyframes water-wash {
+  0%, 25% { background-position: 170% 0; opacity: 0; }
+  30%     { opacity: 1; }
+  82%     { background-position: -60% 0; opacity: 1; }
+  100%    { background-position: -110% 0; opacity: 0; }
 }
-/* Light crosses the finished wordmark */
+
+/* a clean highlight to finish on */
+/* Same direction as the wash — see the note above. */
 @keyframes logo-shine {
-  0%, 58%  { background-position: -140% 0; }
-  100%     { background-position: 240% 0; }
+  0%, 62% { background-position: 240% 0; opacity: 0; }
+  70%     { opacity: 1; }
+  100%    { background-position: -140% 0; opacity: 0; }
 }
 
 /* ── Step pill (Process timeline) ─────────────────────────────── */
@@ -533,88 +554,75 @@
     transform: translateX(120%) skewX(-12deg);
   }
 
-  /* Wordmark water-fill — see the logo-fill keyframes for how it works.
-     Plain white by default so the logo is NEVER invisible; the clipped-gradient
-     treatment is only applied where background-clip:text is actually supported. */
-  .logo-fill {
+  /* Wordmark intro — see the keyframes block for the beat list.
+     The name is plain solid white by default and STAYS that way; every animated
+     part is a separate overlay, so the wordmark itself can never be left
+     invisible or half-rendered if anything fails. */
+  .logo-word {
     color: #fff;
-    /* Hug the capitals. background-size is relative to the element BOX, so any
-       line-height leading above/below the glyphs is sweep that happens where
-       there are no letters — which made the fill look like it finished early. */
     line-height: 1;
+    animation: letters-jolt 2.8s linear forwards;
   }
+
+  /* The water passing through the letterforms. A second copy of the text
+     stacked exactly on top: two background-clip:text treatments cannot share
+     one element, so the wash and the shine each need their own layer. */
   @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .logo-fill {
-      background-image: linear-gradient(
-        to top,
-        #ffffff 0%,
-        #ffffff 47%,
-        var(--color-brand-glow) 49.5%,   /* the waterline itself */
-        rgba(255, 255, 255, 0.22) 52%,
-        rgba(255, 255, 255, 0.22) 100%
-      );
-      background-size: 100% 200%;
-      background-position: 0% 0%;
-      background-repeat: no-repeat;
+    .logo-wash,
+    .logo-shine {
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      /* NOT --ease-out-expo here. That curve covers most of its travel in the
-         first fraction of the duration, which is right for an entrance but makes
-         a rising water level appear already-full before you can see it. This
-         curve stays close to linear through the rise so the waterline is
-         actually watchable, and only eases as it settles. */
-      /* linear, deliberately. A CSS timing function applies to EACH keyframe
-         segment, not across the whole animation, so any ease-out curve here
-         compounds and the level is ~90% full by the halfway point. Real water
-         rising at a constant rate is linear anyway; the character comes from the
-         overshoot/slosh keyframes, not from the curve. */
-      animation: logo-fill 2.2s linear forwards;
+      background-repeat: no-repeat;
+      /* MUST match .logo-word. These are absolutely-positioned copies of the
+         same text stacked on top of it; any difference in line-height puts the
+         glyphs on a different baseline and the layers visibly separate. */
+      line-height: 1;
     }
-
-    /* Shine layer — a duplicate of the wordmark stacked exactly on top, carrying
-       only a moving highlight. Two background-clip:text treatments cannot live on
-       one element, hence the second layer rather than a second background. */
+    .logo-wash {
+      background-image: linear-gradient(
+        100deg,
+        transparent 34%,
+        var(--color-brand-glow) 46%,
+        #ffffff 52%,
+        var(--color-brand-glow) 58%,
+        transparent 70%
+      );
+      background-size: 200% 100%;
+      animation: water-wash 2.8s linear forwards;
+    }
     .logo-shine {
       background-image: linear-gradient(
         100deg,
-        transparent 42%,
-        rgba(255, 255, 255, 0.95) 50%,
-        transparent 58%
+        transparent 44%,
+        rgba(255, 255, 255, 0.9) 50%,
+        transparent 56%
       );
       background-size: 220% 100%;
-      background-repeat: no-repeat;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: logo-shine 2.2s ease-out forwards;
+      animation: logo-shine 2.8s ease-out forwards;
     }
   }
-  /* Reduced motion: no fill animation, just the solid wordmark. The background
-     must be cleared too — leaving it would freeze the logo half-dim. */
+
+  .logo-drop {
+    animation: drop-fall 2.8s cubic-bezier(0.45, 0, 0.35, 1) forwards;
+  }
+  .logo-ripple {
+    animation: impact-ring 2.8s ease-out forwards;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .logo-fill {
-      animation: none !important;
-      background-image: none;
-      color: #fff;
-    }
-    /* The shine layer is pure decoration sitting on top of the real wordmark —
-       hide it outright rather than freezing it mid-sweep. */
-    .logo-shine {
-      display: none;
-    }
-    /* Droplet: stopping these leaves the element at its untransformed base
-       state, which is a full drop at full opacity — exactly the resting look.
-       !important is required because these animations are set as INLINE styles
-       in wordmark.tsx, and an inline style beats a class rule. */
-    .logo-drop-water,
-    .logo-drop-glow {
+    /* Every animated part here is decorative overlay on top of a wordmark that
+       is already solid white, so the safe reduced-motion state is simply to
+       remove them. !important because several are set inline in the component,
+       and an inline style beats a class rule. */
+    .logo-word {
       animation: none !important;
     }
-    /* The ripple ring only reads as motion. Its resting state is a visible
-       circle around the mark, so it has to be removed, not merely stopped. */
+    .logo-wash,
+    .logo-shine,
+    .logo-drop,
     .logo-ripple {
-      display: none;
+      display: none !important;
     }
   }
 
