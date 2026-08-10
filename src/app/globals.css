@@ -252,6 +252,27 @@
   to   { transform: translateX(0); }
 }
 
+/* ── Wordmark water-fill ───────────────────────────────────────
+   The letters start dim and a waterline rises through them until they are
+   full, overshooting slightly and sloshing back so it settles like liquid
+   rather than stopping dead.
+
+   How it works: the gradient image is twice the element's height — water in
+   its lower half, dim in its upper half, with a teal glint at the boundary.
+   Scrolling background-position from 0% to 100% brings the water half up into
+   view, so the boundary reads as a rising water level. background-clip:text
+   paints all of that inside the letterforms.
+
+   Plays once on load; the header remounts the span to replay it on hover. It
+   never loops — the header is on every page, and a looping logo would be
+   unbearable within a minute. */
+@keyframes logo-fill {
+  0%   { background-position: 0% 0%; }
+  80%  { background-position: 0% 103%; }  /* overshoot — water surges past level */
+  91%  { background-position: 0% 97%; }   /* slosh back */
+  100% { background-position: 0% 100%; }  /* settle */
+}
+
 /* ── Step pill (Process timeline) ─────────────────────────────── */
 @keyframes pill-pop {
   0%   { transform: translateY(3px) scale(0.94); opacity: 0; }
@@ -485,6 +506,55 @@
   }
   .card-shine:hover::after {
     transform: translateX(120%) skewX(-12deg);
+  }
+
+  /* Wordmark water-fill — see the logo-fill keyframes for how it works.
+     Plain white by default so the logo is NEVER invisible; the clipped-gradient
+     treatment is only applied where background-clip:text is actually supported. */
+  .logo-fill {
+    color: #fff;
+    /* Hug the capitals. background-size is relative to the element BOX, so any
+       line-height leading above/below the glyphs is sweep that happens where
+       there are no letters — which made the fill look like it finished early. */
+    line-height: 1;
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .logo-fill {
+      background-image: linear-gradient(
+        to top,
+        #ffffff 0%,
+        #ffffff 47%,
+        var(--color-brand-glow) 49.5%,   /* the waterline itself */
+        rgba(255, 255, 255, 0.22) 52%,
+        rgba(255, 255, 255, 0.22) 100%
+      );
+      background-size: 100% 200%;
+      background-position: 0% 0%;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      /* NOT --ease-out-expo here. That curve covers most of its travel in the
+         first fraction of the duration, which is right for an entrance but makes
+         a rising water level appear already-full before you can see it. This
+         curve stays close to linear through the rise so the waterline is
+         actually watchable, and only eases as it settles. */
+      /* linear, deliberately. A CSS timing function applies to EACH keyframe
+         segment, not across the whole animation, so any ease-out curve here
+         compounds and the level is ~90% full by the halfway point. Real water
+         rising at a constant rate is linear anyway; the character comes from the
+         overshoot/slosh keyframes, not from the curve. */
+      animation: logo-fill 1.8s linear forwards;
+    }
+  }
+  /* Reduced motion: no fill animation, just the solid wordmark. The background
+     must be cleared too — leaving it would freeze the logo half-dim. */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-fill {
+      animation: none;
+      background-image: none;
+      color: #fff;
+    }
   }
 
   /* Safe area for notched phones */

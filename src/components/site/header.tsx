@@ -15,6 +15,7 @@ import { NAV_LINKS } from "@/lib/nav";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [logoRun, setLogoRun] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
@@ -112,19 +113,26 @@ export function Header() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="tap-target-y group/logo flex min-w-0 items-center">
+          {/* Bumping `logoRun` remounts the span below, which is what restarts
+              the CSS fill animation — a CSS animation will not replay just
+              because an element is hovered. */}
+          <Link
+            href="/"
+            className="tap-target-y group/logo flex min-w-0 items-center"
+            onMouseEnter={() => setLogoRun((n) => n + 1)}
+          >
             {/* Wordmark: all caps, uniform size, heavier weight.
                 Caps need POSITIVE tracking — the negative tracking that suits
                 lowercase jams capitals into each other, which is what makes a
                 caps wordmark look amateur. Cap-height also reads larger than
                 lowercase at the same px, so the size is pulled back slightly to
                 keep the same optical weight against the 14px nav. */}
-            <span className={cn(
-              "min-w-0 truncate font-[family-name:var(--font-logo)] font-bold uppercase tracking-[0.055em] text-white",
+            <span key={logoRun} className={cn(
+              "logo-fill min-w-0 truncate font-[family-name:var(--font-logo)] font-bold uppercase tracking-[0.042em]",
               "transition-[font-size] duration-300 ease-out-expo",
               scrolled
-                ? "text-[clamp(0.95rem,4vw,1.25rem)]"
-                : "text-[clamp(1.05rem,4.4vw,1.4rem)]"
+                ? "text-[clamp(1.05rem,4.4vw,1.4rem)]"
+                : "text-[clamp(1.15rem,4.9vw,1.6rem)]"
             )}>
               Waterbase<span className="hidden sm:inline"> Technologies</span>
             </span>
