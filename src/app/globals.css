@@ -247,26 +247,6 @@
   to   { transform: translateX(0); }
 }
 
-/* ── Irrigation schematic (hero) ───────────────────────────────
-   Water tracing through a drip network. The pipes are drawn as dashed strokes
-   and the dash pattern is scrolled with stroke-dashoffset, which is how you get
-   a pulse that follows a curved path — a transform cannot do that.
-   Kept to a handful of paths so the per-frame cost stays negligible. */
-@keyframes pipe-flow {
-  to { stroke-dashoffset: -1000; }
-}
-/* Emitters "open" in sequence, as a real zone valve would */
-@keyframes emitter-pulse {
-  0%, 72%, 100% { opacity: 0.22; transform: scale(1); }
-  80%           { opacity: 0.95; transform: scale(1.5); }
-}
-/* A droplet leaving an emitter */
-@keyframes emitter-drop {
-  0%, 70%  { opacity: 0; transform: translateY(0); }
-  78%      { opacity: 0.7; }
-  100%     { opacity: 0; transform: translateY(14px); }
-}
-
 /* ── Floating stat cards (hero) ────────────────────────────────
    Very small amplitude on purpose. These sit directly under the headline, so
    anything larger than a few pixels pulls the eye away from the message. The
@@ -389,8 +369,6 @@
   .motion-caustic,
   .motion-float-card,
   .motion-panel,
-  .motion-schematic,
-  .motion-schematic * ,
   .motion-marquee { animation: none !important; }
 
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.

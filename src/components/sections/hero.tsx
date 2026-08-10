@@ -10,7 +10,6 @@ import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
 import { DUR, EASE_OUT_EXPO } from "@/lib/motion";
 import { WaterCaustics } from "@/components/site/water-caustics";
-import { IrrigationSchematic } from "@/components/site/irrigation-schematic";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig, telLink } from "@/lib/site-config";
@@ -42,9 +41,6 @@ export function Hero() {
           canvas water-ripple, and a cursor glow (which does nothing on touch). */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <WaterCaustics />
-        {/* The schematic sits on top of the caustic light, so the pipes read as
-            lit by it rather than as a flat overlay. */}
-        <IrrigationSchematic />
       </motion.div>
       <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-px bg-white/10" aria-hidden="true" />
