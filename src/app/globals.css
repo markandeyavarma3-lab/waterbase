@@ -252,71 +252,71 @@
   to   { transform: translateX(0); }
 }
 
-/* ── Wordmark intro sequence ───────────────────────────────────
-   A five-beat story rather than two things fading at once:
-     1. a droplet forms above the name and falls (the drop distance is
-        limited by the 64px header - it cannot start far above it or the
-        fall happens off-screen)
-     2. it lands on the first letter and squashes
-     3. the impact throws a ring, and the letters jolt
-     4. its water washes across the wordmark, left to right
-     5. the droplet drains to nothing - absorbed into the name
+/* ── Wordmark water loop ───────────────────────────────────────
+   A 4s cycle: a droplet falls onto the first letter, lands, and its water
+   washes through the name over ~3s while a caustic shimmer drifts inside the
+   letterforms. Then it repeats.
 
-   The letters themselves stay SOLID WHITE the whole time. The water is a
-   coloured highlight passing through them, not a fill, so the logo is legible
-   at every frame and can never appear half-drawn or missing.
+   TWO RULES THIS IS BUILT AROUND:
 
-   Plays once on load and replays on hover; it never loops, because this header
-   is on every page. */
+   1. Every animated part is HIDDEN in its base state and only revealed by its
+      animation. That means "stop the loop" is simply "remove the animation" -
+      it can never strand a droplet frozen on the W or leave the letters
+      mid-wash. The name itself is solid white and never animated away.
 
-/* 1-2-5: fall, squash, then drain away */
+   2. The loop only runs while the page is at the top. The header is sticky on
+      every page, so something moving in it permanently would compete with
+      whatever the visitor is actually reading.
+
+   Percentages below are of the 4s cycle: the drop occupies the first ~35%, the
+   water the remaining ~65%. */
+
 @keyframes drop-fall {
   0%   { transform: translateY(-155%) scale(0.62); opacity: 0; }
-  8%   { opacity: 1; }
-  24%  { transform: translateY(0) scale(1, 1); opacity: 1; }
-  28%  { transform: translateY(8%) scale(1.22, 0.78); }   /* squash on impact */
-  34%  { transform: translateY(0) scale(0.94, 1.06); }    /* rebound */
-  42%  { transform: translateY(0) scale(1); }
-  56%  { transform: translateY(0) scale(0); opacity: 0; } /* absorbed */
+  4%   { opacity: 1; }
+  17%  { transform: translateY(0) scale(1, 1); opacity: 1; }
+  20%  { transform: translateY(8%) scale(1.22, 0.78); opacity: 1; }  /* squash */
+  25%  { transform: translateY(0) scale(0.94, 1.06); opacity: 1; }   /* rebound */
+  30%  { transform: translateY(0) scale(1); opacity: 1; }
+  38%  { transform: translateY(0) scale(0); opacity: 0; }            /* absorbed */
   100% { transform: translateY(0) scale(0); opacity: 0; }
 }
 
-/* 3: ring thrown out by the impact */
 @keyframes impact-ring {
-  0%, 25%  { transform: scale(0.3); opacity: 0; }
-  30%      { opacity: 0.5; }
-  58%      { transform: scale(1.9); opacity: 0; }
-  100%     { transform: scale(1.9); opacity: 0; }
+  0%, 17% { transform: scale(0.3); opacity: 0; }
+  21%     { opacity: 0.5; }
+  42%     { transform: scale(1.9); opacity: 0; }
+  100%    { transform: scale(1.9); opacity: 0; }
 }
 
-/* 3: the letters take the hit */
 @keyframes letters-jolt {
-  0%, 25% { transform: translateY(0); }
-  29%     { transform: translateY(2.5px); }
-  36%     { transform: translateY(-1.5px); }
-  44%     { transform: translateY(0.5px); }
-  52%     { transform: translateY(0); }
+  0%, 17% { transform: translateY(0); }
+  20%     { transform: translateY(2.5px); }
+  25%     { transform: translateY(-1.5px); }
+  30%     { transform: translateY(0.5px); }
+  35%     { transform: translateY(0); }
   100%    { transform: translateY(0); }
 }
 
-/* 4: the water itself, travelling through the letterforms */
-/* NOTE the direction. Increasing background-position scrolls the image LEFT,
-   so a highlight travels right-to-left as the value rises. The droplet lands on
-   the first letter, so the water has to spread rightwards from there — which
-   means counting DOWN, not up. */
+/* The water itself. NOTE the direction: increasing background-position scrolls
+   the image LEFT, so a highlight travels right-to-left as the value rises. The
+   droplet lands on the first letter and the water must spread RIGHTWARDS from
+   there, which means counting DOWN. */
 @keyframes water-wash {
-  0%, 25% { background-position: 170% 0; opacity: 0; }
-  30%     { opacity: 1; }
-  82%     { background-position: -60% 0; opacity: 1; }
+  0%, 18% { background-position: 170% 0; opacity: 0; }
+  22%     { opacity: 1; }
+  88%     { background-position: -60% 0; opacity: 1; }
   100%    { background-position: -110% 0; opacity: 0; }
 }
 
-/* a clean highlight to finish on */
-/* Same direction as the wash — see the note above. */
-@keyframes logo-shine {
-  0%, 62% { background-position: 240% 0; opacity: 0; }
-  70%     { opacity: 1; }
-  100%    { background-position: -140% 0; opacity: 0; }
+/* Caustic shimmer drifting INSIDE the letterforms - the hero's pool light,
+   scaled down. Runs on its own slower clock so it never lines up with the drop
+   and the pair never look mechanical. */
+@keyframes logo-caustic {
+  0%   { background-position: 0% 50%; opacity: 0; }
+  15%  { opacity: 0.55; }
+  85%  { opacity: 0.55; }
+  100% { background-position: 100% 50%; opacity: 0; }
 }
 
 /* ── Step pill (Process timeline) ─────────────────────────────── */
@@ -554,29 +554,31 @@
     transform: translateX(120%) skewX(-12deg);
   }
 
-  /* Wordmark intro — see the keyframes block for the beat list.
-     The name is plain solid white by default and STAYS that way; every animated
-     part is a separate overlay, so the wordmark itself can never be left
-     invisible or half-rendered if anything fails. */
+  /* Wordmark — see the keyframes block for the cycle.
+     BASE STATE IS FULLY STATIC: the name is solid white and every decorative
+     layer is invisible. Animation is added only by .logo-anim, so removing that
+     class is always a safe stop - nothing can be stranded mid-flight. */
   .logo-word {
     color: #fff;
     line-height: 1;
-    animation: letters-jolt 2.8s linear forwards;
+  }
+  .logo-drop,
+  .logo-ripple,
+  .logo-wash,
+  .logo-caustic {
+    opacity: 0;
   }
 
-  /* The water passing through the letterforms. A second copy of the text
-     stacked exactly on top: two background-clip:text treatments cannot share
-     one element, so the wash and the shine each need their own layer. */
   @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .logo-wash,
-    .logo-shine {
+    .logo-caustic {
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       background-repeat: no-repeat;
       /* MUST match .logo-word. These are absolutely-positioned copies of the
-         same text stacked on top of it; any difference in line-height puts the
-         glyphs on a different baseline and the layers visibly separate. */
+         same text; any difference in line-height puts them on a different
+         baseline and the layers visibly separate. */
       line-height: 1;
     }
     .logo-wash {
@@ -589,40 +591,34 @@
         transparent 70%
       );
       background-size: 200% 100%;
-      animation: water-wash 2.8s linear forwards;
     }
-    .logo-shine {
-      background-image: linear-gradient(
-        100deg,
-        transparent 44%,
-        rgba(255, 255, 255, 0.9) 50%,
-        transparent 56%
-      );
+    /* Soft overlapping pools rather than a single band — that irregularity is
+       what reads as caustic light instead of a moving stripe. */
+    .logo-caustic {
+      background-image:
+        radial-gradient(ellipse 40% 120% at 20% 50%, rgba(79, 224, 196, 0.9), transparent 60%),
+        radial-gradient(ellipse 30% 120% at 55% 50%, rgba(255, 255, 255, 0.75), transparent 60%),
+        radial-gradient(ellipse 45% 120% at 85% 50%, rgba(147, 206, 238, 0.8), transparent 60%);
       background-size: 220% 100%;
-      animation: logo-shine 2.8s ease-out forwards;
     }
   }
 
-  .logo-drop {
-    animation: drop-fall 2.8s cubic-bezier(0.45, 0, 0.35, 1) forwards;
-  }
-  .logo-ripple {
-    animation: impact-ring 2.8s ease-out forwards;
-  }
+  /* Motion is opt-in, and only while the page is at the top. */
+  .logo-anim .logo-drop    { animation: drop-fall 4s cubic-bezier(0.45, 0, 0.35, 1) infinite; }
+  .logo-anim .logo-ripple  { animation: impact-ring 4s ease-out infinite; }
+  .logo-anim .logo-word    { animation: letters-jolt 4s linear infinite; }
+  .logo-anim .logo-wash    { animation: water-wash 4s linear infinite; }
+  .logo-anim .logo-caustic { animation: logo-caustic 7s ease-in-out infinite; }
 
   @media (prefers-reduced-motion: reduce) {
-    /* Every animated part here is decorative overlay on top of a wordmark that
-       is already solid white, so the safe reduced-motion state is simply to
-       remove them. !important because several are set inline in the component,
-       and an inline style beats a class rule. */
-    .logo-word {
+    /* The static base is already the correct resting state, so this only has to
+       stop things. !important because the loop classes are more specific. */
+    .logo-anim .logo-drop,
+    .logo-anim .logo-ripple,
+    .logo-anim .logo-word,
+    .logo-anim .logo-wash,
+    .logo-anim .logo-caustic {
       animation: none !important;
-    }
-    .logo-wash,
-    .logo-shine,
-    .logo-drop,
-    .logo-ripple {
-      display: none !important;
     }
   }
 

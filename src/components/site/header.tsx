@@ -19,6 +19,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [logoRun, setLogoRun] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  // Drives the wordmark loop. Separate from `scrolled` (which fires at 8px):
+  // the logo should keep running through small scroll jitter and only settle
+  // once the visitor has genuinely moved down the page.
+  const [atTop, setAtTop] = useState(true);
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
   const pathname = usePathname();
@@ -31,6 +35,7 @@ export function Header() {
       const y = window.scrollY;
       const delta = y - lastY.current;
       setScrolled(y > 8);
+      setAtTop(y < 90);
       if (!open) {
         if (y <= 140) setHidden(false);
         else if (delta > 10) setHidden(true);
@@ -131,6 +136,7 @@ export function Header() {
                 keep the same optical weight against the 14px nav. */}
             <Wordmark
               key={logoRun}
+              animate={atTop}
               className={cn(
                 "font-[family-name:var(--font-logo)] font-bold uppercase tracking-[0.042em] text-white",
                 "transition-[font-size] duration-300 ease-out-expo",
