@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
+import {
+  motion, useScroll, useSpring, useTransform, useMotionTemplate, AnimatePresence,
+} from "framer-motion";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,8 +29,22 @@ export function Header() {
   const lastY = useRef(0);
   const pathname = usePathname();
 
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress, scrollY } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.3 });
+
+  // The bar responds to scroll CONTINUOUSLY rather than flipping between two
+  // states at a threshold. Everything below is driven off the same 0-120px
+  // range, so height, weight and depth all resolve together — that
+  // simultaneity is what reads as engineered rather than switched.
+  // A light spring smooths the raw scroll value without adding lag.
+  const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
+  const barHeight = useTransform(settle, [0, 120], [64, 54], { clamp: true });
+  const blurPx = useTransform(settle, [0, 120], [0, 14], { clamp: true });
+  const shadeAlpha = useTransform(settle, [0, 120], [0, 0.35], { clamp: true });
+  const edgeAlpha = useTransform(settle, [0, 120], [0.1, 0.28], { clamp: true });
+  const backdrop = useMotionTemplate`blur(${blurPx}px)`;
+  const shade = useMotionTemplate`rgba(12, 20, 12, ${shadeAlpha})`;
+  const edge = useMotionTemplate`rgba(255, 255, 255, ${edgeAlpha})`;
 
   useEffect(() => {
     const onScroll = () => {
@@ -51,20 +67,38 @@ export function Header() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href));
 
   return (
-    <header className={cn(
-      "sticky top-0 z-50 border-b border-white/10 bg-olive-deep backdrop-blur transition-all duration-300 ease-out-expo",
-      scrolled && "shadow-lift",
-      hidden ? "-translate-y-full" : "translate-y-0"
-    )}>
+    <motion.header
+      className={cn(
+        "sticky top-0 z-50 bg-olive-deep transition-transform duration-300 ease-out-expo",
+        scrolled && "shadow-lift",
+        hidden ? "-translate-y-full" : "translate-y-0"
+      )}
+      style={{ backdropFilter: backdrop, WebkitBackdropFilter: backdrop }}
+    >
+      {/* Darkens continuously as you scroll, so the bar gains weight over the
+          content beneath it instead of switching to a solid state. */}
+      <motion.div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: shade }}
+        aria-hidden="true"
+      />
+      {/* Bottom edge: a 1px water current in place of a static border. The
+          scroll-progress bar sits above it. */}
+      <motion.div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px"
+        style={{ background: edge }}
+        aria-hidden="true"
+      />
+      <div className="header-water pointer-events-none absolute inset-x-0 bottom-0 h-px" aria-hidden="true" />
       <motion.div
         className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-brand-green to-brand-blue"
         style={{ scaleX: progress }}
         aria-hidden="true"
       />
-      <div className={cn(
-        "mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 transition-all duration-300 ease-out-expo sm:gap-4 sm:px-4 md:px-6",
-        scrolled ? "h-14" : "h-16"
-      )}>
+      <motion.div
+        className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-4 md:px-6"
+        style={{ height: barHeight }}
+      >
         {/* Logo — left */}
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <Sheet open={open} onOpenChange={setOpen}>
@@ -175,7 +209,7 @@ export function Header() {
             </Link>
           ))}
         </nav>
-      </div>
-    </header>
+      </motion.div>
+    </motion.header>
   );
 }

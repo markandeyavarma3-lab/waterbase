@@ -319,6 +319,16 @@
   100% { background-position: 100% 50%; opacity: 0; }
 }
 
+/* ── Header water line ────────────────────────────────────────
+   The bar's bottom edge as a slow current rather than a static border. Two
+   bright patches at different points in the gradient drift past at 16s, which
+   is slow enough that it never pulls the eye but means the edge is quietly
+   alive. Transform-free (background-position on a 1px strip is cheap). */
+@keyframes header-current {
+  0%   { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
 /* ── Step pill (Process timeline) ─────────────────────────────── */
 @keyframes pill-pop {
   0%   { transform: translateY(3px) scale(0.94); opacity: 0; }
@@ -618,6 +628,29 @@
     .logo-anim .logo-word,
     .logo-anim .logo-wash,
     .logo-anim .logo-caustic {
+      animation: none !important;
+    }
+  }
+
+  /* Header water line — see the header-current keyframes. Deliberately faint:
+     this sits under the nav on every page, so it has to register as texture
+     rather than as something happening. */
+  .header-water {
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(79, 224, 196, 0.55) 16%,
+      rgba(147, 206, 238, 0.7) 27%,
+      transparent 44%,
+      transparent 58%,
+      rgba(79, 224, 196, 0.45) 74%,
+      transparent 90%
+    );
+    background-size: 200% 100%;
+    animation: header-current 16s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .header-water {
       animation: none !important;
     }
   }
