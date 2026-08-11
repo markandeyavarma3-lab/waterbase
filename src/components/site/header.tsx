@@ -37,9 +37,12 @@ export function Header() {
   const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
   const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
   const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
-  const pillAlpha = useTransform(settle, [0, 120], [0.55, 0.9], { clamp: true });
-  const pillShadow = useTransform(settle, [0, 120], [0.12, 0.4], { clamp: true });
-  const pillBg = useMotionTemplate`rgba(12, 30, 39, ${pillAlpha})`;
+  // Near-solid, not translucent. The hero is now a LIGHT gradient, and a
+  // half-transparent dark tint over a light ground just reads as grey smear.
+  // Kept a touch of transparency so content still shows movement behind it.
+  const pillAlpha = useTransform(settle, [0, 120], [0.93, 0.97], { clamp: true });
+  const pillShadow = useTransform(settle, [0, 120], [0.18, 0.34], { clamp: true });
+  const pillBg = useMotionTemplate`rgba(18, 60, 70, ${pillAlpha})`;
   const pillGlow = useMotionTemplate`0 10px 30px rgba(4, 14, 20, ${pillShadow})`;
 
   useEffect(() => {
@@ -87,7 +90,7 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-white/12 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
+          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-white/10 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
           style={{ height: barHeight, background: pillBg, boxShadow: pillGlow }}
         >
           {/* water current along the pill's lower edge */}

@@ -29,13 +29,13 @@ export function WaterCaustics({ className }: { className?: string }) {
         className="motion-caustic absolute -inset-[25%] opacity-70 will-change-transform"
         style={{
           backgroundImage: [
-            "radial-gradient(ellipse 38% 20% at 22% 28%, rgba(79,224,196,0.34), transparent 62%)",
-            "radial-gradient(ellipse 30% 16% at 68% 18%, rgba(147,206,238,0.26), transparent 62%)",
-            "radial-gradient(ellipse 34% 19% at 46% 72%, rgba(107,192,151,0.30), transparent 62%)",
-            "radial-gradient(ellipse 26% 14% at 84% 62%, rgba(79,224,196,0.22), transparent 62%)",
+            "radial-gradient(ellipse 38% 20% at 22% 28%, rgba(31,99,118,0.55), transparent 62%)",
+            "radial-gradient(ellipse 30% 16% at 68% 18%, rgba(63,163,218,0.45), transparent 62%)",
+            "radial-gradient(ellipse 34% 19% at 46% 72%, rgba(46,148,102,0.42), transparent 62%)",
+            "radial-gradient(ellipse 26% 14% at 84% 62%, rgba(31,99,118,0.38), transparent 62%)",
           ].join(","),
           filter: "blur(44px)",
-          mixBlendMode: "screen",
+          mixBlendMode: "soft-light",
           animation: "caustic-a var(--dur-drift, 26s) var(--ease-in-out-soft) infinite",
         }}
       />
@@ -44,24 +44,24 @@ export function WaterCaustics({ className }: { className?: string }) {
         className="motion-caustic absolute -inset-[25%] opacity-60 will-change-transform"
         style={{
           backgroundImage: [
-            "radial-gradient(ellipse 32% 17% at 62% 40%, rgba(107,192,151,0.30), transparent 62%)",
-            "radial-gradient(ellipse 28% 15% at 30% 62%, rgba(79,224,196,0.24), transparent 62%)",
-            "radial-gradient(ellipse 36% 18% at 78% 84%, rgba(147,206,238,0.20), transparent 62%)",
+            "radial-gradient(ellipse 32% 17% at 62% 40%, rgba(46,148,102,0.42), transparent 62%)",
+            "radial-gradient(ellipse 28% 15% at 30% 62%, rgba(31,99,118,0.40), transparent 62%)",
+            "radial-gradient(ellipse 36% 18% at 78% 84%, rgba(63,163,218,0.35), transparent 62%)",
           ].join(","),
           filter: "blur(52px)",
-          mixBlendMode: "screen",
+          mixBlendMode: "soft-light",
           animation: "caustic-b calc(var(--dur-drift, 26s) * 1.45) var(--ease-in-out-soft) infinite",
         }}
       />
-      {/* Depth: a top-down light fall-off plus a corner vignette. This is what
-          stops the section reading as one flat slab of green — the eye needs the
-          ground to be darker at the edges than behind the headline. */}
+      {/* Depth on a LIGHT ground: a soft bloom behind the headline to lift the
+          text off the gradient, and only a very slight edge darkening. A heavy
+          vignette here would muddy the sand tones at the bottom. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 85% at 50% 0%, rgba(255,255,255,0.09), transparent 55%)," +
-            "radial-gradient(100% 100% at 50% 42%, transparent 45%, rgba(8,18,10,0.42) 100%)",
+            "radial-gradient(115% 80% at 50% 22%, rgba(255,255,255,0.55), transparent 62%)," +
+            "radial-gradient(100% 100% at 50% 45%, transparent 55%, rgba(18,60,70,0.10) 100%)",
         }}
       />
       {/* Fine horizontal banding — the surface line pattern, kept very faint */}
@@ -69,7 +69,7 @@ export function WaterCaustics({ className }: { className?: string }) {
         className="motion-caustic absolute inset-0 will-change-transform"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(178deg, rgba(255,255,255,0.030) 0px, rgba(255,255,255,0.030) 1px, transparent 1px, transparent 9px)",
+            "repeating-linear-gradient(178deg, rgba(18,60,70,0.035) 0px, rgba(18,60,70,0.035) 1px, transparent 1px, transparent 9px)",
           maskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, black, transparent 75%)",
           WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, black, transparent 75%)",
           animation: "caustic-sheen calc(var(--dur-drift, 26s) * 0.85) var(--ease-in-out-soft) infinite",

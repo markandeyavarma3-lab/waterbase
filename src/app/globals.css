@@ -95,6 +95,19 @@
   --color-brand-glow: #54D6E0;
   --color-brand-glow-dim: #2FA8B4;
 
+  /* ── Sunrise palette — water, field, soil, sunlight ───────────
+     The four things this business actually deals in, in the order you meet them
+     going down the hero: sky/water at the top, crop green through the middle,
+     warm soil and low sun at the bottom. Text on these is DEEP WATER, not white
+     — the ground is light, so white would fail contrast outdoors on a phone,
+     which is exactly where these customers are. */
+  --color-sky: #D6EDF3;      /* water / sky */
+  --color-field: #E8F0E2;    /* crop green, desaturated */
+  --color-sand: #F6EAD6;     /* soil warmed by low sun */
+  --color-water-deep: #123C46;  /* primary text on light ground */
+  --color-water-mid: #1F6376;   /* primary action, dark sections */
+  --color-water-soft: #EEF5F3;  /* light section ground */
+
   /* Olive — earthy leaf green, distinct from the primary brand-green */
   --color-olive: #7D8B4A;
   --color-olive-dark: #5F6A38;
@@ -634,6 +647,18 @@
     .logo-anim .logo-caustic {
       animation: none !important;
     }
+  }
+
+  /* Sunrise ground — the hero and page tops. Sky at the top through crop green
+     to warm soil at the bottom, so the page opens the way a watered field looks
+     at first light. */
+  .bg-sunrise {
+    background-image: linear-gradient(
+      168deg,
+      var(--color-sky) 0%,
+      var(--color-field) 52%,
+      var(--color-sand) 100%
+    );
   }
 
   /* Header water line — see the header-current keyframes. Deliberately faint:
