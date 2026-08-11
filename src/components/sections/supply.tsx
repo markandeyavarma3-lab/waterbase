@@ -33,7 +33,7 @@ const brands = ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNe
 
 export function Supply() {
   return (
-    <Section tone="muted">
+    <Section tone="soil">
       <Container>
         <SectionHeading eyebrow="What we supply" title="The complete agricultural range" lead="Every component for your farm — from drip and sprinkler systems to pumps, pipes, and planting materials." action={<Button asChild variant="outline"><Link href="/products">Browse all products <ArrowRight /></Link></Button>} />
 

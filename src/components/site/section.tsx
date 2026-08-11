@@ -7,12 +7,33 @@ export function Container({ className, children }: { className?: string; childre
   return <div className={cn("mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-8", className)}>{children}</div>;
 }
 
-type Tone = "default" | "muted" | "brand" | "brand-dark" | "brand-deep";
+/**
+ * Section tones. The four light tints are the elements this business works in —
+ * water, crop, earth, early light — and pages alternate through them so
+ * scrolling moves through the same story the hero gradient tells.
+ *
+ * They are all at 97-99% lightness deliberately. You should register a change of
+ * TEMPERATURE between sections, not a change of colour; anything stronger turns
+ * a page into a stack of coloured blocks, which is the opposite of premium.
+ * White cards on any of these still read as white and lift cleanly.
+ *
+ * `muted` and `brand` are kept as aliases so the existing pages keep working.
+ */
+type Tone =
+  | "default" | "sky" | "field" | "soil" | "sun"
+  | "muted" | "brand"
+  | "brand-dark" | "brand-deep";
 
 const toneClass: Record<Tone, string> = {
-  default: "bg-background",
-  muted: "bg-muted bg-mesh-warm",
-  brand: "bg-brand-green-soft bg-mesh-cool",
+  default: "bg-white",
+  sky: "bg-tint-sky",
+  field: "bg-tint-field",
+  soil: "bg-tint-soil",
+  sun: "bg-tint-sun",
+  // back-compat aliases
+  muted: "bg-tint-sky",
+  brand: "bg-tint-field",
+  // dark sections keep their weight, for rhythm against all of the above
   "brand-dark": "bg-brand-green-deep text-white",
   "brand-deep": "bg-brand-green-deeper text-white",
 };

@@ -15,7 +15,7 @@ const serve = [
 
 export function EndToEnd() {
   return (
-    <Section tone="default">
+    <Section tone="sky">
       <Container>
         <SectionHeading eyebrow="What we do" title="Complete irrigation, handled from start to finish" lead="Whether it's a farm field, a corporate lawn or a commercial nursery — and whether you're an individual farmer or a large company — we own the entire journey, so you work with one accountable team from the first call to after-sales." />
 

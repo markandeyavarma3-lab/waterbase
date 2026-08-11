@@ -37,13 +37,14 @@ export function Header() {
   const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
   const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
   const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
-  // Near-solid, not translucent. The hero is now a LIGHT gradient, and a
-  // half-transparent dark tint over a light ground just reads as grey smear.
-  // Kept a touch of transparency so content still shows movement behind it.
-  const pillAlpha = useTransform(settle, [0, 120], [0.93, 0.97], { clamp: true });
-  const pillShadow = useTransform(settle, [0, 120], [0.18, 0.34], { clamp: true });
-  const pillBg = useMotionTemplate`rgba(18, 60, 70, ${pillAlpha})`;
-  const pillGlow = useMotionTemplate`0 10px 30px rgba(4, 14, 20, ${pillShadow})`;
+  // Frosted WHITE, not a dark slab. The hero is a light gradient, so the bar
+  // belongs to it rather than sitting on top of it. Separation comes from a soft
+  // shadow and a faint border, not from a colour jump — which is what keeps it
+  // findable without turning it into a block.
+  const pillAlpha = useTransform(settle, [0, 120], [0.72, 0.92], { clamp: true });
+  const pillShadow = useTransform(settle, [0, 120], [0.07, 0.13], { clamp: true });
+  const pillBg = useMotionTemplate`rgba(255, 255, 255, ${pillAlpha})`;
+  const pillGlow = useMotionTemplate`0 10px 30px rgba(18, 60, 70, ${pillShadow})`;
 
   useEffect(() => {
     const onScroll = () => {
@@ -90,7 +91,7 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-white/10 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
+          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-water-deep/8 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
           style={{ height: barHeight, background: pillBg, boxShadow: pillGlow }}
         >
           {/* water current along the pill's lower edge */}
@@ -103,7 +104,7 @@ export function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="-ml-1 size-10 shrink-0 rounded-full border border-white/15 bg-white/[0.06] text-white hover:bg-white/15 hover:text-white lg:hidden"
+                  className="-ml-1 size-10 shrink-0 rounded-full border border-water-deep/15 bg-water-deep/[0.04] text-water-deep hover:bg-water-deep/10 hover:text-water-deep lg:hidden"
                   aria-label="Open menu"
                 >
                   <Menu className="h-5 w-5" />
@@ -158,7 +159,7 @@ export function Header() {
               <Wordmark
                 key={logoRun}
                 animate={atTop}
-                className="font-[family-name:var(--font-logo)] text-[clamp(1rem,4.2vw,1.35rem)] font-bold uppercase tracking-[0.042em] text-white"
+                className="font-[family-name:var(--font-logo)] text-[clamp(1rem,4.2vw,1.35rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
               />
             </Link>
           </div>
@@ -187,13 +188,13 @@ export function Header() {
                     // tap-target-y: an iPad Pro is wide enough for the desktop nav
                     // but is still finger-driven, so these need the 44px height.
                     "tap-target-y relative flex items-center rounded-full px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-colors duration-200",
-                    active || showPill ? "text-white" : "text-white/55"
+                    active || showPill ? "text-water-deep" : "text-water-deep/68"
                   )}
                 >
                   {showPill && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-white/[0.13] ring-1 ring-white/10"
+                      className="absolute inset-0 rounded-full bg-water-deep/[0.07] ring-1 ring-water-deep/10"
                       transition={{ type: "spring", stiffness: 420, damping: 34, mass: 0.7 }}
                       aria-hidden="true"
                     />

@@ -108,6 +108,18 @@
   --color-water-mid: #1F6376;   /* primary action, dark sections */
   --color-water-soft: #EEF5F3;  /* light section ground */
 
+  /* ── Section tints — the four elements, at whisper strength ───
+     Sections alternate through water / crop / soil / early sun so the page
+     moves through the same story as the hero gradient.
+     ALL of these sit at 97-99% lightness on purpose. That restraint is the
+     difference between "premium" and "a page of coloured blocks": you should
+     register a change of temperature between sections, not a change of colour.
+     White cards placed on any of them still read as white and lift cleanly. */
+  --color-tint-sky:   #F1F8FB;  /* water */
+  --color-tint-field: #F3F9F3;  /* crop */
+  --color-tint-soil:  #FAF6F1;  /* earth */
+  --color-tint-sun:   #FDFAF2;  /* early light */
+
   /* Olive — earthy leaf green, distinct from the primary brand-green */
   --color-olive: #7D8B4A;
   --color-olive-dark: #5F6A38;
@@ -196,26 +208,25 @@
 }
 
 /*
- * Warm theme — a scoped override for light sections that swaps the graphite/
- * industrial neutral system for a warm, natural one (cream base, olive/green/
- * blue/sunshine accents). Dark sections (hero, header, footer, dark CTAs) use
- * hardcoded colors, not these tokens, so wrapping around them is harmless —
- * only descendants that reference --background/--border/--color-graphite-*
- * etc. pick up the new values.
+ * Page theme — a scoped override applied to whole pages. It used to be a WARM
+ * cream (#F3EEE1), chosen when the brand was olive. Against the sunrise hero and
+ * the tinted sections that cream was the last warm-vs-cool mismatch left, so the
+ * ground is now an almost-white with the faintest water tint. Section tints do
+ * the colouring now; this just has to stay out of their way.
  */
 .theme-warm {
-  --background: #F3EEE1;
-  --foreground: #2A2622;
+  --background: #FAFCFC;
+  --foreground: #12303A;
   --card: #FFFFFF;
-  --card-foreground: #2A2622;
+  --card-foreground: #12303A;
   --popover: #FFFFFF;
   --popover-foreground: #2A2622;
-  --secondary: #EEE7D6;
+  --secondary: #EDF3F4;
   --secondary-foreground: #2A2622;
-  --muted: #EEE7D6;
-  --muted-foreground: #6F6458;
-  --border: #E3D8C2;
-  --input: #DED2B9;
+  --muted: #F1F7F8;
+  --muted-foreground: #5B6B70;
+  --border: #E2EAEC;
+  --input: #D8E3E5;
 
   --color-graphite-50: #F3EEE5;
   --color-graphite-100: #E9E1D5;
@@ -586,7 +597,10 @@
      layer is invisible. Animation is added only by .logo-anim, so removing that
      class is always a safe stop - nothing can be stranded mid-flight. */
   .logo-word {
-    color: #fff;
+    /* inherit, NOT a hardcoded white. The bar is frosted white now, so a fixed
+       #fff here made the wordmark invisible against it. Inheriting lets the
+       header set the colour for whatever ground it is sitting on. */
+    color: inherit;
     line-height: 1;
   }
   .logo-drop,
@@ -608,14 +622,17 @@
          baseline and the layers visibly separate. */
       line-height: 1;
     }
+    /* Colours chosen for a LIGHT bar: the letters are deep water, so the wash
+       has to be a mid blue that stays readable as it passes. A white or pale
+       cyan highlight here would simply erase the letters against the bar. */
     .logo-wash {
       background-image: linear-gradient(
         100deg,
         transparent 34%,
-        var(--color-brand-glow) 46%,
-        #ffffff 52%,
-        var(--color-brand-glow) 58%,
-        transparent 70%
+        var(--color-brand-blue) 44%,
+        var(--color-brand-blue-dark) 52%,
+        var(--color-brand-green) 60%,
+        transparent 72%
       );
       background-size: 200% 100%;
     }
@@ -623,9 +640,9 @@
        what reads as caustic light instead of a moving stripe. */
     .logo-caustic {
       background-image:
-        radial-gradient(ellipse 40% 120% at 20% 50%, rgba(79, 224, 196, 0.9), transparent 60%),
-        radial-gradient(ellipse 30% 120% at 55% 50%, rgba(255, 255, 255, 0.75), transparent 60%),
-        radial-gradient(ellipse 45% 120% at 85% 50%, rgba(147, 206, 238, 0.8), transparent 60%);
+        radial-gradient(ellipse 40% 120% at 20% 50%, rgba(42, 124, 172, 0.85), transparent 60%),
+        radial-gradient(ellipse 30% 120% at 55% 50%, rgba(46, 148, 102, 0.7), transparent 60%),
+        radial-gradient(ellipse 45% 120% at 85% 50%, rgba(31, 99, 118, 0.8), transparent 60%);
       background-size: 220% 100%;
     }
   }

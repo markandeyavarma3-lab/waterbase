@@ -17,7 +17,7 @@ const reasons: { icon: LucideIcon; title: string; desc: string }[] = [
 
 export function WhyWaterbase() {
   return (
-    <Section tone="muted" className="relative overflow-hidden">
+    <Section tone="sun" className="relative overflow-hidden">
       <AuroraGlow variant="cool" />
       <Container>
         <SectionHeading eyebrow="Why Waterbase" title="One accountable partner, end to end" lead="Not just a supplier — we own the entire journey, from the first survey to long-term support." />
