@@ -73,9 +73,9 @@ export function Hero() {
                 <a
                   href={telLink(siteConfig.phones.sales.primary)}
                   onClick={trackCallClick}
-                  className="group inline-flex items-center gap-2.5 rounded-full bg-brand-sun-muted px-8 py-4 text-base font-semibold text-white shadow-lg shadow-black/30 transition-colors duration-300 hover:bg-brand-sun-muted-hover"
+                  className="group inline-flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-base font-semibold text-brand-green-deeper shadow-lg shadow-black/30 transition-colors duration-300 hover:bg-white/90"
                 >
-                  <Phone className="h-[1.05rem] w-[1.05rem]" aria-hidden="true" />
+                  <Phone className="h-[1.05rem] w-[1.05rem] text-brand-green-dark" aria-hidden="true" />
                   Call now
                 </a>
               </MotionPress>

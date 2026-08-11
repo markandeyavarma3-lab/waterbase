@@ -6,20 +6,19 @@ import { useEffect, useRef, useState } from "react";
 import {
   motion, useScroll, useSpring, useTransform, useMotionTemplate, AnimatePresence,
 } from "framer-motion";
-import { Menu, MapPin, Clock, Mail, MessageCircle, Phone } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
-import { siteConfig, telLink, whatsappLink } from "@/lib/site-config";
-import { trackCallClick } from "@/lib/analytics";
 import { NAV_LINKS } from "@/lib/nav";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [logoRun, setLogoRun] = useState(0);
+  const [hovered, setHovered] = useState<string | null>(null);
   // Drives the wordmark loop. Deliberately a larger threshold than the visual
   // scroll response below, so small jitter at the top does not kill the logo
   // animation mid-drop.
@@ -37,13 +36,11 @@ export function Header() {
   // switched. A light spring smooths the raw value without adding lag.
   const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
   const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
-  const stripHeight = useTransform(settle, [0, 70], [36, 0], { clamp: true });
-  const stripOpacity = useTransform(settle, [0, 45], [1, 0], { clamp: true });
   const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
   const pillAlpha = useTransform(settle, [0, 120], [0.55, 0.9], { clamp: true });
   const pillShadow = useTransform(settle, [0, 120], [0.12, 0.4], { clamp: true });
-  const pillBg = useMotionTemplate`rgba(29, 42, 20, ${pillAlpha})`;
-  const pillGlow = useMotionTemplate`0 10px 30px rgba(6, 14, 8, ${pillShadow})`;
+  const pillBg = useMotionTemplate`rgba(12, 30, 39, ${pillAlpha})`;
+  const pillGlow = useMotionTemplate`0 10px 30px rgba(4, 14, 20, ${pillShadow})`;
 
   useEffect(() => {
     const onScroll = () => {
@@ -83,46 +80,6 @@ export function Header() {
         aria-hidden="true"
       />
 
-      {/* ── INFO STRIP ──────────────────────────────────────────
-          Location, hours and the two contact routes the site treats as public.
-          Collapses to nothing as you scroll so it costs no room while reading. */}
-      <motion.div
-        className="overflow-hidden border-b border-white/[0.07] bg-olive-deep/80 backdrop-blur"
-        style={{ height: stripHeight, opacity: stripOpacity }}
-      >
-        <div className="mx-auto flex h-9 max-w-6xl items-center justify-between gap-4 px-4 text-[0.78rem] text-white/60 sm:px-6">
-          <div className="flex min-w-0 items-center gap-4">
-            <span className="flex shrink-0 items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
-              {siteConfig.address.city}, {siteConfig.address.state}
-            </span>
-            <span className="hidden shrink-0 items-center gap-1.5 sm:flex">
-              <Clock className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
-              {siteConfig.hoursSummary.days} {siteConfig.hoursSummary.time}
-            </span>
-          </div>
-          <div className="flex shrink-0 items-center gap-4">
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-underline hidden items-center gap-1.5 transition-colors hover:text-white sm:flex"
-            >
-              <MessageCircle className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
-              WhatsApp
-            </a>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="link-underline flex items-center gap-1.5 transition-colors hover:text-white"
-            >
-              <Mail className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
-              <span className="hidden md:inline">{siteConfig.email}</span>
-              <span className="md:hidden">Email</span>
-            </a>
-          </div>
-        </div>
-      </motion.div>
-
       {/* ── FLOATING PILL ───────────────────────────────────────
           Detached from the edges with its own translucent surface, so it sits
           over the page rather than dividing it. It gains opacity and shadow as
@@ -130,7 +87,7 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-white/12 pl-4 pr-2 backdrop-blur-xl sm:gap-4 sm:pl-5"
+          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-white/12 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
           style={{ height: barHeight, background: pillBg, boxShadow: pillGlow }}
         >
           {/* water current along the pill's lower edge */}
@@ -203,55 +160,47 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Nav — centre */}
-          <nav aria-label="Main navigation" className="hidden items-center gap-0.5 lg:flex">
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={cn(
-                  // tap-target-y: an iPad Pro is wide enough for the desktop nav
-                  // but is still finger-driven, so these need the 44px height.
-                  "tap-target-y relative flex items-center rounded-full px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-colors",
-                  isActive(l.href) ? "text-white" : "text-white/55 hover:text-white"
-                )}
-              >
-                {isActive(l.href) && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full bg-white/[0.12] ring-1 ring-white/10"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                    aria-hidden="true"
-                  />
-                )}
-                <span className="relative">{l.label}</span>
-              </Link>
-            ))}
+          {/* Nav — centre.
+              ONE pill, shared across every item via layoutId, so it GLIDES from
+              item to item instead of each one lighting up independently. It
+              follows the cursor while hovering and returns to the active page
+              when the pointer leaves. */}
+          <nav
+            aria-label="Main navigation"
+            className="hidden items-center gap-0.5 lg:flex"
+            onMouseLeave={() => setHovered(null)}
+          >
+            {NAV_LINKS.map((l) => {
+              const active = isActive(l.href);
+              // While hovering anywhere in the nav the pill belongs to the
+              // hovered item; otherwise it marks the current page.
+              const showPill = hovered ? hovered === l.href : active;
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onMouseEnter={() => setHovered(l.href)}
+                  className={cn(
+                    // tap-target-y: an iPad Pro is wide enough for the desktop nav
+                    // but is still finger-driven, so these need the 44px height.
+                    "tap-target-y relative flex items-center rounded-full px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-colors duration-200",
+                    active || showPill ? "text-white" : "text-white/55"
+                  )}
+                >
+                  {showPill && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 rounded-full bg-white/[0.13] ring-1 ring-white/10"
+                      transition={{ type: "spring", stiffness: 420, damping: 34, mass: 0.7 }}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span className="relative">{l.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Actions — right */}
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="tap-target inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15 sm:px-4"
-              aria-label="Message us on WhatsApp"
-            >
-              <MessageCircle className="h-4 w-4 shrink-0 text-brand-green-light" aria-hidden="true" />
-              <span className="hidden xl:inline">WhatsApp</span>
-            </a>
-            <a
-              href={telLink(siteConfig.phones.sales.primary)}
-              onClick={trackCallClick}
-              className="tap-target inline-flex items-center justify-center gap-2 rounded-full bg-brand-sun-muted px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-sun-muted-hover sm:px-4"
-              aria-label="Call us"
-            >
-              <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
-              <span className="hidden sm:inline">Call</span>
-              <span className="hidden xl:inline">now</span>
-            </a>
-          </div>
         </motion.div>
       </motion.div>
     </header>

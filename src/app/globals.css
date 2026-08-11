@@ -49,8 +49,12 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* 🌅 Brand palette — sunrise over the fields:
-     green (crop) · sky blue (water) · soil (earth) · sun (sunrise) */
+  /* 💧 Brand palette — water first.
+     The dark sections were a warm, yellow-leaning olive (#2E4020) while the
+     accent on them was a COOL mint. Warm base against cool accent of the same
+     hue family is what made the combination look muddy. The dark bases are now
+     a deep blue-teal, so base and accent finally agree in temperature — and it
+     reads as water rather than as camouflage. */
 
   /* Green — softened & fresh (primary) */
   --color-brand-green: #2E9466;
@@ -58,9 +62,9 @@
   --color-brand-green-darker: #1A5740;
   /* Dark-section base — the same medium olive-green used on the hero/header,
      applied everywhere else a dark section appears (footer, CTAs, page heroes). */
-  --color-brand-green-deep: #3B531F;
-  --color-brand-green-deeper: #2E4020;
-  --color-brand-green-light: #6BC097;
+  --color-brand-green-deep: #16323F;
+  --color-brand-green-deeper: #0F2530;
+  --color-brand-green-light: #5ECFB0;
   --color-brand-green-soft: #E7F3EC;
 
   /* Sky blue — water */
@@ -88,15 +92,15 @@
   --color-brand-sun-muted-hover: #B87033;
 
   /* Water glow — bright teal/cyan shimmer accent for ripple + glow effects */
-  --color-brand-glow: #4FE0C4;
-  --color-brand-glow-dim: #2BA893;
+  --color-brand-glow: #54D6E0;
+  --color-brand-glow-dim: #2FA8B4;
 
   /* Olive — earthy leaf green, distinct from the primary brand-green */
   --color-olive: #7D8B4A;
   --color-olive-dark: #5F6A38;
   --color-olive-light: #A8B073;
   --color-olive-soft: #EEF1E1;
-  --color-olive-deep: #2E4020;
+  --color-olive-deep: #0F2530;
 
   /* Warm neutrals — kept for back-compat, no longer the default UI neutral */
   --color-ink: #2A2622;
