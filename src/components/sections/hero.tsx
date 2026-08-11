@@ -36,7 +36,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-px bg-white/10" aria-hidden="true" />
 
-      <Container className="relative z-10 py-12 pb-24 text-center sm:py-16 sm:pb-28 md:py-24 md:pb-36">
+      <Container className="relative z-10 pt-32 pb-24 text-center sm:pt-36 sm:pb-28 md:pt-40 md:pb-36">
         <div className="mx-auto max-w-5xl">
           <Reveal>
             {/* The dot no longer pulses. A looping ping next to the headline

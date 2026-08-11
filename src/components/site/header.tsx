@@ -6,24 +6,23 @@ import { useEffect, useRef, useState } from "react";
 import {
   motion, useScroll, useSpring, useTransform, useMotionTemplate, AnimatePresence,
 } from "framer-motion";
-import { Menu } from "lucide-react";
+import { Menu, MapPin, Clock, Mail, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-
 import { Wordmark } from "@/components/site/wordmark";
-
+import { siteConfig, telLink, whatsappLink } from "@/lib/site-config";
+import { trackCallClick } from "@/lib/analytics";
 import { NAV_LINKS } from "@/lib/nav";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [logoRun, setLogoRun] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
-  // Drives the wordmark loop. Separate from `scrolled` (which fires at 8px):
-  // the logo should keep running through small scroll jitter and only settle
-  // once the visitor has genuinely moved down the page.
+  // Drives the wordmark loop. Deliberately a larger threshold than the visual
+  // scroll response below, so small jitter at the top does not kill the logo
+  // animation mid-drop.
   const [atTop, setAtTop] = useState(true);
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
@@ -33,24 +32,23 @@ export function Header() {
   const progress = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.3 });
 
   // The bar responds to scroll CONTINUOUSLY rather than flipping between two
-  // states at a threshold. Everything below is driven off the same 0-120px
-  // range, so height, weight and depth all resolve together — that
-  // simultaneity is what reads as engineered rather than switched.
-  // A light spring smooths the raw scroll value without adding lag.
+  // states at a threshold. Everything below is driven off one 0-120px range so
+  // the changes resolve together, which is what reads as engineered rather than
+  // switched. A light spring smooths the raw value without adding lag.
   const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
-  const barHeight = useTransform(settle, [0, 120], [64, 54], { clamp: true });
-  const blurPx = useTransform(settle, [0, 120], [0, 14], { clamp: true });
-  const shadeAlpha = useTransform(settle, [0, 120], [0, 0.35], { clamp: true });
-  const edgeAlpha = useTransform(settle, [0, 120], [0.1, 0.28], { clamp: true });
-  const backdrop = useMotionTemplate`blur(${blurPx}px)`;
-  const shade = useMotionTemplate`rgba(12, 20, 12, ${shadeAlpha})`;
-  const edge = useMotionTemplate`rgba(255, 255, 255, ${edgeAlpha})`;
+  const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
+  const stripHeight = useTransform(settle, [0, 70], [36, 0], { clamp: true });
+  const stripOpacity = useTransform(settle, [0, 45], [1, 0], { clamp: true });
+  const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
+  const pillAlpha = useTransform(settle, [0, 120], [0.55, 0.9], { clamp: true });
+  const pillShadow = useTransform(settle, [0, 120], [0.12, 0.4], { clamp: true });
+  const pillBg = useMotionTemplate`rgba(29, 42, 20, ${pillAlpha})`;
+  const pillGlow = useMotionTemplate`0 10px 30px rgba(6, 14, 8, ${pillShadow})`;
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
       const delta = y - lastY.current;
-      setScrolled(y > 8);
       setAtTop(y < 90);
       if (!open) {
         if (y <= 140) setHidden(false);
@@ -67,149 +65,195 @@ export function Header() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href));
 
   return (
-    <motion.header
+    <header
       className={cn(
-        "sticky top-0 z-50 bg-olive-deep transition-transform duration-300 ease-out-expo",
-        scrolled && "shadow-lift",
+        // FIXED, not sticky. A sticky header still occupies space in the flow,
+        // so the pill would float over the page background rather than over the
+        // hero. Fixed takes it out of flow and lets the dark hero run up behind
+        // it — which is the whole point of a floating bar. The hero and page
+        // heroes carry matching top padding so their content clears it.
+        "fixed inset-x-0 top-0 z-50 transition-transform duration-300 ease-out-expo",
         hidden ? "-translate-y-full" : "translate-y-0"
       )}
-      style={{ backdropFilter: backdrop, WebkitBackdropFilter: backdrop }}
     >
-      {/* Darkens continuously as you scroll, so the bar gains weight over the
-          content beneath it instead of switching to a solid state. */}
+      {/* Reading progress — a hairline at the very top edge of the viewport. */}
       <motion.div
-        className="pointer-events-none absolute inset-0"
-        style={{ background: shade }}
-        aria-hidden="true"
-      />
-      {/* Bottom edge: a 1px water current in place of a static border. The
-          scroll-progress bar sits above it. */}
-      <motion.div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px"
-        style={{ background: edge }}
-        aria-hidden="true"
-      />
-      <div className="header-water pointer-events-none absolute inset-x-0 bottom-0 h-px" aria-hidden="true" />
-      <motion.div
-        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-brand-green to-brand-blue"
+        className="absolute inset-x-0 top-0 z-10 h-0.5 origin-left bg-gradient-to-r from-brand-green to-brand-blue"
         style={{ scaleX: progress }}
         aria-hidden="true"
       />
+
+      {/* ── INFO STRIP ──────────────────────────────────────────
+          Location, hours and the two contact routes the site treats as public.
+          Collapses to nothing as you scroll so it costs no room while reading. */}
       <motion.div
-        className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-4 md:px-6"
-        style={{ height: barHeight }}
+        className="overflow-hidden border-b border-white/[0.07] bg-olive-deep/80 backdrop-blur"
+        style={{ height: stripHeight, opacity: stripOpacity }}
       >
-        {/* Logo — left */}
-        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              {/* Ghost, not the light `outline` variant — on the dark header that
-                  rendered as a solid white box, which read as a stray UI chip
-                  rather than part of the bar. */}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-11 shrink-0 border border-white/15 bg-white/[0.06] text-white hover:bg-white/15 hover:text-white lg:hidden"
-                aria-label="Open menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            {/* Never wider than the screen — w-72 alone overflowed a 320px phone */}
-            <SheetContent side="left" className="w-[min(18rem,85vw)]">
-              <SheetHeader>
-                <SheetTitle className="font-display">Menu</SheetTitle>
-                <SheetDescription className="sr-only">Site navigation</SheetDescription>
-              </SheetHeader>
-              <AnimatePresence>
-                {open && (
-                  <motion.nav
-                    aria-label="Mobile navigation"
-                    className="mt-2 flex flex-col gap-1 px-2"
-                    initial="hidden"
-                    animate="show"
-                    variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } } }}
-                  >
-                    {NAV_LINKS.map((l) => (
-                      <motion.div
-                        key={l.href}
-                        variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
-                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                      >
-                        <Link
-                          href={l.href}
-                          onClick={() => setOpen(false)}
-                          className={cn(
-                            "flex min-h-11 items-center rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
-                            isActive(l.href) && "bg-accent text-brand-green"
-                          )}
-                        >
-                          {l.label}
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </motion.nav>
-                )}
-              </AnimatePresence>
-            </SheetContent>
-          </Sheet>
-
-          {/* Bumping `logoRun` remounts the span below, which is what restarts
-              the CSS fill animation — a CSS animation will not replay just
-              because an element is hovered. */}
-          <Link
-            href="/"
-            className="tap-target-y group/logo flex min-w-0 items-center"
-            onMouseEnter={() => setLogoRun((n) => n + 1)}
-          >
-            {/* Wordmark: all caps, uniform size, heavier weight.
-                Caps need POSITIVE tracking — the negative tracking that suits
-                lowercase jams capitals into each other, which is what makes a
-                caps wordmark look amateur. Cap-height also reads larger than
-                lowercase at the same px, so the size is pulled back slightly to
-                keep the same optical weight against the 14px nav. */}
-            <Wordmark
-              key={logoRun}
-              animate={atTop}
-              className={cn(
-                "font-[family-name:var(--font-logo)] font-bold uppercase tracking-[0.042em] text-white",
-                "transition-[font-size] duration-300 ease-out-expo",
-                scrolled
-                  ? "text-[clamp(1.05rem,4.4vw,1.4rem)]"
-                  : "text-[clamp(1.15rem,4.9vw,1.6rem)]"
-              )}
-            />
-          </Link>
-        </div>
-
-        {/* Desktop nav — center */}
-        <nav aria-label="Main navigation" className="hidden items-center gap-0.5 lg:flex">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={cn(
-                // tap-target-y: an iPad Pro is wide enough to get the desktop nav
-                // but is still a finger-driven device, so these need the 44px height.
-                "tap-target-y relative flex items-center rounded-md px-2.5 py-2 font-display text-sm font-semibold uppercase tracking-wide transition-colors xl:px-3",
-                isActive(l.href)
-                  ? "text-brand-sun"
-                  : "text-white/60 hover:bg-white/10 hover:text-white"
-              )}
+        <div className="mx-auto flex h-9 max-w-6xl items-center justify-between gap-4 px-4 text-[0.78rem] text-white/60 sm:px-6">
+          <div className="flex min-w-0 items-center gap-4">
+            <span className="flex shrink-0 items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
+              {siteConfig.address.city}, {siteConfig.address.state}
+            </span>
+            <span className="hidden shrink-0 items-center gap-1.5 sm:flex">
+              <Clock className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
+              {siteConfig.hoursSummary.days} {siteConfig.hoursSummary.time}
+            </span>
+          </div>
+          <div className="flex shrink-0 items-center gap-4">
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline hidden items-center gap-1.5 transition-colors hover:text-white sm:flex"
             >
-              {l.label}
-              {isActive(l.href) && (
-                <motion.span
-                  layoutId="nav-underline"
-                  className="absolute inset-x-2.5 -bottom-px h-0.5 rounded-full bg-brand-sun xl:inset-x-3"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  aria-hidden="true"
-                />
-              )}
-            </Link>
-          ))}
-        </nav>
+              <MessageCircle className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
+              WhatsApp
+            </a>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="link-underline flex items-center gap-1.5 transition-colors hover:text-white"
+            >
+              <Mail className="h-3.5 w-3.5 text-brand-green-light" aria-hidden="true" />
+              <span className="hidden md:inline">{siteConfig.email}</span>
+              <span className="md:hidden">Email</span>
+            </a>
+          </div>
+        </div>
       </motion.div>
-    </motion.header>
+
+      {/* ── FLOATING PILL ───────────────────────────────────────
+          Detached from the edges with its own translucent surface, so it sits
+          over the page rather than dividing it. It gains opacity and shadow as
+          you scroll, which is what keeps it legible once light content passes
+          beneath it. */}
+      <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
+        <motion.div
+          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-white/12 pl-4 pr-2 backdrop-blur-xl sm:gap-4 sm:pl-5"
+          style={{ height: barHeight, background: pillBg, boxShadow: pillGlow }}
+        >
+          {/* water current along the pill's lower edge */}
+          <div className="header-water pointer-events-none absolute inset-x-6 bottom-0 h-px" aria-hidden="true" />
+
+          {/* Logo — left */}
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="-ml-1 size-10 shrink-0 rounded-full border border-white/15 bg-white/[0.06] text-white hover:bg-white/15 hover:text-white lg:hidden"
+                  aria-label="Open menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              {/* Never wider than the screen — w-72 alone overflowed a 320px phone */}
+              <SheetContent side="left" className="w-[min(18rem,85vw)]">
+                <SheetHeader>
+                  <SheetTitle className="font-display">Menu</SheetTitle>
+                  <SheetDescription className="sr-only">Site navigation</SheetDescription>
+                </SheetHeader>
+                <AnimatePresence>
+                  {open && (
+                    <motion.nav
+                      aria-label="Mobile navigation"
+                      className="mt-2 flex flex-col gap-1 px-2"
+                      initial="hidden"
+                      animate="show"
+                      variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } } }}
+                    >
+                      {NAV_LINKS.map((l) => (
+                        <motion.div
+                          key={l.href}
+                          variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <Link
+                            href={l.href}
+                            onClick={() => setOpen(false)}
+                            className={cn(
+                              "flex min-h-11 items-center rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
+                              isActive(l.href) && "bg-accent text-brand-green"
+                            )}
+                          >
+                            {l.label}
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.nav>
+                  )}
+                </AnimatePresence>
+              </SheetContent>
+            </Sheet>
+
+            {/* Remounting via `logoRun` is what restarts the CSS animation — a
+                CSS animation will not replay merely because you hover. */}
+            <Link
+              href="/"
+              className="tap-target-y flex min-w-0 items-center"
+              onMouseEnter={() => setLogoRun((n) => n + 1)}
+            >
+              <Wordmark
+                key={logoRun}
+                animate={atTop}
+                className="font-[family-name:var(--font-logo)] text-[clamp(1rem,4.2vw,1.35rem)] font-bold uppercase tracking-[0.042em] text-white"
+              />
+            </Link>
+          </div>
+
+          {/* Nav — centre */}
+          <nav aria-label="Main navigation" className="hidden items-center gap-0.5 lg:flex">
+            {NAV_LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={cn(
+                  // tap-target-y: an iPad Pro is wide enough for the desktop nav
+                  // but is still finger-driven, so these need the 44px height.
+                  "tap-target-y relative flex items-center rounded-full px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-colors",
+                  isActive(l.href) ? "text-white" : "text-white/55 hover:text-white"
+                )}
+              >
+                {isActive(l.href) && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-white/[0.12] ring-1 ring-white/10"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="relative">{l.label}</span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Actions — right */}
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tap-target inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15 sm:px-4"
+              aria-label="Message us on WhatsApp"
+            >
+              <MessageCircle className="h-4 w-4 shrink-0 text-brand-green-light" aria-hidden="true" />
+              <span className="hidden xl:inline">WhatsApp</span>
+            </a>
+            <a
+              href={telLink(siteConfig.phones.sales.primary)}
+              onClick={trackCallClick}
+              className="tap-target inline-flex items-center justify-center gap-2 rounded-full bg-brand-sun-muted px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-sun-muted-hover sm:px-4"
+              aria-label="Call us"
+            >
+              <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span className="hidden sm:inline">Call</span>
+              <span className="hidden xl:inline">now</span>
+            </a>
+          </div>
+        </motion.div>
+      </motion.div>
+    </header>
   );
 }

@@ -34,7 +34,7 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
       </motion.div>
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
-      <Container className="relative z-10 py-10 sm:py-14 md:py-20">
+      <Container className="relative z-10 pt-32 pb-10 sm:pt-36 sm:pb-14 md:pt-40 md:pb-20">
         <Reveal>
           {/* min-w-0 + truncate: a long page title in the trail would otherwise
               push the breadcrumb row past the edge of a narrow phone. */}
