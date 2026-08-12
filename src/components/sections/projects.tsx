@@ -26,7 +26,7 @@ export function Projects() {
   const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
   return (
-    <Section tone="default">
+    <Section tone="soil">
       <Container>
         <SectionHeading eyebrow="What we build" title="The kind of projects we take on" lead="From smallholder farms to large commercial developments — representative categories of the work we do across South India." />
 

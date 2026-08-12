@@ -8,7 +8,6 @@ import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { Process } from "@/components/sections/process";
 import { ContactActions } from "@/components/site/contact-actions";
-import { AuroraGlow } from "@/components/site/aurora-glow";
 import { pageMeta } from "@/lib/seo";
 import { siteConfig, whatsappLink } from "@/lib/site-config";
 
@@ -81,7 +80,7 @@ export default function ServicesPage() {
     <div className="theme-warm">
       <PageHero eyebrow="Services" title="Our Core Services" description="We organize our expertise into three main areas: Complete Irrigation Projects (for farms and commercial spaces), Product Supply, and APMIP Subsidy services." />
 
-      <Section tone="default">
+      <Section tone="sky">
         <Container>
           <SectionHeading eyebrow="What we do" title="Complete solutions, not just products" lead="From the first survey to the final installation and subsidy paperwork, we handle every part of your irrigation project." />
           <Stagger className="mt-12 grid gap-6 sm:grid-cols-1 lg:grid-cols-3">
@@ -108,7 +107,7 @@ export default function ServicesPage() {
         </Container>
       </Section>
 
-      <Section tone="muted">
+      <Section tone="field">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
@@ -147,7 +146,7 @@ export default function ServicesPage() {
         </Container>
       </Section>
 
-      <Section tone="default">
+      <Section tone="soil">
         <Container>
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
@@ -160,8 +159,7 @@ export default function ServicesPage() {
         </Container>
       </Section>
 
-      <Section tone="muted" className="relative overflow-hidden">
-        <AuroraGlow variant="cool" />
+      <Section tone="sun">
         <Container>
           <SectionHeading align="center" eyebrow="Why choose us" title="A partner you can rely on" lead="Not just a supplier — a complete irrigation partner from planning to long-term support." />
           <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -178,8 +176,7 @@ export default function ServicesPage() {
         </Container>
       </Section>
 
-      <Section tone="brand-deep" className="relative overflow-hidden">
-        <AuroraGlow variant="dark-converge" />
+      <Section tone="brand-deep">
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">Start your project</p>

@@ -42,7 +42,7 @@ export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
   const hasLogos = logos.length > 0;
 
   return (
-    <section className="border-y border-border bg-white py-16">
+    <section className="border-y border-border tint-wash-plain py-16">
       <Container>
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Authorized Distributor &amp; Dealer</p>

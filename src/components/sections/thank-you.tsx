@@ -68,7 +68,7 @@ export function ThankYou() {
   return (
     <div className="theme-warm">
       {/* Hero confirmation */}
-      <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
+      <section className="relative isolate overflow-hidden tint-wash-darker text-white">
         <AuroraGlow variant="hero" />
         <div className="mx-auto flex max-w-3xl flex-col items-center px-4 py-14 sm:px-6 sm:py-20 text-center sm:py-24">
           <Reveal>

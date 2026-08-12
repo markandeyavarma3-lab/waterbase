@@ -36,7 +36,7 @@ export default function ProductSupplyPage() {
         description="We don't just build systems; we are an authorized distributor supplying genuine parts from over 20 leading irrigation brands."
       />
 
-      <Section tone="default">
+      <Section tone="soil">
         <Container>
           <SectionHeading
             eyebrow="What we stock"
@@ -60,7 +60,7 @@ export default function ProductSupplyPage() {
         </Container>
       </Section>
 
-      <Section tone="muted">
+      <Section tone="sun">
         <Container>
           <SectionHeading align="center" eyebrow="How you can buy" title="Whichever way suits your order" />
           <Stagger className="mt-12 grid gap-5 sm:grid-cols-3">

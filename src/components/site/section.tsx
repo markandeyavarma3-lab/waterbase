@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
+import { AuroraGlow } from "@/components/site/aurora-glow";
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
   // px-4 on small phones (not px-6) — on a 320px screen that returns 16px of
@@ -26,23 +27,41 @@ type Tone =
 
 /**
  * Each tone also sets a `tone-*` class. That does not paint anything itself —
- * it declares the --card-edge / --card-cast variables that `.surface-card`
- * descendants inherit, so a card's border and shadow pick up the hue of
- * whatever section it happens to sit in, without any card needing to know
- * where it is.
+ * it declares the --card-edge / --card-cast / --card-wash variables that
+ * `.surface-card` descendants inherit, so a card's border, shadow and faint
+ * fill gradient all pick up the hue of whatever section it happens to sit in,
+ * without any card needing to know where it is.
+ *
+ * The `tint-wash-*` classes are gradients, not flat fills — see globals.css.
+ * No section on the site should ever resolve to a single solid colour.
  */
 const toneClass: Record<Tone, string> = {
-  default: "bg-white tone-plain",
-  sky: "bg-tint-sky tone-sky",
-  field: "bg-tint-field tone-field",
-  soil: "bg-tint-soil tone-soil",
-  sun: "bg-tint-sun tone-sun",
+  default: "tint-wash-plain tone-plain",
+  sky: "tint-wash-sky tone-sky",
+  field: "tint-wash-field tone-field",
+  soil: "tint-wash-soil tone-soil",
+  sun: "tint-wash-sun tone-sun",
   // back-compat aliases
-  muted: "bg-tint-sky tone-sky",
-  brand: "bg-tint-field tone-field",
-  // dark sections keep their weight, for rhythm against all of the above
-  "brand-dark": "bg-brand-green-deep text-white tone-plain",
-  "brand-deep": "bg-brand-green-deeper text-white tone-plain",
+  muted: "tint-wash-sky tone-sky",
+  brand: "tint-wash-field tone-field",
+  // dark sections keep their weight, for rhythm against all of the above —
+  // but still settle from deep teal toward an even deeper edge, not one slab
+  "brand-dark": "tint-wash-dark text-white tone-plain",
+  "brand-deep": "tint-wash-darker text-white tone-plain",
+};
+
+/** Which ambient AuroraGlow blobs belong to each tone, so every section gets
+ *  matching movement automatically instead of pages remembering to add it. */
+const glowVariant: Record<Tone, "sky" | "field" | "soil" | "sun" | "plain" | "dark-teal" | "dark-converge"> = {
+  default: "plain",
+  sky: "sky",
+  field: "field",
+  soil: "soil",
+  sun: "sun",
+  muted: "sky",
+  brand: "field",
+  "brand-dark": "dark-teal",
+  "brand-deep": "dark-converge",
 };
 
 export function Section({ tone = "default", id, className, children }: { tone?: Tone; id?: string; className?: string; children: ReactNode }) {
@@ -50,8 +69,11 @@ export function Section({ tone = "default", id, className, children }: { tone?: 
     // `isolate` makes this element form a stacking context, so decorative layers
     // placed at -z-10 (AuroraGlow and friends) paint ABOVE this section's own
     // tone background rather than behind it. Without it they were drawn under
-    // the fill and were invisible everywhere on the site.
-    <section id={id} className={cn("relative isolate py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
+    // the fill and were invisible everywhere on the site. `overflow-hidden` is
+    // baked in here (not left to callers) because every section now carries
+    // its own ambient glow blobs, which bleed past the edge by design.
+    <section id={id} className={cn("relative isolate overflow-hidden py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
+      <AuroraGlow variant={glowVariant[tone]} />
       {children}
     </section>
   );

@@ -81,8 +81,8 @@ export function Testimonials() {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="relative isolate overflow-hidden border-y border-border bg-brand-green-soft/30 py-20">
-      <AuroraGlow variant="cool" />
+    <section className="relative isolate overflow-hidden border-y border-border tint-wash-brand-soft py-20">
+      <AuroraGlow variant="field" />
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Testimonials</p>
         <h2 className="mt-3 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-bold tracking-tight">Trusted by farmers &amp; businesses</h2>

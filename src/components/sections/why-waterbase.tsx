@@ -2,7 +2,6 @@ import type { LucideIcon } from "lucide-react";
 import { Award, ShieldCheck, Users, Map, BadgePercent, LifeBuoy } from "lucide-react";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
-import { AuroraGlow } from "@/components/site/aurora-glow";
 import { MediaSlot } from "@/components/site/media-slot";
 import { siteConfig } from "@/lib/site-config";
 
@@ -17,8 +16,7 @@ const reasons: { icon: LucideIcon; title: string; desc: string }[] = [
 
 export function WhyWaterbase() {
   return (
-    <Section tone="sun" className="relative overflow-hidden">
-      <AuroraGlow variant="cool" />
+    <Section tone="sun">
       <Container>
         <SectionHeading eyebrow="Why Waterbase" title="One accountable partner, end to end" lead="Not just a supplier — we own the entire journey, from the first survey to long-term support." />
         <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-14">

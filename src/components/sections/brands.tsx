@@ -5,7 +5,7 @@ const brands = ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNe
 
 export function Brands() {
   return (
-    <section className="border-y border-border bg-brand-green-soft/40">
+    <section className="border-y border-border tint-wash-brand-soft">
       <div className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 sm:py-14">
         <Reveal>
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Authorized Dealer &amp; Distributor</p>

@@ -63,7 +63,7 @@ const categoryGroups = [
 
 export function ProductCategories() {
   return (
-    <Section tone="default">
+    <Section tone="field">
       <Container>
         <SectionHeading
           eyebrow="Micro Irrigation"

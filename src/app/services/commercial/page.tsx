@@ -35,7 +35,7 @@ export default function CommercialPage() {
         description="Professional irrigation for factories, industries, commercial nurseries, corporate lawns, and expansive gardens."
       />
 
-      <Section tone="default">
+      <Section tone="sky">
         <Container>
           <SectionHeading
             title="Built for places where downtime isn't an option"
@@ -57,7 +57,7 @@ export default function CommercialPage() {
         </Container>
       </Section>
 
-      <Section tone="muted">
+      <Section tone="field">
         <Container>
           <SectionHeading align="center" eyebrow="Why businesses choose us" title="A partner you don't have to manage" />
           <Stagger className="mt-12 grid gap-5 sm:grid-cols-3">

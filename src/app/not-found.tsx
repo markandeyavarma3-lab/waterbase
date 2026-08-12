@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
+    <section className="relative isolate overflow-hidden tint-wash-darker text-white">
       <AuroraGlow variant="hero" />
       <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center px-4 py-16 sm:px-6 sm:py-24 text-center">
         <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/70">

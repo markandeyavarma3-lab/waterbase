@@ -35,7 +35,7 @@ export default function AgriFarmsPage() {
         description="We design and execute complete irrigation systems tailored for small, mid, and large agricultural farms to maximize yield and save water."
       />
 
-      <Section tone="default">
+      <Section tone="field">
         <Container>
           <SectionHeading
             title="Sized to your land, not a one-size package"
@@ -57,7 +57,7 @@ export default function AgriFarmsPage() {
         </Container>
       </Section>
 
-      <Section tone="muted">
+      <Section tone="sun">
         <Container>
           <SectionHeading align="center" eyebrow="Why farmers choose us" title="One team, from survey to harvest" />
           <Stagger className="mt-12 grid gap-5 sm:grid-cols-3">

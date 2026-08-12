@@ -3,7 +3,6 @@ import { BadgeCheck, ArrowRight } from "lucide-react";
 import { Section, Container, Eyebrow } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
-import { AuroraGlow } from "@/components/site/aurora-glow";
 
 // APMIP flow — placeholder labels. Confirm or replace with the official steps.
 const flow = [
@@ -19,8 +18,7 @@ const apmipMessage =
 
 export function Apmip() {
   return (
-    <Section tone="brand-deep" id="apmip" className="relative overflow-hidden">
-      <AuroraGlow variant="dark-teal" />
+    <Section tone="brand-deep" id="apmip">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>

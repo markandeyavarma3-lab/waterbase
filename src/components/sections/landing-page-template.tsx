@@ -53,7 +53,7 @@ export function LandingPageTemplate({
   return (
     <>
       {/* HERO */}
-      <section className="relative isolate overflow-hidden bg-brand-green-deeper text-white">
+      <section className="relative isolate overflow-hidden tint-wash-darker text-white">
         <AuroraGlow variant="hero" />
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
         <Container className="py-12 sm:py-16 md:py-24">
@@ -102,7 +102,7 @@ export function LandingPageTemplate({
       <Stats />
 
       {/* PRODUCTS */}
-      <Section>
+      <Section tone="sky">
         <Container>
           <SectionHeading eyebrow={productsEyebrow} title={productsTitle} lead={productsLead} />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -122,8 +122,7 @@ export function LandingPageTemplate({
       </Section>
 
       {/* WHY */}
-      <Section tone="brand" className="relative overflow-hidden">
-        <AuroraGlow variant="cool" />
+      <Section tone="soil">
         <Container>
           <SectionHeading eyebrow={whyEyebrow} title={whyTitle} lead={whyLead} align="center" />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -143,8 +142,7 @@ export function LandingPageTemplate({
       </Section>
 
       {/* BOTTOM CTA */}
-      <Section tone="brand-deep" className="relative overflow-hidden">
-        <AuroraGlow variant="dark-converge" />
+      <Section tone="brand-deep">
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">{ctaSubtitle}</p>
