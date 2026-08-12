@@ -9,8 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-soft hover:bg-brand-green-dark",
-        accent: "bg-brand-blue text-white shadow-soft hover:bg-brand-blue-dark",
+        // Translucent tint + border + blur — the same recipe as the
+        // WhatsApp/callback buttons on the "Planning a project" CTA panel,
+        // now the default everywhere rather than a one-off. Text switches to
+        // each hue's darkest token (not the mid "-dark" one): a translucent
+        // 15% fill needs a darker foreground than a solid fill would to hold
+        // 4.5:1 contrast.
+        default: "border border-brand-green/25 bg-brand-green/15 text-brand-green-darker shadow-soft backdrop-blur-sm hover:bg-brand-green/25",
+        accent: "border border-brand-blue/25 bg-brand-blue/15 text-brand-blue-deep shadow-soft backdrop-blur-sm hover:bg-brand-blue/25",
         outline:
           "border-border bg-background shadow-xs hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:

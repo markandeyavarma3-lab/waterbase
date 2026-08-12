@@ -404,6 +404,30 @@
   50%      { transform: translate(-5%, -7%) scale(1.12); }
 }
 
+/* ── Panel drift — the "Planning a project" CTA panel's gradient wash.
+   This keyframe was referenced by name (panel-drift, 19s) but never
+   actually defined, so that panel has never moved — it only looked calm
+   because it was accidentally static. Now real, and reused everywhere the
+   same gradient-panel technique is applied (header, cards, sections). */
+@keyframes panel-drift {
+  0%, 100% { transform: translate3d(-3%, -2%, 0) scale(1.08); }
+  50%      { transform: translate3d(3%, 2%, 0) scale(1.12); }
+}
+/* panel-sheen was the same story — reuses shimmer-sweep's motion under its
+   own name so every existing "animation: panel-sheen ..." reference (which
+   already has the right duration/easing) starts working without edits. */
+@keyframes panel-sheen {
+  0%   { transform: translateX(-120%) skewX(-12deg); }
+  100% { transform: translateX(220%) skewX(-12deg); }
+}
+/* Same drift idea, background-position flavour — for large flat fills
+   (section tints) where adding an oversized child element isn't practical.
+   Needs background-size well over 100% on the element using it. */
+@keyframes wash-drift {
+  0%, 100% { background-position: 0% 30%; }
+  50%      { background-position: 100% 70%; }
+}
+
 /* ── Gentle float (floating badge cards) ──────────────────────── */
 @keyframes float-y {
   0%, 100% { transform: translateY(0); }
@@ -455,7 +479,16 @@
   .motion-flow,
   .motion-caustic,
   .motion-panel,
-  .motion-marquee { animation: none !important; }
+  .motion-marquee,
+  .surface-card::before,
+  .tint-wash-sky,
+  .tint-wash-field,
+  .tint-wash-soil,
+  .tint-wash-sun,
+  .tint-wash-plain,
+  .tint-wash-dark,
+  .tint-wash-darker,
+  .tint-wash-brand-soft { animation: none !important; }
 
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.
      Killing the animation without restoring the transform would leave the bar
@@ -676,19 +709,38 @@
      FILL would not work here — the sections are already at 97-99% lightness, so
      a tinted card would sink into them instead of lifting.
 
-     Defaults are the water tint; each .tone-* below overrides them. */
+     Defaults are the water tint; each .tone-* below overrides them.
+
+     The wash itself uses the same technique as the "Planning a project" CTA
+     panel — a diagonal tint → white → next-tint gradient, oversized and
+     drifting via panel-drift — just recoloured per card to ITS section's own
+     tint and its downstream neighbour, rather than always green→blue. Lives
+     on ::before (not the card's own background) so it can be oversized and
+     clipped without fighting the plain white base every card falls back to. */
   .surface-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     --card-edge: rgba(31, 99, 118, 0.11);
     --card-cast: rgba(31, 99, 118, 0.07);
-    --card-wash: color-mix(in srgb, var(--color-tint-sky) 55%, white 45%);
+    --card-wash-a: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%);
+    --card-wash-b: color-mix(in srgb, var(--color-tint-field) 70%, white 30%);
     background-color: #fff;
-    background-image: linear-gradient(165deg, #ffffff 0%, var(--card-wash) 100%);
     border: 1px solid var(--card-edge);
     box-shadow: 0 1px 2px var(--card-cast), 0 8px 22px var(--card-cast);
     transition:
       transform var(--dur-quick) var(--ease-out-soft),
       box-shadow var(--dur-quick) var(--ease-out-soft),
       border-color var(--dur-quick) var(--ease-out-soft);
+  }
+  .surface-card::before {
+    content: "";
+    position: absolute;
+    inset: -25%;
+    z-index: -1;
+    background-image: linear-gradient(135deg, var(--card-wash-a) 0%, #ffffff 50%, var(--card-wash-b) 100%);
+    animation: panel-drift 24s var(--ease-in-out-soft) infinite;
+    pointer-events: none;
   }
   /* Lift is desktop-only: a hover transform that fires on tap and then sticks
      is worse than no hover at all on a phone. */
@@ -703,11 +755,11 @@
   /* Section tone -> the tint its cards inherit. --card-wash is a real hex blend
      (not the rgba edge/cast colours) so it composites cleanly into the card's
      own gradient fill instead of muddying it. */
-  .tone-sky   { --card-edge: rgba(31, 99, 118, 0.12); --card-cast: rgba(31, 99, 118, 0.08); --card-wash: color-mix(in srgb, var(--color-tint-sky) 60%, white 40%); }
-  .tone-field { --card-edge: rgba(46, 148, 102, 0.13); --card-cast: rgba(46, 148, 102, 0.08); --card-wash: color-mix(in srgb, var(--color-tint-field) 60%, white 40%); }
-  .tone-soil  { --card-edge: rgba(160, 110, 69, 0.14); --card-cast: rgba(160, 110, 69, 0.08); --card-wash: color-mix(in srgb, var(--color-tint-soil) 60%, white 40%); }
-  .tone-sun   { --card-edge: rgba(196, 145, 60, 0.14); --card-cast: rgba(196, 145, 60, 0.08); --card-wash: color-mix(in srgb, var(--color-tint-sun) 60%, white 40%); }
-  .tone-plain { --card-edge: rgba(31, 99, 118, 0.10); --card-cast: rgba(31, 99, 118, 0.06); --card-wash: color-mix(in srgb, var(--color-tint-sky) 40%, white 60%); }
+  .tone-sky   { --card-edge: rgba(31, 99, 118, 0.12); --card-cast: rgba(31, 99, 118, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-field) 70%, white 30%); }
+  .tone-field { --card-edge: rgba(46, 148, 102, 0.13); --card-cast: rgba(46, 148, 102, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-field) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-soil) 70%, white 30%); }
+  .tone-soil  { --card-edge: rgba(160, 110, 69, 0.14); --card-cast: rgba(160, 110, 69, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-soil) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-sun) 70%, white 30%); }
+  .tone-sun   { --card-edge: rgba(196, 145, 60, 0.14); --card-cast: rgba(196, 145, 60, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-sun) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%); }
+  .tone-plain { --card-edge: rgba(31, 99, 118, 0.10); --card-cast: rgba(31, 99, 118, 0.06); --card-wash-a: #ffffff; --card-wash-b: color-mix(in srgb, var(--color-tint-sky) 55%, white 45%); }
 
   /* Sunrise ground — the hero and page tops. Sky at the top through crop green
      to warm soil at the bottom, so the page opens the way a watered field looks
@@ -727,7 +779,13 @@
      opens with. A third stop lifts toward white for a soft sheen rather than
      landing on a second flat colour. Angles are varied per tone so the whole
      page doesn't read as one repeated stripe. Still 96-99% lightness — this is
-     a temperature shift you feel while scrolling, not a colour block you see. */
+     a temperature shift you feel while scrolling, not a colour block you see.
+
+     Each also carries background-size/animation for a slow drift — the same
+     panel-drift idea as the CTA panel and cards, in background-position form
+     since a full-bleed section fill doesn't need (or want) an extra child
+     element to get the same effect. Durations are staggered per tone so
+     adjacent sections never drift in visible sync. */
   .tint-wash-sky {
     background-image: linear-gradient(
       135deg,
@@ -735,6 +793,8 @@
       color-mix(in srgb, var(--color-tint-sky) 55%, var(--color-tint-field) 45%) 58%,
       color-mix(in srgb, var(--color-tint-field) 65%, white 35%) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 32s var(--ease-in-out-soft) infinite;
   }
   .tint-wash-field {
     background-image: linear-gradient(
@@ -743,6 +803,8 @@
       color-mix(in srgb, var(--color-tint-field) 55%, var(--color-tint-soil) 45%) 58%,
       color-mix(in srgb, var(--color-tint-soil) 65%, white 35%) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 36s var(--ease-in-out-soft) infinite;
   }
   .tint-wash-soil {
     background-image: linear-gradient(
@@ -751,6 +813,8 @@
       color-mix(in srgb, var(--color-tint-soil) 55%, var(--color-tint-sun) 45%) 58%,
       color-mix(in srgb, var(--color-tint-sun) 65%, white 35%) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 40s var(--ease-in-out-soft) infinite;
   }
   .tint-wash-sun {
     background-image: linear-gradient(
@@ -759,6 +823,8 @@
       color-mix(in srgb, var(--color-tint-sun) 55%, var(--color-tint-sky) 45%) 58%,
       color-mix(in srgb, var(--color-tint-sky) 65%, white 35%) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 44s var(--ease-in-out-soft) infinite;
   }
   /* Neutral tone — still not a flat white, just the faintest hint of water. */
   .tint-wash-plain {
@@ -767,6 +833,8 @@
       #ffffff 0%,
       color-mix(in srgb, var(--color-tint-sky) 42%, white 58%) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 38s var(--ease-in-out-soft) infinite;
   }
   /* Dark sections — the same rule applies going the other direction, deep teal
      settling toward an even deeper edge instead of one flat slab. */
@@ -776,6 +844,8 @@
       var(--color-brand-green-deep) 0%,
       var(--color-brand-green-deeper) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 34s var(--ease-in-out-soft) infinite;
   }
   .tint-wash-darker {
     background-image: linear-gradient(
@@ -783,6 +853,8 @@
       var(--color-brand-green-deeper) 0%,
       color-mix(in srgb, var(--color-brand-green-deeper) 100%, black 22%) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 34s var(--ease-in-out-soft) infinite;
   }
   /* Light green band used by testimonials/brand strips — same treatment. */
   .tint-wash-brand-soft {
@@ -791,6 +863,8 @@
       var(--color-brand-green-soft) 0%,
       color-mix(in srgb, var(--color-tint-field) 60%, var(--color-tint-sun) 40%) 100%
     );
+    background-size: 220% 220%;
+    animation: wash-drift 30s var(--ease-in-out-soft) infinite;
   }
 
   /* Header water line — see the header-current keyframes. Deliberately faint:

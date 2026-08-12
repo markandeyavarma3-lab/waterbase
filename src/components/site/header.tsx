@@ -112,14 +112,16 @@ export function Header() {
           className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-brand-green/20 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
           style={{ height: barHeight, boxShadow: pillGlow }}
         >
-          {/* Colour wash — the EXACT gradient the "Planning a project" CTA
-              panel uses (green-soft → white → blue-soft, diagonal), not a
-              reinterpretation. That panel has no working drift/sheen
-              animation (the keyframes it references don't exist anywhere in
-              the codebase) — it is a static gradient — so this matches it
-              as a static gradient too, rather than inventing motion it
-              doesn't actually have. */}
-          <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-br from-brand-green-soft via-white to-brand-blue-soft" aria-hidden="true" />
+          {/* Colour wash — the same gradient the "Planning a project" CTA
+              panel uses (green-soft → white → blue-soft, diagonal), oversized
+              and drifting the same way that panel now does (see globals.css —
+              panel-drift/panel-sheen were referenced by name there but never
+              actually defined; fixed centrally, both panels move for real now). */}
+          <div
+            className="motion-panel pointer-events-none absolute -inset-[20%] -z-20 bg-gradient-to-br from-brand-green-soft via-white to-brand-blue-soft will-change-transform"
+            style={{ animation: "panel-drift 26s var(--ease-in-out-soft) infinite" }}
+            aria-hidden="true"
+          />
           {/* Scroll-driven white veil on top of the wash — this is what makes
               the bar read as "frosted white", but it caps below full opacity
               so the wash always shows through, even scrolled. */}
