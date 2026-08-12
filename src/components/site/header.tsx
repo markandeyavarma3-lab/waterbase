@@ -15,10 +15,19 @@ import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
 import { NAV_LINKS } from "@/lib/nav";
 
+// Fixed pill colour per nav-link tone — always visible, not just on
+// hover/active, so the bar itself carries colour rather than being plain
+// text until you touch it. Active gets a visible ring on top of its tint.
+const NAV_TONE = {
+  blue: { bg: "bg-brand-blue-soft", text: "text-brand-blue-dark", hover: "hover:bg-brand-blue/15", ring: "ring-brand-blue/35" },
+  green: { bg: "bg-brand-green-soft", text: "text-brand-green-dark", hover: "hover:bg-brand-green/15", ring: "ring-brand-green/35" },
+  soil: { bg: "bg-brand-soil-soft", text: "text-brand-soil-dark", hover: "hover:bg-brand-soil/15", ring: "ring-brand-soil/35" },
+  sun: { bg: "bg-brand-sun-soft", text: "text-brand-sun-dark", hover: "hover:bg-brand-sun/20", ring: "ring-brand-sun/40" },
+} as const;
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const [logoRun, setLogoRun] = useState(0);
-  const [hovered, setHovered] = useState<string | null>(null);
   // Drives the wordmark loop. Deliberately a larger threshold than the visual
   // scroll response below, so small jitter at the top does not kill the logo
   // animation mid-drop.
@@ -164,42 +173,28 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Nav — centre.
-              ONE pill, shared across every item via layoutId, so it GLIDES from
-              item to item instead of each one lighting up independently. It
-              follows the cursor while hovering and returns to the active page
-              when the pointer leaves. */}
-          <nav
-            aria-label="Main navigation"
-            className="hidden items-center gap-0.5 lg:flex"
-            onMouseLeave={() => setHovered(null)}
-          >
+          {/* Nav — centre. Each link carries its own fixed-colour pill, an
+              even rotation through the site's four section hues, so the bar
+              itself is never a flat row of plain text — same idea as the
+              coloured WhatsApp / callback pills on the "Planning a project"
+              CTA panel, applied to navigation. */}
+          <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
             {NAV_LINKS.map((l) => {
               const active = isActive(l.href);
-              // While hovering anywhere in the nav the pill belongs to the
-              // hovered item; otherwise it marks the current page.
-              const showPill = hovered ? hovered === l.href : active;
+              const tone = NAV_TONE[l.tone];
               return (
                 <Link
                   key={l.href}
                   href={l.href}
-                  onMouseEnter={() => setHovered(l.href)}
                   className={cn(
                     // tap-target-y: an iPad Pro is wide enough for the desktop nav
                     // but is still finger-driven, so these need the 44px height.
-                    "tap-target-y relative flex items-center rounded-full px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-colors duration-200",
-                    active || showPill ? "text-water-deep" : "text-water-deep/68"
+                    "tap-target-y flex items-center rounded-full px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-all duration-200",
+                    tone.bg, tone.text, tone.hover,
+                    active && cn("ring-1", tone.ring)
                   )}
                 >
-                  {showPill && (
-                    <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-water-deep/[0.07] ring-1 ring-water-deep/10"
-                      transition={{ type: "spring", stiffness: 420, damping: 34, mass: 0.7 }}
-                      aria-hidden="true"
-                    />
-                  )}
-                  <span className="relative">{l.label}</span>
+                  {l.label}
                 </Link>
               );
             })}
