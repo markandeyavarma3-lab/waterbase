@@ -21,11 +21,15 @@ import { NAV_LINKS } from "@/lib/nav";
 // the WhatsApp/callback buttons on the "Planning a project" CTA panel
 // (bg-brand-*/15, border-brand-*/25, backdrop-blur-sm) — a faded wash, not a
 // flat block.
+// Text uses each tone's DARKEST variant, not -dark — the pill fill is
+// strong enough now (and sits on top of the coloured .header-wash) that the
+// regular -dark tokens measured under 4.5:1 at rest scroll position. Checked
+// against the worst case (top of page, least-veiled, most saturated pill).
 const NAV_TONE = {
-  blue: { bg: "bg-brand-blue/12", border: "border-brand-blue/25", text: "text-brand-blue-dark", hover: "hover:bg-brand-blue/20" },
-  green: { bg: "bg-brand-green/12", border: "border-brand-green/25", text: "text-brand-green-dark", hover: "hover:bg-brand-green/20" },
-  soil: { bg: "bg-brand-soil/12", border: "border-brand-soil/25", text: "text-brand-soil-dark", hover: "hover:bg-brand-soil/20" },
-  sun: { bg: "bg-brand-sun/16", border: "border-brand-sun/28", text: "text-brand-sun-dark", hover: "hover:bg-brand-sun/24" },
+  blue: { bg: "bg-brand-blue/24", border: "border-brand-blue/40", text: "text-brand-blue-deep", hover: "hover:bg-brand-blue/34" },
+  green: { bg: "bg-brand-green/24", border: "border-brand-green/40", text: "text-brand-green-darker", hover: "hover:bg-brand-green/34" },
+  soil: { bg: "bg-brand-soil/24", border: "border-brand-soil/40", text: "text-brand-soil-darker", hover: "hover:bg-brand-soil/34" },
+  sun: { bg: "bg-brand-sun/30", border: "border-brand-sun/44", text: "text-brand-sun-darker", hover: "hover:bg-brand-sun/40" },
 } as const;
 
 export function Header() {
@@ -54,8 +58,9 @@ export function Header() {
   // shadow and a faint border, not from a colour jump — which is what keeps it
   // findable without turning it into a block. This white layer is a VEIL over
   // the .header-wash gradient beneath it (see globals.css), not the pill's only
-  // colour — capped at 0.9 so the wash is never fully hidden, even scrolled.
-  const pillAlpha = useTransform(settle, [0, 120], [0.5, 0.9], { clamp: true });
+  // colour — starts low so the wash reads clearly at rest, and caps at 0.75
+  // (not 1) so it never fully hides the wash, even scrolled.
+  const pillAlpha = useTransform(settle, [0, 120], [0.22, 0.75], { clamp: true });
   const pillShadow = useTransform(settle, [0, 120], [0.07, 0.13], { clamp: true });
   const pillGlow = useMotionTemplate`0 10px 30px rgba(18, 60, 70, ${pillShadow})`;
 
