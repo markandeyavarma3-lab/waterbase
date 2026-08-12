@@ -17,12 +17,15 @@ import { NAV_LINKS } from "@/lib/nav";
 
 // Fixed pill colour per nav-link tone — always visible, not just on
 // hover/active, so the bar itself carries colour rather than being plain
-// text until you touch it. Active gets a visible ring on top of its tint.
+// text until you touch it. Translucent fill + border + blur, same recipe as
+// the WhatsApp/callback buttons on the "Planning a project" CTA panel
+// (bg-brand-*/15, border-brand-*/25, backdrop-blur-sm) — a faded wash, not a
+// flat block.
 const NAV_TONE = {
-  blue: { bg: "bg-brand-blue-soft", text: "text-brand-blue-dark", hover: "hover:bg-brand-blue/15", ring: "ring-brand-blue/35" },
-  green: { bg: "bg-brand-green-soft", text: "text-brand-green-dark", hover: "hover:bg-brand-green/15", ring: "ring-brand-green/35" },
-  soil: { bg: "bg-brand-soil-soft", text: "text-brand-soil-dark", hover: "hover:bg-brand-soil/15", ring: "ring-brand-soil/35" },
-  sun: { bg: "bg-brand-sun-soft", text: "text-brand-sun-dark", hover: "hover:bg-brand-sun/20", ring: "ring-brand-sun/40" },
+  blue: { bg: "bg-brand-blue/12", border: "border-brand-blue/25", text: "text-brand-blue-dark", hover: "hover:bg-brand-blue/20" },
+  green: { bg: "bg-brand-green/12", border: "border-brand-green/25", text: "text-brand-green-dark", hover: "hover:bg-brand-green/20" },
+  soil: { bg: "bg-brand-soil/12", border: "border-brand-soil/25", text: "text-brand-soil-dark", hover: "hover:bg-brand-soil/20" },
+  sun: { bg: "bg-brand-sun/16", border: "border-brand-sun/28", text: "text-brand-sun-dark", hover: "hover:bg-brand-sun/24" },
 } as const;
 
 export function Header() {
@@ -49,10 +52,11 @@ export function Header() {
   // Frosted WHITE, not a dark slab. The hero is a light gradient, so the bar
   // belongs to it rather than sitting on top of it. Separation comes from a soft
   // shadow and a faint border, not from a colour jump — which is what keeps it
-  // findable without turning it into a block.
-  const pillAlpha = useTransform(settle, [0, 120], [0.72, 0.92], { clamp: true });
+  // findable without turning it into a block. This white layer is a VEIL over
+  // the .header-wash gradient beneath it (see globals.css), not the pill's only
+  // colour — capped at 0.9 so the wash is never fully hidden, even scrolled.
+  const pillAlpha = useTransform(settle, [0, 120], [0.5, 0.9], { clamp: true });
   const pillShadow = useTransform(settle, [0, 120], [0.07, 0.13], { clamp: true });
-  const pillBg = useMotionTemplate`rgba(255, 255, 255, ${pillAlpha})`;
   const pillGlow = useMotionTemplate`0 10px 30px rgba(18, 60, 70, ${pillShadow})`;
 
   useEffect(() => {
@@ -100,9 +104,18 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-water-deep/8 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
-          style={{ height: barHeight, background: pillBg, boxShadow: pillGlow }}
+          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-water-deep/8 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
+          style={{ height: barHeight, boxShadow: pillGlow }}
         >
+          {/* Colour wash — the same four section hues as the rest of the site,
+              fading into each other and drifting slowly, so the pill is never
+              a flat colour underneath the frost. */}
+          <div className="header-wash pointer-events-none absolute inset-0 -z-20" aria-hidden="true" />
+          {/* Scroll-driven white veil on top of the wash — this is what makes
+              the bar read as "frosted white", but it caps below full opacity
+              so the wash always shows through, even scrolled. */}
+          <motion.div className="pointer-events-none absolute inset-0 -z-10 bg-white" style={{ opacity: pillAlpha }} aria-hidden="true" />
+
           {/* water current along the pill's lower edge */}
           <div className="header-water pointer-events-none absolute inset-x-6 bottom-0 h-px" aria-hidden="true" />
 
@@ -189,9 +202,9 @@ export function Header() {
                   className={cn(
                     // tap-target-y: an iPad Pro is wide enough for the desktop nav
                     // but is still finger-driven, so these need the 44px height.
-                    "tap-target-y flex items-center rounded-full px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-all duration-200",
-                    tone.bg, tone.text, tone.hover,
-                    active && cn("ring-1", tone.ring)
+                    "tap-target-y flex items-center rounded-full border px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide backdrop-blur-sm transition-all duration-200",
+                    tone.bg, tone.border, tone.text, tone.hover,
+                    active && "shadow-sm"
                   )}
                 >
                   {l.label}

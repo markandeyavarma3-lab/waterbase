@@ -455,6 +455,8 @@
   .motion-panel,
   .motion-marquee { animation: none !important; }
 
+  .header-wash { animation: none !important; background-position: 30% 50%; }
+
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.
      Killing the animation without restoring the transform would leave the bar
      permanently invisible, so it is reset explicitly rather than just stopped. */
@@ -789,6 +791,28 @@
       var(--color-brand-green-soft) 0%,
       color-mix(in srgb, var(--color-tint-field) 60%, var(--color-tint-sun) 40%) 100%
     );
+  }
+
+  /* Header pill wash — the same idea as the "Planning a project" CTA panel's
+     fading gradient (green → white → blue), extended to all four section
+     hues and slowed down into a persistent header. This sits BEHIND the
+     scroll-driven white wash (see header.tsx), so the bar is never a flat
+     colour at any scroll position — the white layer only ever veils it,
+     topping out under full opacity. */
+  .header-wash {
+    background-image: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--color-brand-blue-soft) 75%, white 25%) 0%,
+      color-mix(in srgb, var(--color-brand-green-soft) 75%, white 25%) 34%,
+      color-mix(in srgb, var(--color-brand-soil-soft) 75%, white 25%) 67%,
+      color-mix(in srgb, var(--color-brand-sun-soft) 75%, white 25%) 100%
+    );
+    background-size: 240% 240%;
+    animation: header-wash-drift 42s var(--ease-in-out-soft) infinite;
+  }
+  @keyframes header-wash-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   /* Header water line — see the header-current keyframes. Deliberately faint:
