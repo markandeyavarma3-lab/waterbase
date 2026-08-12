@@ -24,18 +24,25 @@ type Tone =
   | "muted" | "brand"
   | "brand-dark" | "brand-deep";
 
+/**
+ * Each tone also sets a `tone-*` class. That does not paint anything itself —
+ * it declares the --card-edge / --card-cast variables that `.surface-card`
+ * descendants inherit, so a card's border and shadow pick up the hue of
+ * whatever section it happens to sit in, without any card needing to know
+ * where it is.
+ */
 const toneClass: Record<Tone, string> = {
-  default: "bg-white",
-  sky: "bg-tint-sky",
-  field: "bg-tint-field",
-  soil: "bg-tint-soil",
-  sun: "bg-tint-sun",
+  default: "bg-white tone-plain",
+  sky: "bg-tint-sky tone-sky",
+  field: "bg-tint-field tone-field",
+  soil: "bg-tint-soil tone-soil",
+  sun: "bg-tint-sun tone-sun",
   // back-compat aliases
-  muted: "bg-tint-sky",
-  brand: "bg-tint-field",
+  muted: "bg-tint-sky tone-sky",
+  brand: "bg-tint-field tone-field",
   // dark sections keep their weight, for rhythm against all of the above
-  "brand-dark": "bg-brand-green-deep text-white",
-  "brand-deep": "bg-brand-green-deeper text-white",
+  "brand-dark": "bg-brand-green-deep text-white tone-plain",
+  "brand-deep": "bg-brand-green-deeper text-white tone-plain",
 };
 
 export function Section({ tone = "default", id, className, children }: { tone?: Tone; id?: string; className?: string; children: ReactNode }) {

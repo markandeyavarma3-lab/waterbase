@@ -32,7 +32,7 @@ export function InteractiveCard({ children, className, glow = true }: { children
       whileTap={{ y: -2 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       className={cn(
-        "group card-shine relative h-full overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-[box-shadow,border-color] duration-300 ease-out-expo hover:border-brand-green/40 hover:shadow-lift",
+        "group card-shine surface-card relative h-full overflow-hidden rounded-2xl",
         className
       )}
     >

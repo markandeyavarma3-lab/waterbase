@@ -134,17 +134,17 @@
   --color-stone-200: #E9E1D5;
 
   /* Graphite/steel — the default structural neutral (industrial, not warm-paper) */
-  --color-graphite-950: #0F1316;
-  --color-graphite-900: #171B1E;
-  --color-graphite-700: #2E3438;
-  --color-graphite-500: #5C6569;
-  --color-graphite-300: #A6ADB0;
-  --color-graphite-100: #E7EAEB;
-  --color-graphite-50: #F4F5F6;
+  --color-graphite-950: #0B1A20;
+  --color-graphite-900: #123C46;
+  --color-graphite-700: #24505C;
+  --color-graphite-500: #52707A;
+  --color-graphite-300: #A2B5BB;
+  --color-graphite-100: #E2EBEE;
+  --color-graphite-50: #F1F7F9;
 
   /* Crisp, cool-tinted shadows — a defined edge, not a soft warm glow */
-  --shadow-soft: 0 1px 2px rgba(15, 19, 22, 0.06), 0 2px 6px rgba(15, 19, 22, 0.08);
-  --shadow-lift: 0 1px 3px rgba(15, 19, 22, 0.10), 0 8px 20px rgba(15, 19, 22, 0.14);
+  --shadow-soft: 0 1px 2px rgba(18, 60, 70, 0.06), 0 2px 6px rgba(18, 60, 70, 0.07);
+  --shadow-lift: 0 1px 3px rgba(18, 60, 70, 0.09), 0 8px 20px rgba(18, 60, 70, 0.12);
 
   /* ── Motion system ────────────────────────────────────────────
      One easing curve and one timing scale for the whole site. The
@@ -170,23 +170,23 @@
   /* Tight, machined corner radius — cascades to every card/button/input via calc() above */
   --radius: 0.3125rem;
 
-  --background: #F4F5F6;
-  --foreground: #171B1E;
+  --background: #FAFCFC;
+  --foreground: #123C46;
   --card: #FFFFFF;
-  --card-foreground: #171B1E;
+  --card-foreground: #123C46;
   --popover: #FFFFFF;
-  --popover-foreground: #171B1E;
+  --popover-foreground: #123C46;
   --primary: #2E9466;
   --primary-foreground: #FFFFFF;
-  --secondary: #E7EAEB;
-  --secondary-foreground: #171B1E;
-  --muted: #F4F5F6;
-  --muted-foreground: #5C6569;
+  --secondary: #E7EFF1;
+  --secondary-foreground: #123C46;
+  --muted: #F1F7F9;
+  --muted-foreground: #52707A;
   --accent: #E7F3EC;
   --accent-foreground: #1F6A49;
   --destructive: #C0392B;
-  --border: #E7EAEB;
-  --input: #DDE1E2;
+  --border: #E2EBEE;
+  --input: #D6E3E7;
   --ring: #2E9466;
 
   /* Charts — full brand palette */
@@ -665,6 +665,43 @@
       animation: none !important;
     }
   }
+
+  /* ── Card surface ─────────────────────────────────────────────
+     Cards stay WHITE so they always lift off the tinted ground, but their
+     border and shadow are tinted to whichever section they sit in. That is what
+     makes a card feel like it belongs to its section rather than being pasted
+     on: the hue carries through the edge and the shadow, not the fill. A tinted
+     FILL would not work here — the sections are already at 97-99% lightness, so
+     a tinted card would sink into them instead of lifting.
+
+     Defaults are the water tint; each .tone-* below overrides them. */
+  .surface-card {
+    --card-edge: rgba(31, 99, 118, 0.11);
+    --card-cast: rgba(31, 99, 118, 0.07);
+    background-color: #fff;
+    border: 1px solid var(--card-edge);
+    box-shadow: 0 1px 2px var(--card-cast), 0 8px 22px var(--card-cast);
+    transition:
+      transform var(--dur-quick) var(--ease-out-soft),
+      box-shadow var(--dur-quick) var(--ease-out-soft),
+      border-color var(--dur-quick) var(--ease-out-soft);
+  }
+  /* Lift is desktop-only: a hover transform that fires on tap and then sticks
+     is worse than no hover at all on a phone. */
+  @media (hover: hover) and (pointer: fine) {
+    .surface-card:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--card-edge) 170%, transparent);
+      box-shadow: 0 2px 4px var(--card-cast), 0 16px 36px var(--card-cast);
+    }
+  }
+
+  /* Section tone -> the tint its cards inherit */
+  .tone-sky   { --card-edge: rgba(31, 99, 118, 0.12); --card-cast: rgba(31, 99, 118, 0.08); }
+  .tone-field { --card-edge: rgba(46, 148, 102, 0.13); --card-cast: rgba(46, 148, 102, 0.08); }
+  .tone-soil  { --card-edge: rgba(160, 110, 69, 0.14); --card-cast: rgba(160, 110, 69, 0.08); }
+  .tone-sun   { --card-edge: rgba(196, 145, 60, 0.14); --card-cast: rgba(196, 145, 60, 0.08); }
+  .tone-plain { --card-edge: rgba(31, 99, 118, 0.10); --card-cast: rgba(31, 99, 118, 0.06); }
 
   /* Sunrise ground — the hero and page tops. Sky at the top through crop green
      to warm soil at the bottom, so the page opens the way a watered field looks

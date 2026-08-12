@@ -120,7 +120,7 @@ export default function ServicesPage() {
               <Reveal delay={120}>
                 <div className="mt-8 grid grid-cols-3 gap-4">
                   {team.map((t) => (
-                    <div key={t.label} className="rounded-2xl border border-border bg-card p-4 text-center shadow-soft">
+                    <div key={t.label} className="surface-card rounded-2xl p-4 text-center">
                       <p className="font-display text-2xl font-extrabold text-brand-green md:text-3xl">{t.value}</p>
                       <p className="mt-1 text-xs text-muted-foreground">{t.label}</p>
                     </div>
@@ -132,7 +132,7 @@ export default function ServicesPage() {
               </Reveal>
             </div>
             <Reveal delay={120}>
-              <div className="rounded-2xl border border-border bg-card p-6 shadow-soft md:p-8">
+              <div className="surface-card rounded-2xl p-6 md:p-8">
                 <ul className="grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
                   {scope.map((s) => (
                     <li key={s} className="flex items-start gap-2.5">

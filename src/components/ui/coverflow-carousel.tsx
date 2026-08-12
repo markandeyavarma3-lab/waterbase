@@ -66,7 +66,7 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
               aria-roledescription="slide"
               aria-label={`${index + 1} of ${items.length}: ${item.name}`}
               aria-hidden={!isCenter}
-              className="absolute flex h-40 w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-card px-6 shadow-soft sm:h-44 sm:w-64"
+              className="surface-card absolute flex h-40 w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl px-6 sm:h-44 sm:w-64"
               initial={false}
               animate={{
                 x,

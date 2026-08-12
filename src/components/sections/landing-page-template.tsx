@@ -108,7 +108,7 @@ export function LandingPageTemplate({
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((p, i) => (
               <Reveal key={p.name} delay={i * 60}>
-                <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-lift">
+                <div className="group surface-card h-full rounded-2xl p-6">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors group-hover:bg-brand-green group-hover:text-white">
                     <p.icon className="h-6 w-6" />
                   </span>
