@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Search, Download, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Download, Loader2, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { LEAD_STATUSES, REQUIREMENT_OPTIONS, type Lead, type LeadStatus } from "@/lib/leads";
-import { updateLeadStatus } from "@/lib/actions/leads";
+import { updateLeadStatus, updateLeadNotes } from "@/lib/actions/leads";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -12,6 +12,69 @@ const PAGE_SIZE = 25;
 
 function requirementLabel(value: string) {
   return REQUIREMENT_OPTIONS.find((o) => o.value === value)?.label ?? value;
+}
+
+/**
+ * Escapes one cell for CSV.
+ *
+ * Beyond the usual quote-doubling, this neutralises formula injection: Excel and
+ * Google Sheets execute any cell whose text begins with = + - @ (or a leading
+ * tab/carriage return). `name` and `location` arrive from a public, unauthenticated
+ * form, so without this a lead submitted as `=HYPERLINK(...)` would run as a live
+ * formula the moment the owner opened their own export. A leading apostrophe
+ * forces the spreadsheet to treat the value as literal text.
+ */
+function csvCell(raw: unknown): string {
+  const text = String(raw ?? "");
+  const guarded = /^[=+\-@\t\r]/.test(text) ? `'${text}` : text;
+  return `"${guarded.replace(/"/g, '""')}"`;
+}
+
+/** Inline notes editor — saves on blur, so there is no button to forget to press. */
+function NotesCell({ lead }: { lead: Lead }) {
+  const [value, setValue] = useState(lead.admin_notes ?? "");
+  const [saving, setSaving] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
+  const saved = useRef(lead.admin_notes ?? "");
+
+  // Clear the tick without leaving a timer running if the row unmounts first.
+  useEffect(() => {
+    if (!justSaved) return;
+    const t = setTimeout(() => setJustSaved(false), 1600);
+    return () => clearTimeout(t);
+  }, [justSaved]);
+
+  async function commit() {
+    const next = value.trim();
+    if (next === saved.current) return;
+    setSaving(true);
+    const result = await updateLeadNotes(lead.id, next);
+    setSaving(false);
+    if (result.ok) {
+      saved.current = next;
+      setValue(next);
+      setJustSaved(true);
+    }
+  }
+
+  return (
+    <div className="relative">
+      <textarea
+        aria-label={`Notes for ${lead.name}`}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={commit}
+        rows={2}
+        placeholder="Add a note…"
+        className="w-full min-w-[13rem] resize-y rounded-md border border-input bg-transparent px-2 py-1.5 text-xs leading-relaxed placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      />
+      {saving ? (
+        <Loader2 className="absolute right-2 top-2 h-3.5 w-3.5 animate-spin text-muted-foreground" />
+      ) : justSaved ? (
+        <Check className="absolute right-2 top-2 h-3.5 w-3.5 text-brand-green" aria-label="Saved" />
+      ) : null}
+    </div>
+  );
 }
 
 function statusClasses(status: string) {
@@ -57,10 +120,12 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
   }
 
   function exportCsv() {
-    const header = ["Date", "Name", "Mobile", "Location", "Land Size", "Requirement", "Status"];
-    const rows = filtered.map((l) => [new Date(l.created_at).toLocaleString("en-IN"), l.name, l.mobile, l.location ?? "", l.land_size ?? "", requirementLabel(l.requirement), l.status]);
-    const csv = [header, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
+    const header = ["Date", "Name", "Mobile", "Location", "Land Size", "Requirement", "Status", "Notes"];
+    const rows = filtered.map((l) => [new Date(l.created_at).toLocaleString("en-IN"), l.name, l.mobile, l.location ?? "", l.land_size ?? "", requirementLabel(l.requirement), l.status, l.admin_notes ?? ""]);
+    // The BOM makes Excel read the file as UTF-8, so Telugu names and the ₹ sign
+    // survive the round trip instead of arriving as mojibake.
+    const csv = "﻿" + [header, ...rows].map((r) => r.map(csvCell).join(",")).join("\r\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -92,7 +157,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
       {/* 7 columns can't compress into a phone without the cells turning into
           one-word-per-line mush — scroll the table instead of squashing it. */}
       <div className="scroll-touch mt-4 overflow-x-auto rounded-xl border border-border">
-        <table className="w-full min-w-[820px] text-sm">
+        <table className="w-full min-w-[1040px] text-sm">
           <thead className="bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>
               <th className="px-4 py-3 font-semibold">Date</th>
@@ -102,12 +167,13 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
               <th className="px-4 py-3 font-semibold">Land Size</th>
               <th className="px-4 py-3 font-semibold">Requirement</th>
               <th className="px-4 py-3 font-semibold">Status</th>
+              <th className="px-4 py-3 font-semibold">Notes</th>
             </tr>
           </thead>
           <tbody>
             {visible.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-muted-foreground">No leads found.</td>
+                <td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">No leads found.</td>
               </tr>
             ) : (
               visible.map((l) => (
@@ -130,6 +196,9 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
                       </select>
                       {pending && updatingId === l.id ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" /> : null}
                     </div>
+                  </td>
+                  <td className="px-4 py-3 align-top">
+                    <NotesCell lead={l} />
                   </td>
                 </tr>
               ))
