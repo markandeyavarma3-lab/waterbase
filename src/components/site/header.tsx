@@ -15,23 +15,6 @@ import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
 import { NAV_LINKS } from "@/lib/nav";
 
-// Fixed pill colour per nav-link tone — always visible, not just on
-// hover/active, so the bar itself carries colour rather than being plain
-// text until you touch it. Translucent fill + border + blur, same recipe as
-// the WhatsApp/callback buttons on the "Planning a project" CTA panel
-// (bg-brand-*/15, border-brand-*/25, backdrop-blur-sm) — a faded wash, not a
-// flat block.
-// Text uses each tone's DARKEST variant, not -dark — the pill fill is
-// strong enough now (and sits on top of the coloured .header-wash) that the
-// regular -dark tokens measured under 4.5:1 at rest scroll position. Checked
-// against the worst case (top of page, least-veiled, most saturated pill).
-const NAV_TONE = {
-  blue: { bg: "bg-brand-blue/24", border: "border-brand-blue/40", text: "text-brand-blue-deep", hover: "hover:bg-brand-blue/34" },
-  green: { bg: "bg-brand-green/24", border: "border-brand-green/40", text: "text-brand-green-darker", hover: "hover:bg-brand-green/34" },
-  soil: { bg: "bg-brand-soil/24", border: "border-brand-soil/40", text: "text-brand-soil-darker", hover: "hover:bg-brand-soil/34" },
-  sun: { bg: "bg-brand-sun/30", border: "border-brand-sun/44", text: "text-brand-sun-darker", hover: "hover:bg-brand-sun/40" },
-} as const;
-
 export function Header() {
   const [open, setOpen] = useState(false);
   const [logoRun, setLogoRun] = useState(0);
@@ -53,16 +36,10 @@ export function Header() {
   const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
   const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
   const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
-  // Frosted WHITE, not a dark slab. The hero is a light gradient, so the bar
-  // belongs to it rather than sitting on top of it. Separation comes from a soft
-  // shadow and a faint border, not from a colour jump — which is what keeps it
-  // findable without turning it into a block. This white layer is a VEIL over
-  // the green/white/blue wash beneath it, not the pill's only colour — starts
-  // low so the green/blue edges of the wash stay visible at rest, and caps
-  // at 0.65 (not 1) so they're never fully hidden, even scrolled.
-  const pillAlpha = useTransform(settle, [0, 120], [0.15, 0.65], { clamp: true });
-  const pillShadow = useTransform(settle, [0, 120], [0.07, 0.13], { clamp: true });
-  const pillGlow = useMotionTemplate`0 10px 30px rgba(18, 60, 70, ${pillShadow})`;
+  // Soft shadow only — no white veil. The bar uses the same living mesh as the
+  // homepage so it reads as part of the page, not a solid slab on top.
+  const pillShadow = useTransform(settle, [0, 120], [0.06, 0.12], { clamp: true });
+  const pillGlow = useMotionTemplate`0 10px 28px rgba(18, 60, 70, ${pillShadow})`;
 
   useEffect(() => {
     const onScroll = () => {
@@ -109,24 +86,9 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-brand-green/20 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
+          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-water-deep/10 bg-sunrise living-mesh-b px-4 sm:gap-4 sm:px-5"
           style={{ height: barHeight, boxShadow: pillGlow }}
         >
-          {/* Colour wash — the same gradient the "Planning a project" CTA
-              panel uses (green-soft → white → blue-soft, diagonal), oversized
-              and drifting the same way that panel now does (see globals.css —
-              panel-drift/panel-sheen were referenced by name there but never
-              actually defined; fixed centrally, both panels move for real now). */}
-          <div
-            className="motion-panel pointer-events-none absolute -inset-[20%] -z-20 bg-gradient-to-br from-brand-green-soft via-white to-brand-blue-soft will-change-transform"
-            style={{ animation: "panel-drift 26s var(--ease-in-out-soft) infinite" }}
-            aria-hidden="true"
-          />
-          {/* Scroll-driven white veil on top of the wash — this is what makes
-              the bar read as "frosted white", but it caps below full opacity
-              so the wash always shows through, even scrolled. */}
-          <motion.div className="pointer-events-none absolute inset-0 -z-10 bg-white" style={{ opacity: pillAlpha }} aria-hidden="true" />
-
           {/* water current along the pill's lower edge */}
           <div className="header-water pointer-events-none absolute inset-x-6 bottom-0 h-px" aria-hidden="true" />
 
@@ -192,7 +154,7 @@ export function Header() {
               <Wordmark
                 key={logoRun}
                 animate={atTop}
-                className="font-[family-name:var(--font-logo)] text-[clamp(1rem,4.2vw,1.35rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
+                className="font-[family-name:var(--font-logo)] text-[clamp(1.15rem,4.8vw,1.65rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
               />
             </Link>
           </div>
@@ -202,20 +164,19 @@ export function Header() {
               itself is never a flat row of plain text — same idea as the
               coloured WhatsApp / callback pills on the "Planning a project"
               CTA panel, applied to navigation. */}
-          <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
-            {NAV_LINKS.map((l) => {
+          <nav aria-label="Main navigation" className="hidden items-center gap-1.5 lg:flex">
+            {NAV_LINKS.map((l, i) => {
               const active = isActive(l.href);
-              const tone = NAV_TONE[l.tone];
               return (
                 <Link
                   key={l.href}
                   href={l.href}
                   className={cn(
-                    // tap-target-y: an iPad Pro is wide enough for the desktop nav
-                    // but is still finger-driven, so these need the 44px height.
-                    "tap-target-y flex items-center rounded-full border px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide backdrop-blur-sm transition-all duration-200",
-                    tone.bg, tone.border, tone.text, tone.hover,
-                    active && "shadow-sm"
+                    "nav-pill tap-target-y flex items-center rounded-full border px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-shadow duration-200",
+                    i % 3 === 0 && "living-mesh-a",
+                    i % 3 === 1 && "living-mesh-b",
+                    i % 3 === 2 && "living-mesh-c",
+                    active && "nav-pill-active shadow-sm"
                   )}
                 >
                   {l.label}

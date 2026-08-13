@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Logo } from "@/lib/logos";
 import { cn } from "@/lib/utils";
 
-const AUTOPLAY_MS = 2000;
+const AUTOPLAY_MS = 3800;
 
 export function CoverflowCarousel({ items }: { items: Logo[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -44,38 +44,41 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
           let diff = index - activeIndex;
           const half = items.length / 2;
 
-          // Wrap around logic so the array is circular
+          // Wrap around so the deck is circular.
           if (diff < -half) diff += items.length;
           if (diff > half) diff -= items.length;
 
           const isVisible = Math.abs(diff) <= 1;
           const isCenter = diff === 0;
 
-          const scale = isCenter ? 1.15 : 0.85;
-          const opacity = isVisible ? (isCenter ? 1 : 0.6) : 0;
-          const blur = isVisible ? (isCenter ? "0px" : "4px") : "10px";
-          const zIndex = isVisible ? (isCenter ? 20 : 10) : 0;
-
-          // Use percentage of its own width for X translation
-          const x = `${diff * 115}%`;
+          // Cards are anchored at left:50%. x must include -50% so the center
+          // card is truly centered — without that, every card sat on the left
+          // edge and the coverflow looked broken.
+          const x = `calc(-50% + ${diff * 118}%)`;
 
           return (
             <motion.div
-              key={index}
+              key={item.src}
               role="group"
               aria-roledescription="slide"
               aria-label={`${index + 1} of ${items.length}: ${item.name}`}
               aria-hidden={!isCenter}
-              className="surface-card absolute flex h-40 w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl px-6 sm:h-44 sm:w-64"
+              className="surface-card absolute left-1/2 top-1/2 flex h-40 w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl px-6 sm:h-44 sm:w-64"
               initial={false}
               animate={{
                 x,
-                scale,
-                opacity,
-                filter: `blur(${blur})`,
-                zIndex,
+                y: "-50%",
+                scale: isCenter ? 1.12 : 0.88,
+                opacity: isVisible ? (isCenter ? 1 : 0.55) : 0,
+                filter: isVisible ? (isCenter ? "blur(0px)" : "blur(2px)") : "blur(8px)",
+                zIndex: isVisible ? (isCenter ? 20 : 10) : 0,
               }}
-              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 260, damping: 28, mass: 0.7 }
+              }
+              style={{ pointerEvents: isVisible ? "auto" : "none" }}
             >
               <div className="relative h-16 w-full sm:h-20">
                 <Image src={item.src} alt={item.name} fill sizes="256px" className="object-contain" />
@@ -97,12 +100,10 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
             <ChevronLeft className="h-4 w-4" />
           </button>
 
-          {/* The dot is 6px tall, which is untappable on its own — so the button
-              is a transparent 44px-tall hit area with the dot drawn inside it. */}
           <div className="flex items-center" role="tablist" aria-label="Select company">
             {items.map((item, i) => (
               <button
-                key={i}
+                key={item.src}
                 type="button"
                 role="tab"
                 aria-selected={i === activeIndex}

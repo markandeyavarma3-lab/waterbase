@@ -68,30 +68,33 @@ Each has Call Now + WhatsApp + callback form above the fold, plus a mobile stick
 - `/ksb-pumps`
 
 ### Conversion tracking — how it works
-All conversion events live in `src/lib/analytics.ts` and fire through the Google Ads tag:
+All conversion events live in `src/lib/analytics.ts` and fire through the Google Ads tag.
+The three events are **fully wired in code** and configured entirely through environment variables —
+you never need to edit `analytics.ts` to change a conversion.
 
-| Conversion | Event name | Fires when | Status |
-|------------|-----------|-----------|--------|
-| WhatsApp click | `ads_conversion_Contact_Us_1` | Any WhatsApp link clicked (tracked site-wide) | ✅ Working |
-| Form submit | `ads_conversion_Form_1` | `/thank-you` page loads after a form submit | ✅ Working |
-| Phone call (Call Now) | `ads_conversion_Call_1` | Any "Call Now" button clicked on a landing page | ⚠️ **Placeholder name — needs real value** |
+| Conversion | Fires when | Configured by |
+|------------|-----------|---------------|
+| Phone call | Any "Call Now" button clicked (all 6 landing pages + mobile sticky bar) | `NEXT_PUBLIC_ADS_CALL_LABEL` / `_EVENT` |
+| WhatsApp click | Any WhatsApp link clicked, anywhere on the site | `NEXT_PUBLIC_ADS_CONTACT_LABEL` / `_EVENT` |
+| Form submit | `/thank-you` loads after a real form submit (once per submission) | `NEXT_PUBLIC_ADS_FORM_LABEL` / `_EVENT` |
 
-The "Call Now" buttons are **already wired** to fire `trackCallClick()` everywhere they appear
-(both CTAs on all 5 landing pages + the mobile sticky call bar). The code is complete.
+Google gives you **one of two things** per conversion action, depending on the snippet it shows:
 
-### ⚠️ PENDING TASK — finish phone-call conversion tracking
-Right now `trackCallClick()` in `src/lib/analytics.ts` fires a **placeholder** event name
-(`ads_conversion_Call_1`). Google Ads will only count phone-call conversions if this name **exactly
-matches** the event name Google generates for the real conversion action. Until this is fixed,
-roughly **65% of conversions (phone calls) are invisible to Google Ads.**
+- a **label** like `AbC-D_efGhIjKlMnOp` → put it in the `*_LABEL` variable
+- an **event name** like `ads_conversion_Call_1` → put it in the `*_EVENT` variable
 
-**To finish:**
-1. In Google Ads → **Goals → Conversions → + New conversion action → Website**.
-2. Create one for **"Calls to a phone number on your website"** (tracks `tel:` Call Now clicks).
-3. Copy the **exact event name** from the tag snippet it gives you (looks like
-   `gtag('event', 'ads_conversion_Call_Now_1', ...)`).
-4. Paste that name into `trackCallClick()` in `src/lib/analytics.ts`, replacing `ads_conversion_Call_1`.
-5. `npm run build`, then commit & push.
+Set whichever one you were given and leave the other blank. If both are set, the label wins.
+If **neither** is set, the code falls back to a placeholder event name that Google Ads will
+**not** count — and warns about it in the dev console.
+
+> These are `NEXT_PUBLIC_*` variables, so they are baked in at **build time**. After changing them
+> you must redeploy, and they must be set in **Vercel → Settings → Environment Variables**, not just
+> in `.env.local`.
+
+### ⚠️ PENDING — create the conversion actions in Google Ads
+The code is done; the values are not filled in yet. Until you create the three conversion actions
+in Google Ads and paste their values into Vercel, **phone calls (~65% of your conversions) are still
+not counted.** See `docs/google-ads-conversions.md` for the click-by-click walkthrough.
 
 ---
 
@@ -99,11 +102,12 @@ roughly **65% of conversions (phone calls) are invisible to Google Ads.**
 
 | File | Purpose |
 |------|---------|
-| `src/lib/site-config.ts` | All business data — phone, email, addresses, WhatsApp. **Never hardcode these elsewhere.** |
-| `src/lib/analytics.ts` | Google Ads conversion events (call / form / WhatsApp) |
+| `src/lib/site-config.ts` | All business data — phone, email, addresses, WhatsApp, stats, Ads ID. **Never hardcode these elsewhere.** |
+| `src/lib/analytics.ts` | Google Ads conversion events (call / form / WhatsApp), driven by env vars |
 | `src/lib/leads.ts` | Lead form schema (validation) + admin status list |
+| `src/lib/admin-auth.ts` | Who may access `/admin` — email allowlist, **fails closed** |
 | `src/lib/notify.ts` | Resend email notification for new leads |
-| `src/app/admin/` | Leads dashboard (Supabase auth) |
+| `src/app/admin/` | Leads dashboard (Supabase auth + allowlist) |
 | `src/app/layout.tsx` | Analytics tags (GA4 ×2, Google Ads, Vercel) |
 | `src/components/site/contact-actions.tsx` | Call Now / WhatsApp / callback buttons |
 | `src/components/site/sticky-call-bar.tsx` | Mobile sticky Call/WhatsApp bar on landing pages |
@@ -112,11 +116,18 @@ roughly **65% of conversions (phone calls) are invisible to Google Ads.**
 
 | Variable | Purpose |
 |----------|---------|
-| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase client (lead form, admin) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Admin dashboard reads all leads |
+| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase client (lead form, admin). The newer `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` name also works |
+| `SUPABASE_SERVICE_ROLE_KEY` | Admin dashboard reads all leads. The newer `SUPABASE_SECRET_KEY` name also works |
+| **`ADMIN_EMAILS`** | **Required.** Comma-separated emails allowed into `/admin`. Unset = nobody gets in |
 | `RESEND_API_KEY` | Lead email alerts (optional — leads still save without it) |
 | `LEAD_NOTIFICATION_EMAIL` | Where lead alert emails go (falls back to business email) |
 | `LEAD_FROM_EMAIL` | "From" address for lead alert emails |
+| `NEXT_PUBLIC_ADS_*_LABEL` / `_EVENT` | Google Ads conversion values — see the conversion tracking section above |
+
+> ⚠️ `ADMIN_EMAILS` **must be set in Vercel before this branch is merged**, or the live
+> dashboard will lock you out. Being signed in is no longer sufficient on its own: the dashboard
+> reads leads with the service-role key, which bypasses row-level security, so the allowlist is
+> the only thing protecting customer names and phone numbers.
 
 ---
 

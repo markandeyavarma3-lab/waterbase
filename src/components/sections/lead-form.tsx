@@ -24,6 +24,19 @@ const slideVariants = {
   exit: (dir: number) => ({ x: dir > 0 ? -32 : 32, opacity: 0 }),
 };
 
+/**
+ * A throwaway id identifying one submission. Only needs to be unique within a
+ * browser session, not unguessable — randomUUID is used when available purely
+ * because it is there, with a plain random string for older/insecure contexts
+ * where it is not exposed.
+ */
+function submissionToken(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 /** Wraps a field so it gently shakes whenever a new validation error appears on it. */
 function ShakeField({ error, children }: { error?: string; children: ReactNode }) {
   const controls = useAnimation();
@@ -70,7 +83,11 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
     const result = await submitLead({ ...values, company: honeypotRef.current?.value ?? "" });
     if (result.ok) {
       form.reset();
-      router.push("/thank-you?ref=lead");
+      // The token makes /thank-you able to tell a fresh submission from a reload
+      // or a shared link, so the Google Ads form conversion is counted exactly
+      // once per submission. A second genuine submission gets a new token and is
+      // counted again, which a plain "already fired" flag would have swallowed.
+      router.push(`/thank-you?ref=lead&s=${submissionToken()}`);
     } else {
       setServerError(result.message);
     }

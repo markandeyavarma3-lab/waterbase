@@ -53,15 +53,15 @@ export function Wordmark({
         className="pointer-events-none absolute -top-[0.15em] left-[0.06em] z-10 inline-flex h-[0.74em] w-[0.74em] items-center justify-center"
         aria-hidden="true"
       >
-        <span className="logo-ripple absolute inset-[-0.18em] rounded-full border border-brand-blue/70" />
+        <span className="logo-ripple absolute inset-[-0.18em] rounded-full border border-[#5BB8E8]/80" />
         {/* origin-bottom so the squash reads as landing, not shrinking */}
         <svg viewBox="0 0 24 24" className="logo-drop h-full w-full origin-bottom" fill="none">
           <path
             d="M12 1.8c0 0 7.4 7.6 7.4 12.6A7.4 7.4 0 0 1 12 21.8a7.4 7.4 0 0 1-7.4-7.4C4.6 9.4 12 1.8 12 1.8Z"
-            fill="var(--color-brand-blue)"
+            fill="#5BB8E8"
           />
           {/* specular dot so it reads as liquid rather than a flat blob */}
-          <ellipse cx="9.4" cy="14.6" rx="1.5" ry="2.1" fill="#fff" fillOpacity="0.7" />
+          <ellipse cx="9.4" cy="14.6" rx="1.5" ry="2.1" fill="#fff" fillOpacity="0.75" />
         </svg>
       </span>
 

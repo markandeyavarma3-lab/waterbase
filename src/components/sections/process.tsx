@@ -88,12 +88,12 @@ export function Process() {
       <div className="sticky top-20 z-30 mb-6 flex justify-center">
         <motion.span
           layout
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-card/90 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-soft backdrop-blur"
+          className="inline-flex items-center gap-2 rounded-full sink-panel living-mesh-b px-3.5 py-1.5 text-xs font-semibold text-foreground"
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         >
           {/* Steady dot — the old one looped an animate-ping right next to a
               number that changes, which read as two competing signals. */}
-          <span className="relative inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green shadow-[0_0_0_3px_rgba(46,148,102,0.16)]" />
+          <span className="relative inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-[#5BB8E8] shadow-[0_0_0_3px_rgba(91,184,232,0.2)]" />
           <span className="tabular-nums">
             Step{" "}
             {/* The digit swaps with a small vertical roll so the change is
@@ -117,31 +117,22 @@ export function Process() {
         </motion.span>
       </div>
 
-      {/* rail track */}
-      <span className="pointer-events-none absolute left-8 top-8 bottom-8 w-1 -translate-x-1/2 rounded-full bg-border md:left-1/2" aria-hidden="true" />
-      {/* rail fill — follows scroll */}
+      {/* canal bank */}
+      <span className="process-canal-bank pointer-events-none absolute left-8 top-8 bottom-8 w-2.5 -translate-x-1/2 rounded-full md:left-1/2" aria-hidden="true" />
+      {/* canal water — fills with scroll, flows like water in a channel */}
       <motion.span
-        className="pointer-events-none absolute left-8 top-8 w-1 -translate-x-1/2 overflow-hidden rounded-full bg-gradient-to-b from-brand-green via-brand-green-light to-brand-blue md:left-1/2"
+        className="process-canal-water pointer-events-none absolute left-8 top-8 w-2.5 -translate-x-1/2 overflow-hidden rounded-full md:left-1/2"
         style={{ height: railHeight }}
         aria-hidden="true"
-      >
-        {/* flowing shimmer — reads as water moving down the filled rail */}
-        <span
-          className="motion-flow absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: "repeating-linear-gradient(180deg, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.9) 4px, transparent 4px, transparent 16px)",
-            animation: "flow-dash 700ms linear infinite",
-          }}
-        />
-      </motion.span>
-      {/* traveling signal pulse — marks exactly how far the rail has filled */}
+      />
+      {/* traveling water tip */}
       <motion.span
         className="pointer-events-none absolute left-8 z-20 -translate-x-1/2 -translate-y-1/2 md:left-1/2"
         style={{ top: pulseTop, opacity: pulseOpacity }}
         aria-hidden="true"
       >
-        <span className="absolute inset-0 -m-2 animate-ping rounded-full bg-brand-glow/50 [animation-duration:1.6s]" />
-        <span className="relative block h-2.5 w-2.5 rounded-full bg-brand-glow shadow-[0_0_10px_3px_rgba(79,224,196,0.7)]" />
+        <span className="absolute inset-0 -m-2 animate-ping rounded-full bg-[#5BB8E8]/45 [animation-duration:1.6s]" />
+        <span className="relative block h-2.5 w-2.5 rounded-full bg-[#5BB8E8] shadow-[0_0_10px_3px_rgba(91,184,232,0.65)]" />
       </motion.span>
 
       <ol className="relative">
@@ -162,9 +153,16 @@ export function Process() {
                 transition={{ type: "spring", stiffness: 260, damping: 18 }}
               >
                 {/* glow */}
-                <span className={cn("absolute inset-0 rounded-full bg-brand-green/30 blur-md transition-opacity duration-500", active ? "opacity-100" : "opacity-0")} aria-hidden="true" />
-                {/* disc */}
-                <span className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand-green to-brand-green-dark text-white shadow-lift ring-4 ring-background">
+                <span className={cn("absolute inset-0 rounded-full bg-[#5BB8E8]/30 blur-md transition-opacity duration-500", active ? "opacity-100" : "opacity-0")} aria-hidden="true" />
+                {/* disc — sky-blue water node, cycles lightly with the mesh */}
+                <span
+                  className={cn(
+                    "process-node relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full text-white shadow-lift ring-4 ring-background",
+                    i % 3 === 0 && "living-mesh-a",
+                    i % 3 === 1 && "living-mesh-b",
+                    i % 3 === 2 && "living-mesh-c"
+                  )}
+                >
                   <AnimatePresence mode="wait" initial={false}>
                     {completed ? (
                       <motion.span
@@ -189,7 +187,14 @@ export function Process() {
                   </AnimatePresence>
                 </span>
                 {/* number badge */}
-                <span className="absolute -right-0.5 -top-1 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-graphite-900 font-display text-[11px] font-extrabold text-white shadow-soft ring-2 ring-background">
+                <span
+                  className={cn(
+                    "process-node-badge absolute -right-0.5 -top-1 z-10 flex h-6 w-6 items-center justify-center rounded-full font-display text-[11px] font-extrabold shadow-soft ring-2 ring-background",
+                    i % 3 === 0 && "living-mesh-a",
+                    i % 3 === 1 && "living-mesh-b",
+                    i % 3 === 2 && "living-mesh-c"
+                  )}
+                >
                   {i + 1}
                 </span>
               </motion.span>
@@ -204,7 +209,16 @@ export function Process() {
                 animate={active ? { opacity: 1, x: 0, scale: 1, rotateY: 0 } : { opacity: 0, x: left ? -16 : 16, scale: 0.96, rotateY: left ? 6 : -6 }}
                 transition={{ type: "spring", stiffness: 220, damping: 24 }}
               >
-                <InteractiveCard glow={false} className={cn("p-5", left && "md:text-right")}>
+                <InteractiveCard
+                  glow={false}
+                  className={cn(
+                    "process-step-card p-5",
+                    i % 3 === 0 && "living-mesh-a",
+                    i % 3 === 1 && "living-mesh-b",
+                    i % 3 === 2 && "living-mesh-c",
+                    left && "md:text-right"
+                  )}
+                >
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-green/70">Step {i + 1}</p>
                   <h3 className="mt-1 font-display text-base font-semibold leading-tight transition-colors group-hover:text-brand-green md:text-lg">{step.title}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>

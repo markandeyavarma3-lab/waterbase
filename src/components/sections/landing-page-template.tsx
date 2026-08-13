@@ -6,7 +6,6 @@ import { Stats } from "@/components/sections/stats";
 import { LeadForm } from "@/components/sections/lead-form";
 import { ContactActions } from "@/components/site/contact-actions";
 import { StickyCallBar } from "@/components/site/sticky-call-bar";
-import { AuroraGlow } from "@/components/site/aurora-glow";
 import type { RequirementValue } from "@/lib/leads";
 
 export interface LandingPageTemplateProps {
@@ -53,31 +52,29 @@ export function LandingPageTemplate({
   return (
     <>
       {/* HERO */}
-      <section className="relative isolate overflow-hidden tint-wash-darker text-white">
-        <AuroraGlow variant="hero" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-white/10" aria-hidden="true" />
-        <Container className="py-12 sm:py-16 md:py-24">
+      <section className="relative isolate overflow-hidden bg-sunrise text-water-deep">
+        <Container className="pt-32 pb-12 sm:pt-36 sm:pb-16 md:pt-40 md:pb-24">
           {/* minmax(0,1fr) rather than 1fr — a bare 1fr track has min-width:auto,
               so a wide child (the form) can push the grid past the viewport. */}
           <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_420px]">
             <div>
               <Reveal>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium backdrop-blur">{badge}</span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-water-deep/12 bg-white/70 px-4 py-1.5 text-sm font-medium backdrop-blur">{badge}</span>
               </Reveal>
               <Reveal delay={80}>
                 <h1 className="mt-5 max-w-xl font-display text-[clamp(1.875rem,6vw,3rem)] font-extrabold leading-[1.06] tracking-tight">{title}</h1>
               </Reveal>
               <Reveal delay={160}>
-                <p className="mt-4 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">{description}</p>
+                <p className="mt-4 max-w-lg text-base leading-relaxed text-water-deep/70 sm:text-lg">{description}</p>
               </Reveal>
               <Reveal delay={240}>
-                <ContactActions showCall onDark size="xl" className="mt-7" />
+                <ContactActions showCall size="xl" className="mt-7" />
               </Reveal>
               <Reveal delay={320}>
                 <ul className="mt-7 space-y-2.5">
                   {trustPoints.map((pt) => (
-                    <li key={pt} className="flex items-start gap-2 text-sm text-white/80">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-green-light" />
+                    <li key={pt} className="flex items-start gap-2 text-sm text-water-deep/75">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-green" />
                       {pt}
                     </li>
                   ))}
@@ -86,7 +83,7 @@ export function LandingPageTemplate({
             </div>
 
             <Reveal delay={120}>
-              <div className="rounded-2xl bg-white p-5 text-foreground shadow-lift ring-1 ring-black/5 sm:p-6">
+              <div className="sink-panel rounded-2xl p-5 text-foreground sm:p-6">
                 <h2 className="font-display text-xl font-bold text-brand-green-deep">{formTitle}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">{formDesc}</p>
                 <div className="mt-5">
@@ -145,10 +142,10 @@ export function LandingPageTemplate({
       <Section tone="brand-deep">
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green-light">{ctaSubtitle}</p>
-            <h2 className="mt-3 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-bold leading-tight tracking-tight text-white">{ctaTitle}</h2>
-            <p className="mt-4 text-lg text-white/75">{ctaDesc}</p>
-            <ContactActions showCall onDark size="xl" className="mt-7 justify-center" />
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">{ctaSubtitle}</p>
+            <h2 className="mt-3 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-bold leading-tight tracking-tight text-water-deep">{ctaTitle}</h2>
+            <p className="mt-4 text-lg text-water-deep/70">{ctaDesc}</p>
+            <ContactActions showCall size="xl" className="mt-7 justify-center" />
           </Reveal>
         </Container>
       </Section>

@@ -46,8 +46,8 @@ const toneClass: Record<Tone, string> = {
   brand: "tint-wash-field tone-field",
   // dark sections keep their weight, for rhythm against all of the above —
   // but still settle from deep teal toward an even deeper edge, not one slab
-  "brand-dark": "tint-wash-dark text-white tone-plain",
-  "brand-deep": "tint-wash-darker text-white tone-plain",
+  "brand-dark": "tint-wash-dark tone-soil",
+  "brand-deep": "tint-wash-darker tone-field",
 };
 
 /** Which ambient AuroraGlow blobs belong to each tone, so every section gets
