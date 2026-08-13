@@ -517,6 +517,11 @@
   100% { background-position: 0 -32px; }
 }
 
+@keyframes canal-flow {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-aurora,
   .motion-float,
@@ -540,7 +545,15 @@
   .living-mesh,
   .bg-sunrise,
   .sink-panel,
-  .process-step-card { animation: none !important; }
+  .process-step-card,
+  .nav-pill,
+  .cta-sink-primary,
+  .cta-sink-secondary,
+  .process-node,
+  .process-node-badge { animation: none !important; }
+
+  .process-canal-water,
+  .process-canal-water::after { animation: none !important; }
 
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.
      Killing the animation without restoring the transform would leave the bar
@@ -903,6 +916,97 @@
   .process-step-card.living-mesh-a { animation-delay: 0s, 0s; }
   .process-step-card.living-mesh-b { animation-delay: -8s, -4s; }
   .process-step-card.living-mesh-c { animation-delay: -16s, -8s; }
+
+  /* Nav pills — light shades only, cycling with the homepage mesh so they
+     sink into the bar instead of sitting as hard colour blocks. */
+  .nav-pill {
+    color: var(--mesh-ink, #163844);
+    background: color-mix(in srgb, white 62%, var(--mesh-mist, #d7f0ee));
+    border-color: color-mix(in srgb, white 40%, var(--mesh-sky, #c8e8f4));
+    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
+  }
+  .nav-pill.living-mesh-a { animation-delay: 0s; }
+  .nav-pill.living-mesh-b { animation-delay: -8s; }
+  .nav-pill.living-mesh-c { animation-delay: -16s; }
+  .nav-pill:hover {
+    background: color-mix(in srgb, white 48%, var(--mesh-sky, #c8e8f4));
+  }
+  .nav-pill-active {
+    background: color-mix(in srgb, white 40%, var(--mesh-sky, #c8e8f4));
+    border-color: color-mix(in srgb, var(--mesh-sky, #c8e8f4) 55%, white);
+  }
+
+  /* Hero / CTA buttons — soft fills that ride the living mesh. */
+  .cta-sink-primary {
+    color: #fff;
+    background: color-mix(in srgb, var(--mesh-cta, #2a5e72) 82%, var(--mesh-sky, #c8e8f4));
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--mesh-cta, #2a5e72) 28%, transparent);
+    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
+  }
+  .cta-sink-primary:hover {
+    background: color-mix(in srgb, var(--mesh-ink, #163844) 88%, var(--mesh-sky, #c8e8f4));
+  }
+  .cta-sink-secondary {
+    color: var(--mesh-ink, #163844);
+    background: color-mix(in srgb, white 70%, var(--mesh-mist, #d7f0ee));
+    border: 1px solid color-mix(in srgb, white 35%, var(--mesh-sky, #c8e8f4));
+    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
+    animation-delay: -8s;
+  }
+  .cta-sink-secondary:hover {
+    background: color-mix(in srgb, white 55%, var(--mesh-sky, #c8e8f4));
+    border-color: color-mix(in srgb, var(--mesh-sky, #c8e8f4) 50%, white);
+  }
+
+  /* Process canal — soft banks, sky-blue water flowing down. */
+  .process-canal-bank {
+    background: color-mix(in srgb, var(--mesh-soil, #e8d7c4) 35%, white);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mesh-soil, #e8d7c4) 40%, transparent);
+  }
+  .process-canal-water {
+    background-image: linear-gradient(
+      180deg,
+      #9AD4EE 0%,
+      #5BB8E8 35%,
+      #3FA3DA 70%,
+      #7BC8EC 100%
+    );
+    background-size: 100% 200%;
+    animation: canal-flow 2.8s linear infinite;
+  }
+  .process-canal-water::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.55) 0,
+      rgba(255, 255, 255, 0.55) 3px,
+      transparent 3px,
+      transparent 14px
+    );
+    animation: flow-dash 900ms linear infinite;
+    opacity: 0.55;
+  }
+  .process-node {
+    background-image: linear-gradient(
+      145deg,
+      color-mix(in srgb, white 35%, #5BB8E8),
+      color-mix(in srgb, #3FA3DA 70%, var(--mesh-cta, #2a5e72))
+    );
+    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
+  }
+  .process-node.living-mesh-a { animation-delay: 0s; }
+  .process-node.living-mesh-b { animation-delay: -8s; }
+  .process-node.living-mesh-c { animation-delay: -16s; }
+  .process-node-badge {
+    background: color-mix(in srgb, var(--mesh-cta, #2a5e72) 75%, #5BB8E8);
+    color: #fff;
+    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
+  }
+  .process-node-badge.living-mesh-a { animation-delay: 0s; }
+  .process-node-badge.living-mesh-b { animation-delay: -8s; }
+  .process-node-badge.living-mesh-c { animation-delay: -16s; }
 
   /* Header water line — see the header-current keyframes. Deliberately faint:
      this sits under the nav on every page, so it has to register as texture

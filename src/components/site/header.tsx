@@ -15,23 +15,6 @@ import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
 import { NAV_LINKS } from "@/lib/nav";
 
-// Fixed pill colour per nav-link tone — always visible, not just on
-// hover/active, so the bar itself carries colour rather than being plain
-// text until you touch it. Translucent fill + border + blur, same recipe as
-// the WhatsApp/callback buttons on the "Planning a project" CTA panel
-// (bg-brand-*/15, border-brand-*/25, backdrop-blur-sm) — a faded wash, not a
-// flat block.
-// Text uses each tone's DARKEST variant, not -dark — the pill fill is
-// strong enough now (and sits on top of the coloured .header-wash) that the
-// regular -dark tokens measured under 4.5:1 at rest scroll position. Checked
-// against the worst case (top of page, least-veiled, most saturated pill).
-const NAV_TONE = {
-  blue: { bg: "bg-brand-blue/24", border: "border-brand-blue/40", text: "text-brand-blue-deep", hover: "hover:bg-brand-blue/34" },
-  green: { bg: "bg-brand-green/24", border: "border-brand-green/40", text: "text-brand-green-darker", hover: "hover:bg-brand-green/34" },
-  soil: { bg: "bg-brand-soil/24", border: "border-brand-soil/40", text: "text-brand-soil-darker", hover: "hover:bg-brand-soil/34" },
-  sun: { bg: "bg-brand-sun/30", border: "border-brand-sun/44", text: "text-brand-sun-darker", hover: "hover:bg-brand-sun/40" },
-} as const;
-
 export function Header() {
   const [open, setOpen] = useState(false);
   const [logoRun, setLogoRun] = useState(0);
@@ -181,20 +164,19 @@ export function Header() {
               itself is never a flat row of plain text — same idea as the
               coloured WhatsApp / callback pills on the "Planning a project"
               CTA panel, applied to navigation. */}
-          <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
-            {NAV_LINKS.map((l) => {
+          <nav aria-label="Main navigation" className="hidden items-center gap-1.5 lg:flex">
+            {NAV_LINKS.map((l, i) => {
               const active = isActive(l.href);
-              const tone = NAV_TONE[l.tone];
               return (
                 <Link
                   key={l.href}
                   href={l.href}
                   className={cn(
-                    // tap-target-y: an iPad Pro is wide enough for the desktop nav
-                    // but is still finger-driven, so these need the 44px height.
-                    "tap-target-y flex items-center rounded-full border px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide backdrop-blur-sm transition-all duration-200",
-                    tone.bg, tone.border, tone.text, tone.hover,
-                    active && "shadow-sm"
+                    "nav-pill tap-target-y flex items-center rounded-full border px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-shadow duration-200",
+                    i % 3 === 0 && "living-mesh-a",
+                    i % 3 === 1 && "living-mesh-b",
+                    i % 3 === 2 && "living-mesh-c",
+                    active && "nav-pill-active shadow-sm"
                   )}
                 >
                   {l.label}
