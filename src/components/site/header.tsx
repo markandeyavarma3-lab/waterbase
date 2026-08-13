@@ -60,7 +60,7 @@ export function Header() {
   // the green/white/blue wash beneath it, not the pill's only colour — starts
   // low so the green/blue edges of the wash stay visible at rest, and caps
   // at 0.65 (not 1) so they're never fully hidden, even scrolled.
-  const pillAlpha = useTransform(settle, [0, 120], [0.15, 0.65], { clamp: true });
+  const pillAlpha = useTransform(settle, [0, 120], [0.08, 0.38], { clamp: true });
   const pillShadow = useTransform(settle, [0, 120], [0.07, 0.13], { clamp: true });
   const pillGlow = useMotionTemplate`0 10px 30px rgba(18, 60, 70, ${pillShadow})`;
 
@@ -109,22 +109,12 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-brand-green/20 px-4 backdrop-blur-xl sm:gap-4 sm:px-5"
+          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full sink-panel living-mesh-b px-4 sm:gap-4 sm:px-5"
           style={{ height: barHeight, boxShadow: pillGlow }}
         >
-          {/* Colour wash — the same gradient the "Planning a project" CTA
-              panel uses (green-soft → white → blue-soft, diagonal), oversized
-              and drifting the same way that panel now does (see globals.css —
-              panel-drift/panel-sheen were referenced by name there but never
-              actually defined; fixed centrally, both panels move for real now). */}
-          <div
-            className="motion-panel pointer-events-none absolute -inset-[20%] -z-20 bg-gradient-to-br from-brand-green-soft via-white to-brand-blue-soft will-change-transform"
-            style={{ animation: "panel-drift 26s var(--ease-in-out-soft) infinite" }}
-            aria-hidden="true"
-          />
-          {/* Scroll-driven white veil on top of the wash — this is what makes
-              the bar read as "frosted white", but it caps below full opacity
-              so the wash always shows through, even scrolled. */}
+          {/* Mesh tint lives on the pill itself (.living-mesh-b). A light veil
+              keeps type readable as you scroll without turning the bar into a
+              solid white slab. */}
           <motion.div className="pointer-events-none absolute inset-0 -z-10 bg-white" style={{ opacity: pillAlpha }} aria-hidden="true" />
 
           {/* water current along the pill's lower edge */}

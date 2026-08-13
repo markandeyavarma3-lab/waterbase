@@ -209,6 +209,54 @@
   --sidebar-ring: #2E9466;
 }
 
+/* ── Living mesh — interpolatable colours ───────────────────────
+   Registered so keyframes can blend them. Soft-to-medium mixes of:
+   sky blue, field green, soil brown, morning sunlight, plus mist teal. */
+@property --mesh-sky { syntax: "<color>"; inherits: true; initial-value: #C8E8F4; }
+@property --mesh-green { syntax: "<color>"; inherits: true; initial-value: #D9ECDC; }
+@property --mesh-soil { syntax: "<color>"; inherits: true; initial-value: #E8D7C4; }
+@property --mesh-sun { syntax: "<color>"; inherits: true; initial-value: #F7F0E2; }
+@property --mesh-mist { syntax: "<color>"; inherits: true; initial-value: #D7F0EE; }
+@property --mesh-accent { syntax: "<color>"; inherits: true; initial-value: #2E7A5C; }
+@property --mesh-cta { syntax: "<color>"; inherits: true; initial-value: #2A5E72; }
+@property --mesh-ink { syntax: "<color>"; inherits: true; initial-value: #163844; }
+
+@keyframes mesh-palette {
+  /* Style A — sky-led */
+  0%, 100% {
+    --mesh-sky: #B9E0F0;
+    --mesh-green: #E3F0E5;
+    --mesh-soil: #F0E6D8;
+    --mesh-sun: #FBF8F1;
+    --mesh-mist: #D2EEF0;
+    --mesh-accent: #2A7D6A;
+    --mesh-cta: #245A70;
+    --mesh-ink: #153844;
+  }
+  /* Style B — field-led */
+  33% {
+    --mesh-sky: #E2F3F7;
+    --mesh-green: #C8E4CC;
+    --mesh-soil: #E7D4BE;
+    --mesh-sun: #F5EEDC;
+    --mesh-mist: #E4F3EA;
+    --mesh-accent: #3A7A48;
+    --mesh-cta: #3B5C3E;
+    --mesh-ink: #1C3A26;
+  }
+  /* Style C — sun / soil-led */
+  66% {
+    --mesh-sky: #E8F3F6;
+    --mesh-green: #E6EEDC;
+    --mesh-soil: #E4CDB0;
+    --mesh-sun: #F6E7C4;
+    --mesh-mist: #F2EDE0;
+    --mesh-accent: #9A6A42;
+    --mesh-cta: #7A4E32;
+    --mesh-ink: #3A2818;
+  }
+}
+
 /*
  * Page theme — a scoped override applied to whole pages. It used to be a WARM
  * cream (#F3EEE1), chosen when the brand was olive. Against the sunrise hero and
@@ -488,7 +536,10 @@
   .tint-wash-plain,
   .tint-wash-dark,
   .tint-wash-darker,
-  .tint-wash-brand-soft { animation: none !important; }
+  .tint-wash-brand-soft,
+  .living-mesh,
+  .bg-sunrise,
+  .sink-panel { animation: none !important; }
 
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.
      Killing the animation without restoring the transform would leave the bar
@@ -725,7 +776,7 @@
     --card-cast: rgba(31, 99, 118, 0.07);
     --card-wash-a: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%);
     --card-wash-b: color-mix(in srgb, var(--color-tint-field) 70%, white 30%);
-    background-color: #fff;
+    background-color: color-mix(in srgb, white 82%, var(--mesh-mist, #fff));
     border: 1px solid var(--card-edge);
     box-shadow: 0 1px 2px var(--card-cast), 0 8px 22px var(--card-cast);
     transition:
@@ -761,110 +812,72 @@
   .tone-sun   { --card-edge: rgba(196, 145, 60, 0.14); --card-cast: rgba(196, 145, 60, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-sun) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%); }
   .tone-plain { --card-edge: rgba(31, 99, 118, 0.10); --card-cast: rgba(31, 99, 118, 0.06); --card-wash-a: #ffffff; --card-wash-b: color-mix(in srgb, var(--color-tint-sky) 55%, white 45%); }
 
-  /* Sunrise ground — the hero and page tops. Sky at the top through crop green
-     to warm soil at the bottom, so the page opens the way a watered field looks
-     at first light. */
-  .bg-sunrise {
-    background-image: linear-gradient(
-      168deg,
-      var(--color-sky) 0%,
-      var(--color-field) 52%,
-      var(--color-sand) 100%
-    );
-  }
-
-  /* ── Tint washes — no section is one flat fill ─────────────────
-     Each wash carries its own tint into its DOWNSTREAM neighbour (sky→field,
-     field→soil, soil→sun, sun→sky), closing the same loop the hero gradient
-     opens with. A third stop lifts toward white for a soft sheen rather than
-     landing on a second flat colour. Angles are varied per tone so the whole
-     page doesn't read as one repeated stripe. Still 96-99% lightness — this is
-     a temperature shift you feel while scrolling, not a colour block you see.
-
-     Each also carries background-size/animation for a slow drift — the same
-     panel-drift idea as the CTA panel and cards, in background-position form
-     since a full-bleed section fill doesn't need (or want) an extra child
-     element to get the same effect. Durations are staggered per tone so
-     adjacent sections never drift in visible sync. */
-  .tint-wash-sky {
-    background-image: linear-gradient(
-      135deg,
-      var(--color-tint-sky) 0%,
-      color-mix(in srgb, var(--color-tint-sky) 55%, var(--color-tint-field) 45%) 58%,
-      color-mix(in srgb, var(--color-tint-field) 65%, white 35%) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 32s var(--ease-in-out-soft) infinite;
-  }
-  .tint-wash-field {
-    background-image: linear-gradient(
-      155deg,
-      var(--color-tint-field) 0%,
-      color-mix(in srgb, var(--color-tint-field) 55%, var(--color-tint-soil) 45%) 58%,
-      color-mix(in srgb, var(--color-tint-soil) 65%, white 35%) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 36s var(--ease-in-out-soft) infinite;
-  }
-  .tint-wash-soil {
-    background-image: linear-gradient(
-      120deg,
-      var(--color-tint-soil) 0%,
-      color-mix(in srgb, var(--color-tint-soil) 55%, var(--color-tint-sun) 45%) 58%,
-      color-mix(in srgb, var(--color-tint-sun) 65%, white 35%) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 40s var(--ease-in-out-soft) infinite;
-  }
-  .tint-wash-sun {
-    background-image: linear-gradient(
-      145deg,
-      var(--color-tint-sun) 0%,
-      color-mix(in srgb, var(--color-tint-sun) 55%, var(--color-tint-sky) 45%) 58%,
-      color-mix(in srgb, var(--color-tint-sky) 65%, white 35%) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 44s var(--ease-in-out-soft) infinite;
-  }
-  /* Neutral tone — still not a flat white, just the faintest hint of water. */
-  .tint-wash-plain {
-    background-image: linear-gradient(
-      160deg,
-      #ffffff 0%,
-      color-mix(in srgb, var(--color-tint-sky) 42%, white 58%) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 38s var(--ease-in-out-soft) infinite;
-  }
-  /* Dark sections — the same rule applies going the other direction, deep teal
-     settling toward an even deeper edge instead of one flat slab. */
-  .tint-wash-dark {
-    background-image: linear-gradient(
-      160deg,
-      var(--color-brand-green-deep) 0%,
-      var(--color-brand-green-deeper) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 34s var(--ease-in-out-soft) infinite;
-  }
-  .tint-wash-darker {
-    background-image: linear-gradient(
-      160deg,
-      var(--color-brand-green-deeper) 0%,
-      color-mix(in srgb, var(--color-brand-green-deeper) 100%, black 22%) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 34s var(--ease-in-out-soft) infinite;
-  }
-  /* Light green band used by testimonials/brand strips — same treatment. */
+  /* Living mesh — screenshot-1 blobs, cycling A (sky) → B (field) → C (sun)
+     every 8s with a long ease so it never snaps. Accents/CTA/ink ride the same
+     keyframes so pills, buttons and headings shift with the ground. */
+  .living-mesh,
+  .bg-sunrise,
+  .tint-wash-sky,
+  .tint-wash-field,
+  .tint-wash-soil,
+  .tint-wash-sun,
+  .tint-wash-plain,
+  .tint-wash-dark,
+  .tint-wash-darker,
   .tint-wash-brand-soft {
-    background-image: linear-gradient(
-      150deg,
-      var(--color-brand-green-soft) 0%,
-      color-mix(in srgb, var(--color-tint-field) 60%, var(--color-tint-sun) 40%) 100%
-    );
-    background-size: 220% 220%;
-    animation: wash-drift 30s var(--ease-in-out-soft) infinite;
+    --color-brand-green: var(--mesh-accent);
+    --color-brand-green-dark: var(--mesh-cta);
+    --color-brand-green-darker: var(--mesh-ink);
+    --color-brand-green-soft: color-mix(in srgb, var(--mesh-green) 55%, white);
+    --color-brand-green-light: color-mix(in srgb, var(--mesh-green) 40%, var(--mesh-accent));
+    --color-brand-blue: color-mix(in srgb, var(--mesh-sky) 35%, var(--mesh-cta));
+    --color-brand-blue-dark: var(--mesh-cta);
+    --color-brand-blue-deep: var(--mesh-ink);
+    --color-brand-blue-soft: color-mix(in srgb, var(--mesh-sky) 60%, white);
+    --color-brand-soil: color-mix(in srgb, var(--mesh-soil) 45%, var(--mesh-cta));
+    --color-brand-soil-dark: var(--mesh-cta);
+    --color-brand-soil-darker: var(--mesh-ink);
+    --color-brand-sun: color-mix(in srgb, var(--mesh-sun) 40%, var(--mesh-accent));
+    --color-brand-sun-dark: var(--mesh-cta);
+    --color-brand-sun-darker: var(--mesh-ink);
+    --color-water-deep: var(--mesh-ink);
+    --color-water-mid: var(--mesh-cta);
+    --foreground: var(--mesh-ink);
+    --primary: var(--mesh-accent);
+    --muted-foreground: color-mix(in srgb, var(--mesh-ink) 62%, var(--mesh-soil));
+    color: var(--mesh-ink);
+    background-color: var(--mesh-sun);
+    background-image:
+      radial-gradient(ellipse 80% 62% at 10% 6%, var(--mesh-sky) 0%, transparent 56%),
+      radial-gradient(ellipse 72% 58% at 92% 14%, var(--mesh-green) 0%, transparent 54%),
+      radial-gradient(ellipse 78% 52% at 48% 96%, var(--mesh-soil) 0%, transparent 56%),
+      radial-gradient(ellipse 48% 44% at 74% 46%, var(--mesh-sun) 0%, transparent 52%),
+      radial-gradient(ellipse 56% 50% at 26% 58%, var(--mesh-mist) 0%, transparent 54%);
+    background-size: 160% 160%, 160% 160%, 160% 160%, 160% 160%, 160% 160%;
+    animation:
+      mesh-palette 24s var(--ease-in-out-soft) infinite,
+      wash-drift 34s var(--ease-in-out-soft) infinite;
+  }
+
+  /* Independent clocks so neighbouring blocks are never in the same style. */
+  .tint-wash-sky, .bg-sunrise, .living-mesh-a { animation-delay: 0s, 0s; }
+  .tint-wash-field, .living-mesh-b { animation-delay: -8s, -4s; }
+  .tint-wash-soil, .living-mesh-c { animation-delay: -16s, -8s; }
+  .tint-wash-sun { animation-delay: -4s, -10s; }
+  .tint-wash-plain { animation-delay: -12s, -2s; }
+  .tint-wash-brand-soft { animation-delay: -20s, -6s; }
+  .tint-wash-dark { animation-delay: -6s, -12s; }
+  .tint-wash-darker { animation-delay: -14s, -1s; }
+
+  /* Screenshot 2 — white/frosted bar that tints with the current mesh. */
+  .sink-panel {
+    background: color-mix(in srgb, white 78%, var(--mesh-mist, #eaf6f4));
+    border: 1px solid color-mix(in srgb, white 55%, var(--mesh-sky, #c8e8f4));
+    box-shadow:
+      0 10px 40px color-mix(in srgb, var(--mesh-soil, #e8d7c4) 22%, transparent),
+      0 1px 2px color-mix(in srgb, var(--mesh-ink, #163844) 6%, transparent);
+    backdrop-filter: blur(18px);
+    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
 
   /* Header water line — see the header-current keyframes. Deliberately faint:

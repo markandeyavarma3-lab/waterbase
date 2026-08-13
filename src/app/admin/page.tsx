@@ -49,8 +49,8 @@ export default async function AdminPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      <header className="border-b border-border bg-card">
+    <div className="min-h-screen">
+      <header className="sink-panel living-mesh-b">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <h1 className="font-display text-lg font-extrabold">Waterbase · Leads</h1>
           <div className="flex items-center gap-3">
@@ -64,12 +64,12 @@ export default async function AdminPage() {
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          <div className="rounded-xl border border-border bg-card p-4">
+          <div className="rounded-xl sink-panel p-4">
             <div className="font-display text-2xl font-extrabold text-brand-green">{totalCount}</div>
             <div className="mt-0.5 text-xs text-muted-foreground">Total</div>
           </div>
           {metrics.map((m) => (
-            <div key={m.label} className="rounded-xl border border-border bg-card p-4">
+            <div key={m.label} className="rounded-xl sink-panel p-4">
               <div className="font-display text-2xl font-extrabold">{m.count}</div>
               <div className="mt-0.5 text-xs text-muted-foreground">{m.label}</div>
             </div>
@@ -82,7 +82,7 @@ export default async function AdminPage() {
           </p>
         ) : null}
 
-        <div className="mt-8 rounded-2xl border border-border bg-card p-5">
+        <div className="mt-8 rounded-2xl sink-panel p-5">
           <LeadsTable leads={rows} />
         </div>
       </main>
@@ -93,8 +93,8 @@ export default async function AdminPage() {
 function AccessDenied({ reason }: { reason: "not-allowed" | "not-configured" }) {
   const notConfigured = reason === "not-configured";
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 text-center">
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="sink-panel w-full max-w-md rounded-2xl p-8 text-center">
         <h1 className="font-display text-xl font-extrabold">
           {notConfigured ? "Admin access isn't configured" : "You don't have access"}
         </h1>

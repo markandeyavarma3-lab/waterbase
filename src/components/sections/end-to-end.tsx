@@ -48,17 +48,7 @@ export function EndToEnd() {
           {/* Same gradient colours as before, now in slow motion. The gradient
               moved onto an oversized child so it can be driven by transform;
               the panel itself just clips it. Content sits above on z-10. */}
-          <div className="relative isolate mt-16 overflow-hidden rounded-3xl border border-brand-green/20 shadow-soft">
-            <div
-              className="motion-panel absolute -inset-[20%] -z-10 bg-gradient-to-br from-brand-green-soft via-white to-brand-blue-soft will-change-transform"
-              style={{ animation: "panel-drift 19s var(--ease-in-out-soft) infinite" }}
-              aria-hidden="true"
-            />
-            <span
-              className="motion-panel pointer-events-none absolute inset-y-0 -z-10 w-1/3 bg-gradient-to-r from-transparent via-white/70 to-transparent will-change-transform"
-              style={{ animation: "panel-sheen 14s var(--ease-in-out-soft) infinite" }}
-              aria-hidden="true"
-            />
+          <div className="relative isolate mt-16 overflow-hidden rounded-3xl sink-panel living-mesh-c">
             <div className="flex flex-col items-start gap-5 p-8 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h3 className="font-display text-xl font-bold text-brand-green-dark">Planning an irrigation project?</h3>

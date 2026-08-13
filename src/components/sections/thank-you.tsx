@@ -9,7 +9,6 @@ import { trackFormSubmit } from "@/lib/analytics";
 import { siteConfig, whatsappLink } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
-import { AuroraGlow } from "@/components/site/aurora-glow";
 
 const nextSteps = [
   {
@@ -83,14 +82,13 @@ export function ThankYou() {
   return (
     <div className="theme-warm">
       {/* Hero confirmation */}
-      <section className="relative isolate overflow-hidden tint-wash-darker text-white">
-        <AuroraGlow variant="hero" />
+      <section className="relative isolate overflow-hidden bg-sunrise text-water-deep">
         <div className="mx-auto flex max-w-3xl flex-col items-center px-4 py-14 sm:px-6 sm:py-20 text-center sm:py-24">
           <Reveal>
             <div className="relative flex h-20 w-20 items-center justify-center">
-              <span className="motion-ripple absolute inset-0 rounded-full border-2 border-white/40" style={{ animation: "ripple-ping 1.8s ease-out infinite" }} aria-hidden="true" />
-              <span className="motion-ripple absolute inset-0 rounded-full border-2 border-white/40" style={{ animation: "ripple-ping 1.8s ease-out 0.6s infinite" }} aria-hidden="true" />
-              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-white ring-2 ring-white/30">
+              <span className="motion-ripple absolute inset-0 rounded-full border-2 border-brand-green/40" style={{ animation: "ripple-ping 1.8s ease-out infinite" }} aria-hidden="true" />
+              <span className="motion-ripple absolute inset-0 rounded-full border-2 border-brand-green/40" style={{ animation: "ripple-ping 1.8s ease-out 0.6s infinite" }} aria-hidden="true" />
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-full sink-panel text-brand-green">
                 <motion.svg viewBox="0 0 24 24" className="h-9 w-9" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                   <motion.path
                     d="M20 6 9 17l-5-5"
@@ -103,24 +101,24 @@ export function ThankYou() {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-white/70">Request received</p>
+            <p className="mt-6 text-sm font-semibold uppercase tracking-wide text-brand-green">Request received</p>
             <h1 className="mt-2 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">Thank you — we&apos;ll be in touch soon.</h1>
           </Reveal>
           <Reveal delay={160}>
-            <p className="mt-4 max-w-xl text-white/80">
+            <p className="mt-4 max-w-xl text-water-deep/70">
               Your callback request has reached our team. We usually get back within a few working hours.
               If you&apos;d like to talk to us right away, ping us on WhatsApp.
             </p>
           </Reveal>
           <Reveal delay={220}>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="bg-white text-brand-green-deep hover:bg-white/90">
+              <Button asChild size="lg">
                 <a href={waLink} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="mr-2 h-4 w-4" />
                   Message us on WhatsApp
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10">
+              <Button asChild size="lg" variant="outline">
                 <Link href="/">Back to home</Link>
               </Button>
             </div>
