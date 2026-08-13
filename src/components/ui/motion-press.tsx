@@ -28,21 +28,28 @@ function createRipple(el: HTMLElement, clientX: number, clientY: number) {
  */
 export function MotionPress({ children, className, magnetic = false }: { children: ReactNode; className?: string; magnetic?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
-  const x = useSpring(useMotionValue(0), { stiffness: 300, damping: 20, mass: 0.5 });
-  const y = useSpring(useMotionValue(0), { stiffness: 300, damping: 20, mass: 0.5 });
+  // This magnetic pull never actually worked: useSpring(source) stays
+  // subscribed to `source` and keeps re-syncing toward it, so calling
+  // .set() on the SPRING's own output (x/y below, previously) got silently
+  // overridden within a frame — the source it tracked never moved. Has to
+  // .set() the raw source value instead and let the spring trail it.
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const x = useSpring(rawX, { stiffness: 300, damping: 20, mass: 0.5 });
+  const y = useSpring(rawY, { stiffness: 300, damping: 20, mass: 0.5 });
 
   const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
     if (!magnetic || e.pointerType !== "mouse" || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const relX = e.clientX - (rect.left + rect.width / 2);
     const relY = e.clientY - (rect.top + rect.height / 2);
-    x.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relX * MAGNETIC_PULL)));
-    y.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relY * MAGNETIC_PULL)));
+    rawX.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relX * MAGNETIC_PULL)));
+    rawY.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relY * MAGNETIC_PULL)));
   };
 
   const onPointerLeave = () => {
-    x.set(0);
-    y.set(0);
+    rawX.set(0);
+    rawY.set(0);
   };
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {

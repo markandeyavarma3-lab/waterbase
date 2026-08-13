@@ -80,16 +80,15 @@ function Button({
   asChild = false,
   ...props
 }: ButtonProps) {
-  // Recreated only when asChild flips, not every render — motion.create
-  // returns a new component identity each call, and using that fresh
-  // without memoizing would remount the button (losing focus/animation
-  // state) on every parent re-render.
-  const Comp = React.useMemo(() => motion.create(asChild ? Slot.Root : "button"), [asChild])
-
   const prefersReducedMotion = useReducedMotion()
   const springConfig = { stiffness: 300, damping: 20, mass: 0.5 }
-  const x = useSpring(useMotionValue(0), springConfig)
-  const y = useSpring(useMotionValue(0), springConfig)
+  // useSpring(source) stays subscribed to `source` and keeps re-syncing
+  // toward it — .set() has to target the raw source value, not the spring's
+  // own output, or the pull gets silently overridden within a frame.
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+  const x = useSpring(rawX, springConfig)
+  const y = useSpring(rawY, springConfig)
 
   // Every button pulls gently toward the cursor — the same magnetic feel
   // MotionPress already gave the WhatsApp/callback buttons, now everywhere
@@ -100,25 +99,48 @@ function Button({
     const rect = e.currentTarget.getBoundingClientRect()
     const relX = e.clientX - (rect.left + rect.width / 2)
     const relY = e.clientY - (rect.top + rect.height / 2)
-    x.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relX * MAGNETIC_PULL)))
-    y.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relY * MAGNETIC_PULL)))
+    const nx = Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relX * MAGNETIC_PULL))
+    const ny = Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relY * MAGNETIC_PULL))
+    rawX.set(nx)
+    rawY.set(ny)
   }
   const handlePointerLeave = () => {
-    x.set(0)
-    y.set(0)
+    rawX.set(0)
+    rawY.set(0)
+  }
+
+  const motionProps = {
+    style: prefersReducedMotion ? undefined : { x, y },
+    onPointerMove: handlePointerMove,
+    onPointerLeave: handlePointerLeave,
+    whileTap: prefersReducedMotion ? undefined : { scale: 0.96 },
+    transition: { type: "spring" as const, stiffness: 400, damping: 25 },
+  }
+
+  const buttonClassName = cn(buttonVariants({ variant, size, className }))
+
+  // asChild renders through Radix's Slot, which clones its props onto a
+  // single arbitrary child (an <a>, a <Link>, ...). Wrapping THAT in
+  // motion.create() does not reliably reach the real DOM node — framer-motion
+  // needs a direct ref to the element it's animating, and Slot's prop-cloning
+  // sits in the way. So for asChild, the motion lives on an outer
+  // motion.span instead (same pattern MotionPress already uses elsewhere),
+  // and Slot.Root underneath is left completely plain.
+  if (asChild) {
+    return (
+      <motion.span className="inline-flex" {...motionProps}>
+        <Slot.Root data-slot="button" data-variant={variant} data-size={size} className={buttonClassName} {...props} />
+      </motion.span>
+    )
   }
 
   return (
-    <Comp
+    <motion.button
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
-      style={prefersReducedMotion ? undefined : { x, y }}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      className={buttonClassName}
+      {...motionProps}
       {...props}
     />
   )
