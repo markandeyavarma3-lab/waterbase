@@ -896,7 +896,7 @@
 
   /* Nine-step process cards — same living mesh as the page, each on its own
      clock via .living-mesh-a/b/c so neighbouring cards never match. */
-  .process-step-card.surface-card {
+  .process-step-card {
     background-color: color-mix(in srgb, white 55%, var(--mesh-sun, #f7f0e2));
     background-image:
       radial-gradient(ellipse 80% 62% at 10% 6%, var(--mesh-sky, #c8e8f4) 0%, transparent 56%),
@@ -905,7 +905,10 @@
       radial-gradient(ellipse 48% 44% at 74% 46%, var(--mesh-sun, #f7f0e2) 0%, transparent 52%),
       radial-gradient(ellipse 56% 50% at 26% 58%, var(--mesh-mist, #d7f0ee) 0%, transparent 54%);
     background-size: 160% 160%, 160% 160%, 160% 160%, 160% 160%, 160% 160%;
-    border-color: color-mix(in srgb, var(--mesh-sky, #c8e8f4) 45%, transparent);
+    border: 1px solid color-mix(in srgb, var(--mesh-sky, #c8e8f4) 45%, transparent);
+    box-shadow:
+      0 1px 2px color-mix(in srgb, var(--mesh-ink, #163844) 6%, transparent),
+      0 8px 22px color-mix(in srgb, var(--mesh-soil, #e8d7c4) 18%, transparent);
     animation:
       mesh-palette 24s var(--ease-in-out-soft) infinite,
       wash-drift 34s var(--ease-in-out-soft) infinite;

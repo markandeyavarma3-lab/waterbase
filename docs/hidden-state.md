@@ -125,11 +125,14 @@ Documented in README and `docs/google-ads-conversions.md`, but not in code (exce
 
 ## 📋 Small In-Repo Gaps
 
-### 1. `src/proxy.ts` is not wired
+### 1. `src/proxy.ts` (admin gate)
 
-File exists but middleware.ts doesn't import it. The RLS check and admin gate are implemented in `src/lib/admin-auth.ts` and called from the page/action directly instead.
+In Next.js 16 this file **is** the network proxy (the old `middleware.ts`). It
+redirects unsigned visitors away from `/admin` and refreshes the Supabase
+session cookie. Allowlist checks still run in `src/lib/admin-auth.ts` —
+signed in ≠ admin.
 
-**Status:** Not a bug — the protection is there, just not via middleware. The next refactor could move it to actual middleware.
+**Status:** Wired. Keep both layers.
 
 ### 2. Testimonials are empty
 
