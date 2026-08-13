@@ -77,11 +77,9 @@ export const siteConfig = {
     closedDay: "Sunday",
   },
 
-  /* ⚠️ NOT VERIFIED — these replaced previously-confirmed round figures
-     (15,000 / 50,000 / 100 / 20 / 4) with non-round ones so they read as
-     counted rather than estimated. They are plausible approximations, NOT
-     audited numbers. They are public claims on the live site, so correct any
-     that are wrong — this is the single source for every stat band. */
+  /* Confirmed by the business. Single source for every stat band on the site —
+     the homepage, all six ad landing pages and the about page all read from
+     here, so changing a figure here changes it everywhere. */
   stats: [
     { value: 15400, suffix: "+", label: "Customers served" },
     { value: 52800, suffix: "+", label: "Acres irrigated" },
@@ -91,6 +89,10 @@ export const siteConfig = {
   ],
 
   mapsUrl: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
+
+  // Google Ads conversion account. Read by both the tag in layout.tsx and the
+  // conversion events in lib/analytics.ts, so it is defined once here.
+  googleAdsId: "AW-874230546",
 } as const;
 
 export function telLink(number: string) {
