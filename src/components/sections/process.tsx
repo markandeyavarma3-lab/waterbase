@@ -204,7 +204,16 @@ export function Process() {
                 animate={active ? { opacity: 1, x: 0, scale: 1, rotateY: 0 } : { opacity: 0, x: left ? -16 : 16, scale: 0.96, rotateY: left ? 6 : -6 }}
                 transition={{ type: "spring", stiffness: 220, damping: 24 }}
               >
-                <InteractiveCard glow={false} className={cn("p-5", left && "md:text-right")}>
+                <InteractiveCard
+                  glow={false}
+                  className={cn(
+                    "process-step-card p-5",
+                    i % 3 === 0 && "living-mesh-a",
+                    i % 3 === 1 && "living-mesh-b",
+                    i % 3 === 2 && "living-mesh-c",
+                    left && "md:text-right"
+                  )}
+                >
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-green/70">Step {i + 1}</p>
                   <h3 className="mt-1 font-display text-base font-semibold leading-tight transition-colors group-hover:text-brand-green md:text-lg">{step.title}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>

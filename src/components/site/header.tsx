@@ -53,16 +53,10 @@ export function Header() {
   const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
   const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
   const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
-  // Frosted WHITE, not a dark slab. The hero is a light gradient, so the bar
-  // belongs to it rather than sitting on top of it. Separation comes from a soft
-  // shadow and a faint border, not from a colour jump — which is what keeps it
-  // findable without turning it into a block. This white layer is a VEIL over
-  // the green/white/blue wash beneath it, not the pill's only colour — starts
-  // low so the green/blue edges of the wash stay visible at rest, and caps
-  // at 0.65 (not 1) so they're never fully hidden, even scrolled.
-  const pillAlpha = useTransform(settle, [0, 120], [0.08, 0.38], { clamp: true });
-  const pillShadow = useTransform(settle, [0, 120], [0.07, 0.13], { clamp: true });
-  const pillGlow = useMotionTemplate`0 10px 30px rgba(18, 60, 70, ${pillShadow})`;
+  // Soft shadow only — no white veil. The bar uses the same living mesh as the
+  // homepage so it reads as part of the page, not a solid slab on top.
+  const pillShadow = useTransform(settle, [0, 120], [0.06, 0.12], { clamp: true });
+  const pillGlow = useMotionTemplate`0 10px 28px rgba(18, 60, 70, ${pillShadow})`;
 
   useEffect(() => {
     const onScroll = () => {
@@ -109,14 +103,9 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full sink-panel living-mesh-b px-4 sm:gap-4 sm:px-5"
+          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-water-deep/10 bg-sunrise living-mesh-b px-4 sm:gap-4 sm:px-5"
           style={{ height: barHeight, boxShadow: pillGlow }}
         >
-          {/* Mesh tint lives on the pill itself (.living-mesh-b). A light veil
-              keeps type readable as you scroll without turning the bar into a
-              solid white slab. */}
-          <motion.div className="pointer-events-none absolute inset-0 -z-10 bg-white" style={{ opacity: pillAlpha }} aria-hidden="true" />
-
           {/* water current along the pill's lower edge */}
           <div className="header-water pointer-events-none absolute inset-x-6 bottom-0 h-px" aria-hidden="true" />
 
@@ -182,7 +171,7 @@ export function Header() {
               <Wordmark
                 key={logoRun}
                 animate={atTop}
-                className="font-[family-name:var(--font-logo)] text-[clamp(1rem,4.2vw,1.35rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
+                className="font-[family-name:var(--font-logo)] text-[clamp(1.15rem,4.8vw,1.65rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
               />
             </Link>
           </div>

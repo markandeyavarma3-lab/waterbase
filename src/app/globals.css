@@ -539,7 +539,8 @@
   .tint-wash-brand-soft,
   .living-mesh,
   .bg-sunrise,
-  .sink-panel { animation: none !important; }
+  .sink-panel,
+  .process-step-card { animation: none !important; }
 
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.
      Killing the animation without restoring the transform would leave the bar
@@ -715,9 +716,9 @@
       background-image: linear-gradient(
         100deg,
         transparent 34%,
-        var(--color-brand-blue) 44%,
-        var(--color-brand-blue-dark) 52%,
-        var(--color-brand-green) 60%,
+        #7BC8EC 44%,
+        #5BB8E8 52%,
+        #3FA3DA 60%,
         transparent 72%
       );
       background-size: 200% 100%;
@@ -726,9 +727,9 @@
        what reads as caustic light instead of a moving stripe. */
     .logo-caustic {
       background-image:
-        radial-gradient(ellipse 40% 120% at 20% 50%, rgba(42, 124, 172, 0.85), transparent 60%),
-        radial-gradient(ellipse 30% 120% at 55% 50%, rgba(46, 148, 102, 0.7), transparent 60%),
-        radial-gradient(ellipse 45% 120% at 85% 50%, rgba(31, 99, 118, 0.8), transparent 60%);
+        radial-gradient(ellipse 40% 120% at 20% 50%, rgba(91, 184, 232, 0.9), transparent 60%),
+        radial-gradient(ellipse 30% 120% at 55% 50%, rgba(63, 163, 218, 0.75), transparent 60%),
+        radial-gradient(ellipse 45% 120% at 85% 50%, rgba(123, 200, 236, 0.8), transparent 60%);
       background-size: 220% 100%;
     }
   }
@@ -879,6 +880,29 @@
     backdrop-filter: blur(18px);
     animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
+
+  /* Nine-step process cards — same living mesh as the page, each on its own
+     clock via .living-mesh-a/b/c so neighbouring cards never match. */
+  .process-step-card.surface-card {
+    background-color: color-mix(in srgb, white 55%, var(--mesh-sun, #f7f0e2));
+    background-image:
+      radial-gradient(ellipse 80% 62% at 10% 6%, var(--mesh-sky, #c8e8f4) 0%, transparent 56%),
+      radial-gradient(ellipse 72% 58% at 92% 14%, var(--mesh-green, #d9ecdc) 0%, transparent 54%),
+      radial-gradient(ellipse 78% 52% at 48% 96%, var(--mesh-soil, #e8d7c4) 0%, transparent 56%),
+      radial-gradient(ellipse 48% 44% at 74% 46%, var(--mesh-sun, #f7f0e2) 0%, transparent 52%),
+      radial-gradient(ellipse 56% 50% at 26% 58%, var(--mesh-mist, #d7f0ee) 0%, transparent 54%);
+    background-size: 160% 160%, 160% 160%, 160% 160%, 160% 160%, 160% 160%;
+    border-color: color-mix(in srgb, var(--mesh-sky, #c8e8f4) 45%, transparent);
+    animation:
+      mesh-palette 24s var(--ease-in-out-soft) infinite,
+      wash-drift 34s var(--ease-in-out-soft) infinite;
+  }
+  .process-step-card.surface-card::before {
+    display: none;
+  }
+  .process-step-card.living-mesh-a { animation-delay: 0s, 0s; }
+  .process-step-card.living-mesh-b { animation-delay: -8s, -4s; }
+  .process-step-card.living-mesh-c { animation-delay: -16s, -8s; }
 
   /* Header water line — see the header-current keyframes. Deliberately faint:
      this sits under the nav on every page, so it has to register as texture
