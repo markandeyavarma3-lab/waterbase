@@ -920,23 +920,29 @@
   .process-step-card.living-mesh-b { animation-delay: -8s, -4s; }
   .process-step-card.living-mesh-c { animation-delay: -16s, -8s; }
 
-  /* Nav pills — light shades only, cycling with the homepage mesh so they
-     sink into the bar instead of sitting as hard colour blocks. */
+  /* Nav bar + pills — transparent shell so the page mesh shows through. */
+  .nav-bar-sink {
+    border: 1px solid color-mix(in srgb, white 50%, transparent);
+    background: transparent;
+    box-shadow: none;
+  }
+
   .nav-pill {
     color: var(--mesh-ink, #163844);
-    background: color-mix(in srgb, white 62%, var(--mesh-mist, #d7f0ee));
-    border-color: color-mix(in srgb, white 40%, var(--mesh-sky, #c8e8f4));
+    background: color-mix(in srgb, white 38%, transparent);
+    border-color: color-mix(in srgb, white 30%, var(--mesh-sky, #c8e8f4));
+    backdrop-filter: blur(6px);
     animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
   .nav-pill.living-mesh-a { animation-delay: 0s; }
   .nav-pill.living-mesh-b { animation-delay: -8s; }
   .nav-pill.living-mesh-c { animation-delay: -16s; }
   .nav-pill:hover {
-    background: color-mix(in srgb, white 48%, var(--mesh-sky, #c8e8f4));
+    background: color-mix(in srgb, white 28%, var(--mesh-sky, #c8e8f4));
   }
   .nav-pill-active {
-    background: color-mix(in srgb, white 40%, var(--mesh-sky, #c8e8f4));
-    border-color: color-mix(in srgb, var(--mesh-sky, #c8e8f4) 55%, white);
+    background: color-mix(in srgb, white 24%, var(--mesh-sky, #c8e8f4));
+    border-color: color-mix(in srgb, var(--mesh-sky, #c8e8f4) 38%, white);
   }
 
   /* Hero / CTA buttons — soft fills that ride the living mesh. */
