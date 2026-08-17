@@ -24,12 +24,12 @@ export const siteConfig = {
   areasServed: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"],
   brandPartners: ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNet"],
 
-  // Internal reference only — these are NOT displayed anywhere on the site.
-  // Public contact is WhatsApp (whatsappNumber) + the request-a-callback form.
+  // Internal reference only — department numbers are NOT displayed on the site
+  // except sales.primary (Call Now on ad landing pages) and whatsappNumber.
   phones: {
     sales: {
       label: "Sales & Products",
-      primary: "9440018418",
+      primary: "7793938418",
       secondary: "8332918418",
       tertiary: "8332938418",
     },
@@ -40,12 +40,12 @@ export const siteConfig = {
     },
     english: {
       label: "English Support",
-      primary: "9100149844",
+      primary: "7793938418",
     },
   },
 
-  // The only number shown publicly — and only as a WhatsApp link, never as text/dial.
-  whatsappNumber: "9100149844",
+  // Public WhatsApp — also used as the primary contact number for Call Now.
+  whatsappNumber: "7793938418",
 
   address: {
     buildingNo: "1-1159",
