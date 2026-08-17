@@ -13,8 +13,8 @@ import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = pageMeta({
-  title: "Complete Irrigation & Water Management Solutions",
-  description: "Waterbase Technologies is a complete irrigation and agricultural water management solutions provider.",
+  title: "Engineered irrigation for commercial sites and large farms",
+  description: "Waterbase Technologies designs, supplies and installs irrigation for commercial landscapes, estates and large farms across South India. Authorised Jain, KSB and Netafim dealer, Eluru.",
   path: "/",
 });
 

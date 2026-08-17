@@ -3,7 +3,7 @@ import { Clock, Mail, MapPin, MessageCircle, PhoneCall } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
-import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
+import { siteConfig, whatsappLink, fullAddress, formatPhone } from "@/lib/site-config";
 
 export function ContactCTA() {
   return (
@@ -17,10 +17,10 @@ export function ContactCTA() {
                 Get started
               </p>
               <h2 className="mt-4 font-display text-[clamp(1.75rem,4.6vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em] text-balance text-water-deep">
-                Let&apos;s plan your <span className="text-brand-green">irrigation</span>
+                Let&apos;s specify your <span className="text-brand-green">system</span>
               </h2>
               <p className="mt-4 max-w-lg text-lg leading-relaxed text-water-deep/70">
-                Products, design, installation or APMIP subsidy — message us on WhatsApp, or request a callback and our team will reach out.
+                Commercial landscape, estate or large farm — WhatsApp, call, or request a callback. One team from survey to after-sales.
               </p>
             </Reveal>
             <Reveal delay={120}>
@@ -34,7 +34,7 @@ export function ContactCTA() {
                 <MessageCircle className="h-4 w-4 shrink-0 text-brand-green" aria-hidden="true" />
                 <span className="min-w-0">
                   <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-water-deep">WhatsApp us</span>
-                  <span className="text-sm text-water-deep/60">Fastest way to get a quote</span>
+                  <span className="text-sm text-water-deep/60">{formatPhone(siteConfig.whatsappNumber)}</span>
                 </span>
               </a>
               <Link href="/contact" className="flex items-center gap-4 border-b border-water-deep/10 px-6 py-4 transition-colors hover:bg-white/40">
