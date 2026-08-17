@@ -36,10 +36,12 @@ export function Header() {
   const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
   const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
   const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
-  // Soft shadow only — no white veil. The bar uses the same living mesh as the
-  // homepage so it reads as part of the page, not a solid slab on top.
-  const pillShadow = useTransform(settle, [0, 120], [0.06, 0.12], { clamp: true });
-  const pillGlow = useMotionTemplate`0 10px 28px rgba(18, 60, 70, ${pillShadow})`;
+  // At the top of the page the bar is almost invisible — the hero mesh shows
+  // straight through it. A touch more veil only appears once you scroll so links
+  // stay readable over lighter sections below.
+  const pillShadow = useTransform(settle, [0, 120], [0, 0.08], { clamp: true });
+  const pillGlow = useMotionTemplate`0 8px 24px rgba(18, 60, 70, ${pillShadow})`;
+  const barVeil = useTransform(settle, [0, 120], [0.06, 0.38], { clamp: true });
 
   useEffect(() => {
     const onScroll = () => {
@@ -86,9 +88,15 @@ export function Header() {
           beneath it. */}
       <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
         <motion.div
-          className="relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full border border-water-deep/10 bg-sunrise living-mesh-b px-4 sm:gap-4 sm:px-5"
+          className="nav-bar-sink relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full px-4 sm:gap-4 sm:px-5"
           style={{ height: barHeight, boxShadow: pillGlow }}
         >
+          {/* Frosted veil — no own mesh layer; the page background bleeds through. */}
+          <motion.div
+            className="pointer-events-none absolute inset-0 rounded-full bg-white/60 backdrop-blur-md"
+            style={{ opacity: barVeil }}
+            aria-hidden="true"
+          />
           {/* water current along the pill's lower edge */}
           <div className="header-water pointer-events-none absolute inset-x-6 bottom-0 h-px" aria-hidden="true" />
 
