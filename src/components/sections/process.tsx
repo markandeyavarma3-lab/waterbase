@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import { Handshake, MapPin, Ruler, PencilRuler, FileText, Truck, Wrench, Settings, LifeBuoy, Check } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { InteractiveCard } from "@/components/ui/interactive-card";
 import { cn } from "@/lib/utils";
 
 const steps: { icon: LucideIcon; title: string; desc: string }[] = [
@@ -37,8 +36,7 @@ export function Process() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       requestAnimationFrame(() => setProgress(1));
       return;
     }
@@ -49,15 +47,11 @@ export function Process() {
       raf = requestAnimationFrame(() => {
         raf = 0;
         const rect = el.getBoundingClientRect();
-        const trigger = window.innerHeight * 0.82; // line near the lower third of the screen
+        const trigger = window.innerHeight * 0.78;
         const p = (trigger - rect.top) / rect.height;
         setProgress(Math.min(1, Math.max(0, p)));
 
-        // The pill is derived from where the step NODES actually are, not from
-        // the rail-fill progress above. The rail is a "filled up to here" line
-        // that intentionally runs ahead of the viewport centre, so reusing it
-        // made the pill announce a step several nodes before you could see it.
-        const centre = window.innerHeight / 2;
+        const centre = window.innerHeight * 0.42;
         let active = 0;
         nodeRefs.current.forEach((node, i) => {
           if (!node) return;
@@ -77,57 +71,56 @@ export function Process() {
     };
   }, []);
 
-  // `reached` still drives which cards have animated in (tied to the rail fill).
-  // The pill uses activeStep, measured from real node positions — see onScroll.
   const reached = progress * steps.length;
-  const currentStep = activeStep;
+  const current = steps[activeStep - 1];
+  const CurrentIcon = current.icon;
 
   return (
     <div ref={ref} className="relative mx-auto mt-14 max-w-3xl">
-      {/* live step counter — tracks scroll position through the timeline */}
-      <div className="sticky top-20 z-30 mb-6 flex justify-center">
-        <motion.span
-          layout
-          className="inline-flex items-center gap-2 rounded-full sink-panel living-mesh-b px-3.5 py-1.5 text-xs font-semibold text-foreground"
-          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-        >
-          {/* Steady dot — the old one looped an animate-ping right next to a
-              number that changes, which read as two competing signals. */}
-          <span className="relative inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-[#5BB8E8] shadow-[0_0_0_3px_rgba(91,184,232,0.2)]" />
-          <span className="tabular-nums">
-            Step{" "}
-            {/* The digit swaps with a small vertical roll so the change is
-                legible in peripheral vision without moving the pill itself. */}
-            <span className="relative inline-flex h-[1.1em] w-[1.1ch] overflow-hidden align-baseline">
-              <AnimatePresence mode="popLayout" initial={false}>
-                <motion.span
-                  key={currentStep}
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={prefersReducedMotion ? false : { y: "-90%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  exit={prefersReducedMotion ? { opacity: 0 } : { y: "90%", opacity: 0 }}
-                  transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  {currentStep}
-                </motion.span>
-              </AnimatePresence>
-            </span>{" "}
-            of {steps.length}
+      {/* Spotlight — current step stays pinned while the list drops past it. */}
+      <div className="sticky top-20 z-30 mb-8">
+        <div className="mx-auto flex max-w-xl items-center gap-4 rounded-2xl border border-water-deep/10 bg-white/75 px-4 py-3 shadow-soft backdrop-blur-md sm:px-5">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1a4a5c] text-white shadow-lift">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={activeStep}
+                initial={prefersReducedMotion ? false : { y: -18, opacity: 0, scale: 0.7 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                exit={prefersReducedMotion ? { opacity: 0 } : { y: 18, opacity: 0, scale: 0.7 }}
+                transition={{ type: "spring", stiffness: 380, damping: 28 }}
+              >
+                <CurrentIcon className="h-5 w-5" aria-hidden="true" />
+              </motion.span>
+            </AnimatePresence>
           </span>
-        </motion.span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-green">
+              Step {String(activeStep).padStart(2, "0")} of {String(steps.length).padStart(2, "0")}
+            </p>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.p
+                key={current.title}
+                className="truncate font-display text-base font-semibold text-water-deep sm:text-lg"
+                initial={prefersReducedMotion ? false : { y: -12, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={prefersReducedMotion ? { opacity: 0 } : { y: 12, opacity: 0 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {current.title}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
 
-      {/* canal bank */}
-      <span className="process-canal-bank pointer-events-none absolute left-8 top-8 bottom-8 w-2.5 -translate-x-1/2 rounded-full md:left-1/2" aria-hidden="true" />
-      {/* canal water — fills with scroll, flows like water in a channel */}
+      <span className="process-canal-bank pointer-events-none absolute left-7 top-8 bottom-8 w-2.5 -translate-x-1/2 rounded-full sm:left-8" aria-hidden="true" />
       <motion.span
-        className="process-canal-water pointer-events-none absolute left-8 top-8 w-2.5 -translate-x-1/2 overflow-hidden rounded-full md:left-1/2"
+        className="process-canal-water pointer-events-none absolute left-7 top-8 w-2.5 -translate-x-1/2 overflow-hidden rounded-full sm:left-8"
         style={{ height: railHeight }}
         aria-hidden="true"
       />
-      {/* traveling water tip */}
       <motion.span
-        className="pointer-events-none absolute left-8 z-20 -translate-x-1/2 -translate-y-1/2 md:left-1/2"
+        className="pointer-events-none absolute left-7 z-20 -translate-x-1/2 -translate-y-1/2 sm:left-8"
         style={{ top: pulseTop, opacity: pulseOpacity }}
         aria-hidden="true"
       >
@@ -137,27 +130,23 @@ export function Process() {
 
       <ol className="relative">
         {steps.map((step, i) => {
-          const left = i % 2 === 0;
-          const active = reached >= i + 0.25;
+          const active = reached >= i + 0.2;
           const completed = reached >= i + 1;
+          const focused = activeStep === i + 1;
           return (
             <li
               key={step.title}
               ref={(n) => { nodeRefs.current[i] = n; }}
-              className="relative pb-11 last:pb-0 md:pb-16"
+              className="relative pb-8 last:pb-0 sm:pb-10"
             >
-              {/* node */}
               <motion.span
-                className="absolute left-8 top-0 z-10 flex h-16 w-16 -translate-x-1/2 items-center justify-center md:left-1/2"
-                animate={active ? { scale: 1, opacity: 1, rotate: 0 } : { scale: 0.4, opacity: 0, rotate: -30 }}
-                transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                className="absolute left-7 top-1 z-10 flex h-14 w-14 -translate-x-1/2 items-center justify-center sm:left-8"
+                animate={active ? { scale: 1, opacity: 1, y: 0 } : { scale: 0.45, opacity: 0, y: -22 }}
+                transition={{ type: "spring", stiffness: 280, damping: 20 }}
               >
-                {/* glow */}
-                <span className={cn("absolute inset-0 rounded-full bg-[#5BB8E8]/30 blur-md transition-opacity duration-500", active ? "opacity-100" : "opacity-0")} aria-hidden="true" />
-                {/* disc — sky-blue water node, cycles lightly with the mesh */}
                 <span
                   className={cn(
-                    "process-node relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full text-white shadow-lift ring-4 ring-background",
+                    "process-node relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full text-white shadow-lift ring-4 ring-background sm:h-12 sm:w-12",
                     i % 3 === 0 && "living-mesh-a",
                     i % 3 === 1 && "living-mesh-b",
                     i % 3 === 2 && "living-mesh-c"
@@ -165,64 +154,57 @@ export function Process() {
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     {completed ? (
-                      <motion.span
-                        key="done"
-                        initial={{ scale: 0.4, opacity: 0, rotate: -90 }}
-                        animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                      >
-                        <Check className="h-6 w-6" aria-hidden="true" />
+                      <motion.span key="done" initial={{ scale: 0.4, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+                        <Check className="h-5 w-5" aria-hidden="true" />
                       </motion.span>
                     ) : (
-                      <motion.span
-                        key="icon"
-                        initial={{ scale: 0.4, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.4, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <step.icon className="h-6 w-6" aria-hidden="true" />
+                      <motion.span key="icon" initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                        <step.icon className="h-5 w-5" aria-hidden="true" />
                       </motion.span>
                     )}
                   </AnimatePresence>
                 </span>
-                {/* number badge */}
-                <span
-                  className={cn(
-                    "process-node-badge absolute -right-0.5 -top-1 z-10 flex h-6 w-6 items-center justify-center rounded-full font-display text-[11px] font-extrabold shadow-soft ring-2 ring-background",
-                    i % 3 === 0 && "living-mesh-a",
-                    i % 3 === 1 && "living-mesh-b",
-                    i % 3 === 2 && "living-mesh-c"
-                  )}
-                >
-                  {i + 1}
-                </span>
               </motion.span>
 
-              {/* content card */}
               <motion.div
-                className={cn(
-                  "ml-20 md:ml-0 md:w-[calc(50%-3.5rem)]",
-                  left ? "md:mr-auto md:pr-14" : "md:ml-auto md:pl-14"
-                )}
-                style={{ transformPerspective: 800 }}
-                animate={active ? { opacity: 1, x: 0, scale: 1, rotateY: 0 } : { opacity: 0, x: left ? -16 : 16, scale: 0.96, rotateY: left ? 6 : -6 }}
-                transition={{ type: "spring", stiffness: 220, damping: 24 }}
+                className="ml-[4.25rem] sm:ml-[4.75rem]"
+                initial={false}
+                animate={
+                  prefersReducedMotion
+                    ? { opacity: 1, y: 0 }
+                    : active
+                      ? { opacity: 1, y: 0, scale: focused ? 1 : 0.985 }
+                      : { opacity: 0, y: -56, scale: 0.96 }
+                }
+                transition={{ type: "spring", stiffness: 240, damping: 22, mass: 0.9 }}
               >
-                <InteractiveCard
-                  glow={false}
+                <div
                   className={cn(
-                    "process-step-card p-5",
+                    "process-step-card overflow-hidden rounded-2xl border px-5 py-4 transition-[box-shadow,border-color] duration-300",
                     i % 3 === 0 && "living-mesh-a",
                     i % 3 === 1 && "living-mesh-b",
                     i % 3 === 2 && "living-mesh-c",
-                    left && "md:text-right"
+                    focused ? "border-brand-green/35 shadow-lift" : "border-water-deep/8"
                   )}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-green/70">Step {i + 1}</p>
-                  <h3 className="mt-1 font-display text-base font-semibold leading-tight transition-colors group-hover:text-brand-green md:text-lg">{step.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
-                </InteractiveCard>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-green/70">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-1 font-display text-base font-semibold leading-tight md:text-lg">{step.title}</h3>
+                  <AnimatePresence initial={false}>
+                    {focused ? (
+                      <motion.p
+                        key="desc"
+                        initial={prefersReducedMotion ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={prefersReducedMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        className="overflow-hidden text-sm leading-relaxed text-muted-foreground"
+                      >
+                        <span className="mt-1.5 block pb-0.5">{step.desc}</span>
+                      </motion.p>
+                    ) : null}
+                  </AnimatePresence>
+                </div>
               </motion.div>
             </li>
           );

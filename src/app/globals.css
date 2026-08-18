@@ -548,6 +548,7 @@
   .process-step-card,
   .nav-pill,
   .cta-sink-primary,
+  .cta-call-now,
   .cta-sink-secondary,
   .process-node,
   .process-node-badge { animation: none !important; }
@@ -954,6 +955,14 @@
   }
   .cta-sink-primary:hover {
     background: color-mix(in srgb, var(--mesh-ink, #163844) 88%, var(--mesh-sky, #c8e8f4));
+  }
+  /* Hero Call now — slightly deeper, less bright than other primary pills. */
+  .cta-call-now {
+    background: color-mix(in srgb, var(--mesh-cta, #2a5e72) 94%, #0a1c24);
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--mesh-cta, #2a5e72) 22%, transparent);
+  }
+  .cta-call-now:hover {
+    background: color-mix(in srgb, var(--mesh-ink, #163844) 92%, #07141a);
   }
   .cta-sink-secondary {
     color: var(--mesh-ink, #163844);
