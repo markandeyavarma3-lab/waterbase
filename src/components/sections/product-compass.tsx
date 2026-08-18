@@ -55,11 +55,11 @@ function ProductWindow({ item, slot }: { item: CompassItem; slot: number }) {
           <Icon className="h-5 w-5" />
         </span>
       </div>
-      <div className="flex flex-1 flex-col justify-center px-4 py-3 sm:px-5 sm:py-4">
-        <h3 className="font-display text-sm font-semibold leading-snug text-water-deep transition-colors group-hover:text-brand-green sm:text-base">
+      <div className="flex flex-1 flex-col justify-center px-4 py-3.5 sm:px-5 sm:py-5">
+        <h3 className="font-display text-base font-semibold leading-snug text-water-deep transition-colors group-hover:text-brand-green sm:text-lg">
           {item.title}
         </h3>
-        <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:text-sm">{item.desc}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">{item.desc}</p>
       </div>
     </Link>
   );
