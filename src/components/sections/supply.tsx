@@ -5,12 +5,13 @@ import Link from "next/link";
 import {
   Droplets, CloudRain, Filter, Gauge, Cpu, Workflow,
   ArrowRight, Check, Waves, Layers, Leaf, Route, Box, Cable, CircleDashed,
+  LayoutGrid, Package,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
-import { FallingCards } from "@/components/sections/falling-cards";
+import { ProductCompass, type CompassBatch } from "@/components/sections/product-compass";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 
 const categories: { icon: LucideIcon; title: string; desc: string }[] = [
@@ -30,12 +31,35 @@ const categories: { icon: LucideIcon; title: string; desc: string }[] = [
   { icon: Leaf, title: "Planting Material", desc: "High-quality seeds and saplings for optimal yield." },
 ];
 
+const batches: CompassBatch[] = [
+  {
+    label: "Irrigation",
+    items: categories.slice(0, 4),
+  },
+  {
+    label: "Pipes & fittings",
+    items: categories.slice(4, 8),
+  },
+  {
+    label: "Pumps & control",
+    items: categories.slice(8, 12),
+  },
+  {
+    label: "Farm essentials",
+    items: [
+      ...categories.slice(12, 14),
+      { icon: Package, title: "Bulk & project supply", desc: "Volume orders for estates, contractors and commercial sites." },
+      { icon: LayoutGrid, title: "Full product catalogue", desc: "Every line we stock — open the products page." },
+    ],
+  },
+];
+
 const reach = ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"];
 const brands = ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNet"];
 
 export function Supply() {
   return (
-    <Section tone="soil">
+    <Section tone="soil" className="overflow-visible">
       <Container>
         <SectionHeading eyebrow="What we supply" title="The complete agricultural range" lead="Every component for your farm — from drip and sprinkler systems to pumps, pipes, and planting materials." action={<Button asChild variant="outline"><Link href="/products">Browse all products <ArrowRight /></Link></Button>} />
 
@@ -52,9 +76,11 @@ export function Supply() {
             />
           </div>
         </Reveal>
+      </Container>
 
-        <FallingCards items={categories} />
+      <ProductCompass batches={batches} />
 
+      <Container>
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <Reveal className="h-full">
             <InteractiveCard className="h-full p-6">
