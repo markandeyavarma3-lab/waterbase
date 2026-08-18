@@ -15,8 +15,13 @@ HOW TO USE
 3. Name the file after the company, e.g.:
       nuziveedu-seeds.jpg
       patanjali-foods.jpg
-   The filename is turned into the label shown under the logo:
+The filename is turned into the label shown under the logo:
       "nuziveedu-seeds.jpg"  ->  "Nuziveedu Seeds"
+   Featured order on the homepage is: Reliance, Godrej, Patanjali, then everyone else
+   (matched from the filename). Name those files so they include those words, e.g.
+      reliance.jpg
+      godrej.jpg
+      patanjali-foods.jpg
 4. Add as many as you like.
 5. Commit + push (or tell Claude to push) -> Vercel rebuilds and
    the logos go live.

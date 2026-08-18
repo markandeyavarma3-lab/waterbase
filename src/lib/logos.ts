@@ -38,3 +38,13 @@ export function listLogos(dir: string): Logo[] {
         .trim(),
     }));
 }
+
+/** Put featured companies first. Matches filename or display name. */
+export function prioritizeLogos(list: Logo[], lead: string[]): Logo[] {
+  const rank = (logo: Logo) => {
+    const hay = `${logo.src} ${logo.name}`.toLowerCase();
+    const i = lead.findIndex((key) => hay.includes(key.toLowerCase()));
+    return i === -1 ? lead.length + 1 : i;
+  };
+  return [...list].sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name));
+}

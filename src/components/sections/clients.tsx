@@ -1,9 +1,11 @@
 import { Section, Container, SectionHeading } from "@/components/site/section";
-import { listLogos } from "@/lib/logos";
+import { listLogos, prioritizeLogos } from "@/lib/logos";
 import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
 
+const CLIENT_LEAD = ["reliance", "godrej", "patanjali"];
+
 export function Clients() {
-  const clients = listLogos("clients");
+  const clients = prioritizeLogos(listLogos("clients"), CLIENT_LEAD);
   if (clients.length === 0) return null;
 
   return (
