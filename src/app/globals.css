@@ -554,7 +554,8 @@
   .process-node-badge { animation: none !important; }
 
   .process-canal-water,
-  .process-canal-water::after { animation: none !important; }
+  .process-canal-water::after,
+  .maps-pill-car { animation: none !important; }
 
   /* The accent bar's resting state is scaleX(0) and the animation reveals it.
      Killing the animation without restoring the transform would leave the bar
@@ -1065,6 +1066,23 @@
      + the home-indicator inset. Miss the border and the footer sits 1px under it. */
   .h-mobile-cta {
     height: calc(3.5rem + 1px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Google Maps pill — a small car drives the road under the label. */
+  .maps-pill-road {
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--mesh-ink, #163844) 22%, transparent), transparent);
+  }
+  .maps-pill-car {
+    animation: maps-car-drive 4.2s linear infinite;
+  }
+  @keyframes maps-car-drive {
+    0% { left: 8%; transform: translateX(0); opacity: 0; }
+    8% { opacity: 1; }
+    92% { opacity: 1; }
+    100% { left: 86%; transform: translateX(0); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .maps-pill-car { animation: none !important; left: 72%; opacity: 0.7; }
   }
 
   /* Explicit 44px hit area on touch devices only — keyed off the *pointer*, not
