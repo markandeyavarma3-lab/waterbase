@@ -59,8 +59,9 @@ export function Hero() {
             {/* One line, not three. A long paragraph directly under a headline
                 competes with it instead of supporting it. */}
             <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-water-deep/70 sm:text-lg">
-              Design, supply, installation and after-sales — for farms, nurseries and
-              corporate landscapes across South India.
+              Survey, design, supply and installation for commercial landscapes,
+              estates and large farms — one accountable team from first site visit
+              to after-sales.
             </p>
           </Reveal>
 

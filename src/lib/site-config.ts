@@ -10,13 +10,13 @@ export const siteConfig = {
   experienceYears: `${yearsOfExp}+`,
 
   // 👇 Edit this one line anytime to change the hero badge text.
-  heroBadge: "Serving farmers for 25+ years",
+  heroBadge: "Since 2000 · Authorised Jain, KSB & Netafim",
 
   domain: "waterbasetechnologies.com",
   url: "https://waterbasetechnologies.com",
-  tagline: "Complete Irrigation & Agricultural Water Management Solutions",
+  tagline: "Engineered irrigation for commercial sites and large farms",
   description:
-    "Waterbase Technologies is a complete irrigation and agricultural water management solutions provider — product supply, survey & design, installation, project execution, corporate & nursery landscaping irrigation, and APMIP subsidy assistance. Authorized dealer of Jain Irrigation, KSB and Netafim, serving farmers, nurseries, industries and large agricultural projects across South India.",
+    "Waterbase Technologies designs, supplies and installs complete irrigation systems for commercial landscapes, estates and large farms across South India. Authorised dealer of Jain Irrigation, KSB and Netafim — survey, design, project execution and APMIP subsidy assistance from one accountable team in Eluru.",
 
   email: "waterbasetechnologies@gmail.com",
 
@@ -24,13 +24,12 @@ export const siteConfig = {
   areasServed: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"],
   brandPartners: ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNet"],
 
-  // Internal reference only — these are NOT displayed anywhere on the site.
-  // Public contact is WhatsApp (whatsappNumber) + the request-a-callback form.
+  // Public: primary + WhatsApp. Secondary is shown on contact as an alternate line.
   phones: {
     sales: {
       label: "Sales & Products",
-      primary: "9440018418",
-      secondary: "8332918418",
+      primary: "7793938418",
+      secondary: "9440018418",
       tertiary: "8332938418",
     },
     apmip: {
@@ -40,12 +39,12 @@ export const siteConfig = {
     },
     english: {
       label: "English Support",
-      primary: "9100149844",
+      primary: "7793938418",
     },
   },
 
-  // The only number shown publicly — and only as a WhatsApp link, never as text/dial.
-  whatsappNumber: "9100149844",
+  // Public WhatsApp — also used as the primary contact number for Call Now.
+  whatsappNumber: "7793938418",
 
   address: {
     buildingNo: "1-1159",
@@ -90,6 +89,23 @@ export const siteConfig = {
 
   mapsUrl: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
 
+  // Google Business listings. Paste the shop Maps short-link into `url` when you
+  // have it — until then both cards open the office listing so reviews still work.
+  googleListings: [
+    {
+      id: "office",
+      name: "Eluru office",
+      blurb: "Design studio, project desk and authorised brand counter.",
+      url: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
+    },
+    {
+      id: "shop",
+      name: "Farm shop",
+      blurb: "Walk-in counter for pipes, fittings, pumps and field supplies.",
+      url: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
+    },
+  ],
+
   // Google Ads conversion account. Read by both the tag in layout.tsx and the
   // conversion events in lib/analytics.ts, so it is defined once here.
   googleAdsId: "AW-874230546",
@@ -97,6 +113,13 @@ export const siteConfig = {
 
 export function telLink(number: string) {
   return `tel:+${siteConfig.countryCode}${number}`;
+}
+
+/** Display as +91 77939 38418 */
+export function formatPhone(number: string) {
+  const digits = number.replace(/\D/g, "");
+  if (digits.length === 10) return `+${siteConfig.countryCode} ${digits.slice(0, 5)} ${digits.slice(5)}`;
+  return `+${siteConfig.countryCode} ${digits}`;
 }
 
 export function whatsappLink(

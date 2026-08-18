@@ -33,7 +33,7 @@ export function localBusinessJsonLd() {
     description: siteConfig.description,
     url: siteConfig.url,
     email: siteConfig.email,
-    telephone: `+91${phones.sales.primary}`,
+    telephone: [`+91${phones.sales.primary}`, `+91${phones.sales.secondary}`],
     foundingDate: String(siteConfig.since),
     priceRange: "₹₹",
     address: {

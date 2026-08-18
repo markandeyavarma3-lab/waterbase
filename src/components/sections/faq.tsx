@@ -25,11 +25,15 @@ const faqs = [
   },
   {
     q: "Do you take on commercial and corporate projects?",
-    a: "Yes. Alongside farm irrigation we handle nursery, corporate, industrial and commercial landscape projects — from a few acres to large developments.",
+    a: "Yes. Commercial campuses, industrial sites, nurseries and large estates are a core part of the work — specified, installed and maintained as a single project.",
+  },
+  {
+    q: "Can you work with our farm manager or next generation?",
+    a: "Yes. Briefs often come from owners, estate managers, or sons and daughters running the farm. We work in English, share a clear specification, and keep one point of contact through delivery.",
   },
   {
     q: "How do I get a quote or callback?",
-    a: "Fill in the callback form on our contact page or message us on WhatsApp. Share your crop, area and requirement and our team will get back to you — usually within a few working hours.",
+    a: "Use the callback form, call, or WhatsApp. Share crop or landscape type, acreage and what you need — we typically respond within a few working hours.",
   },
 ];
 

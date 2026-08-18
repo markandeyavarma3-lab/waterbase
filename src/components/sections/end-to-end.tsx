@@ -8,16 +8,16 @@ import { ContactActions } from "@/components/site/contact-actions";
 
 // Drop real photos at /public/images/work/<file>.jpg (landscape ~1200x675).
 const serve = [
-  { title: "Fields & farms", desc: "Drip and sprinkler systems for every crop and acreage — from a single plot to large estates.", label: "Field installation photo", img: "/images/work/fields.jpg" },
-  { title: "Lawns & landscapes", desc: "Clean, efficient irrigation for corporate campuses, resorts and public green spaces.", label: "Landscape photo", img: "/images/work/lawns.jpg" },
-  { title: "Nurseries & greenhouses", desc: "Precise water and fertigation for high-value, controlled growing environments.", label: "Nursery photo", img: "/images/work/nurseries.jpg" },
+  { title: "Fields & farms", desc: "Drip and sprinkler systems sized for large holdings and high-value crops — designed to the land, not a catalogue.", label: "Field installation photo", img: "/images/work/fields.jpg" },
+  { title: "Lawns & landscapes", desc: "Quiet, efficient irrigation for corporate campuses, resorts and public landscapes — specified, installed and maintained.", label: "Landscape photo", img: "/images/work/lawns.jpg" },
+  { title: "Nurseries & greenhouses", desc: "Precise water and fertigation for controlled growing — where yield and consistency are the brief.", label: "Nursery photo", img: "/images/work/nurseries.jpg" },
 ];
 
 export function EndToEnd() {
   return (
     <Section tone="sky">
       <Container>
-        <SectionHeading eyebrow="What we do" title="Complete irrigation, handled from start to finish" lead="Whether it's a farm field, a corporate lawn or a commercial nursery — and whether you're an individual farmer or a large company — we own the entire journey, so you work with one accountable team from the first call to after-sales." />
+        <SectionHeading eyebrow="What we do" title="Irrigation engineered for scale" lead="Commercial campuses, estates and large farms — one team owns survey, design, supply, installation and after-sales. You deal with Waterbase, not a chain of vendors." />
 
         <Stagger className="mt-12 grid gap-6 md:grid-cols-3">
           {serve.map((s) => (
@@ -37,8 +37,8 @@ export function EndToEnd() {
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
               <Eyebrow>How we work</Eyebrow>
-              <h3 className="mt-3 font-display text-[clamp(1.375rem,3.6vw,1.875rem)] font-bold tracking-tight">Nine steps, one accountable team</h3>
-              <p className="mt-3 text-muted-foreground">No hand-offs, no finger-pointing. Every stage — from understanding your land to servicing it years later — is handled in-house.</p>
+              <h3 className="mt-3 font-display text-[clamp(1.375rem,3.6vw,1.875rem)] font-bold tracking-tight">Nine steps. One contract. One team.</h3>
+              <p className="mt-3 text-muted-foreground">No subcontracted hand-offs. From understanding the land to servicing it years later, every stage stays in-house.</p>
             </div>
           </Reveal>
           <Process />
@@ -51,8 +51,8 @@ export function EndToEnd() {
           <div className="relative isolate mt-16 overflow-hidden rounded-3xl sink-panel living-mesh-c">
             <div className="flex flex-col items-start gap-5 p-8 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h3 className="font-display text-xl font-bold text-brand-green-dark">Planning an irrigation project?</h3>
-                <p className="mt-1 text-sm text-brand-green-dark/80">Tell us about your land and we&apos;ll recommend the right system.</p>
+                <h3 className="font-display text-xl font-bold text-brand-green-dark">Scoping a project?</h3>
+                <p className="mt-1 text-sm text-brand-green-dark/80">Share acreage, crop or landscape brief — we&apos;ll return a system recommendation.</p>
               </div>
               <ContactActions className="shrink-0" />
             </div>
