@@ -74,7 +74,7 @@ export function Hero() {
                 <a
                   href={telLink(siteConfig.phones.sales.primary)}
                   onClick={trackCallClick}
-                  className="cta-sink-primary group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold transition-colors duration-300"
+                  className="cta-sink-primary cta-call-now group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold transition-colors duration-300"
                 >
                   <Phone className="h-[1.05rem] w-[1.05rem]" aria-hidden="true" />
                   Call now

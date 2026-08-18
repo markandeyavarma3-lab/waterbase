@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,7 +10,7 @@ import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
-import { Stagger, StaggerItem } from "@/components/sections/stagger";
+import { FallingCards } from "@/components/sections/falling-cards";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 
 const categories: { icon: LucideIcon; title: string; desc: string }[] = [
@@ -51,21 +53,7 @@ export function Supply() {
           </div>
         </Reveal>
 
-        <Stagger className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((c) => (
-            <StaggerItem key={c.title}>
-              <Link href="/products" className="block h-full">
-                <InteractiveCard className="group h-full p-6">
-                  <span className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white">
-                    <c.icon className="h-6 w-6" />
-                  </span>
-                  <h3 className="relative mt-4 font-display text-base font-semibold transition-colors group-hover:text-brand-green">{c.title}</h3>
-                  <p className="relative mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
-                </InteractiveCard>
-              </Link>
-            </StaggerItem>
-          ))}
-        </Stagger>
+        <FallingCards items={categories} />
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <Reveal className="h-full">

@@ -10,7 +10,7 @@ export const siteConfig = {
   experienceYears: `${yearsOfExp}+`,
 
   // 👇 Edit this one line anytime to change the hero badge text.
-  heroBadge: "Since 2000 · Authorised Jain, KSB & Netafim",
+  heroBadge: "Serving since 2000",
 
   domain: "waterbasetechnologies.com",
   url: "https://waterbasetechnologies.com",
@@ -89,19 +89,24 @@ export const siteConfig = {
 
   mapsUrl: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
 
-  // Google Business listings. Paste the shop Maps short-link into `url` when you
-  // have it — until then both cards open the office listing so reviews still work.
+  // Google Business listings. Paste each Maps short-link into `url` when you have it.
   googleListings: [
     {
       id: "office",
-      name: "Eluru office",
-      blurb: "Design studio, project desk and authorised brand counter.",
+      name: "Office",
+      blurb: "Project desk, design and authorised brand counter — Eluru.",
       url: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
     },
     {
       id: "shop",
-      name: "Farm shop",
+      name: "Shop / Sales",
       blurb: "Walk-in counter for pipes, fittings, pumps and field supplies.",
+      url: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
+    },
+    {
+      id: "godown",
+      name: "Godown",
+      blurb: "Warehouse stock for project supply and bulk dispatch.",
       url: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
     },
   ],
