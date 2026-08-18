@@ -53,7 +53,7 @@ export function GoogleReviews() {
 
           <div className="mt-6 flex flex-col items-center gap-3">
             <a
-              href={siteConfig.googleListings[0]?.url ?? siteConfig.mapsUrl}
+              href={siteConfig.googleReviewsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center rounded-full border border-water-deep/12 bg-white/80 py-2.5 pl-4 pr-5 shadow-lift backdrop-blur-md transition-colors hover:bg-white"
