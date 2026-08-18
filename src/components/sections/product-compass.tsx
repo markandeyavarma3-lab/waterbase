@@ -22,47 +22,69 @@ export type CompassBatch = {
   items: CompassItem[];
 };
 
+const SLOT_POS = [
+  "col-start-1 row-start-1",
+  "col-start-3 row-start-1",
+  "col-start-1 row-start-3",
+  "col-start-3 row-start-3",
+] as const;
+
+const MESH = ["living-mesh-a", "living-mesh-b", "living-mesh-c"] as const;
+
+function visibility(distance: number) {
+  const d = Math.abs(distance);
+  if (d <= 0.1) return 1;
+  if (d >= 0.92) return 0;
+  const t = (d - 0.1) / 0.82;
+  return 1 - t * t * (3 - 2 * t);
+}
+
 function SlotFace({
   item,
   index,
+  slot,
   batchFloat,
-  hovered,
 }: {
   item: CompassItem;
   index: number;
+  slot: number;
   batchFloat: MotionValue<number>;
-  hovered: boolean;
 }) {
   const Icon = item.icon;
-  const y = useTransform(batchFloat, (v) => (v - index) * 42);
-  const opacity = useTransform(batchFloat, (v) => Math.max(0, 1 - Math.abs(v - index)));
-  const scale = useTransform(batchFloat, (v) => {
-    const vis = Math.max(0, 1 - Math.abs(v - index));
-    return 0.96 + vis * 0.04;
-  });
-  const filter = useTransform(batchFloat, (v) => {
-    const d = Math.min(1, Math.abs(v - index));
-    return `blur(${d * 3.5}px)`;
-  });
-  const zIndex = useTransform(batchFloat, (v) => Math.round((1 - Math.abs(v - index)) * 8));
+  const y = useTransform(batchFloat, (v) => (v - index) * 14);
+  const opacity = useTransform(batchFloat, (v) => visibility(v - index));
+  const scale = useTransform(batchFloat, (v) => 0.988 + visibility(v - index) * 0.012);
+  const zIndex = useTransform(batchFloat, (v) => Math.round(visibility(v - index) * 6));
 
   return (
     <motion.div
-      className="absolute inset-0"
-      style={{ y, opacity, scale, filter, zIndex }}
+      className="absolute inset-0 will-change-transform"
+      style={{ y, opacity, scale, zIndex }}
     >
       <Link
         href="/products"
         className={cn(
-          "surface-card flex h-full min-h-0 flex-col gap-3 rounded-2xl border border-water-deep/10 p-5 shadow-soft transition-shadow duration-500 sm:p-6",
-          hovered && "shadow-lift"
+          "process-step-card group flex h-full min-h-0 flex-col overflow-hidden rounded-2xl",
+          MESH[slot % 3]
         )}
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green">
-          <Icon className="h-5 w-5" />
-        </span>
-        <div className="min-h-0">
-          <h3 className="font-display text-sm font-semibold leading-snug text-water-deep sm:text-base">{item.title}</h3>
+        <div className="relative h-[42%] min-h-[4.5rem] overflow-hidden">
+          <Icon
+            className="pointer-events-none absolute -right-3 -bottom-4 h-24 w-24 text-water-deep/[0.08] transition-transform duration-700 group-hover:scale-110 sm:h-28 sm:w-28"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/35 via-transparent to-brand-green/10" />
+          <span className="absolute left-4 top-4 font-display text-2xl font-extrabold tabular-nums text-water-deep/18 sm:text-3xl">
+            {String(slot + 1).padStart(2, "0")}
+          </span>
+          <span className="absolute bottom-3 left-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/70 text-brand-green shadow-soft backdrop-blur-sm">
+            <Icon className="h-5 w-5" />
+          </span>
+        </div>
+        <div className="flex flex-1 flex-col justify-center px-4 py-3 sm:px-5 sm:py-4">
+          <h3 className="font-display text-sm font-semibold leading-snug text-water-deep transition-colors group-hover:text-brand-green sm:text-base">
+            {item.title}
+          </h3>
           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:text-sm">{item.desc}</p>
         </div>
       </Link>
@@ -85,11 +107,11 @@ function Slot({
 }) {
   return (
     <motion.div
-      className="relative min-h-0"
+      className={cn("relative min-h-0", SLOT_POS[slot])}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
-      animate={{ scale: hovered ? 1.045 : 1, zIndex: hovered ? 30 : 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 28, mass: 0.7 }}
+      animate={{ scale: hovered ? 1.03 : 1, zIndex: hovered ? 30 : 1 }}
+      transition={{ type: "spring", stiffness: 220, damping: 30, mass: 0.8 }}
     >
       {batches.map((batch, i) => {
         const item = batch.items[slot];
@@ -99,8 +121,8 @@ function Slot({
             key={`${batch.label}-${item.title}`}
             item={item}
             index={i}
+            slot={slot}
             batchFloat={batchFloat}
-            hovered={hovered}
           />
         );
       })}
@@ -125,10 +147,10 @@ export function ProductCompass({ batches }: { batches: CompassBatch[] }) {
     if (!hovering.current) target.set(v);
   });
   const smooth = useSpring(target, {
-    stiffness: 38,
-    damping: 36,
-    mass: 1.05,
-    restDelta: 0.0004,
+    stiffness: 18,
+    damping: 42,
+    mass: 1.55,
+    restDelta: 0.0003,
   });
   const batchFloat = useTransform(smooth, [0, 1], [0, n - 1]);
   const ring = useTransform(smooth, [0, 1], [1, 0]);
@@ -154,7 +176,7 @@ export function ProductCompass({ batches }: { batches: CompassBatch[] }) {
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">{b.label}</p>
             <div className="grid grid-cols-2 gap-4">
               {b.items.map((item) => (
-                <Link key={item.title} href="/products" className="surface-card rounded-2xl p-5">
+                <Link key={item.title} href="/products" className="process-step-card rounded-2xl p-5">
                   <item.icon className="h-5 w-5 text-brand-green" />
                   <h3 className="mt-3 font-display font-semibold">{item.title}</h3>
                   <p className="mt-1 text-sm text-muted-foreground">{item.desc}</p>
@@ -170,9 +192,15 @@ export function ProductCompass({ batches }: { batches: CompassBatch[] }) {
   const current = batches[batchIndex];
 
   return (
-    <div ref={pin} className="relative mt-6 h-[360vh]">
+    <div ref={pin} className="relative mt-6 h-[480vh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center px-4 sm:px-8">
-        <div className="relative mx-auto grid h-[min(34rem,calc(100svh-7.5rem))] w-full max-w-4xl grid-cols-2 grid-rows-2 gap-4 sm:gap-5">
+        <div
+          className="mx-auto grid h-[min(36rem,calc(100svh-7rem))] w-full max-w-5xl gap-4 sm:gap-5"
+          style={{
+            gridTemplateColumns: "1fr minmax(8.5rem, 11rem) 1fr",
+            gridTemplateRows: "1fr minmax(8.5rem, 11rem) 1fr",
+          }}
+        >
           {Array.from({ length: 4 }, (_, slot) => (
             <Slot
               key={slot}
@@ -184,8 +212,8 @@ export function ProductCompass({ batches }: { batches: CompassBatch[] }) {
             />
           ))}
 
-          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-            <div className="relative flex h-36 w-36 items-center justify-center sm:h-44 sm:w-44">
+          <div className="col-start-2 row-start-2 flex items-center justify-center">
+            <div className="relative flex h-full w-full max-h-[11rem] max-w-[11rem] items-center justify-center">
               <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 120 120" aria-hidden="true">
                 <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(22,56,68,0.08)" strokeWidth="2.5" />
                 <motion.circle
@@ -200,12 +228,12 @@ export function ProductCompass({ batches }: { batches: CompassBatch[] }) {
                   style={{ strokeDashoffset: dash }}
                 />
               </svg>
-              <div className="flex h-[6.75rem] w-[6.75rem] flex-col items-center justify-center rounded-full border border-water-deep/10 bg-white/90 text-center shadow-lift backdrop-blur-md sm:h-[8.25rem] sm:w-[8.25rem]">
+              <div className="flex h-[78%] w-[78%] flex-col items-center justify-center rounded-full border border-water-deep/10 bg-white/90 px-3 text-center shadow-lift backdrop-blur-md">
                 <p className="font-display text-[1.05rem] font-bold tabular-nums tracking-tight text-water-deep sm:text-xl">
                   {String(batchIndex + 1).padStart(2, "0")}
                   <span className="text-water-deep/35">/{String(n).padStart(2, "0")}</span>
                 </p>
-                <p className="mt-1 px-2 font-display text-[0.7rem] font-semibold leading-tight text-water-deep sm:text-xs">
+                <p className="mt-1 font-display text-[0.7rem] font-semibold leading-tight text-water-deep sm:text-xs">
                   Products we sell
                 </p>
                 <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-brand-green sm:text-[10px]">
