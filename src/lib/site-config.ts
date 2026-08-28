@@ -114,6 +114,9 @@ export const siteConfig = {
   // Google Ads conversion account. Read by both the tag in layout.tsx and the
   // conversion events in lib/analytics.ts, so it is defined once here.
   googleAdsId: "AW-874230546",
+
+  // Google Tag Manager container — script + noscript in app/layout.tsx
+  gtmId: "GTM-NSS2B9BN",
 } as const;
 
 export function telLink(number: string) {
