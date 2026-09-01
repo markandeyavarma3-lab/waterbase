@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Phone, MessageCircle, FileText, Package, Wrench, Sprout, ArrowRight, Clock } from "lucide-react";
+import { Phone, FileText, Package, Wrench, Sprout, ArrowRight, Clock } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { trackFormSubmit } from "@/lib/analytics";
 import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
 import { Reveal } from "@/components/sections/reveal";
@@ -125,7 +126,7 @@ export function ThankYou() {
                 rel="noopener noreferrer"
                 className="cta-sink-primary inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold"
               >
-                <MessageCircle className="h-4 w-4" />
+                <WhatsAppIcon className="h-4 w-4" />
                 Message us on WhatsApp
               </a>
               <Link

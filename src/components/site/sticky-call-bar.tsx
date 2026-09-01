@@ -1,8 +1,9 @@
 "use client";
 
-import { Phone, MessageCircle } from "lucide-react";
-import { telLink, whatsappLink, siteConfig, callNowTelLink } from "@/lib/site-config";
+import { Phone } from "lucide-react";
+import { whatsappLink, callNowTelLink } from "@/lib/site-config";
 import { trackCallClick } from "@/lib/analytics";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 
 /** Mobile-only sticky bar for ad landing pages — overrides the default sticky CTA. */
 export function StickyCallBar() {
@@ -12,7 +13,7 @@ export function StickyCallBar() {
         <Phone className="h-5 w-5 shrink-0" /> Call Now
       </a>
       <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex min-h-14 items-center justify-center gap-2 px-2 py-3 text-sm font-bold text-water-deep active:bg-white/40">
-        <MessageCircle className="h-5 w-5 shrink-0" /> WhatsApp
+        <WhatsAppIcon className="h-5 w-5 text-[#25D366]" /> WhatsApp
       </a>
     </div>
   );

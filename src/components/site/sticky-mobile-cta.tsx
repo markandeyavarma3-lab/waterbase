@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { MessageCircle, PhoneCall } from "lucide-react";
+import { PhoneCall } from "lucide-react";
 import { whatsappLink } from "@/lib/site-config";
 import { trackRequestCallbackClick } from "@/lib/analytics";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 
 export function StickyMobileCTA() {
   return (
@@ -15,7 +16,7 @@ export function StickyMobileCTA() {
       className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 sink-panel living-mesh-c px-safe pb-safe md:hidden"
     >
       <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex min-h-14 flex-col items-center justify-center gap-0.5 border-r border-border px-2 py-2 text-center text-xs font-medium leading-tight transition-colors active:bg-brand-green-soft">
-        <MessageCircle className="h-5 w-5 shrink-0 text-brand-green" /> WhatsApp
+        <WhatsAppIcon className="h-5 w-5 text-[#25D366]" /> WhatsApp
       </a>
       <Link
         href="/contact"

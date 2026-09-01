@@ -1,6 +1,7 @@
-import { MessageCircle, Mail, MapPin, Clock, Sprout, ArrowUpRight, Phone } from "lucide-react";
+import { Mail, MapPin, Clock, Sprout, ArrowUpRight, Phone } from "lucide-react";
 import { LeadForm } from "@/components/sections/lead-form";
 import { Reveal } from "@/components/sections/reveal";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { siteConfig, whatsappLink, fullAddress, telLink, formatPhone, callNowTelLink } from "@/lib/site-config";
 
 export function Contact() {
@@ -34,7 +35,7 @@ export function Contact() {
 
                 <a href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-3">
                   <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
-                    <MessageCircle className="h-5 w-5" />
+                    <WhatsAppIcon className="h-5 w-5" />
                   </span>
                   <span>
                     <span className="block text-sm text-muted-foreground">WhatsApp</span>
