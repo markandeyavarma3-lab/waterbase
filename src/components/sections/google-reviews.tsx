@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Building2, Car, MapPin, Store, Warehouse } from "lucide-react";
+import { ArrowUpRight, Building2, Car, MapPin, Star, Store, Warehouse } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { siteConfig, fullAddress } from "@/lib/site-config";
@@ -32,12 +32,9 @@ export function GoogleReviews() {
               {siteConfig.googleListings.map((listing, i) => {
                 const Icon = listingIcons[listing.id] ?? MapPin;
                 return (
-                  <a
+                  <div
                     key={listing.id}
-                    href={listing.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`group flex flex-col p-6 transition-colors hover:bg-white/55 ${
+                    className={`flex flex-col p-6 ${
                       i < siteConfig.googleListings.length - 1 ? "border-b border-water-deep/8 sm:border-b-0 sm:border-r" : ""
                     }`}
                   >
@@ -47,18 +44,26 @@ export function GoogleReviews() {
                     <h3 className="mt-4 font-display text-base font-semibold uppercase tracking-[0.06em] text-water-deep">
                       {listing.name}
                     </h3>
-                    <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">{listing.blurb}</p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-green">
-                      Reviews
-                      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                    </span>
-                  </a>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{listing.blurb}</p>
+                  </div>
                 );
               })}
             </div>
           </div>
 
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex flex-col items-center gap-3">
+            <a
+              href={siteConfig.googleReviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center rounded-full border border-water-deep/12 bg-white/80 py-2.5 pl-4 pr-5 shadow-lift backdrop-blur-md transition-colors hover:bg-white"
+            >
+              <Star className="h-4 w-4 shrink-0 fill-brand-green text-brand-green" aria-hidden="true" />
+              <span className="ml-2 font-display text-sm font-semibold text-water-deep">
+                View reviews on Google
+              </span>
+              <ArrowUpRight className="ml-1.5 h-3.5 w-3.5 text-water-deep/40 transition-colors group-hover:text-brand-green" aria-hidden="true" />
+            </a>
             <a
               href={siteConfig.mapsUrl}
               target="_blank"

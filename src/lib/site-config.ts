@@ -89,7 +89,10 @@ export const siteConfig = {
 
   mapsUrl: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
 
-  // Google Business listings. Paste each Maps short-link into `url` when you have it.
+  // Google reviews / Business Profile share link
+  googleReviewsUrl: "https://share.google/gZn0nWF44xQMTwbdT",
+
+  // Google Business listings (same campus — Maps URL is fine for all three).
   googleListings: [
     {
       id: "office",
