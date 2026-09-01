@@ -1,0 +1,41 @@
+PHOTO CREDITS (Wikimedia Commons / Unsplash — free to use)
+
+These fill the homepage “what we do” cards and the projects gallery until
+Waterbase’s own site photos are available. Swap any file in place (same name)
+and it updates automatically.
+
+work/fields.jpg
+  Blond and green rice fields — Wikimedia Commons
+
+work/lawns.jpg
+  Sprinkler Irrigation - Sprinkler head — Wikimedia Commons
+
+work/nurseries.jpg
+  Greenhouse interior — Wikimedia Commons
+
+projects/banana-drip.jpg
+  Drip irrigation in banana farm, Chinawal, India — ABHIJEET (Wikimedia Commons)
+
+projects/apmip-micro.jpg
+  Drip Irrigation T-tape — David Trainer (Flickr / Wikimedia Commons)
+
+projects/campus-landscape.jpg
+  Formal garden path — Unsplash
+
+projects/nursery-drip.jpg
+  Polyhouse — Wikimedia Commons
+
+projects/chilli-drip.jpg
+  Chili peppers field, Bangladesh — Wikimedia Commons
+
+projects/paddy-sprinkler.jpg
+  Blond and green rice fields — Wikimedia Commons
+
+projects/before-field.jpg
+  Dry cracked soil — Famartin, Virginia, USA (Wikimedia Commons)
+
+projects/after-field.jpg
+  Farm fields of Munnar — Unsplash via Wikimedia Commons
+
+Note: before/after are representative (not the same camera position).
+Replace with a matched pair from a Waterbase site when you have them.
