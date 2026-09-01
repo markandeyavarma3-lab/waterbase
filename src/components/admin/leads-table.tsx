@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Search, Download, Loader2, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { LEAD_STATUSES, REQUIREMENT_OPTIONS, type Lead, type LeadStatus } from "@/lib/leads";
 import { updateLeadStatus, updateLeadNotes } from "@/lib/actions/leads";
+import { whatsappLink } from "@/lib/site-config";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -92,6 +93,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
   const [pending, startTransition] = useTransition();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [requirementFilter, setRequirementFilter] = useState("all");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [pageState, setPageState] = useState(1);
 
@@ -100,9 +102,10 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
     return leads.filter((l) => {
       const matchesQuery = !q || l.name.toLowerCase().includes(q) || l.mobile.includes(q);
       const matchesStatus = statusFilter === "all" || l.status === statusFilter;
-      return matchesQuery && matchesStatus;
+      const matchesRequirement = requirementFilter === "all" || l.requirement === requirementFilter;
+      return matchesQuery && matchesStatus && matchesRequirement;
     });
-  }, [leads, query, statusFilter]);
+  }, [leads, query, statusFilter, requirementFilter]);
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   // Derived, not stored — clamps automatically once a narrower search/status
@@ -148,6 +151,12 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
               <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
+          <select aria-label="Filter leads by requirement" value={requirementFilter} onChange={(e) => setRequirementFilter(e.target.value)} className="h-9 max-w-[14rem] rounded-md border border-input bg-transparent px-2.5 text-sm">
+            <option value="all">All requirements</option>
+            {REQUIREMENT_OPTIONS.map((s) => (
+              <option key={s.value} value={s.value}>{s.label}</option>
+            ))}
+          </select>
           <Button variant="outline" size="sm" onClick={exportCsv}>
             <Download className="h-4 w-4" /> Export
           </Button>
@@ -182,6 +191,8 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
                   <td className="px-4 py-3 font-medium">{l.name}</td>
                   <td className="whitespace-nowrap px-4 py-3">
                     <a href={`tel:+91${l.mobile}`} className="text-brand-green hover:underline">{l.mobile}</a>
+                    {" · "}
+                    <a href={whatsappLink(`Hi ${l.name}, this is Waterbase Technologies regarding your website enquiry.`, l.mobile)} target="_blank" rel="noopener noreferrer" className="text-brand-green hover:underline">WA</a>
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">{l.location || "—"}</td>
                   <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{l.land_size || "—"}</td>

@@ -25,11 +25,6 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/contact" className="tap-target-y link-underline text-water-deep/75 hover:text-water-deep">
-                Contact
-              </Link>
-            </li>
           </ul>
         </nav>
         <div>
@@ -45,6 +40,15 @@ export function Footer() {
           </p>
           <p className="mt-3 text-xs text-water-deep/55">
             {siteConfig.hoursSummary.days} · {siteConfig.hoursSummary.time}
+          </p>
+          <p className="mt-3 text-sm">
+            <a href={siteConfig.googleReviewsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-brand-green">
+              Google reviews
+            </a>
+            {" · "}
+            <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-brand-green">
+              Find us on Maps
+            </a>
           </p>
         </div>
       </div>

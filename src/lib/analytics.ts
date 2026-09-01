@@ -82,6 +82,12 @@ function sendTo(label: string): string {
   return label.includes("/") ? label : `${siteConfig.googleAdsId}/${label}`;
 }
 
+/** Also send a GA4 event so GTM / GA4 pick up the CTA without extra tags. */
+function ga4Event(name: string, params: Record<string, unknown> = {}) {
+  const gtag = getGtag();
+  gtag?.("event", name, params);
+}
+
 function fire(kind: ConversionKind) {
   const gtag = getGtag();
   if (!gtag) return;
@@ -121,25 +127,30 @@ export function trackContactClick() {
 
 /** Fires once on /thank-you after a genuine callback-form submission. */
 export function trackFormSubmit() {
+  pushDataLayer("cta_form_submit", { cta: "form_submit" });
+  ga4Event("cta_form_submit", { cta: "form_submit" });
   fire("form");
 }
 
 /** Hero / landing "Call now" tel: click — Ads conversion + GTM event `cta_call_now`. */
 export function trackCallClick() {
   pushDataLayer("cta_call_now", { cta: "call_now", phone: siteConfig.callNowNumber });
+  ga4Event("cta_call_now", { cta: "call_now", phone: siteConfig.callNowNumber });
   fire("call");
 }
 
 /** Hero / sticky "Request a callback" click — GTM event `cta_request_callback`. */
 export function trackRequestCallbackClick() {
   pushDataLayer("cta_request_callback", { cta: "request_callback" });
+  ga4Event("cta_request_callback", { cta: "request_callback" });
 }
 
 /**
- * Floating WhatsApp button — GTM event `cta_whatsapp_float`
+ * WhatsApp float / sticky WhatsApp — GTM event `cta_whatsapp_float`
  * plus the WhatsApp/contact Ads conversion.
  */
 export function trackWhatsAppFloatClick() {
   pushDataLayer("cta_whatsapp_float", { cta: "whatsapp_float", phone: siteConfig.whatsappNumber });
+  ga4Event("cta_whatsapp_float", { cta: "whatsapp_float", phone: siteConfig.whatsappNumber });
   fire("contact");
 }

@@ -87,6 +87,12 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
       // or a shared link, so the Google Ads form conversion is counted exactly
       // once per submission. A second genuine submission gets a new token and is
       // counted again, which a plain "already fired" flag would have swallowed.
+      try {
+        const from = `${window.location.pathname}${window.location.search}`;
+        sessionStorage.setItem("wb:return-after-thanks", from);
+      } catch {
+        // Private browsing — thank-you will fall back to history or home.
+      }
       router.push(`/thank-you?ref=lead&s=${submissionToken()}`);
     } else {
       setServerError(result.message);
