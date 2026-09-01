@@ -35,8 +35,8 @@ See the README.txt inside each folder for the full notes.
 ALSO EMPTY — THE WHOLE PRODUCTS PAGE
 ------------------------------------
 
-public/products/     Phase 1 filled (micro irrigation). Pipes, pumps and
-                     farm essentials still empty — next phases.
+public/products/     Phases 1 and 3 filled (micro irrigation, pumps, farm
+                     essentials). Pipes may still be empty until Phase 2 merges.
 
 
 ALREADY WORKING (no action needed)
