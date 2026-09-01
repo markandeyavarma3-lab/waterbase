@@ -126,7 +126,7 @@ export function trackFormSubmit() {
 
 /** Hero / landing "Call now" tel: click — Ads conversion + GTM event `cta_call_now`. */
 export function trackCallClick() {
-  pushDataLayer("cta_call_now", { cta: "call_now" });
+  pushDataLayer("cta_call_now", { cta: "call_now", phone: siteConfig.callNowNumber });
   fire("call");
 }
 
@@ -136,10 +136,10 @@ export function trackRequestCallbackClick() {
 }
 
 /**
- * Floating "Connect on WhatsApp" widget — GTM event `cta_whatsapp_float`
+ * Floating WhatsApp button — GTM event `cta_whatsapp_float`
  * plus the WhatsApp/contact Ads conversion.
  */
 export function trackWhatsAppFloatClick() {
-  pushDataLayer("cta_whatsapp_float", { cta: "whatsapp_float" });
+  pushDataLayer("cta_whatsapp_float", { cta: "whatsapp_float", phone: siteConfig.whatsappNumber });
   fire("contact");
 }

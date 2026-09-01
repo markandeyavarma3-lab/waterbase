@@ -11,7 +11,7 @@ import { DUR, EASE_OUT_EXPO } from "@/lib/motion";
 import { WaterCaustics } from "@/components/site/water-caustics";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
-import { siteConfig, telLink } from "@/lib/site-config";
+import { siteConfig, telLink, callNowTelLink } from "@/lib/site-config";
 import { trackCallClick, trackRequestCallbackClick } from "@/lib/analytics";
 
 export function Hero() {
@@ -72,7 +72,7 @@ export function Hero() {
                   is the muted token — full-strength brand-sun read as neon here. */}
               <MotionPress magnetic>
                 <a
-                  href={telLink(siteConfig.phones.sales.primary)}
+                  href={callNowTelLink()}
                   onClick={trackCallClick}
                   data-gtm="call_now"
                   className="cta-sink-primary cta-call-now group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold transition-colors duration-300"

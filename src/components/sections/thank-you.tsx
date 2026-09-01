@@ -71,7 +71,7 @@ export function ThankYou() {
 
   const waLink = whatsappLink(
     "Hi Waterbase, I just submitted a callback request through your website.",
-    siteConfig.phones.sales.primary
+    siteConfig.whatsappNumber
   );
 
   return (

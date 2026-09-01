@@ -13,7 +13,7 @@ function to24h(t: string): string {
 }
 
 export function localBusinessJsonLd() {
-  const { phones, address } = siteConfig;
+  const { address } = siteConfig;
 
   const openingHoursSpecification = siteConfig.hours
     .filter((h) => h.open && h.close)
@@ -33,7 +33,7 @@ export function localBusinessJsonLd() {
     description: siteConfig.description,
     url: siteConfig.url,
     email: siteConfig.email,
-    telephone: [`+91${phones.sales.primary}`, `+91${phones.sales.secondary}`],
+    telephone: [`+91${siteConfig.callNowNumber}`, `+91${siteConfig.whatsappNumber}`],
     foundingDate: String(siteConfig.since),
     priceRange: "₹₹",
     address: {

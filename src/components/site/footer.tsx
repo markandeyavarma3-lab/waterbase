@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { siteConfig, whatsappLink, telLink, formatPhone, fullAddress } from "@/lib/site-config";
+import { siteConfig, whatsappLink, formatPhone, fullAddress, callNowTelLink } from "@/lib/site-config";
 import { NAV_LINKS } from "@/lib/nav";
 
 export function Footer() {
-  const { sales } = siteConfig.phones;
-
   return (
     <footer className="relative sink-panel living-mesh-c border-t border-transparent text-water-deep/80">
       <div className="h-px w-full bg-gradient-to-r from-brand-green/40 via-brand-blue/50 to-brand-green/40" />
@@ -38,14 +36,11 @@ export function Footer() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-water-deep/50">Visit &amp; call</p>
           <p className="mt-4 text-sm leading-relaxed text-water-deep/70">{fullAddress}</p>
           <p className="mt-3 space-y-1 text-sm font-medium text-water-deep">
-            <a href={telLink(sales.primary)} className="block hover:text-brand-green">
-              {formatPhone(sales.primary)}
-            </a>
-            <a href={telLink(sales.secondary)} className="block hover:text-brand-green">
-              {formatPhone(sales.secondary)}
+            <a href={callNowTelLink()} className="block hover:text-brand-green">
+              Call {formatPhone(siteConfig.callNowNumber)}
             </a>
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="block hover:text-brand-green">
-              WhatsApp
+              WhatsApp {formatPhone(siteConfig.whatsappNumber)}
             </a>
           </p>
           <p className="mt-3 text-xs text-water-deep/55">

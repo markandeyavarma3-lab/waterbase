@@ -24,7 +24,10 @@ export const siteConfig = {
   areasServed: ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"],
   brandPartners: ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNet"],
 
-  // Public: primary + WhatsApp. Secondary is shown on contact as an alternate line.
+  // Public lines — Call Now uses callNowNumber; WhatsApp uses whatsappNumber.
+  callNowNumber: "9440018418",
+  whatsappNumber: "7793938418",
+
   phones: {
     sales: {
       label: "Sales & Products",
@@ -43,8 +46,8 @@ export const siteConfig = {
     },
   },
 
-  // Public WhatsApp — also used as the primary contact number for Call Now.
-  whatsappNumber: "7793938418",
+  // WhatsApp only — do not use for tel: Call Now links.
+  // (whatsappNumber is defined above next to callNowNumber.)
 
   address: {
     buildingNo: "1-1159",
@@ -124,6 +127,11 @@ export const siteConfig = {
 
 export function telLink(number: string) {
   return `tel:+${siteConfig.countryCode}${number}`;
+}
+
+/** Call Now buttons — 9440018418 */
+export function callNowTelLink() {
+  return telLink(siteConfig.callNowNumber);
 }
 
 /** Display as +91 77939 38418 */

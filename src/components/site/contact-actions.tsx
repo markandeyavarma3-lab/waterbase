@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { MessageCircle, PhoneCall, Phone } from "lucide-react";
 import { MotionPress } from "@/components/ui/motion-press";
-import { whatsappLink, telLink, siteConfig } from "@/lib/site-config";
+import { whatsappLink, telLink, siteConfig, callNowTelLink } from "@/lib/site-config";
 import { trackCallClick, trackRequestCallbackClick } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,7 @@ export function ContactActions({
         <>
           <MotionPress>
             <a
-              href={telLink(siteConfig.phones.sales.primary)}
+              href={callNowTelLink()}
               onClick={trackCallClick}
               data-gtm="call_now"
               className={cn("cta-sink-primary inline-flex items-center justify-center gap-2 rounded-full font-semibold", pad)}
