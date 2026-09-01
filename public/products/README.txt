@@ -6,8 +6,8 @@ of images into a folder and that card uses them; with more than one they
 cross-fade automatically. Leave a folder empty and the card shows a blueprint
 "image pending" placeholder instead.
 
-Right now Phase 1 (Micro Irrigation & Watering) has stock photos.
-Phases 2–4 (pipes, pumps, farm essentials) are still empty placeholders.
+Right now Phases 1 and 3 have stock photos (micro irrigation, then pumps
+    and farm essentials). Pipes (Phase 2) may still be empty until that PR merges.
 
 Accepted formats: .jpg  .jpeg  .png  .webp  .gif
 Filenames inside a folder do not matter — only the FOLDER name does.
