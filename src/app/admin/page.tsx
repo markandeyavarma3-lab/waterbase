@@ -33,9 +33,12 @@ export default async function AdminPage() {
   // the fetched rows. Filtering only ever saw the first PAGE_LIMIT leads, so
   // past that point the pipeline numbers would quietly stop adding up to Total.
   // `head: true` means these transfer counts, not rows.
-  const [leadsResult, totalResult, ...statusResults] = await Promise.all([
+  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+  const [leadsResult, totalResult, weekResult, ...statusResults] = await Promise.all([
     admin.from("leads").select("*").order("created_at", { ascending: false }).limit(PAGE_LIMIT),
     admin.from("leads").select("id", { count: "exact", head: true }),
+    admin.from("leads").select("id,status,requirement,created_at").gte("created_at", weekAgo),
     ...LEAD_STATUSES.map((s) =>
       admin.from("leads").select("id", { count: "exact", head: true }).eq("status", s.value)
     ),
@@ -47,6 +50,9 @@ export default async function AdminPage() {
     label: s.label,
     count: statusResults[i]?.count ?? 0,
   }));
+  const weekRows = (weekResult.data ?? []) as Pick<Lead, "id" | "status" | "requirement" | "created_at">[];
+  const weekNew = weekRows.filter((l) => l.status === "new").length;
+  const weekConverted = weekRows.filter((l) => l.status === "converted").length;
 
   return (
     <div className="min-h-screen">
@@ -63,6 +69,31 @@ export default async function AdminPage() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <div className="mb-6 rounded-2xl sink-panel p-5">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Last 7 days</p>
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div>
+              <div className="font-display text-2xl font-extrabold text-brand-green">{weekRows.length}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">New form leads</div>
+            </div>
+            <div>
+              <div className="font-display text-2xl font-extrabold">{weekNew}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">Still marked New</div>
+            </div>
+            <div>
+              <div className="font-display text-2xl font-extrabold">{weekConverted}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">Converted this week</div>
+            </div>
+            <div>
+              <div className="font-display text-2xl font-extrabold">{totalCount}</div>
+              <div className="mt-0.5 text-xs text-muted-foreground">All-time leads</div>
+            </div>
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Call and WhatsApp clicks live in Google Ads / GA4 (events <code>cta_call_now</code> and <code>cta_whatsapp_float</code>). Form leads are counted here.
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           <div className="rounded-xl sink-panel p-4">
             <div className="font-display text-2xl font-extrabold text-brand-green">{totalCount}</div>

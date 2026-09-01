@@ -5,7 +5,6 @@ import { Reveal } from "@/components/sections/reveal";
 import { Stats } from "@/components/sections/stats";
 import { LeadForm } from "@/components/sections/lead-form";
 import { ContactActions } from "@/components/site/contact-actions";
-import { StickyCallBar } from "@/components/site/sticky-call-bar";
 import type { RequirementValue } from "@/lib/leads";
 
 export interface LandingPageTemplateProps {
@@ -149,7 +148,6 @@ export function LandingPageTemplate({
           </Reveal>
         </Container>
       </Section>
-      <StickyCallBar />
     </>
   );
 }

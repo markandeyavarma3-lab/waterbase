@@ -26,7 +26,7 @@ export function localBusinessJsonLd() {
 
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "IrrigationService"],
     "@id": `${siteConfig.url}/#business`,
     name: siteConfig.name,
     legalName: siteConfig.legalName,
@@ -36,6 +36,12 @@ export function localBusinessJsonLd() {
     telephone: [`+91${siteConfig.callNowNumber}`, `+91${siteConfig.whatsappNumber}`],
     foundingDate: String(siteConfig.since),
     priceRange: "₹₹",
+    sameAs: [siteConfig.mapsUrl, siteConfig.googleReviewsUrl],
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 16.7107,
+      longitude: 81.0952,
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: `${address.buildingName}, ${address.road}, near ${address.landmark}`,

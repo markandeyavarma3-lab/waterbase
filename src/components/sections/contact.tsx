@@ -105,6 +105,40 @@ export function Contact() {
             <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-colors group-hover:text-brand-green" />
           </a>
         </Reveal>
+
+        <Reveal delay={160}>
+          <div className="mt-8">
+            <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Google Business Profile</p>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+              Search “Waterbase Technologies Eluru” on Google, then tap Directions, Call, or Write a review. Keep hours, photos and the website link current on the listing so Maps and Search stay accurate.
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {siteConfig.googleListings.map((listing) => (
+                <a
+                  key={listing.id}
+                  href={listing.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-soft transition-colors hover:border-brand-green/40"
+                >
+                  <span className="block font-display font-semibold text-foreground">{listing.name}</span>
+                  <span className="mt-1 block text-sm text-muted-foreground">{listing.blurb}</span>
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-brand-green">
+                    Open in Maps <ArrowUpRight className="h-4 w-4" />
+                  </span>
+                </a>
+              ))}
+            </div>
+            <a
+              href={siteConfig.googleReviewsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex text-sm font-semibold text-brand-green hover:underline"
+            >
+              View Google reviews
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
