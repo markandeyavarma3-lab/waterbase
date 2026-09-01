@@ -48,7 +48,7 @@ export function ContactActions({
               rel="noopener noreferrer"
               className={cn("cta-sink-secondary inline-flex items-center justify-center gap-2 rounded-full font-semibold", pad)}
             >
-              <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+              <WhatsAppIcon className="h-5 w-5" /> WhatsApp
             </a>
           </MotionPress>
         </>
@@ -61,7 +61,7 @@ export function ContactActions({
               rel="noopener noreferrer"
               className={cn("cta-sink-primary inline-flex items-center justify-center gap-2 rounded-full font-semibold", pad)}
             >
-              <WhatsAppIcon className="h-4 w-4" /> Message on WhatsApp
+              <WhatsAppIcon className="h-5 w-5" /> Message on WhatsApp
             </a>
           </MotionPress>
           <MotionPress>

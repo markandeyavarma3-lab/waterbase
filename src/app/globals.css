@@ -1087,8 +1087,8 @@
 
   /* Small floating WhatsApp logo — gentle bob + soft pulse ring. */
   .wa-float {
-    right: max(1rem, env(safe-area-inset-right, 0px));
-    bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+    right: max(1.25rem, env(safe-area-inset-right, 0px));
+    bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
     animation: wa-float-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   .wa-float-btn {
