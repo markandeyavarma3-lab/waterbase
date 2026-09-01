@@ -126,7 +126,7 @@ export function ThankYou() {
                 rel="noopener noreferrer"
                 className="cta-sink-primary inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold"
               >
-                <WhatsAppIcon className="h-4 w-4" />
+                <WhatsAppIcon className="h-5 w-5" />
                 Message us on WhatsApp
               </a>
               <Link

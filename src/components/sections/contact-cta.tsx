@@ -32,7 +32,7 @@ export function ContactCTA() {
           <Reveal delay={160}>
             <div className="sink-panel overflow-hidden rounded-3xl">
               <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 border-b border-water-deep/10 px-6 py-4 transition-colors hover:bg-white/40">
-                <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+                <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
                 <span className="min-w-0">
                   <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-water-deep">WhatsApp us</span>
                   <span className="text-sm text-water-deep/60">{formatPhone(siteConfig.whatsappNumber)}</span>
