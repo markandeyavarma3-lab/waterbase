@@ -12,7 +12,7 @@ import { WaterCaustics } from "@/components/site/water-caustics";
 import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig, telLink } from "@/lib/site-config";
-import { trackCallClick } from "@/lib/analytics";
+import { trackCallClick, trackRequestCallbackClick } from "@/lib/analytics";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -74,6 +74,7 @@ export function Hero() {
                 <a
                   href={telLink(siteConfig.phones.sales.primary)}
                   onClick={trackCallClick}
+                  data-gtm="call_now"
                   className="cta-sink-primary cta-call-now group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold transition-colors duration-300"
                 >
                   <Phone className="h-[1.05rem] w-[1.05rem]" aria-hidden="true" />
@@ -83,6 +84,8 @@ export function Hero() {
               <MotionPress>
                 <Link
                   href="/contact"
+                  onClick={trackRequestCallbackClick}
+                  data-gtm="request_callback"
                   className="cta-sink-secondary group inline-flex items-center gap-2 rounded-full px-7 py-4 text-base font-semibold transition-colors duration-300"
                 >
                   Request a callback

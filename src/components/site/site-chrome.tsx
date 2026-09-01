@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { StickyMobileCTA } from "@/components/site/sticky-mobile-cta";
+import { WhatsAppFloat } from "@/components/site/whatsapp-float";
 import { SOLUTION_LINKS } from "@/lib/nav";
 
 // Ad landing pages render their own StickyCallBar (Call Now + WhatsApp) —
@@ -33,6 +34,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           footer's legal links at the bottom of every page on a phone. */}
       <div aria-hidden className="h-mobile-cta md:hidden" />
       {isLandingPage ? null : <StickyMobileCTA />}
+      <WhatsAppFloat />
     </>
   );
 }

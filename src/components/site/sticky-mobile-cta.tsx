@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { MessageCircle, PhoneCall } from "lucide-react";
 import { whatsappLink } from "@/lib/site-config";
+import { trackRequestCallbackClick } from "@/lib/analytics";
 
 export function StickyMobileCTA() {
   return (
@@ -16,7 +17,12 @@ export function StickyMobileCTA() {
       <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex min-h-14 flex-col items-center justify-center gap-0.5 border-r border-border px-2 py-2 text-center text-xs font-medium leading-tight transition-colors active:bg-brand-green-soft">
         <MessageCircle className="h-5 w-5 shrink-0 text-brand-green" /> WhatsApp
       </a>
-      <Link href="/contact" className="flex min-h-14 flex-col items-center justify-center gap-0.5 px-2 py-2 text-center text-xs font-medium leading-tight transition-colors active:bg-brand-green-soft">
+      <Link
+        href="/contact"
+        onClick={trackRequestCallbackClick}
+        data-gtm="request_callback"
+        className="flex min-h-14 flex-col items-center justify-center gap-0.5 px-2 py-2 text-center text-xs font-medium leading-tight transition-colors active:bg-brand-green-soft"
+      >
         <PhoneCall className="h-5 w-5 shrink-0 text-brand-green" /> Request callback
       </Link>
     </motion.div>

@@ -12,6 +12,8 @@ export function ConversionTracker() {
       if (!(target instanceof Element)) return;
       const link = target.closest("a");
       if (!link) return;
+      // Floating WA widget fires its own conversion + GTM event — skip double count.
+      if (link.getAttribute("data-gtm") === "whatsapp_float") return;
       const href = link.getAttribute("href") ?? "";
       if (WHATSAPP_HOSTS.test(href)) {
         trackContactClick();
