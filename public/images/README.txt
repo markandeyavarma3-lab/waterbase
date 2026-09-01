@@ -8,8 +8,8 @@ a blueprint "image pending" placeholder instead.
 After adding files: commit + push -> Vercel rebuilds -> photos are live.
 
 
-11 PHOTOS ARE CURRENTLY MISSING
--------------------------------
+11 PHOTO SLOTS — filled with licensed stock until site photos are swapped in
+--------------------------------------------------------------------------
 
 public/images/work/          (3)  homepage "what we do" cards
     fields.jpg                    Fields & farms
@@ -17,14 +17,17 @@ public/images/work/          (3)  homepage "what we do" cards
     nurseries.jpg                 Nurseries & greenhouses
 
 public/images/projects/      (8)  Projects page + before/after slider
-    banana-drip.jpg               50-acre banana drip system
-    apmip-micro.jpg               Subsidy-assisted micro irrigation
-    campus-landscape.jpg          Campus landscape irrigation
-    nursery-drip.jpg              Poly-house mist & drip system
-    chilli-drip.jpg               Chilli crop drip installation
-    paddy-sprinkler.jpg           Paddy sprinkler project
-    before-field.jpg              before/after slider — dry / bare field
-    after-field.jpg               before/after slider — green / irrigated
+    banana-drip.jpg               Banana drip (India)
+    apmip-micro.jpg               Drip / micro irrigation
+    campus-landscape.jpg          Campus landscape
+    nursery-drip.jpg              Poly-house
+    chilli-drip.jpg               Chilli crop
+    paddy-sprinkler.jpg           Paddy / field irrigation
+    before-field.jpg              Dry field (representative)
+    after-field.jpg               Green field (representative)
+
+See PHOTO-CREDITS.txt in this folder. Drop your own JPGs with the same
+filenames to replace stock.
 
 See the README.txt inside each folder for the full notes.
 
