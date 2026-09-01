@@ -1085,40 +1085,41 @@
     .maps-pill-car { animation: none !important; left: 72%; opacity: 0.7; }
   }
 
-  /* Floating WhatsApp popup — sits above the mobile sticky CTA bar. */
+  /* Small floating WhatsApp logo — gentle bob + soft pulse ring. */
   .wa-float {
     right: max(1rem, env(safe-area-inset-right, 0px));
     bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
-    animation: wa-float-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: wa-float-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .wa-float-btn {
+    animation: wa-float-bob 3.6s ease-in-out 0.5s infinite;
   }
   @media (max-width: 767px) {
     .wa-float {
-      left: max(1rem, env(safe-area-inset-left, 0px));
-      right: max(1rem, env(safe-area-inset-right, 0px));
-      max-width: none;
-      bottom: calc(3.5rem + 1px + env(safe-area-inset-bottom, 0px) + 0.85rem);
-    }
-    .wa-float-card {
-      border-radius: 1.75rem;
-    }
-    .wa-float-tail {
-      right: 1.75rem;
+      bottom: calc(3.5rem + 1px + env(safe-area-inset-bottom, 0px) + 0.75rem);
     }
   }
-  .wa-float-pulse {
-    animation: wa-float-pulse 2.2s ease-in-out infinite;
+  .wa-float-ring {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45);
+    animation: wa-float-ring 2.8s ease-out infinite;
   }
   @keyframes wa-float-in {
-    from { opacity: 0; transform: translateY(22px) scale(0.94); }
+    from { opacity: 0; transform: translateY(12px) scale(0.88); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
-  @keyframes wa-float-pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.18); opacity: 0.82; }
+  @keyframes wa-float-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  @keyframes wa-float-ring {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.42); }
+    70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .wa-float,
-    .wa-float-pulse { animation: none !important; }
+    .wa-float-btn,
+    .wa-float-ring { animation: none !important; }
   }
 
   /* Explicit 44px hit area on touch devices only — keyed off the *pointer*, not
