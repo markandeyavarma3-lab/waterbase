@@ -1,6 +1,7 @@
-import { CheckCircle2, MessageCircle } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { whatsappLink } from "@/lib/site-config";
 
 const services = [
@@ -28,7 +29,7 @@ export function Services() {
           </Reveal>
           <Reveal delay={150}>
             <Button asChild size="lg" className="mt-8 font-semibold">
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-5 w-5" /> Talk to our team</a>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"><WhatsAppIcon className="h-5 w-5" /> Talk to our team</a>
             </Button>
           </Reveal>
         </div>

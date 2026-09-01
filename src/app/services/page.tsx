@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Package, Ruler, Wrench, Workflow, Building2, Sprout, BadgePercent, Award, ShieldCheck, Users, Map, LifeBuoy, CheckCircle2, MessageCircle } from "lucide-react";
+import { Package, Ruler, Wrench, Workflow, Building2, Sprout, BadgePercent, Award, ShieldCheck, Users, Map, LifeBuoy, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, Container, SectionHeading, Eyebrow } from "@/components/site/section";
@@ -8,6 +8,7 @@ import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { Process } from "@/components/sections/process";
 import { ContactActions } from "@/components/site/contact-actions";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { pageMeta } from "@/lib/seo";
 import { siteConfig, whatsappLink } from "@/lib/site-config";
 
@@ -127,7 +128,7 @@ export default function ServicesPage() {
                 </div>
               </Reveal>
               <Reveal delay={200}>
-                <Button asChild size="lg" className="mt-8"><a href={whatsappLink()} target="_blank" rel="noopener noreferrer"><MessageCircle /> Talk to our team</a></Button>
+                <Button asChild size="lg" className="mt-8"><a href={whatsappLink()} target="_blank" rel="noopener noreferrer"><WhatsAppIcon className="h-5 w-5" /> Talk to our team</a></Button>
               </Reveal>
             </div>
             <Reveal delay={120}>

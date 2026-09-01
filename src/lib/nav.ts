@@ -8,6 +8,7 @@ export const NAV_LINKS = [
   { label: "Services", href: "/services", tone: "soil" },
   { label: "Crops", href: "/crops", tone: "sun" },
   { label: "About", href: "/about", tone: "blue" },
+  { label: "Contact", href: "/contact", tone: "green" },
 ] as const;
 
 export const SOLUTION_LINKS = [

@@ -40,7 +40,7 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
         role="group"
         aria-roledescription="carousel"
         aria-label="Companies we've delivered for"
-        className="relative mx-auto h-[17rem] w-full overflow-visible sm:h-[18rem]"
+        className="relative mx-auto h-[19rem] w-full overflow-visible sm:h-[20rem]"
       >
         <div className="pointer-events-none absolute inset-y-0 left-1/2 w-full max-w-4xl -translate-x-1/2">
           {items.map((item, index) => {
@@ -63,16 +63,16 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
               className={cn(
                 "pointer-events-auto absolute left-1/2 top-1/2 flex flex-col items-center justify-center gap-3 rounded-2xl border px-5",
                 isCenter
-                  ? "z-30 h-44 w-64 border-water-deep/10 bg-white/92 shadow-lift backdrop-blur-sm sm:h-48 sm:w-72"
-                  : "z-10 h-32 w-44 border-water-deep/6 bg-white/45 backdrop-blur-[3px] sm:h-36 sm:w-48"
+                  ? "z-30 h-48 w-72 border-water-deep/10 bg-white/95 shadow-lift backdrop-blur-sm sm:h-52 sm:w-80"
+                  : "z-10 h-36 w-48 border-water-deep/6 bg-white/70 backdrop-blur-[2px] sm:h-40 sm:w-56"
               )}
               initial={false}
               animate={{
                 x: `calc(-50% + ${diff * SPREAD_PX}px)`,
                 y: "-50%",
-                scale: isCenter ? 1.1 : isSide ? 0.78 : 0.65,
-                opacity: isCenter ? 1 : isSide ? 0.5 : 0,
-                filter: isCenter ? "blur(0px)" : isSide ? "blur(5px)" : "blur(12px)",
+                scale: isCenter ? 1.08 : isSide ? 0.82 : 0.65,
+                opacity: isCenter ? 1 : isSide ? 0.72 : 0,
+                filter: isCenter ? "blur(0px)" : isSide ? "blur(1.5px)" : "blur(8px)",
               }}
               transition={
                 prefersReducedMotion
@@ -81,13 +81,14 @@ export function CoverflowCarousel({ items }: { items: Logo[] }) {
               }
               style={{ pointerEvents: isVisible ? "auto" : "none" }}
             >
-              <div className={cn("relative w-full", isCenter ? "h-20 sm:h-24" : "h-14 sm:h-16")}>
+              <div className={cn("relative w-full", isCenter ? "h-24 sm:h-28" : "h-16 sm:h-20")}>
                 <Image
                   src={item.src}
                   alt={item.name}
                   fill
-                  sizes={isCenter ? "288px" : "208px"}
-                  className="object-contain"
+                  sizes={isCenter ? "320px" : "224px"}
+                  className="object-contain p-1"
+                  priority={index < 3}
                 />
               </div>
               <span

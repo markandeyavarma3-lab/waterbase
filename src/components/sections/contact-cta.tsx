@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Clock, Mail, MapPin, MessageCircle, PhoneCall } from "lucide-react";
+import { Clock, Mail, MapPin, PhoneCall } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { siteConfig, whatsappLink, fullAddress, formatPhone } from "@/lib/site-config";
 
 export function ContactCTA() {
@@ -31,7 +32,7 @@ export function ContactCTA() {
           <Reveal delay={160}>
             <div className="sink-panel overflow-hidden rounded-3xl">
               <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 border-b border-water-deep/10 px-6 py-4 transition-colors hover:bg-white/40">
-                <MessageCircle className="h-4 w-4 shrink-0 text-brand-green" aria-hidden="true" />
+                <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
                 <span className="min-w-0">
                   <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-water-deep">WhatsApp us</span>
                   <span className="text-sm text-water-deep/60">{formatPhone(siteConfig.whatsappNumber)}</span>

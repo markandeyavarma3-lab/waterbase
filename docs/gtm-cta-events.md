@@ -7,9 +7,10 @@ in Google Tag Manager using **Custom Event** triggers.
 |---|--------|-------------------|----------------------|
 | 1 | **Call now** | `cta_call_now` | `call_now` |
 | 2 | **Request a callback** | `cta_request_callback` | `request_callback` |
-| 3 | **Connect on WhatsApp** (floating) | `cta_whatsapp_float` | `whatsapp_float` |
+| 3 | **WhatsApp** (floating button) | `cta_whatsapp_float` | `whatsapp_float` |
 
-WhatsApp float opens `wa.me` for **7793938418**.
+- **Call now** dials **9440018418**
+- **WhatsApp** opens **7793938418**
 
 ---
 

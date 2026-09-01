@@ -1,7 +1,8 @@
-import { MessageCircle, Mail, MapPin, Clock, Sprout, ArrowUpRight, Phone } from "lucide-react";
+import { Mail, MapPin, Clock, Sprout, ArrowUpRight, Phone } from "lucide-react";
 import { LeadForm } from "@/components/sections/lead-form";
 import { Reveal } from "@/components/sections/reveal";
-import { siteConfig, whatsappLink, fullAddress, telLink, formatPhone } from "@/lib/site-config";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
+import { siteConfig, whatsappLink, fullAddress, telLink, formatPhone, callNowTelLink } from "@/lib/site-config";
 
 export function Contact() {
   const waMessage = "Hi Waterbase, I'd like to know more about your irrigation solutions.";
@@ -27,15 +28,14 @@ export function Contact() {
                     <Phone className="h-5 w-5" />
                   </span>
                   <span>
-                    <span className="block text-sm text-muted-foreground">Call</span>
-                    <a href={telLink(siteConfig.phones.sales.primary)} className="block font-semibold text-foreground hover:text-brand-green">{formatPhone(siteConfig.phones.sales.primary)}</a>
-                    <a href={telLink(siteConfig.phones.sales.secondary)} className="block text-sm font-medium text-muted-foreground hover:text-brand-green">{formatPhone(siteConfig.phones.sales.secondary)}</a>
+                    <span className="block text-sm text-muted-foreground">Call now</span>
+                    <a href={callNowTelLink()} className="block font-semibold text-foreground hover:text-brand-green">{formatPhone(siteConfig.callNowNumber)}</a>
                   </span>
                 </div>
 
                 <a href={whatsappLink(waMessage)} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-3">
                   <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
-                    <MessageCircle className="h-5 w-5" />
+                    <WhatsAppIcon className="h-5 w-5" />
                   </span>
                   <span>
                     <span className="block text-sm text-muted-foreground">WhatsApp</span>
