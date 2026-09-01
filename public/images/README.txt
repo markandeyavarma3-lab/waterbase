@@ -35,9 +35,8 @@ See the README.txt inside each folder for the full notes.
 ALSO EMPTY — THE WHOLE PRODUCTS PAGE
 ------------------------------------
 
-public/products/     14 folders, ALL empty, so every card on /products shows a
-                     placeholder. See public/products/README.txt for the list.
-                     Note this is public/products/, NOT public/images/products/.
+public/products/     Phase 1 filled (micro irrigation). Pipes, pumps and
+                     farm essentials still empty — next phases.
 
 
 ALREADY WORKING (no action needed)

@@ -6,8 +6,8 @@ of images into a folder and that card uses them; with more than one they
 cross-fade automatically. Leave a folder empty and the card shows a blueprint
 "image pending" placeholder instead.
 
-Right now ALL 14 folders are empty, so the whole Products page is placeholders.
-Even one photo per folder makes a large difference.
+Right now Phase 1 (Micro Irrigation & Watering) has stock photos.
+Phases 2–4 (pipes, pumps, farm essentials) are still empty placeholders.
 
 Accepted formats: .jpg  .jpeg  .png  .webp  .gif
 Filenames inside a folder do not matter — only the FOLDER name does.

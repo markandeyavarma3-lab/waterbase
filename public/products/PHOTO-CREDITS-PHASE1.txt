@@ -1,0 +1,21 @@
+PHASE 1 — Micro Irrigation & Watering (licensed stock)
+
+These fill the first product group on /products. Swap with Waterbase
+shelf / field photos using the same folders.
+
+drip-irrigation/
+  drip-greenhouse.jpg   Drip irrigation (Armenia) — Wikimedia Commons
+  drip-field.jpg        Drip irrigation system.JPG — Wikimedia Commons
+
+micro-mini-sprinklers/
+  micro-spray.jpg       Micro-spray sprinkler — Wikimedia Commons
+
+sprinkler-irrigation/
+  field-sprinkler.jpg   Sprinkler head in a cultivated field in Raichur — Wikimedia Commons
+  sprinklers-in-crop.jpg  NRBC distributary 10 sprinkler irrigation fields Raichur Karnataka — Wikimedia Commons
+
+rainguns/
+  raingun.jpg           On sprinkler dolly mounted rain gun — Wikimedia Commons
+
+filters-dosing-injectors/
+  media-filters.jpg     Irrigation and Water (NRCS) — Wikimedia Commons
