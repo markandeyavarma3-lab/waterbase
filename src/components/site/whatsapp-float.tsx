@@ -18,10 +18,10 @@ export function WhatsAppFloat() {
         data-gtm="whatsapp_float"
         onClick={trackWhatsAppFloatClick}
         aria-label="Connect on WhatsApp"
-        className="wa-float-btn group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_10px_28px_rgba(37,211,102,0.38)] transition-transform duration-300 hover:scale-105 hover:bg-[#1EBE5D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2"
+        className="wa-float-btn group relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_10px_28px_rgba(37,211,102,0.38)] transition-[filter,background-color] duration-300 hover:brightness-110 hover:bg-[#1EBE5D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2"
       >
         <span className="wa-float-ring pointer-events-none absolute inset-0 rounded-full" aria-hidden="true" />
-        <MessageCircle className="relative h-7 w-7" aria-hidden="true" />
+        <MessageCircle className="relative h-8 w-8" aria-hidden="true" />
       </a>
     </div>
   );
