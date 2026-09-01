@@ -4,10 +4,26 @@ import { siteConfig } from "@/lib/site-config";
 
 type GtagFn = (...args: unknown[]) => void;
 
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[];
+    gtag?: GtagFn;
+  }
+}
+
 function getGtag(): GtagFn | null {
   if (typeof window === "undefined") return null;
-  const g = (window as unknown as { gtag?: GtagFn }).gtag;
-  return typeof g === "function" ? g : null;
+  return typeof window.gtag === "function" ? window.gtag : null;
+}
+
+/**
+ * Push a Custom Event into GTM's dataLayer.
+ * Create a GTM trigger of type "Custom Event" with the same `event` name.
+ */
+export function pushDataLayer(event: string, payload: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event, ...payload });
 }
 
 /**
@@ -108,7 +124,22 @@ export function trackFormSubmit() {
   fire("form");
 }
 
-/** Fires when a "Call Now" tel: button is clicked on any landing page. */
+/** Hero / landing "Call now" tel: click — Ads conversion + GTM event `cta_call_now`. */
 export function trackCallClick() {
+  pushDataLayer("cta_call_now", { cta: "call_now" });
   fire("call");
+}
+
+/** Hero / sticky "Request a callback" click — GTM event `cta_request_callback`. */
+export function trackRequestCallbackClick() {
+  pushDataLayer("cta_request_callback", { cta: "request_callback" });
+}
+
+/**
+ * Floating "Connect on WhatsApp" widget — GTM event `cta_whatsapp_float`
+ * plus the WhatsApp/contact Ads conversion.
+ */
+export function trackWhatsAppFloatClick() {
+  pushDataLayer("cta_whatsapp_float", { cta: "whatsapp_float" });
+  fire("contact");
 }

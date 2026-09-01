@@ -1085,6 +1085,33 @@
     .maps-pill-car { animation: none !important; left: 72%; opacity: 0.7; }
   }
 
+  /* Floating WhatsApp launcher — sits above the mobile sticky CTA bar. */
+  .wa-float {
+    right: max(1rem, env(safe-area-inset-right, 0px));
+    bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+    animation: wa-float-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @media (max-width: 767px) {
+    .wa-float {
+      bottom: calc(3.5rem + 1px + env(safe-area-inset-bottom, 0px) + 0.85rem);
+    }
+  }
+  .wa-float-pulse {
+    animation: wa-float-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes wa-float-in {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes wa-float-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.85; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wa-float,
+    .wa-float-pulse { animation: none !important; }
+  }
+
   /* Explicit 44px hit area on touch devices only — keyed off the *pointer*, not
      the viewport, because a 1024px iPad is a touch device while a 1024px laptop
      window is not. Desktop keeps the tighter, more refined control sizes. */
