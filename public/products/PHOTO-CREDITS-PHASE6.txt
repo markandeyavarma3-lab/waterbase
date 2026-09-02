@@ -1,0 +1,20 @@
+PHASE 6 — Deeper Micro Irrigation product cards (licensed stock)
+
+Tops up folders that only had one Phase 1 photo so cards can
+cross-fade through more variants. Swap with Waterbase shelf /
+field photos using the same folders.
+
+micro-mini-sprinklers/
+  micro-sprinklers-cover-crop.jpg    Micro irrigation sprinklers and cover crop, Mota Ranch — NRCS, public domain
+  micro-sprinklers-field.jpg         Micro irrigation sprinklers in field, Mota Ranch — NRCS, public domain
+
+rainguns/
+  rain-gun-field.jpg                 Vegetative Treatment Area field with rain gun — NRCS, public domain
+  rain-gun-detail.jpg                Rain gun detail — Wikimedia Commons, CC BY-SA 3.0
+
+filters-dosing-injectors/
+  fertigation-setup.jpg              Fertigation — Wikimedia Commons, CC BY-SA 4.0
+  fertigation-tank.jpg               Fertigation tank — Wikimedia Commons, CC BY-SA 4.0
+  irrigation-filter-water.jpg        Irrigation and Water — NRCS, public domain
+
+Sources: Wikimedia Commons / NRCS. Not Waterbase job photos.
