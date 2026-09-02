@@ -1,0 +1,24 @@
+PHASE 3 — Pumps, starters, and farm essentials (licensed stock)
+
+These fill Motors & Pumps, Starters & Others, Mulching Sheets, and
+Planting Material on /products. Swap with Waterbase photos using the
+same folders.
+
+motors-pumps/
+  field-pump-set.jpg     Agricultural irrigation pump set with borewell, Vrindavan — Gannu03, CC BY-SA 4.0
+  open-well-pumps.jpg    Water pumps lifting water from an open well, Raichur — WELL Labs, CC BY-SA 4.0
+
+starters-others/
+  pump-starter.jpg       Woman operating an electrical pump starter, Raichur — Vraj Acharya / WELL Labs, CC BY-SA 4.0
+  pump-control-panel.jpg Electric water well pump with control panel, Tosu — Peka, CC BY-SA 4.0
+
+mulching-sheets/
+  white-mulch-rows.jpg   Vegetables grown on plastic mulch.JPG — Wikimedia Commons, public domain
+  black-mulch-rows.jpg   Strawberry field with black plastic mulching — Hayan Alhasan, CC BY-SA 4.0
+
+planting-material/
+  nursery-saplings.jpg   RJDRP Nursery DSC0282.jpg — T. R. Shankar Raman, CC BY-SA 4.0
+  tissue-culture.jpg     Plant tissue culture sample.jpg — Syed Sajidul Islam, CC BY-SA 4.0
+
+Sources: Wikimedia Commons. Not Waterbase job photos. Manufacturer catalog
+shots (including competing pump brands) were skipped.
