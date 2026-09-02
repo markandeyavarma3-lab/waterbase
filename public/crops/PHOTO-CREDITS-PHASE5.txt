@@ -1,0 +1,48 @@
+PHASE 5 — Remaining “and many more” crops (licensed stock)
+
+Adds photographed cards for sugarcane, paddy, turmeric, cotton,
+oilseeds, spices, and orchards. Also tops up cocoa and dragon-fruit
+to three images each. Swap with Waterbase field photos anytime.
+
+sugarcane/
+  sugarcane-ceruku.jpg                 Ceruku field sugarcane crop — Bhaskaranaidu, CC BY-SA 3.0
+  sugarcane-srirangapatna.jpg          Sugarcane Field Srirangapatna — Timothy A. Gonsalves, CC BY-SA 4.0
+  sugarcane-kachirapalayam.jpg         Sugarcane field of Kachirapalayam — Thamizhpparithi Maari, CC BY-SA 4.0
+
+paddy/
+  paddy-raichur-flooded.jpg            Flooded paddy field Raichur monsoon irrigation — Vraj Acharya / WELL Labs, CC BY-SA 4.0
+  paddy-raichur-borehole.jpg           Newly planted paddy with borehole irrigation, Raichur — Vraj Acharya / WELL Labs, CC BY-SA 4.0
+  paddy-kerala.jpg                     Paddy fields line the Kerala backwaters — McKay Savage, CC BY 2.0
+
+turmeric/
+  turmeric-chinawal.jpg                Turmeric Farm Chinawal — ABHIJEET, CC BY-SA 3.0
+  turmeric-chamarajanagar.jpg          Turmeric farm Chamarajanagar — T. R. Shankar Raman, CC BY-SA 3.0
+  turmeric-jamthi.jpg                  Turmeric farm in Jamthi Kh — Albert Deccan, CC BY-SA 4.0
+
+cotton/
+  cotton-raichur.jpg                   Cotton field in Raichur Karnataka — WELL Labs, CC BY-SA 4.0
+  cotton-perambalur.jpg                Cotton field Sathanur Perambalur — PJeganathan, CC BY-SA 3.0
+  cotton-andhra.jpg                    Balls of cotton ready for harvest, Andhra — CC BY-SA 4.0
+
+oilseeds/
+  mustard-fields.jpg                   Mustard Fields — Nitin Das, CC BY-SA 3.0
+  mustard-chandigarh.jpg               Mustard field near Chandigarh — UnpetitproleX, CC BY-SA 4.0
+  sunflower-andhra.jpg                 Sunflower farm in Andhra — PJeganathan, CC BY-SA 4.0
+
+spices/
+  pepper-kolli.jpg                     Pepper plantation Kolli hills — PJeganathan, CC BY-SA 4.0
+  cardamom-plantation.jpg              View of cardamom plantation — TEKSENG MOS, CC BY-SA 4.0
+  pepper-kerala.jpg                    Spice plantation pepper, Kerala — McKay Savage, CC BY 2.0
+
+orchards/
+  mango-orchard-poovankurichi.jpg      Mango Orchard in Poovankurichi — Rahuljeswin, CC BY-SA 4.0
+  mango-orchard-lucknow.jpg            Mango orchard in Lucknow — Zainab37, CC BY-SA 4.0
+  orange-orchard-darjeeling.jpg        Darjeeling Dabapani Orange Orchard — Priyamkajal, CC BY-SA 4.0
+
+cocoa/
+  cocoa-03.jpg                         Cocoa Pods — Karunakar Rayker, CC BY 2.0
+
+dragon-fruit/
+  dragon-fruit-03.jpg                  Pitaya plantation — Ramon FVelasquez, CC BY-SA 3.0
+
+Sources: Wikimedia Commons. Not Waterbase job photos.
