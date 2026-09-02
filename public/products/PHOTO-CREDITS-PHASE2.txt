@@ -1,0 +1,26 @@
+PHASE 2 — Pipes & Fittings (licensed stock)
+
+These fill the second product group on /products. Swap with Waterbase
+shelf / field photos using the same folders.
+
+pvc-pipes/
+  blue-pvc-mains.jpg      Dura-Blue PVC Pipe for Underground Water Mains — Dwight Burdette, CC BY 3.0
+  grey-pvc-pressure.jpg   PVC pressure.jpg — Стрелец Игорь, CC BY 3.0
+  pvc-valve.jpg           1 inch PVC Valve and pipe — Bijay Chaurasia, CC BY-SA 4.0
+
+pe-pipes/
+  pe-pipe-stack.jpg       Large dusty black plastic pipes front view — W.carter, CC BY-SA 4.0
+  pe-pipe-field.jpg       Last mile irrigation, pipe to field, Raichur — Vraj Acharya / WELL Labs, CC BY-SA 4.0
+
+hose-pipes/
+  garden-hose.jpg         Garden hose.jpg — Nandhp, CC BY-SA 3.0
+  hose-nozzle.jpg         Garden hose nozzle.jpg — Ivan Radic, CC BY 2.0
+
+column-pipes/
+  borewell-column.jpg     Borewell pump and irrigation pipes, Raichur cotton field — Vraj Acharya / WELL Labs, CC BY-SA 4.0
+  column-in-well.jpg      Borehole tubewell.jpg — Wikimedia Commons, public domain
+
+casing-pipes/
+  well-casing.jpg         Bore in a well.JPG — Bhaskaranaidu, public domain
+
+Sources: Wikimedia Commons. Not Waterbase job photos.
