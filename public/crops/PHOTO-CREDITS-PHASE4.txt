@@ -1,0 +1,22 @@
+PHASE 4 — Remaining crop cards (licensed stock)
+
+Fills vegetables/, flowers/, and plantations/ so those crop cards
+appear on /crops (and can join the homepage honeycomb). Swap with
+Waterbase field photos using the same folders.
+
+vegetables/
+  vegetable-farm-himachal.jpg        A vegetable farm in Himachal Pradesh — CIAT, CC BY-SA 2.0
+  cabbage-ooty.jpg                   Cabbage Fields Kandal Ooty Nilgiris — Timothy A. Gonsalves, CC BY-SA 4.0
+  vegetable-irrigation-nilgiris.jpg  Ploughed fields with irrigation, Kulisholai Nilgiris — Timothy A. Gonsalves, CC BY-SA 4.0
+
+flowers/
+  marigold-narpala.jpg               Marigold fields, Narpala AP — panoramio, CC BY 3.0
+  marigold-maharashtra.jpg           Marigold Fields Floriculture Maharashtra — CC BY 2.0
+  chrysanthemum-field.jpg            Chrysanthemum field — Wikimedia Commons, CC BY-SA 4.0
+
+plantations/
+  tea-valparai.jpg                   Tea Estate At Valparai — Wikimedia Commons, CC BY-SA 4.0
+  tea-glendale.jpg                   Glendale Tea Fields Kattery — Timothy A. Gonsalves, CC BY-SA 4.0
+  rubber-plantation.jpg              Rubber Plantation — Manukrishnan80, CC BY-SA 4.0
+
+Sources: Wikimedia Commons. Not Waterbase job photos.

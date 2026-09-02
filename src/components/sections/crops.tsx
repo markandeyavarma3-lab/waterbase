@@ -10,12 +10,12 @@ import { whatsappLink } from "@/lib/site-config";
 const cropNames = [
   "Banana", "Coconut", "Oil Palm", "Cocoa", "Lemon", "Sweet Lime", "Guava", "Papaya",
   "Dragon Fruit", "Watermelon", "Muskmelon", "Mango", "Chilli", "Tomato", "Maize", "Groundnut",
+  "Vegetables", "Flowers", "Plantations",
 ];
 
 // Shown as text on the full page — crops we serve but don't have photos for yet.
 const MORE = [
-  "All vegetables", "All flowers", "Plantation crops", "Sugarcane", "Paddy / Rice",
-  "Turmeric", "Cotton", "Pulses & oilseeds", "Spices", "Orchards",
+  "Sugarcane", "Paddy / Rice", "Turmeric", "Cotton", "Pulses & oilseeds", "Spices", "Orchards",
 ];
 
 const slug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
