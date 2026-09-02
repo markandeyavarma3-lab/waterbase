@@ -10,12 +10,13 @@ import { whatsappLink } from "@/lib/site-config";
 const cropNames = [
   "Banana", "Coconut", "Oil Palm", "Cocoa", "Lemon", "Sweet Lime", "Guava", "Papaya",
   "Dragon Fruit", "Watermelon", "Muskmelon", "Mango", "Chilli", "Tomato", "Maize", "Groundnut",
+  "Sugarcane", "Paddy", "Turmeric", "Cotton", "Oilseeds", "Spices", "Orchards",
 ];
 
 // Shown as text on the full page — crops we serve but don't have photos for yet.
+// Vegetables / flowers / plantations are filled in Phase 4 (separate PR).
 const MORE = [
-  "All vegetables", "All flowers", "Plantation crops", "Sugarcane", "Paddy / Rice",
-  "Turmeric", "Cotton", "Pulses & oilseeds", "Spices", "Orchards",
+  "All vegetables", "All flowers", "Plantation crops",
 ];
 
 const slug = (name: string) => name.toLowerCase().replace(/\s+/g, "-");

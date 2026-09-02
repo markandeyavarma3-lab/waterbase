@@ -18,6 +18,13 @@ FOLDERS (one per crop):
   public/crops/vegetables/
   public/crops/flowers/
   public/crops/plantations/
+  public/crops/sugarcane/
+  public/crops/paddy/
+  public/crops/turmeric/
+  public/crops/cotton/
+  public/crops/oilseeds/
+  public/crops/spices/
+  public/crops/orchards/
 
 HOW TO USE
 ----------
@@ -31,8 +38,12 @@ HOW TO USE
 
 NOTES
 -----
-- A crop with no photos yet shows a "Photos coming soon"
-  placeholder, so the layout always looks complete.
+- A crop with no photos yet is omitted from the grid (text-only
+  "and many more" chips cover other crops we still serve).
 - A crop with only 1 photo just shows that photo (no scrolling).
 - Do not delete the .gitkeep files — they keep the empty folders
   tracked in git.
+
+Phase 5 filled sugarcane/, paddy/, turmeric/, cotton/, oilseeds/,
+spices/, orchards/ and topped up cocoa + dragon-fruit. See
+PHOTO-CREDITS-PHASE5.txt.
