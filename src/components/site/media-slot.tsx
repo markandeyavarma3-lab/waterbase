@@ -29,7 +29,7 @@ const SHIMMER = {
 };
 
 /**
- * The "no photo yet" state, shared by MediaSlot, ProductCard and AwardsList —
+ * The "no photo yet" state, shared by MediaSlot and ProductCard —
  * a blueprint plate rather than an apologetic "coming soon" empty-state.
  */
 export function PlaceholderPlate({ label, className }: { label?: string; className?: string }) {
