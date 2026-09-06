@@ -40,7 +40,7 @@ const categoryGroups = [
     items: [
       { folder: "pvc-pipes", icon: Workflow, title: "PVC Pipes & Fittings", desc: "Durable PVC mains, sub-mains, and matching fittings." },
       { folder: "pe-pipes", icon: Route, title: "PE Pipes & Fittings", desc: "Flexible polyethylene pipes and compression fittings." },
-      { folder: "hose-pipes", icon: Cable, title: "Hose Pipes & Fittings", desc: "Flexible hoses for portable and auxiliary watering." },
+      { folder: "hose-pipes", icon: Cable, title: "Hose Pipes & Fittings", desc: "PE / HDPE hose and coiled pipe for portable and auxiliary watering." },
       { folder: "column-pipes", icon: CircleDashed, title: "Column Pipes & Fittings", desc: "High-strength pipes for submersible borewell pumps." },
       { folder: "casing-pipes", icon: Box, title: "Casing Pipes", desc: "Reliable casing pipes to protect borewells." },
     ]

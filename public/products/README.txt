@@ -6,8 +6,9 @@ of images into a folder and that card uses them; with more than one they
 cross-fade automatically. Leave a folder empty and the card shows a blueprint
 "image pending" placeholder instead.
 
-All 14 folders currently have 2–3 licensed warehouse / field-install photos.
-Swap with Waterbase shelf or job photos using the same folders.
+All 14 folders currently have 2–3 licensed photos. Pipes & fittings cards
+use pipe-only / yard-stock shots. Pumps & automation cards use warehouse
+or new-equipment shots. Swap with Waterbase shelf photos using the same folders.
 
 Accepted formats: .jpg  .jpeg  .png  .webp  .gif
 Filenames inside a folder do not matter — only the FOLDER name does.
@@ -45,8 +46,9 @@ GUIDELINES
   Size      ~1200 x 900 px or similar. Landscape or square both work.
   Weight    Under ~400 KB each. These pages show 14 cards at once, so file
             size adds up fast on phone data.
-  Content   Warehouse stock or a clean field install. Avoid logos of other
-            brands. Real Waterbase photos beat stock.
+  Content   Pipe cards: the pipes themselves (stacks, coils, yard stock).
+            Pumps & starters: new or warehouse equipment. Avoid logos of
+            other brands. Real Waterbase photos beat stock.
   Multiple  Two or three images in one folder cross-fade on the card.
 
 The .gitkeep file in each folder just keeps the empty folder in git. You can

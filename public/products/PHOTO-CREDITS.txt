@@ -1,7 +1,8 @@
-PRODUCT CARD PHOTOS — licensed stock (warehouse / field install)
+PRODUCT CARD PHOTOS — licensed stock (pipe-only / warehouse)
 
-2–3 images per /products folder. Unbranded warehouse or installed shots.
-Swap with Waterbase shelf / field photos using the same folders.
+2–3 images per /products folder. Pipe cards show the pipes themselves.
+Pumps & starters show warehouse or new equipment. Swap with Waterbase
+shelf photos using the same folders.
 
 MICRO IRRIGATION
 drip-irrigation/
@@ -27,40 +28,41 @@ filters-dosing-injectors/
   media-filters.jpg       Irrigation and Water (NRCS) — USDA, public domain
   filter-station-field.jpg  Drought Mitigation Underground Micro-Irrigation (NRCS 0826) — USDA, public domain
 
-PIPES
+PIPES (pipe-only / yard stock — no field installs)
 pvc-pipes/
   blue-pvc-stock.jpg      Dura-Blue PVC Pipe for Underground Water Mains — Dwight Burdette, CC BY 3.0
   grey-pvc-stack.jpg      PVC pressure.jpg — Стрелец Игорь, CC BY 3.0
-  pvc-field-fitting.jpg   Irrigation pipe 03.jpg — Amuzujoe, CC BY-SA 4.0
+  orange-pvc-stack.jpg    PVC nonpressure.jpg — Стрелец Игорь, CC BY 3.0
 
 pe-pipes/
   pe-pipe-ends.jpg        Large dusty black plastic pipes front view — W.carter, CC BY-SA 4.0
-  pe-pipe-install.jpg     Last mile irrigation, Raichur — WELL Labs, CC BY-SA 4.0
   pe-pipe-coils.jpg       Hdpe Pipes In Coil.jpg — Deeptarpara, CC BY-SA 4.0
+  pe-pipe-lengths.jpg     Polyethylene Pipe lengths.jpg — GordonJ86, CC BY-SA 4.0
 
-hose-pipes/
-  hose-coil.jpg           Garden hose.jpg — Nandhp, CC BY-SA 3.0
-  hose-nozzle.jpg         Garden hose nozzle.jpg — Ivan Radic, CC BY 2.0
-  greenhouse-hose.jpg     Great Swamp Greenhouse coiled hose — Tomwsulcer, CC0
+hose-pipes/               (PE / HDPE pipe and coil stock)
+  pe-pipe-side.jpg        Large dusty black plastic pipes side view — W.carter, CC BY-SA 4.0
+  pe-pipe-yard.jpg        Stack of large dusty black plastic pipes — W.carter, CC BY-SA 4.0
+  hdpe-coil-yard.jpg      Orange and Yellow HDPE Pipe.jpg — GordonJ86, CC BY-SA 4.0
 
 column-pipes/
-  borewell-delivery.jpg   Borewell pump and irrigation pipes, Raichur — WELL Labs, CC BY-SA 4.0
-  column-in-well.jpg      Borehole tubewell.jpg — Wikimedia Commons, public domain
+  grey-column-stack.jpg   PVC pressure.jpg — Стрелец Игорь, CC BY 3.0
+  column-pipe-ends.jpg    Multiple large dusty black plastic pipes — W.carter, CC BY-SA 4.0
+  pvc-pipe-bundles.jpg    Bundled PVC pipes for drainage in Awka — Johnnybam, CC BY-SA 4.0
 
 casing-pipes/
-  well-pipe.jpg           Bore in a well.JPG — Bhaskaranaidu, public domain
   thick-pipe-stock.jpg    Thick walled HD-PE Pipes for Slurry application — GordonJ86, CC BY-SA 4.0
-                          (warehouse stack; closest licensed match for casing stock)
+  white-hdpe-stack.jpg    Acu-Therm Coex white skinned HDPE Pipe lengths — GordonJ86, CC BY-SA 4.0
+  blue-pipe-load.jpg      Largediapvc.jpg — public domain (pipe stack crop)
 
-PUMPS & FARM
+PUMPS & AUTOMATION (warehouse / new stock)
 motors-pumps/
-  field-pump-set.jpg      Agricultural irrigation pump set, Vrindavan — Gannu03, CC BY-SA 4.0
-  open-well-pumps.jpg     Water pumps from an open well, Raichur — WELL Labs, CC BY-SA 4.0
-  pump-station.jpg        NRCS Engineer Explaining Pumping System — USDA NRCS, public domain
+  motors-warehouse-aisle.jpg  3ac motors at platinum international — CC BY-SA 4.0
+  motors-stock-aisle.jpg      Motor aisle (6882734177) — CC BY-SA 2.0
+  pumps-on-pallets.jpg        Flygt propellerpumpar — CC BY-SA 4.0 (warehouse pallets)
 
 starters-others/
-  pump-starter.jpg        Electrical pump starter, Raichur — WELL Labs, CC BY-SA 4.0
-  pump-control-panel.jpg  Electric water well pump with control panel, Tosu — Peka, CC BY-SA 4.0
+  control-panels-warehouse.jpg  Banel electric services switchgear made in oman — CC BY-SA 4.0
+  control-panel-pallet.jpg      Electrical Control Panel Made By True Logic Group Inc — CC BY 4.0
 
 mulching-sheets/
   white-mulch-rows.jpg    Vegetables grown on plastic mulch.JPG — public domain
