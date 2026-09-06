@@ -35,8 +35,8 @@ See the README.txt inside each folder for the full notes.
 ALSO EMPTY — THE WHOLE PRODUCTS PAGE
 ------------------------------------
 
-public/products/     Phase 1 filled (micro irrigation). Pipes, pumps and
-                     farm essentials still empty — next phases.
+public/products/     All 14 product cards filled (2–3 warehouse / install
+                     photos each). Swap with Waterbase photos anytime.
 
 
 ALREADY WORKING (no action needed)
