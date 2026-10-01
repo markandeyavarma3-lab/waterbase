@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { siteConfig, whatsappLink, formatPhone, fullAddress, callNowTelLink } from "@/lib/site-config";
-import { NAV_LINKS } from "@/lib/nav";
+import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
 
 export function Footer() {
   return (
     <footer className="relative sink-panel living-mesh-c border-t border-transparent text-water-deep/80">
       <div className="h-px w-full bg-gradient-to-r from-brand-green/40 via-brand-blue/50 to-brand-green/40" />
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3 md:gap-12 md:py-14">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 lg:grid-cols-4 md:gap-12 md:py-14">
         <div>
           <p className="font-display text-sm font-bold uppercase tracking-[0.08em] text-water-deep">
             {siteConfig.name}
@@ -19,6 +19,21 @@ export function Footer() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-water-deep/50">Explore</p>
           <ul className="mt-4 space-y-2 text-sm">
             {NAV_LINKS.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="tap-target-y link-underline text-water-deep/75 hover:text-water-deep">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        {/* The six campaign/solution pages. Before this column existed, five of
+            them had zero internal links anywhere on the site — reachable only
+            from the sitemap or a paid click, so they built no internal PageRank. */}
+        <nav aria-label="Solutions">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-water-deep/50">Solutions</p>
+          <ul className="mt-4 space-y-2 text-sm">
+            {SOLUTION_LINKS.map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className="tap-target-y link-underline text-water-deep/75 hover:text-water-deep">
                   {l.label}

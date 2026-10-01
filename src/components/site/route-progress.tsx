@@ -2,16 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+
+type Phase = "idle" | "loading" | "done";
 
 /**
  * A thin top-of-page loading bar for App Router navigations. Next.js doesn't
  * expose a "navigation started" event, so this starts on any same-origin
- * internal link click and clears once the pathname actually changes.
+ * internal link click and finishes once the pathname actually changes.
+ *
+ * CSS-driven (`.route-progress` in globals.css), not framer-motion: it renders
+ * in the root layout, so anything it imports loads on every page. The motion is
+ * the same — creep to 85% over 3.5s while loading, then snap full and fade.
  */
 export function RouteProgress() {
   const pathname = usePathname();
-  const [active, setActive] = useState(false);
+  const [phase, setPhase] = useState<Phase>("idle");
   const startedAt = useRef(pathname);
 
   useEffect(() => {
@@ -28,27 +33,24 @@ export function RouteProgress() {
         return;
       }
       startedAt.current = pathname;
-      setActive(true);
+      setPhase("loading");
     }
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
   }, [pathname]);
 
+  // The route changed: finish the bar. Done via a timer callback rather than
+  // synchronously in the effect body, and cleared again once it has faded.
   useEffect(() => {
-    if (pathname !== startedAt.current) setActive(false);
+    if (pathname === startedAt.current) return;
+    startedAt.current = pathname;
+    const finish = window.setTimeout(() => setPhase((p) => (p === "loading" ? "done" : p)), 0);
+    const reset = window.setTimeout(() => setPhase("idle"), 320);
+    return () => {
+      window.clearTimeout(finish);
+      window.clearTimeout(reset);
+    };
   }, [pathname]);
 
-  return (
-    <AnimatePresence>
-      {active && (
-        <motion.div
-          className="fixed inset-x-0 top-0 z-[100] h-0.5 origin-left bg-gradient-to-r from-brand-green to-brand-blue"
-          initial={{ scaleX: 0, opacity: 1 }}
-          animate={{ scaleX: 0.85, transition: { duration: 3.5, ease: "easeOut" } }}
-          exit={{ scaleX: 1, opacity: 0, transition: { duration: 0.25 } }}
-          aria-hidden="true"
-        />
-      )}
-    </AnimatePresence>
-  );
+  return <div className="route-progress" data-phase={phase} aria-hidden="true" />;
 }

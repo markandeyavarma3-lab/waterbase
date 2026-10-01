@@ -1,5 +1,6 @@
+import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import { CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Container, Section, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { Stats } from "@/components/sections/stats";
@@ -12,7 +13,9 @@ export interface LandingPageTemplateProps {
   title: string;
   description: string;
   trustPoints: string[];
-  products: { icon: LucideIcon; name: string; desc: string }[];
+  /** `href` turns a card into a link — used by /get-quote, whose one ad covers
+   *  every product line, to send visitors on to the detailed page for each. */
+  products: { icon: LucideIcon; name: string; desc: string; href?: string }[];
   whyReasons: { icon: LucideIcon; title: string; desc: string }[];
   ctaSubtitle: string;
   ctaTitle: string;
@@ -104,13 +107,7 @@ export function LandingPageTemplate({
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((p, i) => (
               <Reveal key={p.name} delay={i * 60}>
-                <div className="group surface-card h-full rounded-2xl p-6">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors group-hover:bg-brand-green group-hover:text-white">
-                    <p.icon className="h-6 w-6" />
-                  </span>
-                  <h3 className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-brand-green">{p.name}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
-                </div>
+                <ProductCardBody product={p} />
               </Reveal>
             ))}
           </div>
@@ -149,5 +146,30 @@ export function LandingPageTemplate({
         </Container>
       </Section>
     </>
+  );
+}
+
+function ProductCardBody({ product: p }: { product: LandingPageTemplateProps["products"][number] }) {
+  const body = (
+    <>
+      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors group-hover:bg-brand-green group-hover:text-white">
+        <p.icon className="h-6 w-6" />
+      </span>
+      <h3 className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-brand-green">{p.name}</h3>
+      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
+      {p.href ? (
+        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-green">
+          Learn more <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+        </span>
+      ) : null}
+    </>
+  );
+
+  return p.href ? (
+    <Link href={p.href} className="group surface-card block h-full rounded-2xl p-6">
+      {body}
+    </Link>
+  ) : (
+    <div className="group surface-card h-full rounded-2xl p-6">{body}</div>
   );
 }

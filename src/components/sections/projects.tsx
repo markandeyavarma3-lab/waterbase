@@ -68,7 +68,7 @@ export function Projects() {
                 <InteractiveCard glow={false} className="flex h-full flex-col">
                   <div className="relative overflow-hidden">
                     <div className="transition-transform duration-500 ease-out-expo group-hover:scale-105">
-                      <MediaSlot src={p.img} alt={p.title} ratio="video" label="Project photo" sizes="(min-width: 1200px) 33vw, (min-width: 640px) 50vw, 100vw" className="rounded-none border-0" />
+                      <MediaSlot src={p.img} alt={p.title} ratio="video" sizes="(min-width: 1200px) 33vw, (min-width: 640px) 50vw, 100vw" className="rounded-none border-0" />
                     </div>
                     <span className="absolute bottom-3 left-3 rounded-full bg-brand-green-deep/90 px-3 py-1 text-xs font-semibold text-white backdrop-blur">{p.category}</span>
                   </div>

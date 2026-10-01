@@ -20,11 +20,24 @@ import { createClient } from "@/lib/supabase/server";
  * in", and being locked out of a dashboard is recoverable in a way that a
  * leaked customer list is not.
  */
-function allowedEmails(): string[] {
-  return (process.env.ADMIN_EMAILS ?? "")
+export function allowedEmails(raw: string | undefined = process.env.ADMIN_EMAILS): string[] {
+  return (raw ?? "")
     .split(",")
     .map((email) => email.trim().toLowerCase())
     .filter(Boolean);
+}
+
+/**
+ * The allowlist decision, with no Supabase and no environment in the way.
+ *
+ * Split out from checkAdmin purely so it can be tested: this single boolean is
+ * the whole thing standing between an arbitrary Supabase account and every
+ * customer name and mobile number in the database, and it had no test.
+ */
+export function isEmailAllowed(email: string | null | undefined, allowed: string[]): boolean {
+  if (allowed.length === 0) return false; // fails CLOSED — see above
+  if (!email) return false;
+  return allowed.includes(email.trim().toLowerCase());
 }
 
 export type AdminCheck =
@@ -47,7 +60,7 @@ export async function checkAdmin(): Promise<AdminCheck> {
     return { ok: false, reason: "not-configured" };
   }
 
-  if (!allowed.includes(user.email.toLowerCase())) {
+  if (!isEmailAllowed(user.email, allowed)) {
     console.warn(`Blocked /admin access for non-allowlisted account: ${user.email}`);
     return { ok: false, reason: "not-allowed" };
   }

@@ -71,16 +71,14 @@ Documented in README and `docs/google-ads-conversions.md`, but not in code (exce
 - **Monthly budget:** ₹5,000 (~₹166/day), one shared pool
 - **Strategy:** ~65% phone calls / 35% form fills, Search only, ~50km radius around Eluru/Vijayawada
 
-### Existing Campaigns
+### Campaigns
 
-| Campaign | Status | Landing page |
-|---|---|---|
-| Jain Systems | Active | `/jain-systems` |
-| Heavy Pipes | Active | `/heavy-pipes` |
-| APMIP Subsidy | Active | `/apmip-subsidy` |
-| Farm Shop | Active | `/farm-shop` |
-| Commercial Irrigation | Active | `/commercial-irrigation` |
-| KSB Pumps | Built, not yet in Ads | `/ksb-pumps` |
+**One campaign, one ad**, covering every product line → `https://www.waterbasetechnologies.com/get-quote`.
+
+The six per-product campaigns (Jain Systems, Heavy Pipes, APMIP Subsidy, Farm Shop, Commercial
+Irrigation, KSB Pumps) were retired in favour of it. Their pages remain as SEO pages and are the
+natural sitelinks for the one ad. Pause old campaigns rather than deleting them — deletion loses
+their reporting history.
 
 ### Conversion Actions
 
@@ -103,21 +101,22 @@ Documented in README and `docs/google-ads-conversions.md`, but not in code (exce
 3. Environment variables are substituted at build time (for `NEXT_PUBLIC_*`)
 4. Each Vercel deployment is immutable and gets a unique URL
 
-### Current Deployments
+### Domains
 
-| Branch | Commit | Environment | Status | URL |
-|---|---|---|---|---|
-| `main` | `547a8b1` | Production | Live | `waterbasetechnologies.com` |
-| `audit-fixes` | `131364e` | Preview | Built, live | Vercel preview URL |
+Vercel's primary domain is **`www.waterbasetechnologies.com`**; the bare apex 308-redirects to it.
+`siteConfig.url` must match the primary domain — every canonical, the sitemap, robots.txt and the
+JSON-LD derive from it. It pointed at the apex until October 2026, which left Google with no stable
+URL to index (see the commit "Canonical host is www").
 
-**Key fact:** The preview uses the same Vercel environment variables as production (if set for Preview). To test with different Ads values without affecting production, create a new Preview variable set or edit the branch-specific Vercel settings.
+Deployment state is not tracked in this file — it goes stale the moment it is written. Check the
+Vercel dashboard, or `curl -sI https://www.waterbasetechnologies.com/ | grep -i age`.
 
 ### Analytics Live on Production
 
 | Service | ID | What it tracks | Access |
 |---|---|---|---|
 | Google Analytics 4 | `G-RP33RYTKFF` | Traffic, conversions | analytics.google.com |
-| Google Analytics 4 | `G-DH17D92KBV` | Traffic, conversions (duplicate) | analytics.google.com |
+| Google Tag Manager | `GTM-NSS2B9BN` | CTA events (`cta_call_now`, …) | tagmanager.google.com |
 | Google Ads | `AW-874230546` | Conversions (once wired) | ads.google.com |
 | Vercel Analytics | (automatic) | Performance, errors | Vercel dashboard |
 

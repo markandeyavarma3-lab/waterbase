@@ -1,6 +1,6 @@
 import { PageHero } from "@/components/site/page-hero";
 import { Stats } from "@/components/sections/stats";
-import { WhyChooseUs } from "@/components/sections/why-choose-us";
+import { WhyWaterbase } from "@/components/sections/why-waterbase";
 import { Credentials } from "@/components/sections/credentials";
 import { Brands } from "@/components/sections/brands";
 import { AwardsList } from "@/components/sections/awards-list";
@@ -20,7 +20,7 @@ export default function AboutPage() {
     <div className="theme-warm">
       <PageHero eyebrow="About us" title="Irrigation partners since 2000" description="Survey, design, supply and installation for commercial landscapes, estates and large farms — from one accountable team in Eluru." />
       <Stats />
-      <WhyChooseUs />
+      <WhyWaterbase />
       <Credentials />
       <Brands />
       <AwardsList />

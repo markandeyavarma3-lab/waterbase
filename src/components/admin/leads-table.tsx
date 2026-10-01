@@ -6,6 +6,7 @@ import { Search, Download, Loader2, ChevronLeft, ChevronRight, Check } from "luc
 import { LEAD_STATUSES, REQUIREMENT_OPTIONS, type Lead, type LeadStatus } from "@/lib/leads";
 import { updateLeadStatus, updateLeadNotes } from "@/lib/actions/leads";
 import { whatsappLink } from "@/lib/site-config";
+import { toCsv } from "@/lib/csv";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -13,22 +14,6 @@ const PAGE_SIZE = 25;
 
 function requirementLabel(value: string) {
   return REQUIREMENT_OPTIONS.find((o) => o.value === value)?.label ?? value;
-}
-
-/**
- * Escapes one cell for CSV.
- *
- * Beyond the usual quote-doubling, this neutralises formula injection: Excel and
- * Google Sheets execute any cell whose text begins with = + - @ (or a leading
- * tab/carriage return). `name` and `location` arrive from a public, unauthenticated
- * form, so without this a lead submitted as `=HYPERLINK(...)` would run as a live
- * formula the moment the owner opened their own export. A leading apostrophe
- * forces the spreadsheet to treat the value as literal text.
- */
-function csvCell(raw: unknown): string {
-  const text = String(raw ?? "");
-  const guarded = /^[=+\-@\t\r]/.test(text) ? `'${text}` : text;
-  return `"${guarded.replace(/"/g, '""')}"`;
 }
 
 /** Inline notes editor — saves on blur, so there is no button to forget to press. */
@@ -125,9 +110,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
   function exportCsv() {
     const header = ["Date", "Name", "Mobile", "Location", "Land Size", "Requirement", "Status", "Notes"];
     const rows = filtered.map((l) => [new Date(l.created_at).toLocaleString("en-IN"), l.name, l.mobile, l.location ?? "", l.land_size ?? "", requirementLabel(l.requirement), l.status, l.admin_notes ?? ""]);
-    // The BOM makes Excel read the file as UTF-8, so Telugu names and the ₹ sign
-    // survive the round trip instead of arriving as mojibake.
-    const csv = "﻿" + [header, ...rows].map((r) => r.map(csvCell).join(",")).join("\r\n");
+    const csv = toCsv(header, rows);
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

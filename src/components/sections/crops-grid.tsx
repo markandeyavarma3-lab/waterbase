@@ -59,7 +59,11 @@ export function CropsGrid({ crops }: { crops: Crop[] }) {
       );
     }, INTERVAL);
     return () => clearInterval(id);
-  }, [crops]);
+    // isVisible MUST be here. Without it the effect only re-ran when `crops`
+    // changed (never), so the interval captured isVisible=true from the first
+    // render and kept ticking off-screen forever — the observer above did real
+    // work whose result was silently discarded.
+  }, [isVisible, crops]);
 
   return (
     <div ref={containerRef}>
@@ -108,7 +112,11 @@ const SIN_60 = Math.sqrt(3) / 2;
 const HONEYCOMB_ROW_OVERLAP = `calc(${(SIN_60 - 1).toFixed(7)} * var(--hc-cell) + ${(HONEYCOMB_GAP * SIN_60).toFixed(4)}px)`;
 
 function CropBubble({ name, images, index, delay }: { name: string; images: string[]; index: number; delay: number }) {
-  const active = images.length ? ((index % images.length) + images.length) % images.length : 0;
+  // Crops with no photos are filtered out upstream, but a bubble with an empty
+  // set would now index into `undefined` and hand <Image> a missing src, so
+  // bail rather than crash the whole cluster.
+  if (images.length === 0) return null;
+  const active = ((index % images.length) + images.length) % images.length;
 
   return (
     <motion.div
@@ -121,18 +129,17 @@ function CropBubble({ name, images, index, delay }: { name: string; images: stri
       // percentage height (which would resolve against the row and go circular).
       style={{ width: "var(--hc-cell)" }}
     >
-      {images.map((src, i) => (
-        <Image
-          key={src}
-          src={src}
-          alt={name}
-          fill
-          sizes={`(max-width: 640px) 25vw, ${HONEYCOMB_SIZE}px`}
-          unoptimized
-          className="object-cover transition-opacity duration-700 ease-in-out"
-          style={{ opacity: i === active ? 1 : 0 }}
-        />
-      ))}
+      {/* One image, not the whole set. The homepage cluster is 14 bubbles; at
+          ~3 photos each this was ~40 full-size requests to display 14 pictures,
+          and `unoptimized` meant none of them were transcoded. */}
+      <Image
+        key={images[active]}
+        src={images[active]}
+        alt={name}
+        fill
+        sizes={`(max-width: 640px) 25vw, ${HONEYCOMB_SIZE}px`}
+        className="animate-[fade-in_0.7s_ease-in-out] object-cover"
+      />
       <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-t from-black/80 via-black/10 to-transparent" aria-hidden="true" />
       {/* The label is sized as a fraction of the circle, not a fixed px value —
           a fixed 11px clipped "Watermelon" once the circles shrank on a phone.

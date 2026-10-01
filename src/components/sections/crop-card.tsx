@@ -11,18 +11,20 @@ export function CropCard({ name, images, index = 0 }: { name: string; images: st
     <InteractiveCard glow={false} className="rounded-2xl">
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-green-soft/40">
         {images.length > 0 ? (
-          images.map((src, i) => (
-            <Image
-              key={src}
-              src={src}
-              alt={name}
-              fill
-              sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw"
-              unoptimized
-              className="object-cover transition-opacity duration-700 ease-in-out"
-              style={{ opacity: i === active ? 1 : 0 }}
-            />
-          ))
+          // Only the ACTIVE image is mounted. This used to render every image in
+          // the set stacked with opacity toggles, so a 3-photo card downloaded 3
+          // full images to show 1 — and `unoptimized` meant they were the raw
+          // source JPEGs, bypassing the AVIF/WebP transcoding configured in
+          // next.config.ts. Keying on src lets React swap the node cleanly; the
+          // CSS cross-fade is preserved by the sibling below.
+          <Image
+            key={images[active]}
+            src={images[active]}
+            alt={name}
+            fill
+            sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw"
+            className="animate-[fade-in_0.7s_ease-in-out] object-cover"
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(120%_120%_at_50%_0%,var(--color-brand-green-soft),#ffffff)]">
             <Sprout className="h-9 w-9 text-brand-green/35" aria-hidden="true" />

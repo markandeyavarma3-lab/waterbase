@@ -16,6 +16,16 @@ export const dynamic = "force-dynamic";
 
 const PAGE_LIMIT = 500;
 
+/**
+ * The clock read lives here rather than inline in the component. This page is
+ * a force-dynamic Server Component, so reading the time per request is exactly
+ * right — but React's purity lint (rightly, for anything that can re-render)
+ * flags impure calls in a component body, and naming it makes the intent plain.
+ */
+function isoDaysAgo(days: number): string {
+  return new Date(Date.now() - days * 86_400_000).toISOString();
+}
+
 export default async function AdminPage() {
   const access = await checkAdmin();
 
@@ -33,7 +43,7 @@ export default async function AdminPage() {
   // the fetched rows. Filtering only ever saw the first PAGE_LIMIT leads, so
   // past that point the pipeline numbers would quietly stop adding up to Total.
   // `head: true` means these transfer counts, not rows.
-  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const weekAgo = isoDaysAgo(7);
 
   const [leadsResult, totalResult, weekResult, ...statusResults] = await Promise.all([
     admin.from("leads").select("*").order("created_at", { ascending: false }).limit(PAGE_LIMIT),

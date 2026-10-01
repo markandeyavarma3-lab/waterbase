@@ -1,6 +1,13 @@
 import { Section, Container, SectionHeading } from "@/components/site/section";
+import dynamic from "next/dynamic";
 import { listLogos, prioritizeLogos } from "@/lib/logos";
-import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
+
+// Below the fold, client-only, and carries an autoplay timer — no reason for it
+// to be in the initial bundle of every page that renders the homepage.
+const CoverflowCarousel = dynamic(
+  () => import("@/components/ui/coverflow-carousel").then((m) => m.CoverflowCarousel),
+  { loading: () => <div className="h-72" aria-hidden="true" /> }
+);
 
 const CLIENT_LEAD = ["reliance", "godrej", "patanjali"];
 

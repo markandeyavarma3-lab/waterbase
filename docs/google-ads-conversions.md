@@ -29,7 +29,7 @@ Do **#1 first**. If you run out of time, it's the one that matters.
 1. Google Ads → **Goals** → **Conversions** → **Summary**.
 2. Click **+ New conversion action**.
 3. Choose **Website**.
-4. Enter `waterbasetechnologies.com` and click **Scan**.
+4. Enter `www.waterbasetechnologies.com` and click **Scan**.
    Ignore whatever it auto-detects — click **+ Add a conversion action manually** at the bottom.
 5. Fill in:
    - **Goal category** → *Contact* → **Phone call leads**
@@ -106,7 +106,7 @@ Don't trust it until you've seen it fire.
 
 **Immediate check (2 minutes):**
 1. Install the **Google Tag Assistant** browser extension.
-2. Open `waterbasetechnologies.com/jain-systems` with Tag Assistant recording.
+2. Open `https://www.waterbasetechnologies.com/get-quote` (the ad's landing page) with Tag Assistant recording.
 3. Click **Call Now**.
 4. Tag Assistant should show a `conversion` event (or your event name) going to `AW-874230546`.
 

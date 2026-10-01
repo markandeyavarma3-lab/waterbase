@@ -1,14 +1,18 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
 import type { PointerEvent, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const MAGNETIC_PULL = 0.25;
 const MAGNETIC_MAX = 10;
 
-function createRipple(el: HTMLElement, clientX: number, clientY: number) {
+function createRipple(host: HTMLElement, clientX: number, clientY: number) {
+  // Ripples go into their own clipped layer, not the wrapper itself. The
+  // wrapper used to be overflow-hidden + rounded-md so the ripple stayed inside
+  // the button — which also clipped the button's drop shadow into a visible
+  // grey RECTANGLE around every rounded Call/WhatsApp pill.
+  const el = (host.querySelector(":scope > .motion-press-ripples") as HTMLElement | null) ?? host;
   const rect = el.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height) * 1.6;
   const span = document.createElement("span");
@@ -23,33 +27,33 @@ function createRipple(el: HTMLElement, clientX: number, clientY: number) {
 }
 
 /**
- * Subtle spring scale + ripple on hover/press — wrap buttons/links for a tactile, non-flashy feel.
- * Pass `magnetic` to also have it gently pull toward the cursor (desktop pointer only).
+ * Subtle scale + ripple on hover/press — wrap buttons/links for a tactile,
+ * non-flashy feel. Pass `magnetic` to also have it gently pull toward the
+ * cursor (mouse only).
+ *
+ * CSS-driven (`.motion-press` in globals.css). It used to be a framer-motion
+ * component, which — because it wraps every Call/WhatsApp CTA, including on the
+ * paid landing pages — kept the animation library in those pages' bundles for
+ * the sake of a 3% scale. The magnetic offset and the hover/press scale are now
+ * CSS custom properties composed into one transform, and an overshooting
+ * cubic-bezier stands in for the spring.
  */
 export function MotionPress({ children, className, magnetic = false }: { children: ReactNode; className?: string; magnetic?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
-  // This magnetic pull never actually worked: useSpring(source) stays
-  // subscribed to `source` and keeps re-syncing toward it, so calling
-  // .set() on the SPRING's own output (x/y below, previously) got silently
-  // overridden within a frame — the source it tracked never moved. Has to
-  // .set() the raw source value instead and let the spring trail it.
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const x = useSpring(rawX, { stiffness: 300, damping: 20, mass: 0.5 });
-  const y = useSpring(rawY, { stiffness: 300, damping: 20, mass: 0.5 });
 
   const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
-    if (!magnetic || e.pointerType !== "mouse" || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
+    const el = ref.current;
+    if (!magnetic || e.pointerType !== "mouse" || !el) return;
+    const rect = el.getBoundingClientRect();
     const relX = e.clientX - (rect.left + rect.width / 2);
     const relY = e.clientY - (rect.top + rect.height / 2);
-    rawX.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relX * MAGNETIC_PULL)));
-    rawY.set(Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relY * MAGNETIC_PULL)));
+    el.style.setProperty("--mx", `${Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relX * MAGNETIC_PULL))}px`);
+    el.style.setProperty("--my", `${Math.max(-MAGNETIC_MAX, Math.min(MAGNETIC_MAX, relY * MAGNETIC_PULL))}px`);
   };
 
   const onPointerLeave = () => {
-    rawX.set(0);
-    rawY.set(0);
+    ref.current?.style.setProperty("--mx", "0px");
+    ref.current?.style.setProperty("--my", "0px");
   };
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
@@ -57,18 +61,15 @@ export function MotionPress({ children, className, magnetic = false }: { childre
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      className={cn("relative isolate inline-block overflow-hidden rounded-md", className)}
-      style={magnetic ? { x, y } : undefined}
+      className={cn("motion-press relative isolate inline-block", className)}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       onPointerDown={onPointerDown}
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
       {children}
-    </motion.div>
+      <span className="motion-press-ripples pointer-events-none absolute inset-0 overflow-hidden rounded-full" aria-hidden="true" />
+    </div>
   );
 }
