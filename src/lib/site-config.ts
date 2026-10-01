@@ -16,8 +16,16 @@ export const siteConfig = {
      it must never claim MORE years than `since` supports. */
   heroBadge: "25+ Years of Trusted Experience",
 
-  domain: "waterbasetechnologies.com",
-  url: "https://waterbasetechnologies.com",
+  /* MUST match the host Vercel actually serves. Vercel's primary domain is
+     www — the bare apex 308-redirects to it. This used to say the apex, so every
+     page's canonical, all 18 sitemap URLs, robots.txt's sitemap line and the
+     JSON-LD url pointed at a redirect: Google was told "the real page is over
+     there", went there, and was redirected back. With no stable URL to index,
+     a search for the business name found Justdial and Bizcommunity and not the
+     site. If the primary domain is ever switched to the apex in Vercel, change
+     this in the same deploy. Pinned by site-config.test.ts. */
+  domain: "www.waterbasetechnologies.com",
+  url: "https://www.waterbasetechnologies.com",
   tagline: "Engineered irrigation for commercial sites and large farms",
   description:
     "Waterbase Technologies designs, supplies and installs complete irrigation systems for commercial landscapes, estates and large farms across South India. Authorised dealer of Jain Irrigation, KSB and Netafim — survey, design, project execution and APMIP subsidy assistance from one accountable team in Eluru.",

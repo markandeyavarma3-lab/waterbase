@@ -96,6 +96,14 @@ describe("business data integrity", () => {
     expect(all).toContain(siteConfig.whatsappNumber);
   });
 
+  it("url is the www host Vercel serves — not the apex, which redirects", () => {
+    // The apex 308-redirects to www. A canonical/sitemap on the apex points
+    // every crawler at a redirect, which is why the site was not indexed.
+    expect(new URL(siteConfig.url).host).toBe("www.waterbasetechnologies.com");
+    expect(siteConfig.url.startsWith("https://")).toBe(true);
+    expect(siteConfig.domain).toBe(new URL(siteConfig.url).host);
+  });
+
   it("url has no trailing slash — pageMeta concatenates paths onto it", () => {
     // A trailing slash here produces "https://site.com//products" canonicals.
     expect(siteConfig.url.endsWith("/")).toBe(false);
