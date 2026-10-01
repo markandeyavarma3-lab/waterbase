@@ -42,8 +42,8 @@ export function Hero() {
             {/* The dot no longer pulses. A looping ping next to the headline
                 competes with the caustic and pulls the eye off the message —
                 a steady dot with a soft halo reads as considered, not busy. */}
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-water-deep/12 bg-white/70 px-4 py-1.5 text-sm font-medium tracking-[-0.01em] text-water-deep/80 backdrop-blur">
-              <span className="relative inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-brand-green shadow-[0_0_0_3px_rgba(46,148,102,0.18)]" />
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-brand-sun/30 bg-gradient-to-r from-white/80 via-brand-sun/10 to-white/80 px-5 py-2 text-sm font-semibold tracking-[-0.01em] text-water-deep shadow-[0_0_12px_rgba(212,175,55,0.12)] backdrop-blur">
+              <span className="relative inline-flex h-2 w-2 shrink-0 rounded-full bg-brand-sun shadow-[0_0_0_3px_rgba(212,175,55,0.25)]" />
               {siteConfig.heroBadge}
             </span>
           </Reveal>

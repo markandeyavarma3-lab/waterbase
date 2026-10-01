@@ -3,10 +3,10 @@ import { Award, ShieldCheck, Users, Map, BadgePercent, LifeBuoy } from "lucide-r
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { MediaSlot } from "@/components/site/media-slot";
-import { siteConfig } from "@/lib/site-config";
+import { experienceText } from "@/lib/site-config";
 
 const reasons: { icon: LucideIcon; title: string; desc: string }[] = [
-  { icon: Award, title: `${siteConfig.experienceYears} years of experience`, desc: "Proven, reliable irrigation work for farmers and businesses across South India, season after season." },
+  { icon: Award, title: `${experienceText} of experience`, desc: "Proven, reliable irrigation work for farmers and businesses across South India, season after season." },
   { icon: ShieldCheck, title: "Authorized & genuine", desc: "Official dealer of Jain Irrigation, KSB and Netafim — genuine products with manufacturer warranty." },
   { icon: Users, title: "Skilled in-house team", desc: "20+ team members, 15+ field technicians and 5+ dedicated installation teams — no subcontracting." },
   { icon: BadgePercent, title: "APMIP subsidy experts", desc: "Certified vendor — we handle the full subsidy process so eligible farmers pay as little as 10%." },

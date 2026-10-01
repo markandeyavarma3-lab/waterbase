@@ -35,7 +35,7 @@ export default function OpengraphImage() {
           Product supply · Design · Installation · APMIP subsidy assistance
         </div>
         <div style={{ display: "flex", fontSize: 26, marginTop: 40, color: "rgba(255,255,255,0.75)" }}>
-          Jain Irrigation · KSB Pumps · Netafim · 25+ years
+          {`Jain Irrigation · KSB Pumps · Netafim · ${siteConfig.experienceYears} years`}
         </div>
       </div>
     ),

@@ -11,6 +11,14 @@ export const NAV_LINKS = [
   { label: "Contact", href: "/contact", tone: "green" },
 ] as const;
 
+/**
+ * The six paid-campaign landing pages.
+ *
+ * Rendered as real navigation in the footer and the mobile sheet, AND used by
+ * site-chrome to detect a landing page (so the generic sticky CTA can step
+ * aside for the page's own Call/WhatsApp bar). Adding a campaign here wires up
+ * both at once — which is the point.
+ */
 export const SOLUTION_LINKS = [
   { label: "APMIP Subsidy", href: "/apmip-subsidy" },
   { label: "Jain Irrigation", href: "/jain-systems" },
@@ -18,4 +26,4 @@ export const SOLUTION_LINKS = [
   { label: "HDPE Pipes", href: "/heavy-pipes" },
   { label: "Farm Shop", href: "/farm-shop" },
   { label: "Commercial Irrigation", href: "/commercial-irrigation" },
-];
+] as const;

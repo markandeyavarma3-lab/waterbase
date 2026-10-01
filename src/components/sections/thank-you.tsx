@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Phone, MessageCircle, FileText, Package, Wrench, Sprout, ArrowRight } from "lucide-react";
-import { trackFormSubmit } from "@/lib/analytics";
 import { siteConfig, whatsappLink } from "@/lib/site-config";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/sections/reveal";
@@ -51,30 +48,6 @@ const exploreCards = [
 ];
 
 export function ThankYou() {
-  const searchParams = useSearchParams();
-  const isFromForm = searchParams.get("ref") === "lead";
-  const token = searchParams.get("s");
-
-  // Count the form conversion once per submission, not once per page view.
-  // Reloading this page, navigating back to it, or opening a shared link used to
-  // re-fire the event and inflate the figure Google Ads bids against.
-  useEffect(() => {
-    if (!isFromForm) return;
-
-    // A link without a token predates this change (or was hand-edited); still
-    // worth counting, but only the first time it is seen in this session.
-    const key = `wb:conversion:form:${token ?? "untokenized"}`;
-    try {
-      if (sessionStorage.getItem(key)) return;
-      sessionStorage.setItem(key, "1");
-    } catch {
-      // Private browsing or storage disabled — fall through and count it rather
-      // than losing a real conversion.
-    }
-
-    trackFormSubmit();
-  }, [isFromForm, token]);
-
   const waLink = whatsappLink(
     "Hi Waterbase, I just submitted a callback request through your website.",
     siteConfig.phones.sales.primary

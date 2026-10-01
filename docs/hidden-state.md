@@ -125,11 +125,36 @@ Documented in README and `docs/google-ads-conversions.md`, but not in code (exce
 
 ## 📋 Small In-Repo Gaps
 
-### 1. `src/proxy.ts` is not wired
+### 1. `src/proxy.ts` IS the middleware (this section used to say otherwise)
 
-File exists but middleware.ts doesn't import it. The RLS check and admin gate are implemented in `src/lib/admin-auth.ts` and called from the page/action directly instead.
+**Correction.** This document previously claimed "`src/proxy.ts` is not wired — middleware.ts doesn't
+import it." That was wrong, and dangerously so: it invited someone to delete a file that is actively
+protecting `/admin`.
 
-**Status:** Not a bug — the protection is there, just not via middleware. The next refactor could move it to actual middleware.
+Next.js 16 **renamed the `middleware.ts` convention to `proxy.ts`**. From
+`node_modules/next/dist/lib/constants.js`:
+
+```js
+const PROXY_FILENAME = 'proxy';
+const PROXY_LOCATION_REGEXP = `(?:src/)?${PROXY_FILENAME}`;
+```
+
+Next resolves the named export `proxy` from a file at `src/proxy.ts`, which is exactly what that
+file exports. A production build confirms it:
+
+```
+$ npm run build
+...
+ƒ Proxy (Middleware)
+```
+
+So the edge gate is live: an unauthenticated request to `/admin/*` is redirected to `/admin/login`
+before the page ever renders. That is the FIRST of three layers — `checkAdmin()` gates the page
+itself, and every server action re-checks independently.
+
+> The likely source of the original confusion: under Turbopack,
+> `.next/server/middleware-manifest.json` is `{}` even when a proxy is compiled. It is not the file
+> that records this. Check the build output line instead.
 
 ### 2. Testimonials are empty
 

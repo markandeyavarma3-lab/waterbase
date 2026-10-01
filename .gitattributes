@@ -1,0 +1,21 @@
+# Normalise line endings.
+#
+# The repo had mixed endings — 33 of 117 text files were CRLF and the rest LF,
+# a split left by the project moving between Windows and macOS. That makes
+# whole-file diffs out of one-line edits and hides real changes in the noise.
+#
+# `text=auto eol=lf` stores everything as LF in git; Windows checkouts still get
+# native endings in the working tree where it matters.
+* text=auto eol=lf
+
+# Binary — never touch these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary

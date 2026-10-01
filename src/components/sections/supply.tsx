@@ -1,35 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Droplets, CloudRain, Filter, Gauge, Cpu, Workflow,
-  ArrowRight, Check, Waves, Layers, Leaf, Route, Box, Cable, CircleDashed,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
+import { PRODUCT_CATEGORIES } from "@/lib/products";
+import { siteConfig } from "@/lib/site-config";
 
-const categories: { icon: LucideIcon; title: string; desc: string }[] = [
-  { icon: Droplets, title: "Drip Irrigation Systems", desc: "Inline & online drippers, laterals, and complete drip systems." },
-  { icon: CloudRain, title: "Micro & Mini Sprinklers", desc: "Low-volume sprinklers for nurseries and horticulture." },
-  { icon: CloudRain, title: "Sprinkler Irrigation", desc: "Overhead sprinkler systems for field crops." },
-  { icon: Waves, title: "Rainguns", desc: "High-discharge rainguns for large coverage areas." },
-  { icon: Workflow, title: "PVC Pipes & Fittings", desc: "Durable PVC mains, sub-mains, and matching fittings." },
-  { icon: Route, title: "PE Pipes & Fittings", desc: "Flexible polyethylene pipes and compression fittings." },
-  { icon: Cable, title: "Hose Pipes & Fittings", desc: "Flexible hoses for portable and auxiliary watering." },
-  { icon: CircleDashed, title: "Column Pipes & Fittings", desc: "High-strength pipes for submersible borewell pumps." },
-  { icon: Box, title: "Casing Pipes", desc: "Reliable casing pipes to protect borewells." },
-  { icon: Gauge, title: "Motors & Pumps", desc: "Submersible, monoblock, and open-well pumps." },
-  { icon: Filter, title: "Filters, Dosing Pump & Injectors", desc: "Screen, disc, sand filters and fertigation tools." },
-  { icon: Cpu, title: "Starters & Others", desc: "Pump starters, electrical panels, and automation." },
-  { icon: Layers, title: "Mulching Sheets", desc: "Agricultural mulching films for weed control and moisture." },
-  { icon: Leaf, title: "Planting Material", desc: "High-quality seeds and saplings for optimal yield." },
-];
-
-const reach = ["Andhra Pradesh", "Telangana", "Karnataka", "Odisha"];
-const brands = ["Jain Irrigation Systems", "KSB Pumps & Motors", "Netafim FlexNet"];
+// Both of these already exist in site-config; they were hand-copied here.
+const reach = siteConfig.areasServed;
+const brands = siteConfig.brandPartners;
 
 export function Supply() {
   return (
@@ -52,7 +34,7 @@ export function Supply() {
         </Reveal>
 
         <Stagger className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((c) => (
+          {PRODUCT_CATEGORIES.map((c) => (
             <StaggerItem key={c.title}>
               <Link href="/products" className="block h-full">
                 <InteractiveCard className="group h-full p-6">

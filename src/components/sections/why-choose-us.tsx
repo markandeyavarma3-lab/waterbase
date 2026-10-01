@@ -1,1 +1,0 @@
-export { WhyWaterbase as WhyChooseUs } from "./why-waterbase";

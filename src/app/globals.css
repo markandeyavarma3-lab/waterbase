@@ -165,6 +165,10 @@
   --dur-snap: 120ms;   /* press feedback */
   --dur-quick: 220ms;  /* hover, colour, small state */
   --dur-settle: 620ms; /* element entrance */
+
+  /* Distance an element travels on entrance. Mirrors REVEAL_Y in lib/motion.ts —
+     small on purpose: long travel reads as a slideshow. */
+  --reveal-y: 10px;
   --dur-drift: 26s;    /* ambient background movement */
 }
 
@@ -238,45 +242,23 @@
   --color-graphite-900: #332C22;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
+/* No dark theme. The shadcn `.dark` block that used to sit here defined a full
+   set of oklch neutrals that had nothing to do with this site's water/soil
+   palette, with no toggle to reach it and only a handful of `dark:` utilities
+   anywhere in the codebase — so it was dead weight that would have rendered
+   broken if it had ever been switched on. Removed rather than half-maintained.
+   Bring it back deliberately, with the brand tokens redefined, if it is wanted. */
 
 /* ── Infinite marquee (testimonials / brand ticker) ───────────── */
 @keyframes marquee-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+/* Kept even though the only consumer (Testimonials) currently renders nothing,
+   because it renders nothing only because its data array is empty. Deleting
+   this would leave the right-hand marquee row silently static the moment real
+   testimonials are added. */
 @keyframes marquee-right {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
@@ -360,10 +342,6 @@
 }
 
 /* ── Step pill (Process timeline) ─────────────────────────────── */
-@keyframes pill-pop {
-  0%   { transform: translateY(3px) scale(0.94); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
-}
 
 /* ── Heading accent draw-in ───────────────────────────────────── */
 @keyframes accent-draw {
@@ -429,17 +407,8 @@
 }
 
 /* ── Gentle float (floating badge cards) ──────────────────────── */
-@keyframes float-y {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-8px); }
-}
 
 /* ── Scroll cue dot ───────────────────────────────────────────── */
-@keyframes scroll-cue {
-  0%   { opacity: 0; transform: translateY(-5px); }
-  40%  { opacity: 1; }
-  100% { opacity: 0; transform: translateY(9px); }
-}
 
 /* ── Water surface — layered SVG wave drift (CSS-only fallback / dividers) ── */
 @keyframes wave-drift-1 {
@@ -458,6 +427,66 @@
 }
 
 /* ── Ripple ping — expanding rings (CSS fallback for canvas ripple + button ripple) ── */
+/* Cross-fade used when a crop card/bubble swaps to its next photo. Only the
+   active image is mounted now (see crop-card.tsx), so the old approach of
+   stacking every image and toggling opacity is gone — this replaces it. */
+/* ── Scroll-in reveals ────────────────────────────────────────────────────
+   Drives <Reveal> and <Stagger>/<StaggerItem>, which used to be framer-motion
+   `whileInView` components. They are the most-used effect on the site (~25
+   components import them), so moving them to CSS is what took the animation
+   library off the critical path of every page.
+
+   The JS half is only an IntersectionObserver setting data-shown; everything
+   visual is here, sharing the same tokens as the rest of the site so the motion
+   stays on one rhythm. */
+.reveal,
+.stagger [data-stagger-item] {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 10px));
+  transition:
+    opacity var(--dur-settle, 0.62s) var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform var(--dur-settle, 0.62s) var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  will-change: opacity, transform;
+}
+
+.reveal[data-shown],
+.stagger[data-shown] [data-stagger-item] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Someone browsing without JavaScript would otherwise see an entirely blank
+   page, since nothing would ever set data-shown. (The framer-motion version had
+   this same flaw — it rendered opacity:0 inline during SSR — so this is a
+   strict improvement, not a regression introduced by the rewrite.) */
+@media (scripting: none) {
+  .reveal,
+  .stagger [data-stagger-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .stagger [data-stagger-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@keyframes consent-in {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 @keyframes ripple-ping {
   0%   { transform: scale(0.4); opacity: 0.5; }
   100% { transform: scale(2.6); opacity: 0; }

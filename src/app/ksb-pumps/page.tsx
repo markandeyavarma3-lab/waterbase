@@ -1,6 +1,7 @@
 import { Gauge, Waves, ArrowUpFromLine, Zap, Sun, SlidersHorizontal, Award, MapPin, LifeBuoy, BadgePercent } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
+import { statText } from "@/lib/site-config";
 
 export const metadata = pageMeta({
   title: "KSB Pumps & Motors Dealer in Eluru | Waterbase Technologies",
@@ -12,7 +13,7 @@ const TRUST_POINTS = [
   "Authorized KSB dealer — genuine pumps & motors with warranty",
   "Free pump sizing based on your borewell depth & flow needs",
   "APMIP subsidy eligible on qualifying micro-irrigation projects",
-  "15,000+ farmers served across AP & Telangana",
+  `${statText("customers")} farmers served across AP & Telangana`,
 ];
 
 const PRODUCTS = [

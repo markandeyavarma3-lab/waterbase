@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
-import { NAV_LINKS } from "@/lib/nav";
+import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
 
 // Fixed pill colour per nav-link tone — always visible, not just on
 // hover/active, so the bar itself carries colour rather than being plain
@@ -176,6 +176,38 @@ export function Header() {
                           </Link>
                         </motion.div>
                       ))}
+
+                      {/* The six campaign landing pages. They are the pages we
+                          pay to send traffic to, and until this existed the
+                          only way to reach five of them was a paid click or the
+                          sitemap — nothing on the site linked to them. */}
+                      <motion.div
+                        variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        className="mt-4 border-t border-border pt-4"
+                      >
+                        <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                          Solutions
+                        </p>
+                      </motion.div>
+                      {SOLUTION_LINKS.map((l) => (
+                        <motion.div
+                          key={l.href}
+                          variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <Link
+                            href={l.href}
+                            onClick={() => setOpen(false)}
+                            className={cn(
+                              "flex min-h-11 items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground",
+                              isActive(l.href) && "bg-accent text-brand-green"
+                            )}
+                          >
+                            {l.label}
+                          </Link>
+                        </motion.div>
+                      ))}
                     </motion.nav>
                   )}
                 </AnimatePresence>
@@ -192,7 +224,7 @@ export function Header() {
               <Wordmark
                 key={logoRun}
                 animate={atTop}
-                className="font-[family-name:var(--font-logo)] text-[clamp(1rem,4.2vw,1.35rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
+                className="font-[family-name:var(--font-logo)] text-[clamp(1.15rem,4.8vw,1.6rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
               />
             </Link>
           </div>

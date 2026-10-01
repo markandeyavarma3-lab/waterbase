@@ -21,10 +21,10 @@ export function ContactActions({
   showCall?: boolean;
   className?: string;
 }) {
-  // No `magnetic` prop on MotionPress below — Button itself pulls toward the
-  // cursor now, on every button site-wide, so setting it here too would
-  // double the pull. MotionPress still earns its keep for the ripple and
-  // hover-scale it adds on top.
+  // MotionPress supplies the ripple and hover-scale here. Button itself is a
+  // plain server component again (it briefly carried a framer-motion magnetic
+  // pull, which put framer-motion on every page in the site), so these CTAs are
+  // now the only place that pays for motion — which is where it earns its keep.
   return (
     <div className={cn("flex flex-col gap-3 sm:flex-row", className)}>
       {showCall ? (

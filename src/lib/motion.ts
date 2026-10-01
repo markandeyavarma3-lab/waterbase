@@ -8,8 +8,6 @@
 
 /** Entrances and reveals — decelerating, calm. Matches CSS `--ease-out-expo`. */
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
-/** Layout/size changes — slightly softer landing. Matches `--ease-out-soft`. */
-export const EASE_OUT_SOFT = [0.22, 0.8, 0.3, 1] as const;
 
 /** Seconds. Mirrors `--dur-snap` / `--dur-quick` / `--dur-settle`. */
 export const DUR = {

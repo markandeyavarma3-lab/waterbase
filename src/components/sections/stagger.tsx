@@ -1,43 +1,59 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { DUR, EASE_OUT_EXPO, REVEAL_Y, STAGGER_STEP } from "@/lib/motion";
+import { STAGGER_STEP } from "@/lib/motion";
 
-const containerVariants: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: STAGGER_STEP, delayChildren: 0.04 },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: REVEAL_Y },
-  show: { opacity: 1, y: 0, transition: { duration: DUR.settle, ease: EASE_OUT_EXPO } },
-};
-
-/** Wraps a grid/row of children and orchestrates a staggered entrance for `StaggerItem` children. */
+/**
+ * A grid or row whose children enter one after another.
+ *
+ * Previously framer-motion variants propagating from a parent to `StaggerItem`
+ * children. That propagation is the only thing the library was providing, and
+ * it cost the library on every page that renders a grid — which is most of them.
+ *
+ * Delays are assigned once after mount by walking `[data-stagger-item]` in DOM
+ * order. Doing it through the DOM rather than through props matters: a
+ * `StaggerItem` is not always a direct child (in credentials.tsx they sit inside
+ * a wrapper div), so a CSS `:nth-child` rule or a React.Children walk would both
+ * miss them. The visual result and the public API are unchanged.
+ */
 export function Stagger({ children, className }: { children: ReactNode; className?: string }) {
-  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    el.querySelectorAll<HTMLElement>("[data-stagger-item]").forEach((item, i) => {
+      item.style.transitionDelay = `${(0.04 + i * STAGGER_STEP).toFixed(3)}s`;
+    });
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShown(true);
+        observer.disconnect();
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      className={className}
-      initial={prefersReducedMotion ? false : "hidden"}
-      whileInView="show"
-      viewport={{ once: true, amount: 0.15, margin: "0px 0px -8% 0px" }}
-      variants={containerVariants}
-    >
+    <div ref={ref} className={cn("stagger", className)} data-shown={shown || undefined}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
+/** One staggered child. Can sit at any depth inside a `Stagger`. */
 export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <motion.div className={cn("h-full", className)} variants={itemVariants}>
+    <div data-stagger-item className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }

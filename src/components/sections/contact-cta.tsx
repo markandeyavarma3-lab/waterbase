@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Clock, Mail, MapPin, MessageCircle, PhoneCall } from "lucide-react";
-import { Section, Container } from "@/components/site/section";
+import { Container } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
 import { AuroraGlow } from "@/components/site/aurora-glow";

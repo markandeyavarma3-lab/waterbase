@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Package, Ruler, Wrench, Workflow, Building2, Sprout, BadgePercent, Award, ShieldCheck, Users, Map, LifeBuoy, CheckCircle2, MessageCircle } from "lucide-react";
+import { Package, Workflow, BadgePercent, Award, ShieldCheck, Users, Map, LifeBuoy, CheckCircle2, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, Container, SectionHeading, Eyebrow } from "@/components/site/section";
@@ -9,7 +9,7 @@ import { InteractiveCard } from "@/components/ui/interactive-card";
 import { Process } from "@/components/sections/process";
 import { ContactActions } from "@/components/site/contact-actions";
 import { pageMeta } from "@/lib/seo";
-import { siteConfig, whatsappLink } from "@/lib/site-config";
+import { experienceText, yearsInBusiness, whatsappLink } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMeta({
   title: "Irrigation Services",
@@ -67,7 +67,7 @@ const team = [
 ];
 
 const reasons = [
-  { icon: Award, title: `${siteConfig.experienceYears} years of experience`, desc: `Serving farmers and businesses for over 25 years with proven, reliable irrigation work.` },
+  { icon: Award, title: `${experienceText} of experience`, desc: `Serving farmers and businesses for over ${yearsInBusiness} years with proven, reliable irrigation work.` },
   { icon: ShieldCheck, title: "Authorized & genuine", desc: "Official dealer of Jain Irrigation, KSB and Netafim — genuine products with warranty." },
   { icon: Users, title: "Skilled in-house team", desc: "20+ team members, 15+ field technicians and 5+ dedicated installation teams." },
   { icon: BadgePercent, title: "APMIP subsidy expertise", desc: "End-to-end assistance with subsidy-based micro-irrigation in West Godavari." },

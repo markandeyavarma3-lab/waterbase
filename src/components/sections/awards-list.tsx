@@ -1,28 +1,14 @@
-import fs from "fs";
-import path from "path";
 import Image from "next/image";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { PlaceholderPlate } from "@/components/site/media-slot";
-
-function getAwards(): string[] {
-  try {
-    const dir = path.join(process.cwd(), "public/awards");
-    if (!fs.existsSync(dir)) return [];
-    
-    const files = fs.readdirSync(dir);
-    const validExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
-    return files
-      .filter((file) => validExts.has(path.extname(file).toLowerCase()))
-      .map((file) => `/awards/${file}`);
-  } catch (error) {
-    return [];
-  }
-}
+import { listImages } from "@/lib/logos";
+import { yearsInBusiness } from "@/lib/site-config";
 
 export function AwardsList() {
-  const awards = getAwards();
+  // Was a local copy of listImages that also swallowed its error binding.
+  const awards = listImages("awards");
 
   return (
     <Section tone="default">
@@ -30,7 +16,7 @@ export function AwardsList() {
         <SectionHeading
           eyebrow="Excellence"
           title="Our Achievements"
-          lead="Recognitions and certifications earned over 25 years in the field."
+          lead={`Recognitions and certifications earned over ${yearsInBusiness} years in the field.`}
         />
 
         <div className="mt-12">

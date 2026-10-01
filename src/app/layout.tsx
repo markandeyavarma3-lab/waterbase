@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Archivo, Outfit } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
-import Script from "next/script";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { SiteChrome } from "@/components/site/site-chrome";
 import { LocalBusinessJsonLd } from "@/components/seo/local-business-jsonld";
 import { ConversionTracker } from "@/components/site/conversion-tracker";
 import { RouteProgress } from "@/components/site/route-progress";
+import { AnalyticsTags } from "@/components/site/analytics-tags";
+import { ConsentBanner } from "@/components/site/consent-banner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const archivo = Archivo({
@@ -81,21 +81,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ConversionTracker />
         <RouteProgress />
         <SiteChrome>{children}</SiteChrome>
+        <ConsentBanner />
         <Analytics />
-        <GoogleAnalytics gaId="G-RP33RYTKFF" />
-        <GoogleAnalytics gaId="G-DH17D92KBV" />
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.googleAdsId}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-ads" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${siteConfig.googleAdsId}');
-          `}
-        </Script>
+        {/* GA4 ×2 + Google Ads, one gtag.js load, consent-gated. */}
+        <AnalyticsTags />
       </body>
     </html>
   );

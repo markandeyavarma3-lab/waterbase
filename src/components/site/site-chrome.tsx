@@ -9,7 +9,7 @@ import { SOLUTION_LINKS } from "@/lib/nav";
 
 // Ad landing pages render their own StickyCallBar (Call Now + WhatsApp) —
 // the generic StickyMobileCTA would otherwise stack on top of it on mobile.
-const LANDING_PAGE_HREFS = new Set(SOLUTION_LINKS.map((l) => l.href));
+const LANDING_PAGE_HREFS: ReadonlySet<string> = new Set<string>(SOLUTION_LINKS.map((l) => l.href));
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
