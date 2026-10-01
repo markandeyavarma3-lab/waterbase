@@ -19,6 +19,14 @@ export const NAV_LINKS = [
  * aside for the page's own Call/WhatsApp bar). Adding a campaign here wires up
  * both at once — which is the point.
  */
+/**
+ * Where the (single) Google Ads campaign lands. The account used to run six
+ * campaigns, one per SOLUTION_LINKS page; it now runs one ad covering
+ * everything, pointed here. Kept as a constant so the page, the docs and any
+ * future check agree on the path.
+ */
+export const AD_LANDING_PATH = "/get-quote";
+
 export const SOLUTION_LINKS = [
   { label: "APMIP Subsidy", href: "/apmip-subsidy" },
   { label: "Jain Irrigation", href: "/jain-systems" },
