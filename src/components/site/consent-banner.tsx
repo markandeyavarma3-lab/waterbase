@@ -104,8 +104,12 @@ export function ConsentBanner() {
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl border border-border bg-card/95 p-4 shadow-lift backdrop-blur sm:flex-row sm:items-center sm:gap-4 sm:p-5">
         <p className="flex-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-          We use cookies to measure how the site is used and how well our ads work. You can
-          accept or decline — declining does not affect any part of the site.{" "}
+          {/* Encourages Accept, but stays true: these cookies are analytics and ad
+              measurement — they don't make the site faster, so it must not say so.
+              Consent obtained with a misleading reason isn't valid consent (DPDP). */}
+          <span className="font-semibold text-foreground">Help us improve this website.</span>{" "}
+          We use cookies to understand what our visitors look for, so we can make the site more
+          useful for you. Please tap Accept — the site works the same if you decline.{" "}
           <Link href="/privacy" className="font-medium text-brand-green hover:underline">
             Privacy Policy
           </Link>
@@ -115,7 +119,7 @@ export function ConsentBanner() {
             Decline
           </Button>
           <Button size="sm" onClick={() => choose("granted")}>
-            Accept
+            Accept &amp; continue
           </Button>
         </div>
       </div>
