@@ -95,10 +95,12 @@ export function ConsentBanner() {
     <div
       role="dialog"
       aria-label="Cookie consent"
-      // bottom-[4.5rem] on small screens so it never covers the sticky
-      // Call/WhatsApp bar — that bar is the conversion path and must stay
-      // reachable while this is on screen.
-      className="fixed inset-x-0 bottom-[4.5rem] z-[90] animate-[consent-in_0.4s_cubic-bezier(0.16,1,0.3,1)_both] px-3 pb-2 motion-reduce:animate-none md:bottom-0 md:px-4 md:pb-4"
+      // Never cover a conversion path while it is on screen:
+      // - bottom-[4.5rem] below md clears the sticky Call/WhatsApp bar;
+      // - the right gutter (below lg) clears the floating WhatsApp button,
+      //   which sits bottom-right on every page. From lg up the banner is a
+      //   centred 48rem card and can no longer reach it.
+      className="fixed inset-x-0 bottom-[4.5rem] z-[90] animate-[consent-in_0.4s_cubic-bezier(0.16,1,0.3,1)_both] pb-2 pl-3 pr-[5.25rem] motion-reduce:animate-none sm:pr-[5.75rem] md:bottom-0 md:pb-4 md:pl-4 lg:px-4"
     >
       <div className="mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl border border-border bg-card/95 p-4 shadow-lift backdrop-blur sm:flex-row sm:items-center sm:gap-4 sm:p-5">
         <p className="flex-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">

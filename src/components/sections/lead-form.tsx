@@ -5,7 +5,6 @@ import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, type Resolver } from "react-hook-form";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { Loader2, ArrowLeft, ArrowRight } from "lucide-react";
 import { leadSchema, type LeadFormValues, type RequirementValue, REQUIREMENT_OPTIONS } from "@/lib/leads";
 import { submitLead } from "@/lib/actions/leads";
@@ -17,12 +16,6 @@ import { cn } from "@/lib/utils";
 
 const STEP_FIELDS = [["name", "mobile"], ["requirement", "location", "landSize"]] as const;
 const TOTAL_STEPS = STEP_FIELDS.length;
-
-const slideVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? 32 : -32, opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? -32 : 32, opacity: 0 }),
-};
 
 /**
  * A throwaway id identifying one submission. Only needs to be unique within a
@@ -37,19 +30,29 @@ function submissionToken(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-/** Wraps a field so it gently shakes whenever a new validation error appears on it. */
+/**
+ * Wraps a field so it gently shakes whenever a new validation error appears.
+ *
+ * Restarting a CSS animation means removing the class, forcing a reflow, and
+ * adding it back — a DOM write in an effect, which is what effects are for.
+ * (This and the step slide below were the form's only reasons to load
+ * framer-motion, and the form sits above the fold on every paid landing page.)
+ */
 function ShakeField({ error, children }: { error?: string; children: ReactNode }) {
-  const controls = useAnimation();
+  const ref = useRef<HTMLDivElement>(null);
   const prevError = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    if (error && error !== prevError.current) {
-      controls.start({ x: [0, -6, 6, -4, 4, 0], transition: { duration: 0.4, ease: "easeOut" } });
+    const el = ref.current;
+    if (el && error && error !== prevError.current) {
+      el.classList.remove("lead-shake");
+      void el.offsetWidth; // reflow, so re-adding the class restarts the animation
+      el.classList.add("lead-shake");
     }
     prevError.current = error;
-  }, [error, controls]);
+  }, [error]);
 
-  return <motion.div animate={controls}>{children}</motion.div>;
+  return <div ref={ref}>{children}</div>;
 }
 
 export function LeadForm({ defaultRequirement }: { defaultRequirement?: RequirementValue } = {}) {
@@ -57,6 +60,9 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
   const [serverError, setServerError] = useState<string | null>(null);
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
+  // No slide on first render — only once the visitor actually moves between
+  // steps, as the previous implementation also did.
+  const [moved, setMoved] = useState(false);
   const honeypotRef = useRef<HTMLInputElement>(null);
 
   // LeadFormValues, not LeadInput: the requirement select legitimately starts
@@ -74,11 +80,13 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
     const valid = await form.trigger(STEP_FIELDS[step] as unknown as (keyof LeadFormValues)[]);
     if (!valid) return;
     setDirection(1);
+    setMoved(true);
     setStep((s) => Math.min(TOTAL_STEPS - 1, s + 1));
   }
 
   function goBack() {
     setDirection(-1);
+    setMoved(true);
     setStep((s) => Math.max(0, s - 1));
   }
 
@@ -132,18 +140,8 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
         </div>
 
         <div className="relative overflow-hidden">
-          <AnimatePresence mode="wait" custom={direction} initial={false}>
-            {step === 0 ? (
-              <motion.div
-                key="step-0"
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-5"
-              >
+          {step === 0 ? (
+              <div key="step-0" className="lead-step space-y-5" data-animate={moved || undefined} data-dir={direction}>
                 <FormField control={form.control} name="name" render={({ field }) => (
                   <FormItem>
                     <FormLabel>Name</FormLabel>
@@ -167,18 +165,9 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
                     <FormMessage />
                   </FormItem>
                 )} />
-              </motion.div>
+              </div>
             ) : (
-              <motion.div
-                key="step-1"
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-5"
-              >
+              <div key="step-1" className="lead-step space-y-5" data-animate={moved || undefined} data-dir={direction}>
                 <FormField control={form.control} name="requirement" render={({ field }) => (
                   <FormItem>
                     <FormLabel>Requirement</FormLabel>
@@ -221,9 +210,8 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
                     </FormItem>
                   )} />
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
         </div>
 
         {serverError ? (
@@ -243,31 +231,16 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
             </Button>
           ) : (
             <Button type="submit" size="lg" className="w-full" disabled={form.formState.isSubmitting}>
-              <AnimatePresence mode="wait" initial={false}>
-                {form.formState.isSubmitting ? (
-                  <motion.span
-                    key="sending"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.2 }}
-                    className="inline-flex items-center gap-2"
-                  >
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Sending…
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="idle"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    Request a Callback
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              {form.formState.isSubmitting ? (
+                <span key="sending" className="lead-swap inline-flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending…
+                </span>
+              ) : (
+                <span key="idle" className="lead-swap">
+                  Request a Callback
+                </span>
+              )}
             </Button>
           )}
         </div>

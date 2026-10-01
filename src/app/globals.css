@@ -478,6 +478,115 @@
 /* Cross-fade used when a crop card/bubble swaps to its next photo. Only the
    active image is mounted now (see crop-card.tsx), so the old approach of
    stacking every image and toggling opacity is gone — this replaces it. */
+/* ── Site header (scroll-driven, no JS animation library) ─────────────────
+   header.tsx writes two custom properties on <header> once per animation frame:
+     --hdr-p         0 → 1 over the first 120px of scroll
+     --hdr-progress  0 → 1 over the whole page
+   Everything visual is a calc() of those. The short transitions stand in for
+   the spring smoothing the framer-motion version had. Values are the same as
+   before: bar 62→54px, rail padding 12→6px, veil 0.06→0.38, shadow 0→0.08. */
+.site-header {
+  --hdr-p: 0;
+  --hdr-progress: 0;
+}
+.hdr-rail {
+  padding-block: calc(12px - 6px * var(--hdr-p));
+  transition: padding 200ms ease-out;
+}
+.hdr-bar {
+  height: calc(62px - 8px * var(--hdr-p));
+  box-shadow: 0 8px 24px rgb(18 60 70 / calc(0.08 * var(--hdr-p)));
+  transition: height 200ms ease-out, box-shadow 200ms ease-out;
+}
+.hdr-veil {
+  opacity: calc(0.06 + 0.32 * var(--hdr-p));
+  transition: opacity 200ms ease-out;
+}
+.hdr-progress {
+  transform: scaleX(var(--hdr-progress));
+  transform-origin: left;
+  transition: transform 120ms linear;
+}
+.hdr-menu-item {
+  animation: hdr-menu-in 350ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(50ms + var(--i, 0) * 50ms);
+}
+@keyframes hdr-menu-in {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hdr-rail, .hdr-bar, .hdr-veil, .hdr-progress { transition: none; }
+  .hdr-menu-item { animation: none; }
+}
+
+/* ── Route progress bar (route-progress.tsx) ── */
+.route-progress {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 100;
+  height: 2px;
+  transform-origin: left;
+  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, var(--color-brand-green), var(--color-brand-blue));
+}
+.route-progress[data-phase="loading"] {
+  opacity: 1;
+  animation: route-load 3.5s ease-out forwards;
+}
+.route-progress[data-phase="done"] {
+  transform: scaleX(1);
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+}
+@keyframes route-load {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(0.85); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-progress[data-phase="loading"] { animation: none; transform: scaleX(0.85); }
+}
+
+/* ── MotionPress (ui/motion-press.tsx) ── magnetic offset × hover/press scale */
+.motion-press {
+  --mx: 0px;
+  --my: 0px;
+  --ms: 1;
+  transform: translate(var(--mx), var(--my)) scale(var(--ms));
+  /* overshooting curve ≈ the old stiffness-400/damping-25 spring */
+  transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@media (hover: hover) {
+  .motion-press:hover { --ms: 1.03; }
+}
+.motion-press:active { --ms: 0.97; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-press { transition: none; --mx: 0px; --my: 0px; }
+  .motion-press:hover, .motion-press:active { --ms: 1; }
+}
+
+/* ── Lead form (lead-form.tsx): step slide, error shake, submit-label swap ── */
+.lead-step[data-animate][data-dir="1"]  { animation: lead-step-in-r 280ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lead-step[data-animate][data-dir="-1"] { animation: lead-step-in-l 280ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes lead-step-in-r { from { opacity: 0; transform: translateX(32px); } }
+@keyframes lead-step-in-l { from { opacity: 0; transform: translateX(-32px); } }
+.lead-shake { animation: lead-shake 400ms ease-out; }
+@keyframes lead-shake {
+  0%, 100% { transform: none; }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.lead-swap { animation: lead-swap-in 200ms ease-out both; }
+@keyframes lead-swap-in { from { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .lead-step[data-animate], .lead-shake, .lead-swap { animation: none; }
+}
+
 /* ── Scroll-in reveals ────────────────────────────────────────────────────
    Drives <Reveal> and <Stagger>/<StaggerItem>, which used to be framer-motion
    `whileInView` components. They are the most-used effect on the site (~25

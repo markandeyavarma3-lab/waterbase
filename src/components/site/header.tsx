@@ -3,10 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import {
-  motion, useScroll, useSpring, useTransform, useMotionTemplate, AnimatePresence,
-} from "framer-motion";
-import { Menu } from "lucide-react";
+import type { CSSProperties } from "react";
+import { Menu, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
@@ -14,40 +12,61 @@ import {
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
 import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
+import { callNowTelLink } from "@/lib/site-config";
+import { trackCallClick } from "@/lib/analytics";
 
+/** Scroll distance over which the bar settles from its "at top" to "scrolled" state. */
+const SETTLE_PX = 120;
+
+/**
+ * The site header — without framer-motion.
+ *
+ * The bar still responds to scroll CONTINUOUSLY rather than flipping between
+ * two states: height 62→54px, rail padding 12→6px, the frosted veil and the
+ * shadow all resolve together over the first 120px, and a hairline at the top
+ * tracks reading progress. What changed is how.
+ *
+ * It used to be five framer-motion springs and transforms (useScroll, useSpring
+ * ×2, useTransform ×4, useMotionTemplate). The header renders in the root
+ * layout, so that put the whole animation library on the critical path of
+ * every page on the site — including the paid landing pages, whose only job is
+ * to load fast on a phone.
+ *
+ * Now: one passive scroll listener, throttled to one write per animation frame,
+ * sets two CSS custom properties on <header> (`--hdr-p` 0→1 and
+ * `--hdr-progress` 0→1). Every visual is a `calc()` of those in globals.css
+ * (`.hdr-*`), and a short CSS transition stands in for the spring's smoothing.
+ * Scrolling causes ZERO React re-renders; state changes only at the two
+ * thresholds that genuinely change markup (hide/show, and the wordmark loop).
+ */
 export function Header() {
   const [open, setOpen] = useState(false);
   const [logoRun, setLogoRun] = useState(0);
   // Drives the wordmark loop. Deliberately a larger threshold than the visual
-  // scroll response below, so small jitter at the top does not kill the logo
-  // animation mid-drop.
+  // settle, so small jitter at the top does not kill the logo mid-drop.
   const [atTop, setAtTop] = useState(true);
   const [hidden, setHidden] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const lastY = useRef(0);
   const pathname = usePathname();
 
-  const { scrollYProgress, scrollY } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 300, damping: 40, mass: 0.3 });
-
-  // The bar responds to scroll CONTINUOUSLY rather than flipping between two
-  // states at a threshold. Everything below is driven off one 0-120px range so
-  // the changes resolve together, which is what reads as engineered rather than
-  // switched. A light spring smooths the raw value without adding lag.
-  const settle = useSpring(scrollY, { stiffness: 260, damping: 40, mass: 0.35 });
-  const barHeight = useTransform(settle, [0, 120], [62, 54], { clamp: true });
-  const railPad = useTransform(settle, [0, 120], [12, 6], { clamp: true });
-  // At the top of the page the bar is almost invisible — the hero mesh shows
-  // straight through it. A touch more veil only appears once you scroll so links
-  // stay readable over lighter sections below.
-  const pillShadow = useTransform(settle, [0, 120], [0, 0.08], { clamp: true });
-  const pillGlow = useMotionTemplate`0 8px 24px rgba(18, 60, 70, ${pillShadow})`;
-  const barVeil = useTransform(settle, [0, 120], [0.06, 0.38], { clamp: true });
-
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0;
+
+    const apply = () => {
+      frame = 0;
+      const el = headerRef.current;
       const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+
+      if (el) {
+        el.style.setProperty("--hdr-p", Math.min(1, Math.max(0, y / SETTLE_PX)).toFixed(3));
+        el.style.setProperty("--hdr-progress", (max > 0 ? Math.min(1, y / max) : 0).toFixed(4));
+      }
+
       const delta = y - lastY.current;
       setAtTop(y < 90);
+      // Never hide the bar while the mobile menu is open.
       if (!open) {
         if (y <= 140) setHidden(false);
         else if (delta > 10) setHidden(true);
@@ -55,46 +74,61 @@ export function Header() {
       }
       lastY.current = y;
     };
-    onScroll();
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+
+    // Initial sync (e.g. a reload halfway down the page), also via rAF so it
+    // happens outside the effect body.
+    frame = requestAnimationFrame(apply);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [open]);
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href));
 
+  // Mobile menu items enter one after another; `--i` feeds the CSS delay.
+  let menuIndex = 0;
+  const stagger = (): CSSProperties => ({ ["--i" as string]: menuIndex++ });
+
   return (
     <header
+      ref={headerRef}
       className={cn(
         // FIXED, not sticky. A sticky header still occupies space in the flow,
         // so the pill would float over the page background rather than over the
-        // hero. Fixed takes it out of flow and lets the dark hero run up behind
-        // it — which is the whole point of a floating bar. The hero and page
-        // heroes carry matching top padding so their content clears it.
-        "fixed inset-x-0 top-0 z-50 transition-transform duration-300 ease-out-expo",
+        // hero. Fixed takes it out of flow and lets the hero run up behind it.
+        // The hero and page heroes carry matching top padding to clear it.
+        "site-header fixed inset-x-0 top-0 z-50 transition-transform duration-300 ease-out-expo",
         hidden ? "-translate-y-full" : "translate-y-0"
       )}
     >
       {/* Reading progress — a hairline at the very top edge of the viewport. */}
-      <motion.div
-        className="absolute inset-x-0 top-0 z-10 h-0.5 origin-left bg-gradient-to-r from-brand-green to-brand-blue"
-        style={{ scaleX: progress }}
+      <div
+        className="hdr-progress absolute inset-x-0 top-0 z-10 h-0.5 bg-gradient-to-r from-brand-green to-brand-blue"
         aria-hidden="true"
       />
 
       {/* ── FLOATING PILL ───────────────────────────────────────
           Detached from the edges with its own translucent surface, so it sits
-          over the page rather than dividing it. It gains opacity and shadow as
-          you scroll, which is what keeps it legible once light content passes
-          beneath it. */}
-      <motion.div className="px-3 sm:px-4 md:px-6" style={{ paddingTop: railPad, paddingBottom: railPad }}>
-        <motion.div
-          className="nav-bar-sink relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full px-4 sm:gap-4 sm:px-5"
-          style={{ height: barHeight, boxShadow: pillGlow }}
-        >
-          {/* Frosted veil — no own mesh layer; the page background bleeds through. */}
-          <motion.div
-            className="pointer-events-none absolute inset-0 rounded-full bg-white/60 backdrop-blur-md"
-            style={{ opacity: barVeil }}
+          over the page rather than dividing it. It gains veil and shadow as you
+          scroll, which keeps it legible once light content passes beneath. */}
+      <div className="hdr-rail px-3 sm:px-4 md:px-6">
+        <div className="hdr-bar nav-bar-sink relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full px-4 sm:gap-4 sm:px-5">
+          {/* Frosted veil — no own mesh layer; the page background bleeds through.
+              -z-10 inside the `isolate` bar: behind every piece of bar content,
+              but still above the bar's own background. Without it the veil (an
+              absolutely positioned layer) painted OVER anything in the bar that
+              is not itself positioned — the Call button and the mobile menu
+              button washed out to grey as the veil strengthened on scroll. */}
+          <div
+            className="hdr-veil pointer-events-none absolute inset-0 -z-10 rounded-full bg-white/60 backdrop-blur-md"
             aria-hidden="true"
           />
           {/* water current along the pill's lower edge */}
@@ -119,68 +153,48 @@ export function Header() {
                   <SheetTitle className="font-display">Menu</SheetTitle>
                   <SheetDescription className="sr-only">Site navigation</SheetDescription>
                 </SheetHeader>
-                <AnimatePresence>
-                  {open && (
-                    <motion.nav
-                      aria-label="Mobile navigation"
-                      className="mt-2 flex flex-col gap-1 px-2"
-                      initial="hidden"
-                      animate="show"
-                      variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } } }}
+                {/* Radix unmounts closed sheet content, so these CSS entrance
+                    animations replay on every open — the same behaviour the
+                    AnimatePresence stagger had. */}
+                <nav aria-label="Mobile navigation" className="mt-2 flex flex-col gap-1 px-2">
+                  {NAV_LINKS.map((l) => (
+                    <Link
+                      key={l.href}
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      style={stagger()}
+                      className={cn(
+                        "hdr-menu-item flex min-h-11 items-center rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
+                        isActive(l.href) && "bg-accent text-brand-green"
+                      )}
                     >
-                      {NAV_LINKS.map((l) => (
-                        <motion.div
-                          key={l.href}
-                          variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
-                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                          <Link
-                            href={l.href}
-                            onClick={() => setOpen(false)}
-                            className={cn(
-                              "flex min-h-11 items-center rounded-md px-3 py-2.5 text-base font-medium hover:bg-accent",
-                              isActive(l.href) && "bg-accent text-brand-green"
-                            )}
-                          >
-                            {l.label}
-                          </Link>
-                        </motion.div>
-                      ))}
+                      {l.label}
+                    </Link>
+                  ))}
 
-                      {/* The six campaign landing pages. They are the pages we
-                          pay to send traffic to, and until this existed the
-                          only way to reach five of them was a paid click or the
-                          sitemap — nothing on the site linked to them. */}
-                      <motion.div
-                        variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
-                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-4 border-t border-border pt-4"
-                      >
-                        <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                          Solutions
-                        </p>
-                      </motion.div>
-                      {SOLUTION_LINKS.map((l) => (
-                        <motion.div
-                          key={l.href}
-                          variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
-                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                          <Link
-                            href={l.href}
-                            onClick={() => setOpen(false)}
-                            className={cn(
-                              "flex min-h-11 items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground",
-                              isActive(l.href) && "bg-accent text-brand-green"
-                            )}
-                          >
-                            {l.label}
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </motion.nav>
-                  )}
-                </AnimatePresence>
+                  {/* The six solution pages. Before this group (and the footer
+                      column) existed, five of them had no internal links at all. */}
+                  <p
+                    style={stagger()}
+                    className="hdr-menu-item mt-4 border-t border-border px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+                  >
+                    Solutions
+                  </p>
+                  {SOLUTION_LINKS.map((l) => (
+                    <Link
+                      key={l.href}
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      style={stagger()}
+                      className={cn(
+                        "hdr-menu-item flex min-h-11 items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground",
+                        isActive(l.href) && "bg-accent text-brand-green"
+                      )}
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </nav>
               </SheetContent>
             </Sheet>
 
@@ -194,39 +208,53 @@ export function Header() {
               <Wordmark
                 key={logoRun}
                 animate={atTop}
-                className="font-[family-name:var(--font-logo)] text-[clamp(1.15rem,4.8vw,1.65rem)] font-bold uppercase tracking-[0.042em] text-water-deep"
+                className="font-[family-name:var(--font-logo)] text-[clamp(1.15rem,4.8vw,1.65rem)] font-bold uppercase tracking-[0.042em] text-water-deep lg:text-[clamp(1.15rem,2.1vw,1.65rem)]"
               />
             </Link>
           </div>
 
-          {/* Nav — centre. Each link carries its own fixed-colour pill, an
-              even rotation through the site's four section hues, so the bar
-              itself is never a flat row of plain text — same idea as the
-              coloured WhatsApp / callback pills on the "Planning a project"
-              CTA panel, applied to navigation. */}
-          <nav aria-label="Main navigation" className="hidden items-center gap-1.5 lg:flex">
-            {NAV_LINKS.map((l, i) => {
-              const active = isActive(l.href);
-              return (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className={cn(
-                    "nav-pill tap-target-y flex items-center rounded-full border px-3.5 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-shadow duration-200",
-                    i % 3 === 0 && "living-mesh-a",
-                    i % 3 === 1 && "living-mesh-b",
-                    i % 3 === 2 && "living-mesh-c",
-                    active && "nav-pill-active shadow-sm"
-                  )}
-                >
-                  {l.label}
-                </Link>
-              );
-            })}
-          </nav>
+          <div className="hidden items-center gap-1.5 lg:flex">
+            {/* Nav — each link carries its own fixed-colour pill, rotating through
+                the living-mesh palettes, so the bar is never a flat row of text. */}
+            <nav aria-label="Main navigation" className="flex items-center gap-1.5">
+              {NAV_LINKS.map((l, i) => {
+                const active = isActive(l.href);
+                return (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className={cn(
+                      "nav-pill tap-target-y flex items-center rounded-full border px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-shadow duration-200 xl:px-3.5",
+                      i % 3 === 0 && "living-mesh-a",
+                      i % 3 === 1 && "living-mesh-b",
+                      i % 3 === 2 && "living-mesh-c",
+                      active && "nav-pill-active shadow-sm"
+                    )}
+                  >
+                    {l.label}
+                  </Link>
+                );
+              })}
+            </nav>
 
-        </motion.div>
-      </motion.div>
+            {/* Desktop Call button. Mobile already has the sticky Call/WhatsApp
+                bar; desktop visitors previously had no call action in the header
+                at all. Same styling and the same tracking (Ads `call` conversion
+                + GTM `cta_call_now`) as the hero's Call now. Icon-only at lg,
+                where the bar is already full; labelled from xl. */}
+            <a
+              href={callNowTelLink()}
+              onClick={trackCallClick}
+              data-gtm="call_now_header"
+              aria-label="Call now"
+              className="cta-sink-primary cta-call-now tap-target-y ml-1 inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-colors duration-300 xl:px-4"
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              <span className="hidden xl:inline">Call now</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </header>
   );
 }

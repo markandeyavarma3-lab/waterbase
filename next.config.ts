@@ -42,16 +42,21 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   // next/font self-hosts Google Fonts at build time, so no external font origin.
   "font-src 'self' data:",
-  "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.google.co.in https://googleads.g.doubleclick.net",
+  // pagead2.googlesyndication.com: Google Ads' consent-mode measurement ping
+  // (/ccm/collect). Observed live in a real browser with the tags running —
+  // the static origin scan could not see it, because gtag.js chooses it at runtime.
+  "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.google.co.in https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com",
   // Supabase (auth + leads), GA4 measurement, Vercel Speed Insights.
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://www.google.com",
   // The Ads tag drops a conversion-linker iframe.
   "frame-src https://td.doubleclick.net https://www.googletagmanager.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
-  "upgrade-insecure-requests",
+  // Ignored by browsers in Report-Only mode (and logged as an error there), so
+  // only emitted once the policy is enforcing.
+  ...(process.env.CSP_ENFORCE === "true" ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
 const securityHeaders = [
