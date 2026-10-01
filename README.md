@@ -73,34 +73,35 @@ footer and mobile menu). In Google Ads they make good **sitelinks** on the one a
 stays — the old per-product campaigns; create the one Search campaign with the final URL above;
 add the six pages as sitelinks; keep the conversion actions below.
 
-### Conversion tracking — how it works
-All conversion events live in `src/lib/analytics.ts` and fire through the Google Ads tag.
-The three events are **fully wired in code** and configured entirely through environment variables —
-you never need to edit `analytics.ts` to change a conversion.
+### Conversion tracking — ONE action: "Contact Us"
 
-| Conversion | Fires when | Configured by |
-|------------|-----------|---------------|
-| Phone call | Any "Call Now" button clicked (header, hero, `/get-quote`, the six product pages, mobile sticky bar) | `NEXT_PUBLIC_ADS_CALL_LABEL` / `_EVENT` |
-| WhatsApp click | Any WhatsApp link clicked, anywhere on the site | `NEXT_PUBLIC_ADS_CONTACT_LABEL` / `_EVENT` |
-| Form submit | `/thank-you` loads after a real form submit (once per submission) | `NEXT_PUBLIC_ADS_FORM_LABEL` / `_EVENT` |
+The single ad optimises for one Google Ads conversion action, **Contact Us**, whose event is
+`ads_conversion_Contact_Us_1`. It is built into `src/lib/analytics.ts` as the default — **no
+environment variable is needed**. It fires, once per action, on:
 
-Google gives you **one of two things** per conversion action, depending on the snippet it shows:
+| Visitor does | Where it is wired |
+|---|---|
+| Completes the callback form | `/thank-you?ref=lead` load, once per submission (`FormConversionTracker`) |
+| Clicks any Call / phone link | Call buttons (`trackCallClick`) + every other `tel:` link via `ConversionTracker` |
+| Clicks any WhatsApp link | Float + sticky bar (`trackWhatsAppFloatClick`) + every other link via `ConversionTracker` |
 
-- a **label** like `AbC-D_efGhIjKlMnOp` → put it in the `*_LABEL` variable
-- an **event name** like `ads_conversion_Call_1` → put it in the `*_EVENT` variable
+Not counted: "Request a callback" clicks (only the *completed* form counts), and anything on
+`/admin` — the owner messaging a lead is not a new lead.
 
-Set whichever one you were given and leave the other blank. If both are set, the label wins.
-If **neither** is set, the code falls back to a placeholder event name that Google Ads will
-**not** count — and warns about it in the dev console.
+Hits are sent with `transport_type: "beacon"`, which is why the site does not use Google's
+"delayed navigation helper" (`gtagSendEvent`) snippet: that holds the visitor for up to 2 s before
+the dialer opens; beacon delivers the hit without the wait.
 
-> These are `NEXT_PUBLIC_*` variables, so they are baked in at **build time**. After changing them
-> you must redeploy, and they must be set in **Vercel → Settings → Environment Variables**, not just
-> in `.env.local`.
+**In Google Ads, set this action's *Count* to "One"** — a visitor who WhatsApps and then fills the
+form is one lead, not two. Step-by-step: `docs/google-ads-conversions.md`.
 
-### ⚠️ PENDING — create the conversion actions in Google Ads
-The code is done; the values are not filled in yet. Until you create the three conversion actions
-in Google Ads and paste their values into Vercel, **phone calls (~65% of your conversions) are still
-not counted.** See `docs/google-ads-conversions.md` for the click-by-click walkthrough.
+<details><summary>Overrides (only if separate Call / WhatsApp / Form actions are created later)</summary>
+
+Each path can be pointed at its own action with `NEXT_PUBLIC_ADS_{CALL,CONTACT,FORM}_LABEL` (a
+label like `AbC-D_efG`, fired via `send_to`) or `…_EVENT` (an event name). Label wins if both are
+set; unset paths keep firing Contact Us. These are inlined at **build time** — set them in Vercel
+and redeploy.
+</details>
 
 ---
 
@@ -109,7 +110,7 @@ not counted.** See `docs/google-ads-conversions.md` for the click-by-click walkt
 | File | Purpose |
 |------|---------|
 | `src/lib/site-config.ts` | All business data — phone, email, addresses, WhatsApp, stats, Ads ID. **Never hardcode these elsewhere.** |
-| `src/lib/analytics.ts` | Google Ads conversion events (call / form / WhatsApp), driven by env vars |
+| `src/lib/analytics.ts` | Google Ads conversion — every contact path fires the "Contact Us" action |
 | `src/lib/leads.ts` | Lead form schema (validation) + admin status list. Uses `zod/mini` — see the note in the file for why |
 | `src/lib/products.ts` | The 14 product categories, shared by the homepage band and `/products` |
 | `src/lib/csv.ts` | CSV escaping for the lead export, including formula-injection defence |
@@ -117,7 +118,7 @@ not counted.** See `docs/google-ads-conversions.md` for the click-by-click walkt
 | `src/lib/admin-auth.ts` | Who may access `/admin` — email allowlist, **fails closed** |
 | `src/lib/notify.ts` | Resend email notification for new leads |
 | `src/app/admin/` | Leads dashboard (Supabase auth + allowlist) |
-| `src/app/layout.tsx` | Analytics tags (GA4 ×2, Google Ads, Vercel) |
+| `src/app/layout.tsx` | Consent defaults, GTM, GA4 + Ads tags, Search Console verification |
 | `src/components/site/contact-actions.tsx` | Call Now / WhatsApp / callback buttons |
 | `src/components/site/sticky-call-bar.tsx` | Mobile sticky Call/WhatsApp bar on landing pages |
 
@@ -132,6 +133,7 @@ not counted.** See `docs/google-ads-conversions.md` for the click-by-click walkt
 | `LEAD_NOTIFICATION_EMAIL` | Where lead alert emails go (falls back to business email) |
 | `LEAD_FROM_EMAIL` | "From" address for lead alert emails |
 | `NEXT_PUBLIC_ADS_*_LABEL` / `_EVENT` | Google Ads conversion values — see the conversion tracking section above |
+| `GOOGLE_SITE_VERIFICATION` | Search Console HTML-tag code (only the `content` value). Optional; redeploy after setting |
 | `CSP_ENFORCE` | `true` switches the Content-Security-Policy from Report-Only to enforcing. Leave unset until verified — see below |
 
 ### Content-Security-Policy

@@ -27,41 +27,52 @@ export function pushDataLayer(event: string, payload: Record<string, unknown> = 
 }
 
 /**
- * Google Ads gives you ONE of two things per conversion action, depending on
- * which snippet it hands you:
+ * The ONE Google Ads conversion action the single ad optimises for: "Contact Us"
+ * (account AW-874230546). Google Ads gave this event snippet for it:
+ *
+ *   gtag('event', 'ads_conversion_Contact_Us_1', { … })
+ *
+ * Every way a visitor reaches the business counts as a contact, so all three
+ * paths fire it by default:
+ *   - callback form — on /thank-you load after a real submission (the "Page
+ *     load" option Google Ads offered; FormConversionTracker dedupes it)
+ *   - WhatsApp click
+ *   - Call now click (calls are ~two-thirds of this business's leads)
+ *
+ * Set the action's "Count" to ONE in Google Ads, so a visitor who WhatsApps and
+ * then also fills the form is one conversion, not two.
+ */
+export const CONTACT_US_EVENT = "ads_conversion_Contact_Us_1";
+
+/**
+ * Per-path overrides, for if separate Call / WhatsApp / Form actions are ever
+ * created again. Google gives ONE of two things per action:
  *
  *   LABEL  — e.g. "AbC-D_efGhIjKlMnOp", fired as
  *            gtag('event', 'conversion', { send_to: 'AW-xxx/LABEL' })
  *   EVENT  — e.g. "ads_conversion_Call_1", fired as
  *            gtag('event', 'ads_conversion_Call_1', {})
  *
- * Both are supported. If both are set for a conversion the LABEL wins, because
- * send_to targets the conversion action directly and cannot be mismatched by a
- * renamed event. If neither is set we fall back to the historical placeholder
- * name — which Google Ads will NOT count unless it happens to match a real
- * conversion action, so an unconfigured conversion warns in the dev console.
+ * If both are set the LABEL wins (send_to targets the action directly). If
+ * neither is set — the normal case now — the path fires CONTACT_US_EVENT.
  *
  * NEXT_PUBLIC_* variables are inlined by literal text substitution when the
- * client bundle is built. Every one must therefore appear as a complete
- * `process.env.NEXT_PUBLIC_FOO` expression — a computed lookup such as
- * process.env[name] is not substituted and reads as undefined in the browser.
- * That is why this table is written out longhand instead of generated.
+ * client bundle is built, so each must appear as a complete
+ * `process.env.NEXT_PUBLIC_FOO` expression; a computed process.env[name] reads
+ * as undefined in the browser. Hence the longhand table.
  */
 const CONVERSIONS = {
   call: {
     label: process.env.NEXT_PUBLIC_ADS_CALL_LABEL,
     event: process.env.NEXT_PUBLIC_ADS_CALL_EVENT,
-    fallback: "ads_conversion_Call_1",
   },
   contact: {
     label: process.env.NEXT_PUBLIC_ADS_CONTACT_LABEL,
     event: process.env.NEXT_PUBLIC_ADS_CONTACT_EVENT,
-    fallback: "ads_conversion_Contact_Us_1",
   },
   form: {
     label: process.env.NEXT_PUBLIC_ADS_FORM_LABEL,
     event: process.env.NEXT_PUBLIC_ADS_FORM_EVENT,
-    fallback: "ads_conversion_Form_1",
   },
 } as const;
 
@@ -92,29 +103,22 @@ function fire(kind: ConversionKind) {
   const gtag = getGtag();
   if (!gtag) return;
 
-  const { label, event, fallback } = CONVERSIONS[kind];
+  const { label, event } = CONVERSIONS[kind];
+
+  // `beacon` lets the hit survive the page being left — which is exactly what
+  // a Call or WhatsApp click is about to do. It does the job of the "delayed
+  // navigation helper" Google Ads offers (gtagSendEvent + event_callback)
+  // without holding the visitor back for up to two seconds before the dialer
+  // or WhatsApp opens.
+  const params = { transport_type: "beacon" };
 
   try {
     const configuredLabel = value(label);
     if (configuredLabel) {
-      gtag("event", "conversion", { send_to: sendTo(configuredLabel) });
+      gtag("event", "conversion", { send_to: sendTo(configuredLabel), ...params });
       return;
     }
-
-    const configuredEvent = value(event);
-    if (configuredEvent) {
-      gtag("event", configuredEvent, {});
-      return;
-    }
-
-    if (process.env.NODE_ENV !== "production") {
-      console.warn(
-        `[analytics] "${kind}" conversion is unconfigured — firing placeholder "${fallback}", ` +
-          `which Google Ads will not count. Set NEXT_PUBLIC_ADS_${kind.toUpperCase()}_LABEL ` +
-          `(or _EVENT) in .env.local and in Vercel, then redeploy.`
-      );
-    }
-    gtag("event", fallback, {});
+    gtag("event", value(event) ?? CONTACT_US_EVENT, params);
   } catch (err) {
     console.error("Gtag error:", err);
   }

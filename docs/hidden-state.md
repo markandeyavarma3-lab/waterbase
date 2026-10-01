@@ -82,8 +82,12 @@ their reporting history.
 
 ### Conversion Actions
 
-| Conversion | Status | Value location |
-|---|---|---|
+**One action: "Contact Us"** → event `ads_conversion_Contact_Us_1`, fired by the site on a
+completed form, any call click and any WhatsApp click (`src/lib/analytics.ts`). No Vercel variables
+are involved. In Google Ads it must be **Count: One** and **Primary**; any older Call / WhatsApp /
+Form actions should be **Secondary** so nothing is counted twice. See `docs/owner-setup-guide.md`.
+
+---|---|---|
 | Phone calls | **Not created yet** | Google Ads → Goals → Conversions → + New |
 | WhatsApp clicks | Already exists | Google Ads → Goals → Conversions → [existing action] |
 | Callback form | Already exists | Google Ads → Goals → Conversions → [existing action] |
@@ -139,11 +143,12 @@ signed in ≠ admin.
 
 **Status:** Waiting for quotes from clients. File is ready, just needs the content.
 
-### 3. Phone call conversion event name is a placeholder
+### 3. Phone calls are counted (resolved)
 
-`src/lib/analytics.ts` has the structure built but falls back to `ads_conversion_Call_1` when no env var is set. This is by design — the real value comes from Google Ads, not the code.
+Calls used to fall back to `ads_conversion_Call_1`, an action that never existed, so no call was
+ever counted. Every contact path — calls included — now fires the real "Contact Us" action.
 
-**Status:** You provide the value in step 2 of the merge checklist.
+**Status:** Done in code. Only the Google Ads settings remain (Count: One).
 
 ---
 

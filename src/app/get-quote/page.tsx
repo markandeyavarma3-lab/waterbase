@@ -2,7 +2,7 @@ import { Droplets, Gauge, Layers, Store, Building2, BadgePercent, Award, MapPin,
 import type { Metadata } from "next";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
-import { statText } from "@/lib/site-config";
+import { siteConfig, statText } from "@/lib/site-config";
 import { AD_LANDING_PATH } from "@/lib/nav";
 
 /**
@@ -85,7 +85,7 @@ const WHY = [
   { icon: Award, title: "Authorised & Genuine", desc: "Official dealer for Jain Irrigation, KSB and Netafim. Manufacturer warranty on every product — no duplicates." },
   { icon: MapPin, title: "Free Site Survey", desc: "We visit your land, check your water source and recommend the right system before you commit to anything." },
   { icon: LifeBuoy, title: "One Team, End to End", desc: "Survey → design → supply → installation → after-sales. No middlemen, no subcontractors." },
-  { icon: Truck, title: "Local Stock, Fast Supply", desc: "Pipes, pumps and accessories ready at our Eluru store — same-day dispatch on most orders." },
+  { icon: Truck, title: "Local Stock, Fast Supply", desc: "Pipes, pumps and accessories stocked at our Eluru store — same-day dispatch can be arranged on bulk orders." },
 ];
 
 export default function GetQuotePage() {
@@ -108,7 +108,7 @@ export default function GetQuotePage() {
         whyLead="From the first site visit to after-sales support — handled by the same team."
         ctaSubtitle="Ready to start?"
         ctaTitle="Call now or send a WhatsApp — we reply fast"
-        ctaDesc="Free site survey and quote. Open Monday to Saturday, 10 AM – 7 PM, Kandrikagudem, Eluru."
+        ctaDesc={`Free site survey and quote. Open ${siteConfig.hoursSummary.days}, ${siteConfig.hoursSummary.time}, in ${siteConfig.address.city}.`}
       />
     </div>
   );

@@ -56,6 +56,13 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
+  // Google Search Console ownership check. Paste ONLY the content="…" value of
+  // the HTML-tag method into GOOGLE_SITE_VERIFICATION in Vercel and redeploy;
+  // the <meta name="google-site-verification"> tag then appears on every page.
+  // Unset → no tag. Read at build time (pages are static), so a redeploy is needed.
+  ...(process.env.GOOGLE_SITE_VERIFICATION?.trim()
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION.trim() } }
+    : {}),
 };
 
 // `viewportFit: "cover"` is what makes env(safe-area-inset-*) resolve to real
