@@ -16,24 +16,38 @@
 -- ─────────────────────────────────────────────────────────────────────────────
 
 create table if not exists public.lead_throttle (
+  -- A surrogate key, not (ip_hash, created_at): two submissions from one
+  -- address in the same microsecond would otherwise collide on the primary key
+  -- and the second record would be silently dropped.
+  id          bigint generated always as identity primary key,
   ip_hash     text        not null,
-  created_at  timestamptz not null default now(),
-  primary key (ip_hash, created_at)
+  created_at  timestamptz not null default now()
 );
 
+-- Serves the throttle query exactly:
+--   select count(*) … where ip_hash = $1 and created_at >= $2
 create index if not exists lead_throttle_lookup_idx
   on public.lead_throttle (ip_hash, created_at desc);
 
--- Reached only via the service-role key, exactly like public.leads.
+-- Reached only via the service-role key, exactly like public.leads. Enabled
+-- with no policies, which denies the anon and authenticated roles outright.
 alter table public.lead_throttle enable row level security;
 
 -- Housekeeping. Called opportunistically from the server action rather than
 -- scheduled, so the table stays small without needing pg_cron.
+--
+-- SECURITY INVOKER, and EXECUTE revoked from everyone but service_role. A
+-- function in `public` is callable over PostgREST by default — as security
+-- definer it would have let any anonymous visitor run it with the owner's
+-- rights via /rest/v1/rpc/prune_lead_throttle.
 create or replace function public.prune_lead_throttle()
 returns void
 language sql
-security definer
+security invoker
 set search_path = public
 as $$
   delete from public.lead_throttle where created_at < now() - interval '1 hour';
 $$;
+
+revoke execute on function public.prune_lead_throttle() from public, anon, authenticated;
+grant execute on function public.prune_lead_throttle() to service_role;

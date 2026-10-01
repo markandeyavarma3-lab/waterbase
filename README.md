@@ -171,17 +171,23 @@ by default.
 
 ## Database
 
-The schema now lives in `supabase/migrations/` instead of only inside the live
-Supabase project. Both files are idempotent and safe to run against the existing
-production database — they create nothing that is already there, and add the
-indexes that were missing (notably `leads (mobile, created_at)`, which the form's
-throttle query needs on every single submission).
+The schema lives in `supabase/migrations/`, and the repo's migration history
+matches the live project's exactly (checked with `supabase_migrations.schema_migrations`):
 
-Apply with `supabase db push`, or paste them into the Supabase SQL editor.
+| Version | What | State |
+|---|---|---|
+| `20260621120129` | `leads.location`, `leads.land_size` | applied (originally via dashboard; mirrored here) |
+| `20261001064520` | `leads` baseline: status/requirement CHECKs, indexes incl. `(mobile, created_at)`, RLS | **applied** |
+| `20261001064524` | `lead_throttle` table for per-IP rate limiting; `prune_lead_throttle()` (service-role only) | **applied** |
 
-> `20260908000100_lead_throttle.sql` must be applied for per-IP rate limiting to
-> take effect. Until then `submitLead` fails open on that check — deliberately, so
-> a missing table can never block a real customer enquiry.
+All three are idempotent. For a future schema change: add a new file here, then
+`supabase db push` (or apply via the dashboard SQL editor **and** commit the same
+SQL here with the version Supabase records — otherwise `db push` refuses to run).
+
+RLS is enabled with **no policies** on both tables, on purpose. The site reaches
+them only through the service-role key, and the only gate on that path is the
+`ADMIN_EMAILS` allowlist. Supabase's advisor flags "RLS enabled, no policy" as
+INFO — that is the intended state, not a problem to fix.
 
 ---
 
