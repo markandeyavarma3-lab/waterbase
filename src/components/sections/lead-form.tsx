@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type Resolver } from "react-hook-form";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { Loader2, ArrowLeft, ArrowRight } from "lucide-react";
-import { leadSchema, type LeadInput, type RequirementValue, REQUIREMENT_OPTIONS } from "@/lib/leads";
+import { leadSchema, type LeadFormValues, type RequirementValue, REQUIREMENT_OPTIONS } from "@/lib/leads";
 import { submitLead } from "@/lib/actions/leads";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,15 +59,19 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
   const [direction, setDirection] = useState(1);
   const honeypotRef = useRef<HTMLInputElement>(null);
 
-  const form = useForm<LeadInput>({
-    resolver: zodResolver(leadSchema),
+  // LeadFormValues, not LeadInput: the requirement select legitimately starts
+  // empty, and "" is not a RequirementValue. Typing it honestly here is what
+  // lets leadSchema keep the strict literal union (it used to be silently
+  // widened to `string`, which is what made `requirement: ""` type-check).
+  const form = useForm<LeadFormValues>({
+    resolver: standardSchemaResolver(leadSchema) as unknown as Resolver<LeadFormValues>,
     defaultValues: { name: "", mobile: "", requirement: defaultRequirement ?? "", location: "", landSize: "" },
   });
 
   const { errors } = form.formState;
 
   async function goNext() {
-    const valid = await form.trigger(STEP_FIELDS[step] as unknown as (keyof LeadInput)[]);
+    const valid = await form.trigger(STEP_FIELDS[step] as unknown as (keyof LeadFormValues)[]);
     if (!valid) return;
     setDirection(1);
     setStep((s) => Math.min(TOTAL_STEPS - 1, s + 1));
@@ -78,7 +82,7 @@ export function LeadForm({ defaultRequirement }: { defaultRequirement?: Requirem
     setStep((s) => Math.max(0, s - 1));
   }
 
-  async function onSubmit(values: LeadInput) {
+  async function onSubmit(values: LeadFormValues) {
     setServerError(null);
     const result = await submitLead({ ...values, company: honeypotRef.current?.value ?? "" });
     if (result.ok) {

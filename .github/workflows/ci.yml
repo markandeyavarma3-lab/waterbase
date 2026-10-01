@@ -1,0 +1,46 @@
+name: CI
+
+# Nothing verified this repo before merge — the only workflow was a Supabase
+# keep-alive ping. A push to main deploys straight to production via Vercel, so
+# lint, tests and the type-checking build all have to pass here first.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # @supabase/supabase-js warns below 22; package.json pins the same floor.
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+        env:
+          # Build-time only. The Supabase clients throw if these are missing, and
+          # the prerender pass constructs them. These are placeholders — nothing
+          # in the build talks to a real database, and no secret belongs in CI.
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
+          SUPABASE_SERVICE_ROLE_KEY: placeholder-service-key
+          ADMIN_EMAILS: ci@example.com

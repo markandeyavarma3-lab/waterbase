@@ -1,16 +1,20 @@
 
+const FOUNDED = 2000;
 const currentYear = new Date().getFullYear();
-const yearsOfExp = currentYear - 2000;
+const yearsOfExp = currentYear - FOUNDED;
 
 export const siteConfig = {
   name: "Waterbase Technologies",
   legalName: "Waterbase Technologies",
   businessType: "Proprietorship",
-  since: 2000,
+  since: FOUNDED,
   experienceYears: `${yearsOfExp}+`,
 
-  // 👇 Edit this one line anytime to change the hero badge text.
-  heroBadge: "Serving since 2000",
+  /* Hand-written marketing line, edited by the owner — deliberately NOT derived.
+     "25+" is a floor, not a count: the business dates from `since` (2000), so the
+     claim stays true every year. The one rule, pinned by site-config.test.ts:
+     it must never claim MORE years than `since` supports. */
+  heroBadge: "25+ Years of Trusted Experience",
 
   domain: "waterbasetechnologies.com",
   url: "https://waterbasetechnologies.com",
@@ -83,11 +87,11 @@ export const siteConfig = {
      the homepage, all six ad landing pages and the about page all read from
      here, so changing a figure here changes it everywhere. */
   stats: [
-    { value: 15400, suffix: "+", label: "Customers served" },
-    { value: 52800, suffix: "+", label: "Acres irrigated" },
-    { value: 128, suffix: "+", label: "Corporate projects" },
-    { value: 22, suffix: "+", label: "Districts served" },
-    { value: 4, suffix: "+", label: "States served" },
+    { key: "customers", value: 15400, suffix: "+", label: "Customers served" },
+    { key: "acres", value: 52800, suffix: "+", label: "Acres irrigated" },
+    { key: "projects", value: 128, suffix: "+", label: "Corporate projects" },
+    { key: "districts", value: 22, suffix: "+", label: "Districts served" },
+    { key: "states", value: 4, suffix: "+", label: "States served" },
   ],
 
   mapsUrl: "https://maps.app.goo.gl/U1Cnqi5dvsMfKQmY9",
@@ -151,5 +155,33 @@ export function whatsappLink(
   );
   return `https://wa.me/${siteConfig.countryCode}${number}?text=${text}`;
 }
+
+export type StatKey = (typeof siteConfig.stats)[number]["key"];
+
+/**
+ * The display form of a headline figure — "15,400+", "128+".
+ *
+ * Landing-page copy used to hardcode rounded-down versions of these ("15,000+
+ * farmers served", "100+ corporate projects") while site-config held 15,400 and
+ * 128, so the same site quoted two different numbers for the same fact. Copy
+ * interpolates this instead; the numbers can only ever be changed in one place.
+ */
+export function statText(key: StatKey): string {
+  const s = siteConfig.stats.find((x) => x.key === key);
+  if (!s) return "";
+  return `${s.value.toLocaleString("en-IN")}${s.suffix}`;
+}
+
+/**
+ * Two forms, because English needs both.
+ *
+ * `experienceText` ("26+ years") suits a standalone claim — a badge, a stat, a
+ * card title. `yearsInBusiness` (26) is for prose that already carries its own
+ * qualifier: "for over 26 years" reads correctly, whereas interpolating the "+"
+ * form there gives "for over 26+ years", which is the redundancy this pair
+ * exists to avoid.
+ */
+export const experienceText = `${siteConfig.experienceYears} years`;
+export const yearsInBusiness = yearsOfExp;
 
 export const fullAddress = `${siteConfig.address.buildingName}, ${siteConfig.address.road}, near ${siteConfig.address.landmark}, ${siteConfig.address.locality}, ${siteConfig.address.city}, ${siteConfig.address.state} ${siteConfig.address.pin}`;

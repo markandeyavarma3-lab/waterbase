@@ -1,6 +1,7 @@
 import { Droplets, Gauge, Wind, CloudRain, Layers, Filter, Award, MapPin, LifeBuoy, BadgePercent } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
+import { statText } from "@/lib/site-config";
 
 export const metadata = pageMeta({
   title: "Jain Drip Irrigation in Eluru | Waterbase Technologies",
@@ -12,7 +13,7 @@ const TRUST_POINTS = [
   "Authorized Jain dealer — genuine products & warranty",
   "Free site survey before any commitment",
   "APMIP subsidy eligible — up to 90% off system cost",
-  "15,000+ farmers served across AP & Telangana",
+  `${statText("customers")} farmers served across AP & Telangana`,
 ];
 
 const PRODUCTS = [

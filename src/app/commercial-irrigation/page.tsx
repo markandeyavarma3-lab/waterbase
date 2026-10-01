@@ -1,6 +1,7 @@
 import { Building2, Sprout, Factory, Ruler, Zap, Settings2, Award, LifeBuoy, MapPin, ShieldCheck } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
+import { statText } from "@/lib/site-config";
 
 export const metadata = pageMeta({
   title: "Commercial & Industrial Irrigation in AP | Waterbase Technologies",
@@ -9,7 +10,7 @@ export const metadata = pageMeta({
 });
 
 const TRUST_POINTS = [
-  "100+ corporate and industrial projects completed",
+  `${statText("projects")} corporate and industrial projects completed`,
   "Survey, design, supply and full turnkey installation",
   "Projects across Vijayawada, Hyderabad, CRDA and Vizag",
   "Authorized Jain Irrigation and Netafim dealer",
@@ -25,7 +26,7 @@ const SERVICES = [
 ];
 
 const WHY = [
-  { icon: Award, title: "100+ Projects Delivered", desc: "Proven track record across corporate campuses, nurseries, resorts and large farms across AP and Telangana." },
+  { icon: Award, title: `${statText("projects")} Projects Delivered`, desc: "Proven track record across corporate campuses, nurseries, resorts and large farms across AP and Telangana." },
   { icon: LifeBuoy, title: "End-to-End Execution", desc: "Survey → design → supply → installation → testing and handover. One team handles the complete scope." },
   { icon: MapPin, title: "Wide Service Reach", desc: "Based in Eluru with projects across Vijayawada, Hyderabad, CRDA, Kadiyam and Vizag corridors." },
   { icon: ShieldCheck, title: "Authorized Brands", desc: "Authorized dealer of Jain Irrigation, Netafim FlexNet and KSB — genuine products with manufacturer warranty." },
@@ -37,7 +38,7 @@ export default function CommercialIrrigationPage() {
       <LandingPageTemplate
       badge="Commercial Irrigation · AP & Telangana"
       title="Irrigation for Corporate Lawns, Nurseries & Industrial Sites"
-      description="We design, supply and install irrigation systems for corporate campuses, nurseries, factories, resorts and large agricultural developments. Authorized Jain Irrigation and Netafim dealer with 100+ commercial projects delivered."
+      description={`We design, supply and install irrigation systems for corporate campuses, nurseries, factories, resorts and large agricultural developments. Authorized Jain Irrigation and Netafim dealer with ${statText("projects")} commercial projects delivered.`}
       trustPoints={TRUST_POINTS}
       products={SERVICES}
       whyReasons={WHY}
@@ -49,7 +50,7 @@ export default function CommercialIrrigationPage() {
       productsLead="From landscape design to pump integration — everything handled in-house for corporate clients, institutions and large developers."
       whyEyebrow="Why choose us"
       whyTitle="The commercial irrigation partner you can rely on"
-      whyLead="We've delivered 100+ corporate and industrial projects — on time, within scope, with full after-sales support."
+      whyLead={`We've delivered ${statText("projects")} corporate and industrial projects — on time, within scope, with full after-sales support.`}
       ctaSubtitle="Start your project"
       ctaTitle="Let's discuss your commercial irrigation project"
       ctaDesc="Call us directly or send a WhatsApp — we'll arrange a site visit and proposal within 48 hours."

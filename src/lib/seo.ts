@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 
 // "9:00 AM" -> "09:00", "8:30 PM" -> "20:30" (schema.org wants 24h HH:MM)
-function to24h(t: string): string {
+// Exported for testing: midnight and noon are the two cases every hand-rolled
+// 12h converter gets wrong, and a wrong openingHours breaks the rich result.
+export function to24h(t: string): string {
   const m = t.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
   if (!m) return t;
   let h = parseInt(m[1], 10);

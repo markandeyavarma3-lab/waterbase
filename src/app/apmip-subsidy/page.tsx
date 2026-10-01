@@ -1,6 +1,7 @@
 import { Search, FileText, MapPin, FileCheck, Hammer, BadgePercent, Award, ShieldCheck, Zap } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
 import { pageMeta } from "@/lib/seo";
+import { statText } from "@/lib/site-config";
 
 export const metadata = pageMeta({
   title: "APMIP Subsidy on Drip Irrigation — 90% Off | Waterbase Technologies",
@@ -12,7 +13,7 @@ const TRUST_POINTS = [
   "Certified APMIP vendor — approved for subsidy installation",
   "Full application and paperwork handled for you",
   "Covers drip, sprinkler and micro-irrigation systems",
-  "15,000+ farmers served including APMIP subsidy projects",
+  `${statText("customers")} farmers served including APMIP subsidy projects`,
 ];
 
 const STEPS = [

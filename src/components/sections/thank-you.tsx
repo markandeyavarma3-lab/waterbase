@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Phone, FileText, Package, Wrench, Sprout, ArrowRight, Clock } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
-import { trackFormSubmit } from "@/lib/analytics";
+import { ThankYouReturn } from "@/components/sections/thank-you-return";
 import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
 import { Reveal } from "@/components/sections/reveal";
 import { WaterCaustics } from "@/components/site/water-caustics";
@@ -52,58 +51,6 @@ const exploreCards = [
 ];
 
 export function ThankYou() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const isFromForm = searchParams.get("ref") === "lead";
-  const token = searchParams.get("s");
-  const [secondsLeft, setSecondsLeft] = useState(5);
-
-  useEffect(() => {
-    if (!isFromForm) return;
-
-    const key = `wb:conversion:form:${token ?? "untokenized"}`;
-    try {
-      if (sessionStorage.getItem(key)) return;
-      sessionStorage.setItem(key, "1");
-    } catch {
-      // Private browsing — still count rather than lose a real conversion.
-    }
-
-    trackFormSubmit();
-  }, [isFromForm, token]);
-
-  useEffect(() => {
-    if (!isFromForm) return;
-
-    const tick = window.setInterval(() => {
-      setSecondsLeft((s) => Math.max(0, s - 1));
-    }, 1000);
-
-    const go = window.setTimeout(() => {
-      let next: string | null = null;
-      try {
-        next = sessionStorage.getItem("wb:return-after-thanks");
-        sessionStorage.removeItem("wb:return-after-thanks");
-      } catch {
-        next = null;
-      }
-
-      if (next && next.startsWith("/") && !next.startsWith("//") && !next.startsWith("/thank-you")) {
-        router.push(next);
-        return;
-      }
-      if (typeof window !== "undefined" && window.history.length > 1) {
-        router.back();
-        return;
-      }
-      router.push("/");
-    }, 5000);
-
-    return () => {
-      window.clearInterval(tick);
-      window.clearTimeout(go);
-    };
-  }, [isFromForm, router]);
 
   const waLink = whatsappLink(
     "Hi Waterbase, I just submitted a callback request through your website.",
@@ -151,11 +98,11 @@ export function ThankYou() {
               Your callback request has reached our team. We usually get back within a few working hours.
               Need us sooner? Message on WhatsApp and we&apos;ll reply as soon as we can.
             </p>
-            {isFromForm ? (
-              <p className="mt-3 text-sm text-water-deep/55">
-                Taking you back in <span className="font-semibold text-water-deep/80">{secondsLeft}</span> seconds…
-              </p>
-            ) : null}
+            {/* The only part of this page that reads search params, so the only
+                part that waits — everything else is in the prerendered HTML. */}
+            <Suspense fallback={null}>
+              <ThankYouReturn />
+            </Suspense>
           </Reveal>
 
           <Reveal delay={220}>

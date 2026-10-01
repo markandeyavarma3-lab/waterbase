@@ -2,7 +2,12 @@ import { PageHero } from "@/components/site/page-hero";
 import { Projects } from "@/components/sections/projects";
 import { Testimonials } from "@/components/sections/testimonials";
 import { ContactCTA } from "@/components/sections/contact-cta";
-import { BeforeAfter } from "@/components/sections/before-after";
+import dynamic from "next/dynamic";
+
+const BeforeAfter = dynamic(
+  () => import("@/components/sections/before-after").then((m) => m.BeforeAfter),
+  { loading: () => <div className="aspect-video w-full rounded-2xl bg-muted" aria-hidden="true" /> }
+);
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { pageMeta } from "@/lib/seo";
 

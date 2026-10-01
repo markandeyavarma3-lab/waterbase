@@ -8,10 +8,15 @@ Built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS v4**. Hosted
 ## Getting Started (local development)
 
 ```bash
-npm install      # first time only
+npm install      # first time only (Node 22+ — Supabase's client warns below that)
 npm run dev      # start dev server → http://localhost:3000
-npm run build    # production build (run this before pushing to catch errors)
+npm run test     # unit tests (vitest)
+npm run build    # production build
+npm run check    # lint + test + build — what CI runs. Do this before pushing.
 ```
+
+CI runs `lint → test → build` on every pull request (`.github/workflows/ci.yml`),
+so a broken build cannot reach `main` unnoticed.
 
 Deployment is automatic: **push to `main` → Vercel builds & deploys**.
 
@@ -42,6 +47,24 @@ The site has **three** separate tracking systems wired up in `src/app/layout.tsx
 | Vercel Analytics | (automatic) | vercel.com → **waterbase** project → **Analytics** tab |
 
 > Note: two GA4 properties are intentionally running at once. Both collect data.
+
+All three Google IDs are configured through **one** `gtag.js` load in
+`src/components/site/analytics-tags.tsx`. They used to be three separate script
+downloads (two from `@next/third-parties`, one hand-rolled), which meant every
+page fetched and ran three copies of the same library.
+
+### Cookie consent
+
+`src/components/site/consent-banner.tsx` gates the Google tags with **Consent
+Mode v2**. Defaults are `denied` and are set inline *before* `gtag.js` loads;
+accepting calls `gtag('consent','update',…)` and Google replays the queued hits.
+`url_passthrough` is on, so Ads click attribution still works while consent is
+denied (the `gclid` travels in the URL instead of a cookie).
+
+**This will lower your reported conversion numbers**, because visitors who
+decline are no longer measured. That is the trade for DPDP/GDPR compliance — the
+previous behaviour dropped analytics and advertising cookies on first paint with
+no notice and no way to decline.
 
 ---
 
@@ -104,7 +127,10 @@ not counted.** See `docs/google-ads-conversions.md` for the click-by-click walkt
 |------|---------|
 | `src/lib/site-config.ts` | All business data — phone, email, addresses, WhatsApp, stats, Ads ID. **Never hardcode these elsewhere.** |
 | `src/lib/analytics.ts` | Google Ads conversion events (call / form / WhatsApp), driven by env vars |
-| `src/lib/leads.ts` | Lead form schema (validation) + admin status list |
+| `src/lib/leads.ts` | Lead form schema (validation) + admin status list. Uses `zod/mini` — see the note in the file for why |
+| `src/lib/products.ts` | The 14 product categories, shared by the homepage band and `/products` |
+| `src/lib/csv.ts` | CSV escaping for the lead export, including formula-injection defence |
+| `supabase/migrations/` | The `leads` schema, its indexes, and the throttle table |
 | `src/lib/admin-auth.ts` | Who may access `/admin` — email allowlist, **fails closed** |
 | `src/lib/notify.ts` | Resend email notification for new leads |
 | `src/app/admin/` | Leads dashboard (Supabase auth + allowlist) |
@@ -123,11 +149,39 @@ not counted.** See `docs/google-ads-conversions.md` for the click-by-click walkt
 | `LEAD_NOTIFICATION_EMAIL` | Where lead alert emails go (falls back to business email) |
 | `LEAD_FROM_EMAIL` | "From" address for lead alert emails |
 | `NEXT_PUBLIC_ADS_*_LABEL` / `_EVENT` | Google Ads conversion values — see the conversion tracking section above |
+| `CSP_ENFORCE` | `true` switches the Content-Security-Policy from Report-Only to enforcing. Leave unset until verified — see below |
+
+### Content-Security-Policy
+
+`next.config.ts` ships a CSP in **Report-Only** mode. It restricts which origins
+may serve scripts, styles, images and connections, and blocks framing outright.
+
+Before setting `CSP_ENFORCE=true`, open a preview deploy, visit a landing page
+with the console open and Tag Assistant recording, click **Call Now** and
+**WhatsApp**, and submit the form. If nothing is reported, flip it on. Getting
+this wrong breaks conversion tracking silently, which is why it does not enforce
+by default.
 
 > ⚠️ `ADMIN_EMAILS` **must be set in Vercel before this branch is merged**, or the live
 > dashboard will lock you out. Being signed in is no longer sufficient on its own: the dashboard
 > reads leads with the service-role key, which bypasses row-level security, so the allowlist is
 > the only thing protecting customer names and phone numbers.
+
+---
+
+## Database
+
+The schema now lives in `supabase/migrations/` instead of only inside the live
+Supabase project. Both files are idempotent and safe to run against the existing
+production database — they create nothing that is already there, and add the
+indexes that were missing (notably `leads (mobile, created_at)`, which the form's
+throttle query needs on every single submission).
+
+Apply with `supabase db push`, or paste them into the Supabase SQL editor.
+
+> `20260908000100_lead_throttle.sql` must be applied for per-IP rate limiting to
+> take effect. Until then `submitLead` fails open on that check — deliberately, so
+> a missing table can never block a real customer enquiry.
 
 ---
 

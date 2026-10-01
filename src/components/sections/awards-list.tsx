@@ -1,27 +1,15 @@
-import fs from "fs";
-import path from "path";
 import Image from "next/image";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Stagger, StaggerItem } from "@/components/sections/stagger";
 import { InteractiveCard } from "@/components/ui/interactive-card";
-
-function getAwards(): string[] {
-  try {
-    const dir = path.join(process.cwd(), "public/awards");
-    if (!fs.existsSync(dir)) return [];
-
-    const files = fs.readdirSync(dir);
-    const validExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
-    return files
-      .filter((file) => validExts.has(path.extname(file).toLowerCase()))
-      .map((file) => `/awards/${file}`);
-  } catch {
-    return [];
-  }
-}
+import { listImages } from "@/lib/logos";
+import { yearsInBusiness } from "@/lib/site-config";
 
 export function AwardsList() {
-  const awards = getAwards();
+  // listImages is the one shared reader (it replaced a local copy of the same
+  // fs walk). Rendering nothing when the folder is empty is main's decision to
+  // hide Achievements until real award photos exist — kept.
+  const awards = listImages("awards");
   if (awards.length === 0) return null;
 
   return (
@@ -30,7 +18,7 @@ export function AwardsList() {
         <SectionHeading
           eyebrow="Excellence"
           title="Our Achievements"
-          lead="Recognitions and certifications earned over 25 years in the field."
+          lead={`Recognitions and certifications earned over ${yearsInBusiness} years in the field.`}
         />
 
         <Stagger className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

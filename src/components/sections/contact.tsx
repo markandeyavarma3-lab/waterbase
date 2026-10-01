@@ -2,7 +2,7 @@ import { Mail, MapPin, Clock, Sprout, ArrowUpRight, Phone } from "lucide-react";
 import { LeadForm } from "@/components/sections/lead-form";
 import { Reveal } from "@/components/sections/reveal";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
-import { siteConfig, whatsappLink, fullAddress, telLink, formatPhone, callNowTelLink } from "@/lib/site-config";
+import { siteConfig, whatsappLink, fullAddress, formatPhone, callNowTelLink } from "@/lib/site-config";
 
 export function Contact() {
   const waMessage = "Hi Waterbase, I'd like to know more about your irrigation solutions.";
