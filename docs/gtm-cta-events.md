@@ -23,7 +23,8 @@ Optional but useful: three **GA4 Event** tags so the events show cleanly in GA4 
 2. Event name (exact): `cta_call_now` — save
 3. Repeat for `cta_request_callback` and `cta_whatsapp_float`
 4. **Tags** → **New** → **GA4 Event**
-   - Configuration tag: your existing GA4 config (`G-RP33RYTKFF` / `G-DH17D92KBV`)
+   - Configuration tag: your existing GA4 config (`G-RP33RYTKFF`). If a config tag for
+     `G-DH17D92KBV` still exists here, delete it — that property was retired.
    - Event name: same as the trigger
 5. **Submit** → **Publish**
 
@@ -51,7 +52,7 @@ Until those env vars are set, Ads will **not** count conversions (placeholders f
 
 ## Test
 
-1. GTM Preview → `https://www.waterbasetechnologies.com`
+1. GTM Preview → `https://www.waterbasetechnologies.com/get-quote`
 2. Click **Call now** → `cta_call_now`
 3. Click **Request a callback** → `cta_request_callback`
 4. Click WhatsApp (float or mobile bar) → `cta_whatsapp_float`

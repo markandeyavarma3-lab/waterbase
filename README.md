@@ -37,58 +37,41 @@ When a visitor submits the "Request a callback" form, the lead is saved and sent
 
 ## Analytics & traffic
 
-The site has **three** separate tracking systems wired up in `src/app/layout.tsx`:
-
 | Tool | ID | Where to view |
 |------|----|----|
-| Google Analytics 4 (original) | `G-RP33RYTKFF` | [analytics.google.com](https://analytics.google.com) |
-| Google Analytics 4 (second account) | `G-DH17D92KBV` | [analytics.google.com](https://analytics.google.com) |
+| Google Analytics 4 | `G-RP33RYTKFF` | [analytics.google.com](https://analytics.google.com) |
 | Google Ads (conversions) | `AW-874230546` | [ads.google.com](https://ads.google.com) → Goals → Conversions |
+| Google Tag Manager | `GTM-NSS2B9BN` | [tagmanager.google.com](https://tagmanager.google.com) — receives the CTA events (`docs/gtm-cta-events.md`) |
 | Vercel Analytics | (automatic) | vercel.com → **waterbase** project → **Analytics** tab |
 
-> Note: two GA4 properties are intentionally running at once. Both collect data.
+GA4 and Ads are configured through **one** `gtag.js` load in
+`src/components/site/analytics-tags.tsx`; GTM loads from `<head>` in `src/app/layout.tsx`.
 
-All three Google IDs are configured through **one** `gtag.js` load in
-`src/components/site/analytics-tags.tsx`. They used to be three separate script
-downloads (two from `@next/third-parties`, one hand-rolled), which meant every
-page fetched and ran three copies of the same library.
+> **One GA4 property.** A second one (`G-DH17D92KBV`) used to run alongside; it was removed
+> because two properties on one site never reconcile and doubled the tag cost. If GTM still has a
+> GA4 configuration tag for `G-DH17D92KBV`, remove it there too — the code cannot reach it.
 
-### Cookie consent
+## Google Ads — one campaign, one landing page
 
-`src/components/site/consent-banner.tsx` gates the Google tags with **Consent
-Mode v2**. Defaults are `denied` and are set inline *before* `gtag.js` loads;
-accepting calls `gtag('consent','update',…)` and Google replays the queued hits.
-`url_passthrough` is on, so Ads click attribution still works while consent is
-denied (the `gclid` travels in the URL instead of a cookie).
+**Budget:** ₹5,000/month (~₹166/day). Search-only, ~50km radius around Eluru/Vijayawada.
+**Strategy split:** ~65% phone calls / 35% form fills.
 
-**This will lower your reported conversion numbers**, because visitors who
-decline are no longer measured. That is the trade for DPDP/GDPR compliance — the
-previous behaviour dropped analytics and advertising cookies on first paint with
-no notice and no way to decline.
+The account runs **a single ad covering every product line**, landing on:
 
----
+> **`https://www.waterbasetechnologies.com/get-quote`** — always the `www` host.
 
-## Google Ads — campaigns & conversion tracking
+`/get-quote` names every line (Jain drip & sprinkler, KSB pumps, pipes, farm shop, commercial,
+APMIP), puts Call Now + WhatsApp + the callback form above the fold, and links each line on to its
+detailed page. It is `noindex` and not in the sitemap — it deliberately repeats what the detailed
+pages cover, and Google Ads does not need its landing page indexed.
 
-**Budget:** ₹5,000/month (~₹166/day), one shared budget pool.
-**Strategy split:** ~65% phone calls / 35% form fills. Search-only, ~50km radius around Eluru/Vijayawada.
+The six pages that used to be separate campaign destinations are now **SEO pages** (linked from the
+footer and mobile menu). In Google Ads they make good **sitelinks** on the one ad:
+`/jain-systems` · `/ksb-pumps` · `/heavy-pipes` · `/farm-shop` · `/commercial-irrigation` · `/apmip-subsidy`
 
-### Campaigns
-1. **Jain Systems** — drip & sprinkler installs (flagship)
-2. **Heavy Pipes** — bulk PVC/HDPE/casing pipes
-3. **APMIP Subsidy** — 90% govt subsidy hook
-4. **Farm Shop** — local accessories, mulching sheets
-5. **Commercial Irrigation** — B2B (corporate lawns, nurseries, factories)
-6. **KSB Pumps & Motors** — landing page built; campaign not yet launched in Google Ads
-
-### Ad landing pages (built & live)
-Each has Call Now + WhatsApp + callback form above the fold, plus a mobile sticky call bar:
-- `/jain-systems`
-- `/heavy-pipes`
-- `/apmip-subsidy`
-- `/farm-shop`
-- `/commercial-irrigation`
-- `/ksb-pumps`
+**Account-side steps (done in Google Ads, not in code):** pause — don't delete, so the history
+stays — the old per-product campaigns; create the one Search campaign with the final URL above;
+add the six pages as sitelinks; keep the conversion actions below.
 
 ### Conversion tracking — how it works
 All conversion events live in `src/lib/analytics.ts` and fire through the Google Ads tag.
@@ -97,7 +80,7 @@ you never need to edit `analytics.ts` to change a conversion.
 
 | Conversion | Fires when | Configured by |
 |------------|-----------|---------------|
-| Phone call | Any "Call Now" button clicked (all 6 landing pages + mobile sticky bar) | `NEXT_PUBLIC_ADS_CALL_LABEL` / `_EVENT` |
+| Phone call | Any "Call Now" button clicked (header, hero, `/get-quote`, the six product pages, mobile sticky bar) | `NEXT_PUBLIC_ADS_CALL_LABEL` / `_EVENT` |
 | WhatsApp click | Any WhatsApp link clicked, anywhere on the site | `NEXT_PUBLIC_ADS_CONTACT_LABEL` / `_EVENT` |
 | Form submit | `/thank-you` loads after a real form submit (once per submission) | `NEXT_PUBLIC_ADS_FORM_LABEL` / `_EVENT` |
 
@@ -193,6 +176,10 @@ INFO — that is the intended state, not a problem to fix.
 
 ## Conventions
 - **One image format across the site: JPG.** Avoid spaces in filenames (they break image URLs).
-- **No public phone numbers** anywhere except WhatsApp — *except* ad landing pages, which get a
-  `tel:` "Call Now" button (the hybrid rule, to maximise call conversions on paid traffic).
+- **Public numbers:** Call Now is `siteConfig.callNowNumber`, WhatsApp is `siteConfig.whatsappNumber`.
+  Calling is the primary action (~two-thirds of conversions), so a `tel:` Call Now button appears in
+  the header (desktop), the hero, every landing page and the mobile sticky bar. Every one fires the
+  same tracking — use `trackCallClick` from `src/lib/analytics.ts` for any new one.
+- **Canonical host is `www`.** `siteConfig.url` must match the domain Vercel serves as primary
+  (the apex redirects to it). Pinned by a test — see `site-config.ts` for why it matters.
 - All business data lives in `src/lib/site-config.ts`.

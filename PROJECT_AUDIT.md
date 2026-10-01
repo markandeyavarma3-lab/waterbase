@@ -876,3 +876,28 @@ recompressed 326 KB → 157 KB (it was ~1.8 bytes/pixel at 480×370 — grossly 
 ### Not done, deliberately
 
 **The Header was left on framer-motion.** It is the largest remaining contributor to first-load JS, because it renders in the root layout and uses scroll-linked springs (`useScroll`/`useSpring`/`useTransform`/`useMotionTemplate`) that have no cheap CSS equivalent with reliable support on the low-end Android this site targets. Rewriting it would take the landing pages meaningfully below 300 KB, but it would also rebuild the site's signature piece of design. That is your call, not a defect to be silently "fixed" — so the bundle work stopped at the point where it stopped being reversible.
+
+---
+
+## 8. October 2026 update
+
+Shipped on top of `main` after it had moved 52 commits (another agent's work: GTM, new public
+numbers, all photos, nav redesign, product compass, WhatsApp float).
+
+- **Search visibility — root cause fixed.** Vercel serves `www`; the apex redirects to it; the code
+  declared the apex canonical. Every canonical, sitemap URL, robots line and JSON-LD URL pointed at
+  a redirect, and `site:waterbasetechnologies.com` returned nothing. `siteConfig.url` is now `www`,
+  pinned by a test.
+- **One ad, one landing page** — `/get-quote` (noindex). The six product pages are SEO pages now.
+- **Supabase** — both migrations applied and verified; `prune_lead_throttle` locked to service_role
+  (as first written it was callable anonymously over `/rest/v1/rpc`); repo/remote history in sync.
+- **Header, route progress, MotionPress and the lead form off framer-motion** — `/get-quote` and
+  the six product pages ship none: 367.5 KB → 256.3 KB gzip (−30%). Homepage, products, contact and
+  about still load it through other components (product compass, falling cards, InteractiveCard).
+- **Consent defaults now precede GTM** — GTM had been initialising before consent existed.
+- **Second GA4 property removed.**
+- **CSP** — a real-browser run caught `pagead2.googlesyndication.com` missing; added.
+
+Still the owner's: leaked-password protection in Supabase Auth; Google Ads campaign restructure
+and the phone-call conversion; Search Console sitemap submission; GTM cleanup of `G-DH17D92KBV`;
+`CSP_ENFORCE=true` after a live console check.
