@@ -8,9 +8,9 @@ import { ContactActions } from "@/components/site/contact-actions";
 
 // Drop real photos at /public/images/work/<file>.jpg (landscape ~1200x675).
 const serve = [
-  { title: "Fields & farms", desc: "Drip and sprinkler systems sized for large holdings and high-value crops — designed to the land, not a catalogue.", label: "Field installation photo", img: "/images/work/fields.jpg" },
-  { title: "Lawns & landscapes", desc: "Quiet, efficient irrigation for corporate campuses, resorts and public landscapes — specified, installed and maintained.", label: "Landscape photo", img: "/images/work/lawns.jpg" },
-  { title: "Nurseries & greenhouses", desc: "Precise water and fertigation for controlled growing — where yield and consistency are the brief.", label: "Nursery photo", img: "/images/work/nurseries.jpg" },
+  { title: "Fields & farms", desc: "Drip and sprinkler systems sized for large holdings and high-value crops — designed to the land, not a catalogue.", img: "/images/work/fields.jpg" },
+  { title: "Lawns & landscapes", desc: "Quiet, efficient irrigation for corporate campuses, resorts and public landscapes — specified, installed and maintained.", img: "/images/work/lawns.jpg" },
+  { title: "Nurseries & greenhouses", desc: "Precise water and fertigation for controlled growing — where yield and consistency are the brief.", img: "/images/work/nurseries.jpg" },
 ];
 
 export function EndToEnd() {
@@ -23,7 +23,7 @@ export function EndToEnd() {
           {serve.map((s) => (
             <StaggerItem key={s.title}>
               <InteractiveCard glow={false}>
-                <MediaSlot src={s.img} alt={s.title} ratio="video" label={s.label} sizes="(min-width: 768px) 33vw, 100vw" className="rounded-none border-0" />
+                <MediaSlot src={s.img} alt={s.title} ratio="video" sizes="(min-width: 768px) 33vw, 100vw" className="rounded-none border-0" />
                 <div className="p-5">
                   <h3 className="font-display text-lg font-semibold">{s.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>

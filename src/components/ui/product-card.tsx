@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveCard } from "@/components/ui/interactive-card";
-import { PlaceholderPlate } from "@/components/site/media-slot";
 
 interface ProductCardProps {
   title: string;
@@ -28,8 +27,11 @@ export function ProductCard({ title, description, iconSmall, images }: ProductCa
 
   return (
     <InteractiveCard className="group flex h-full min-h-[280px] flex-col overflow-hidden p-0">
-      <div className="relative h-48 w-full shrink-0 overflow-hidden bg-graphite-50">
-        {images.length > 0 ? (
+      {/* No photos for this category → no media block at all. A grey
+          "image pending" plate on a product card reads as an unfinished site;
+          the card's icon, title and description stand on their own. */}
+      {images.length > 0 ? (
+        <div className="relative h-48 w-full shrink-0 overflow-hidden bg-graphite-50">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={currentIndex}
@@ -48,12 +50,10 @@ export function ProductCard({ title, description, iconSmall, images }: ProductCa
               />
             </motion.div>
           </AnimatePresence>
-        ) : (
-          <PlaceholderPlate label={title} />
-        )}
-        {/* Overlay gradient so text is readable if we want to overlay, or just for a nice shadow */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      </div>
+          {/* Overlay gradient so text is readable if we want to overlay, or just for a nice shadow */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        </div>
+      ) : null}
 
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center gap-3">

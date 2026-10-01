@@ -10,6 +10,7 @@ const BeforeAfter = dynamic(
 );
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { pageMeta } from "@/lib/seo";
+import { publicFileExists } from "@/lib/logos";
 
 export const metadata = pageMeta({
   title: "Projects",
@@ -17,26 +18,34 @@ export const metadata = pageMeta({
   path: "/projects",
 });
 
+const BEFORE = "/images/projects/before-field.jpg";
+const AFTER = "/images/projects/after-field.jpg";
+
 export default function ProjectsPage() {
+  const hasBeforeAfter = publicFileExists(BEFORE) && publicFileExists(AFTER);
   return (
     <div className="theme-warm">
       <PageHero eyebrow="Projects" title="Selected irrigation work" description="Commercial landscapes and large-farm systems across South India — delivery you can inspect on site." />
       <Projects />
 
-      <Section tone="muted">
-        <Container>
-          <SectionHeading eyebrow="See the difference" title="Before & after — the Waterbase effect" lead="Drag the slider to compare a field before and after our drip irrigation system was installed." />
-          <div className="mx-auto mt-10 max-w-3xl">
-            <BeforeAfter
-              beforeSrc="/images/projects/before-field.jpg"
-              afterSrc="/images/projects/after-field.jpg"
-              beforeLabel="Before"
-              afterLabel="After"
-              alt="Farm field before and after drip irrigation installation"
-            />
-          </div>
-        </Container>
-      </Section>
+      {/* Rendered only when both photos exist — a comparison slider with a
+          missing side is worse than no section at all. */}
+      {hasBeforeAfter ? (
+        <Section tone="muted">
+          <Container>
+            <SectionHeading eyebrow="See the difference" title="Before & after — the Waterbase effect" lead="Drag the slider to compare a field before and after our drip irrigation system was installed." />
+            <div className="mx-auto mt-10 max-w-3xl">
+              <BeforeAfter
+                beforeSrc={BEFORE}
+                afterSrc={AFTER}
+                beforeLabel="Before"
+                afterLabel="After"
+                alt="Farm field before and after drip irrigation installation"
+              />
+            </div>
+          </Container>
+        </Section>
+      ) : null}
 
       <Testimonials />
       <ContactCTA />

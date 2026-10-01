@@ -77,3 +77,19 @@ export function prioritizeLogos(list: Logo[], lead: string[]): Logo[] {
 export function listImages(dir: string): string[] {
   return listLogos(dir).map((l) => l.src);
 }
+
+/**
+ * True when /public/<rel> exists. Build-time only (it reads the filesystem), for
+ * Server Components deciding whether a photo-dependent section should render at
+ * all — a section with no photo is hidden rather than drawn as a placeholder.
+ * Uses the same traversal guard as listLogos.
+ */
+export function publicFileExists(rel: string): boolean {
+  const full = resolveInsidePublic(rel.replace(/^\/+/, ""));
+  if (!full) return false;
+  try {
+    return fs.statSync(full).isFile();
+  } catch {
+    return false;
+  }
+}

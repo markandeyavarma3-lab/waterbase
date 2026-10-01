@@ -44,7 +44,6 @@ export function WhyWaterbase() {
               src="/images/hero.jpg"
               alt="Sprinkler irrigation system watering a field"
               ratio="tall"
-              label="Field installation"
               className="shadow-lift"
             />
           </Reveal>
