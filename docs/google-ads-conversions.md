@@ -1,146 +1,52 @@
-# Setting up the three Google Ads conversions
+# Google Ads conversion — "Contact Us"
 
-**The code is finished.** Every conversion event is wired and tested — the site just doesn't know
-what to call them yet. This guide is the remaining half: creating the three conversion actions in
-Google Ads and pasting their values into Vercel.
+The account (`AW-874230546`) uses **one** conversion action, **Contact Us**, for its single ad.
+Google issued it as the event `ads_conversion_Contact_Us_1`.
 
-Until this is done, **phone calls are not counted**, and phone calls are roughly 65% of the intended
-conversion mix. Google Ads has been optimising your bids against about a third of your real results.
+## What the website does (already live — nothing to paste)
 
-Budget about 25 minutes. You need access to the Google Ads account (`AW-874230546`) and to the
-Vercel project.
+`src/lib/analytics.ts` fires `ads_conversion_Contact_Us_1` once whenever a visitor:
 
----
+| Action | Trigger |
+|---|---|
+| Completes the callback form | `/thank-you?ref=lead` loads — once per submission; refreshes and direct visits don't count |
+| Clicks a Call button or any phone number | every `tel:` link on the public site |
+| Clicks a WhatsApp button or link | every WhatsApp link on the public site |
 
-## What you're creating
+Not counted: "Request a callback" clicks (only a *completed* form counts) and anything on `/admin`.
 
-| # | Conversion action | What it measures | Feeds env var |
-|---|-------------------|------------------|---------------|
-| 1 | **Phone calls** | Clicks on any "Call Now" button | `NEXT_PUBLIC_ADS_CALL_*` |
-| 2 | **WhatsApp clicks** | Clicks on any WhatsApp link, site-wide | `NEXT_PUBLIC_ADS_CONTACT_*` |
-| 3 | **Callback form** | A completed form submission | `NEXT_PUBLIC_ADS_FORM_*` |
+Google Ads offers two snippets. Neither is pasted into the site:
 
-Do **#1 first**. If you run out of time, it's the one that matters.
+- **Page load** (`gtag('event', 'ads_conversion_Contact_Us_1', {})`) — this is exactly what the
+  site fires; `analytics.ts` holds the event name.
+- **Click / "delayed navigation helper"** (`gtagSendEvent(url)`) — it delays leaving the page by
+  up to 2 s so the hit gets out. The site sends hits with `transport_type: "beacon"` instead, which
+  survives the page being left with no delay before the dialer or WhatsApp opens.
 
----
+Verified in a real browser on 2026-10-01: hero Call, header Call, footer phone, footer WhatsApp,
+WhatsApp float and form completion each fire the event exactly once; "Request a callback" fires
+nothing.
 
-## Step 1 — Create the phone call conversion
+## What has to be set in Google Ads
 
-1. Google Ads → **Goals** → **Conversions** → **Summary**.
-2. Click **+ New conversion action**.
-3. Choose **Website**.
-4. Enter `www.waterbasetechnologies.com` and click **Scan**.
-   Ignore whatever it auto-detects — click **+ Add a conversion action manually** at the bottom.
-5. Fill in:
-   - **Goal category** → *Contact* → **Phone call leads**
-   - **Conversion name** → `Call Now click` (any name is fine; you'll recognise it later)
-   - **Value** → *Don't use a value* (or set one if you know a call's worth to you)
-   - **Count** → **One** — one person clicking Call three times is one lead, not three
-   - **Click-through conversion window** → 30 days
-   - **Attribution** → Data-driven (the default)
-6. Click **Done**, then **Save and continue**.
+**Goals → Conversions → Summary → Contact Us → Edit settings:**
 
-## Step 2 — Copy the value (this is the important bit)
+- **Count: One** — a visitor who WhatsApps and also submits the form is one lead.
+- **Click-through window:** 30 days · **Attribution:** data-driven · **Primary** action.
+- Any older actions (Call / WhatsApp / Form / GA4-imported) → **Secondary**, so nothing is counted
+  twice.
 
-Google now shows you a tag setup screen. Choose **Install the tag yourself** (not Google Tag Manager,
-not email — you want to see the code).
+## Verify
 
-You'll see a snippet. **Look carefully at which of these two shapes it has:**
+Tag Assistant → connect `https://www.waterbasetechnologies.com/get-quote` → accept cookies →
+click WhatsApp → the `AW-874230546` tag shows `ads_conversion_Contact_Us_1`. Full walkthrough:
+`docs/owner-setup-guide.md`, step 3.
 
-**Shape A — an event snippet:**
-```js
-gtag('event', 'ads_conversion_Call_Now_1', { ... });
-```
-→ Copy `ads_conversion_Call_Now_1`. This is an **EVENT**.
+## If separate actions are ever wanted again
 
-**Shape B — a conversion label:**
-```js
-gtag('event', 'conversion', {'send_to': 'AW-874230546/AbC-D_efGhIjKlMnOp'});
-```
-→ Copy `AbC-D_efGhIjKlMnOp` (or the whole `AW-874230546/AbC-D_efGhIjKlMnOp` — both work).
-This is a **LABEL**.
+Per-path overrides still exist: `NEXT_PUBLIC_ADS_CALL_LABEL` / `_EVENT`,
+`NEXT_PUBLIC_ADS_CONTACT_LABEL` / `_EVENT`, `NEXT_PUBLIC_ADS_FORM_LABEL` / `_EVENT`. A label (e.g.
+`AbC-D_efG`) wins over an event; an unset path keeps firing Contact Us. They're inlined at
+**build time**, so set them in Vercel and redeploy.
 
-You will get one shape or the other. You do **not** need to paste the snippet anywhere — the tag is
-already installed sitewide. You only need this one string.
-
-> **Don't skip this screen.** Once you leave it, getting back to the value takes a few extra clicks:
-> Conversions → click the action → **Tag setup** → **Install the tag yourself**.
-
-## Step 3 — Repeat for WhatsApp and the form
-
-Same flow, twice more:
-
-- **WhatsApp** — goal category *Contact* → **Chat/message leads**. Count: **One**.
-- **Callback form** — goal category *Submit lead form*. Count: **One**.
-
-Collect all three values before moving on.
-
----
-
-## Step 4 — Put the values into Vercel
-
-Vercel → **waterbase** project → **Settings** → **Environment Variables**.
-
-For each conversion, add **one** variable — whichever shape you got in Step 2:
-
-| If you got a… | Add this variable | Example value |
-|---------------|-------------------|---------------|
-| LABEL | `NEXT_PUBLIC_ADS_CALL_LABEL` | `AbC-D_efGhIjKlMnOp` |
-| EVENT | `NEXT_PUBLIC_ADS_CALL_EVENT` | `ads_conversion_Call_Now_1` |
-
-…and the same for `NEXT_PUBLIC_ADS_CONTACT_*` and `NEXT_PUBLIC_ADS_FORM_*`.
-
-**Rules:**
-- Set **one** of LABEL/EVENT per conversion, not both. If both are set, LABEL wins.
-- Apply each to **all three** environments (Production, Preview, Development).
-- Add the same lines to your local `.env.local` so local testing matches.
-
-Then **redeploy**. These are `NEXT_PUBLIC_*` variables — they're baked into the JavaScript at build
-time, so an existing deployment will not pick them up. Vercel → **Deployments** → ⋯ → **Redeploy**.
-
----
-
-## Step 5 — Verify it actually works
-
-Don't trust it until you've seen it fire.
-
-**Immediate check (2 minutes):**
-1. Install the **Google Tag Assistant** browser extension.
-2. Open `https://www.waterbasetechnologies.com/get-quote` (the ad's landing page) with Tag Assistant recording.
-3. Click **Call Now**.
-4. Tag Assistant should show a `conversion` event (or your event name) going to `AW-874230546`.
-
-**Real check (24–48 hours):**
-Google Ads → Goals → Conversions. The status column should move from
-**"No recent conversions"** to **"Recording conversions"**. This lags — don't panic on day one.
-
-**A quick sanity test without touching your phone:** open the site on a desktop browser, where
-`tel:` links do nothing visible. The conversion still fires on the click.
-
----
-
-## Troubleshooting
-
-**Status stays "No recent conversions" after 48 hours**
-- Confirm the variable is set for the **Production** environment specifically.
-- Confirm you **redeployed** after adding it. This is the most common cause by far.
-- View source on a landing page and search for your label/event string. If it isn't in the
-  JavaScript, the build didn't pick up the variable.
-
-**Conversions are double-counting**
-- Check the conversion action's **Count** setting is **One**, not **Every**.
-- The form conversion is already deduplicated in code — one count per submission, and reloading
-  `/thank-you` will not re-fire it.
-
-**Calls count but seem too high**
-- Every "Call Now" click counts, including misclicks and people who don't complete the call.
-  That's normal and it's what a click-based phone conversion measures. If you want true call
-  duration data, that needs a Google forwarding number, which is a different setup.
-
----
-
-## What this does not cover
-
-Calls made by someone reading the number off your Google Business Profile, or typing it in, are
-invisible to this — they never touch the website. That's expected, and it's a real reason your
-true call volume runs higher than what Ads reports.
+Do **not** also add Google Ads conversion tags in GTM — that double-counts every lead.

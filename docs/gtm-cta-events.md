@@ -9,9 +9,10 @@ Do **not** also add Google Ads Conversion tags in GTM for the same clicks — th
 
 | Button | GTM / GA4 event | Ads conversion in code |
 |--------|-----------------|------------------------|
-| Call now | `cta_call_now` | `call` (`NEXT_PUBLIC_ADS_CALL_LABEL` or `_EVENT`) |
-| Request a callback | `cta_request_callback` | counted when the form succeeds → `cta_form_submit` + `form` Ads |
-| WhatsApp (float + mobile sticky) | `cta_whatsapp_float` | `contact` (`NEXT_PUBLIC_ADS_CONTACT_LABEL` or `_EVENT`) |
+| Call now | `cta_call_now` | `ads_conversion_Contact_Us_1` |
+| Request a callback | `cta_request_callback` | none for the click — counted when the form succeeds (`cta_form_submit` + `ads_conversion_Contact_Us_1`) |
+| WhatsApp (float + mobile sticky) | `cta_whatsapp_float` | `ads_conversion_Contact_Us_1` |
+| Any other phone / WhatsApp link | — | `ads_conversion_Contact_Us_1` (site-wide `ConversionTracker`) |
 
 ---
 
@@ -32,21 +33,11 @@ The site also sends these as `gtag('event', …)` already, so GA4 may show them 
 
 ---
 
-## Google Ads mapping (required for Ads to count)
+## Google Ads mapping
 
-Follow `docs/google-ads-conversions.md`:
-
-1. Create 3 conversion actions in Ads: **Call Now click**, **WhatsApp click**, **Callback form**
-2. Copy each **label** (or event name)
-3. Paste into Vercel env, then **redeploy**:
-
-```
-NEXT_PUBLIC_ADS_CALL_LABEL=…
-NEXT_PUBLIC_ADS_CONTACT_LABEL=…
-NEXT_PUBLIC_ADS_FORM_LABEL=…
-```
-
-Until those env vars are set, Ads will **not** count conversions (placeholders fire in development only as a warning).
+One conversion action, **Contact Us** (`ads_conversion_Contact_Us_1`), built into the code — no
+environment variables needed. Its settings (Count: **One**, Primary) and how to verify it are in
+`docs/google-ads-conversions.md`.
 
 ---
 
