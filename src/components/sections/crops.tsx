@@ -5,6 +5,7 @@ import { Reveal } from "@/components/sections/reveal";
 import { CropsGrid, CropsHoneycomb } from "@/components/sections/crops-grid";
 import { listLogos } from "@/lib/logos";
 import { whatsappLink } from "@/lib/site-config";
+import { WaveTop } from "@/components/site/wave-divider";
 
 // Crops we have photos for — order matters (first 8 are featured on the homepage).
 const cropNames = [
@@ -28,7 +29,8 @@ export function Crops({ limit }: { limit?: number }) {
   const crops = limit ? all.slice(0, limit) : all;
 
   return (
-    <section className="border-y border-border tint-wash-field">
+    <section className="wave-top relative isolate overflow-hidden tint-wash-field">
+      <WaveTop />
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
         <Reveal>
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">

@@ -208,7 +208,7 @@ export function Header() {
               <Wordmark
                 key={logoRun}
                 animate={atTop}
-                className="font-[family-name:var(--font-logo)] text-[clamp(1.15rem,4.8vw,1.65rem)] font-bold uppercase tracking-[0.042em] text-water-deep lg:text-[clamp(1.15rem,2.1vw,1.65rem)]"
+                className="font-[family-name:var(--font-logo)] text-[clamp(1.3rem,5.4vw,1.9rem)] font-bold uppercase tracking-[0.042em] text-heading lg:text-[clamp(1.2rem,2.25vw,1.85rem)]"
               />
             </Link>
           </div>
@@ -224,7 +224,7 @@ export function Header() {
                     key={l.href}
                     href={l.href}
                     className={cn(
-                      "nav-pill tap-target-y flex items-center rounded-full border px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-shadow duration-200 xl:px-3.5",
+                      "nav-pill tap-target-y flex items-center rounded-full border px-2.5 py-2 font-display text-[0.78rem] font-semibold uppercase tracking-wide transition-shadow duration-200 xl:px-3",
                       i % 3 === 0 && "living-mesh-a",
                       i % 3 === 1 && "living-mesh-b",
                       i % 3 === 2 && "living-mesh-c",

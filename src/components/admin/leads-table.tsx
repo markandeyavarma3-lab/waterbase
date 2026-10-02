@@ -67,7 +67,7 @@ function statusClasses(status: string) {
   switch (status) {
     case "new": return "bg-brand-blue-soft text-brand-blue-dark";
     case "contacted": return "bg-brand-sun-soft text-brand-sun-dark";
-    case "follow_up": return "bg-brand-soil-soft text-brand-soil-dark";
+    case "follow_up": return "bg-brand-soil-soft text-brand-sun-darker";
     case "converted": return "bg-brand-green-soft text-brand-green-darker";
     default: return "bg-muted text-muted-foreground";
   }

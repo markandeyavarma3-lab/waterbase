@@ -139,7 +139,7 @@ export function LandingPageTemplate({
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">{ctaSubtitle}</p>
-            <h2 className="mt-3 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-bold leading-tight tracking-tight text-water-deep">{ctaTitle}</h2>
+            <h2 className="mt-3 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-bold leading-tight tracking-tight text-heading">{ctaTitle}</h2>
             <p className="mt-4 text-lg text-water-deep/70">{ctaDesc}</p>
             <ContactActions showCall size="xl" className="mt-7 justify-center" />
           </Reveal>

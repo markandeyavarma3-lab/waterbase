@@ -9,6 +9,7 @@ import { ThankYouReturn } from "@/components/sections/thank-you-return";
 import { siteConfig, whatsappLink, fullAddress } from "@/lib/site-config";
 import { Reveal } from "@/components/sections/reveal";
 import { WaterCaustics } from "@/components/site/water-caustics";
+import { WaveTop } from "@/components/site/wave-divider";
 import { ContactActions } from "@/components/site/contact-actions";
 
 const nextSteps = [
@@ -134,11 +135,12 @@ export function ThankYou() {
         </div>
       </section>
 
-      <section className="tint-wash-sky relative isolate overflow-hidden py-14 sm:py-20 md:py-24">
+      <section className="wave-top tint-wash-sky relative isolate overflow-hidden py-14 sm:py-20 md:py-24">
+        <WaveTop />
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal className="text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">What happens next</p>
-            <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight text-water-deep">
+            <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight text-heading">
               Here&apos;s how we&apos;ll handle it
             </h2>
           </Reveal>
@@ -156,7 +158,7 @@ export function ThankYou() {
                       {i + 1}
                     </span>
                     <Icon className="h-8 w-8 text-[#3FA3DA]" />
-                    <h3 className="mt-4 font-display text-lg font-bold text-water-deep">{step.title}</h3>
+                    <h3 className="mt-4 font-display text-lg font-bold text-heading">{step.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-water-deep/70">{step.body}</p>
                   </div>
                 </Reveal>
@@ -166,11 +168,12 @@ export function ThankYou() {
         </div>
       </section>
 
-      <section className="tint-wash-field relative isolate overflow-hidden py-14 sm:py-20 md:py-24">
+      <section className="wave-top tint-wash-field relative isolate overflow-hidden py-14 sm:py-20 md:py-24">
+        <WaveTop />
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Reveal className="text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">While you wait</p>
-            <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight text-water-deep">
+            <h2 className="mt-2 font-display text-[clamp(1.625rem,4.4vw,2.25rem)] font-extrabold tracking-tight text-heading">
               Have a look around
             </h2>
           </Reveal>
@@ -186,7 +189,7 @@ export function ThankYou() {
                     }`}
                   >
                     <Icon className="h-8 w-8 text-brand-green" />
-                    <h3 className="mt-4 font-display text-lg font-bold text-water-deep">{card.title}</h3>
+                    <h3 className="mt-4 font-display text-lg font-bold text-heading">{card.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-water-deep/70">{card.body}</p>
                     <span className="mt-4 inline-flex items-center text-sm font-semibold text-brand-green">
                       Explore <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />

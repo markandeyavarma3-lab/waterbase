@@ -7,7 +7,6 @@ import { BrandsMarquee } from "@/components/sections/brands-marquee";
 import { WhyWaterbase } from "@/components/sections/why-waterbase";
 import { Apmip } from "@/components/sections/apmip";
 import { Testimonials } from "@/components/sections/testimonials";
-import { FAQ } from "@/components/sections/faq";
 import { ContactCTA } from "@/components/sections/contact-cta";
 import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -42,8 +41,6 @@ export default function Home() {
       {/* Social proof */}
       <Testimonials />
 
-      {/* FAQ */}
-      <FAQ />
 
       {/* Contact */}
       <ContactCTA />

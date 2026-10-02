@@ -41,7 +41,7 @@ export function GoogleReviews() {
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green-soft text-brand-green">
                       <Icon className="h-4 w-4" aria-hidden="true" />
                     </span>
-                    <h3 className="mt-4 font-display text-base font-semibold uppercase tracking-[0.06em] text-water-deep">
+                    <h3 className="mt-4 font-display text-base font-semibold uppercase tracking-[0.06em] text-heading">
                       {listing.name}
                     </h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{listing.blurb}</p>

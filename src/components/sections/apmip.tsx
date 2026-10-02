@@ -25,7 +25,7 @@ export function Apmip() {
               <Eyebrow>Government subsidy · APMIP</Eyebrow>
             </Reveal>
             <Reveal delay={80}>
-              <h2 className="mt-3 font-display text-3xl font-bold leading-[1.1] tracking-tight text-balance text-water-deep md:text-[2.5rem]">Drip &amp; sprinkler subsidies, handled for you</h2>
+              <h2 className="mt-3 font-display text-3xl font-bold leading-[1.1] tracking-tight text-balance text-heading md:text-[2.5rem]">Drip &amp; sprinkler subsidies, handled for you</h2>
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-4 max-w-xl text-lg leading-relaxed text-water-deep/70">Under the Andhra Pradesh Micro Irrigation Project, farmers can access government subsidy on micro-irrigation systems. We handle the entire process — from eligibility and paperwork to installation and inspection — so you get your system with minimal hassle.</p>
@@ -51,7 +51,7 @@ export function Apmip() {
                   <li key={step.title} className="flex gap-4">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-green font-display text-sm font-bold text-white">{i + 1}</span>
                     <div>
-                      <h3 className="font-display text-base font-semibold text-water-deep">{step.title}</h3>
+                      <h3 className="font-display text-base font-semibold text-heading">{step.title}</h3>
                       <p className="mt-0.5 text-sm leading-relaxed text-water-deep/70">{step.desc}</p>
                     </div>
                   </li>

@@ -24,33 +24,20 @@ export function WaterCaustics({ className }: { className?: string }) {
       }
       aria-hidden="true"
     >
-      {/* Layer A — the primary light pools */}
+      {/* One drifting layer of soft light pools. A second counter-drift layer
+          with soft-light blending used to sit here; together they cost more
+          paint time on load than anything else in the hero. */}
       <div
-        className="motion-caustic absolute -inset-[25%] opacity-70 will-change-transform"
+        className="motion-caustic absolute -inset-[20%] will-change-transform"
         style={{
           backgroundImage: [
-            "radial-gradient(ellipse 38% 20% at 22% 28%, rgba(31,99,118,0.55), transparent 62%)",
-            "radial-gradient(ellipse 30% 16% at 68% 18%, rgba(63,163,218,0.45), transparent 62%)",
-            "radial-gradient(ellipse 34% 19% at 46% 72%, rgba(46,148,102,0.42), transparent 62%)",
-            "radial-gradient(ellipse 26% 14% at 84% 62%, rgba(31,99,118,0.38), transparent 62%)",
+            "radial-gradient(ellipse 38% 20% at 22% 28%, rgba(63,163,218,0.20), transparent 62%)",
+            "radial-gradient(ellipse 30% 16% at 70% 20%, rgba(63,163,218,0.16), transparent 62%)",
+            "radial-gradient(ellipse 34% 19% at 46% 72%, rgba(46,148,102,0.12), transparent 62%)",
+            "radial-gradient(ellipse 26% 14% at 84% 62%, rgba(63,163,218,0.12), transparent 62%)",
           ].join(","),
-          filter: "blur(44px)",
-          mixBlendMode: "soft-light",
+          filter: "blur(28px)",
           animation: "caustic-a var(--dur-drift, 26s) var(--ease-in-out-soft) infinite",
-        }}
-      />
-      {/* Layer B — counter-drift; the overlap with A is what wanders */}
-      <div
-        className="motion-caustic absolute -inset-[25%] opacity-60 will-change-transform"
-        style={{
-          backgroundImage: [
-            "radial-gradient(ellipse 32% 17% at 62% 40%, rgba(46,148,102,0.42), transparent 62%)",
-            "radial-gradient(ellipse 28% 15% at 30% 62%, rgba(31,99,118,0.40), transparent 62%)",
-            "radial-gradient(ellipse 36% 18% at 78% 84%, rgba(63,163,218,0.35), transparent 62%)",
-          ].join(","),
-          filter: "blur(52px)",
-          mixBlendMode: "soft-light",
-          animation: "caustic-b calc(var(--dur-drift, 26s) * 1.45) var(--ease-in-out-soft) infinite",
         }}
       />
       {/* Depth on a LIGHT ground: a soft bloom behind the headline to lift the
@@ -66,13 +53,12 @@ export function WaterCaustics({ className }: { className?: string }) {
       />
       {/* Fine horizontal banding — the surface line pattern, kept very faint */}
       <div
-        className="motion-caustic absolute inset-0 will-change-transform"
+        className="absolute inset-0"
         style={{
           backgroundImage:
             "repeating-linear-gradient(178deg, rgba(18,60,70,0.035) 0px, rgba(18,60,70,0.035) 1px, transparent 1px, transparent 9px)",
           maskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, black, transparent 75%)",
           WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 45%, black, transparent 75%)",
-          animation: "caustic-sheen calc(var(--dur-drift, 26s) * 0.85) var(--ease-in-out-soft) infinite",
         }}
       />
     </div>

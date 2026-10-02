@@ -5,10 +5,12 @@ import { Reveal } from "@/components/sections/reveal";
 import { ContactActions } from "@/components/site/contact-actions";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { siteConfig, whatsappLink, fullAddress, formatPhone } from "@/lib/site-config";
+import { WaveTop } from "@/components/site/wave-divider";
 
 export function ContactCTA() {
   return (
-    <section id="contact" className="relative isolate overflow-hidden tint-wash-darker bg-grain py-20 md:py-28">
+    <section id="contact" className="wave-top relative isolate overflow-hidden tint-wash-darker py-20 md:py-28">
+      <WaveTop />
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
@@ -17,7 +19,7 @@ export function ContactCTA() {
                 <span className="h-px w-6 bg-brand-green/60" aria-hidden="true" />
                 Get started
               </p>
-              <h2 className="mt-4 font-display text-[clamp(1.75rem,4.6vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em] text-balance text-water-deep">
+              <h2 className="mt-4 font-display text-[clamp(1.75rem,4.6vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em] text-balance text-heading">
                 Let&apos;s specify your <span className="text-brand-green">system</span>
               </h2>
               <p className="mt-4 max-w-lg text-lg leading-relaxed text-water-deep/70">

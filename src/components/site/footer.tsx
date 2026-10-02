@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { siteConfig, whatsappLink, formatPhone, fullAddress, callNowTelLink } from "@/lib/site-config";
 import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
+import { WaveTop } from "@/components/site/wave-divider";
 
 export function Footer() {
   return (
-    <footer className="relative sink-panel living-mesh-c border-t border-transparent text-water-deep/80">
-      <div className="h-px w-full bg-gradient-to-r from-brand-green/40 via-brand-blue/50 to-brand-green/40" />
+    <footer className="wave-top relative isolate overflow-hidden tint-wash-dark pt-[var(--wave-h)] text-water-deep/80">
+      <WaveTop />
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 lg:grid-cols-4 md:gap-12 md:py-14">
         <div>
           <p className="font-display text-sm font-bold uppercase tracking-[0.08em] text-water-deep">

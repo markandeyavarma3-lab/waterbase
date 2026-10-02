@@ -60,7 +60,7 @@ export function ProductCard({ title, description, iconSmall, images }: ProductCa
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border text-graphite-700 transition-colors duration-300 group-hover:border-brand-green/40 group-hover:bg-brand-green group-hover:text-white">
             {iconSmall}
           </span>
-          <h3 className="font-display text-base font-semibold leading-tight text-foreground transition-colors group-hover:text-brand-green">
+          <h3 className="font-display text-base font-semibold leading-tight text-heading transition-colors group-hover:text-brand-green">
             {title}
           </h3>
         </div>

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { AuroraGlow } from "@/components/site/aurora-glow";
+import { WaveTop } from "@/components/site/wave-divider";
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
   // px-4 on small phones (not px-6) — on a 320px screen that returns 16px of
@@ -72,8 +73,9 @@ export function Section({ tone = "default", id, className, children }: { tone?: 
     // the fill and were invisible everywhere on the site. `overflow-hidden` is
     // baked in here (not left to callers) because every section now carries
     // its own ambient glow blobs, which bleed past the edge by design.
-    <section id={id} className={cn("relative isolate overflow-hidden py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
+    <section id={id} className={cn("wave-top relative isolate overflow-hidden py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
       <AuroraGlow variant={glowVariant[tone]} />
+      <WaveTop />
       {children}
     </section>
   );
@@ -107,7 +109,7 @@ export function SectionHeading({ eyebrow, title, lead, align = "left", onDark = 
             snapping at the md breakpoint, which is what made tablet widths look off. */}
         <h2 className={cn(
           "mt-4 font-display text-[clamp(1.625rem,4.4vw,2.65rem)] font-bold leading-[1.12] tracking-tight text-balance",
-          onDark ? "text-white" : "text-foreground",
+          onDark ? "text-white" : "text-heading",
           align === "center" && "heading-accent heading-accent-center"
         )}>{title}</h2>
         {lead ? <p className={cn("mt-4 text-lg leading-relaxed", onDark ? "text-white/80" : "text-muted-foreground")}>{lead}</p> : null}

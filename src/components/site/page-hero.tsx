@@ -7,7 +7,6 @@ import { ChevronRight } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
 import { Container } from "@/components/site/section";
 import { WaterCaustics } from "@/components/site/water-caustics";
-import { WaveDivider } from "@/components/site/wave-divider";
 import { siteConfig } from "@/lib/site-config";
 
 export function PageHero({ eyebrow, title, description }: { eyebrow?: string; title: string; description?: string }) {
@@ -54,7 +53,6 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
           {description ? <p className="mt-4 max-w-2xl text-base leading-relaxed text-water-deep/70 sm:text-lg md:text-xl">{description}</p> : null}
         </Reveal>
       </Container>
-      <WaveDivider fill="var(--background)" />
     </section>
   );
 }

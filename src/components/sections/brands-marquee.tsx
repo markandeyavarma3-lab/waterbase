@@ -3,21 +3,22 @@ import { ImageIcon } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { listLogos, type Logo } from "@/lib/logos";
 import { cn } from "@/lib/utils";
+import { WaveTop } from "@/components/site/wave-divider";
 
 // Number of empty placeholder cards shown until real logos are added.
 const PLACEHOLDER_COUNT = 12;
 
-function LogoCard({ logo, large = false }: { logo: Logo; large?: boolean }) {
+export function LogoCard({ logo, large = false }: { logo: Logo; large?: boolean }) {
   return (
-    <div className={cn("flex shrink-0 items-center justify-center rounded-2xl border border-border bg-card shadow-soft transition-shadow hover:shadow-lift", large ? "h-32 w-60 px-8" : "h-24 w-44 px-6")}>
-      <div className={cn("relative w-full", large ? "h-20" : "h-14")}>
-        <Image src={logo.src} alt={logo.name} fill sizes={large ? "240px" : "180px"} className="object-contain" />
+    <div className={cn("flex shrink-0 items-center justify-center rounded-2xl border border-border bg-card shadow-soft transition-shadow hover:shadow-lift", large ? "h-40 w-72 px-10" : "h-24 w-44 px-6")}>
+      <div className={cn("relative w-full", large ? "h-24" : "h-14")}>
+        <Image src={logo.src} alt={logo.name} fill sizes={large ? "288px" : "180px"} className="object-contain" />
       </div>
     </div>
   );
 }
 
-function LogoRow({ logos, duration, large = false }: { logos: Logo[]; duration: string; large?: boolean }) {
+export function LogoRow({ logos, duration, large = false }: { logos: Logo[]; duration: string; large?: boolean }) {
   // Duplicate once so the -50% marquee loops seamlessly.
   const items = [...logos, ...logos];
   return (
@@ -42,7 +43,8 @@ export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
   const hasLogos = logos.length > 0;
 
   return (
-    <section className="border-y border-border tint-wash-plain py-16">
+    <section className="wave-top relative isolate overflow-hidden tint-wash-plain py-16 md:py-20">
+      <WaveTop />
       <Container>
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-green">Authorized Distributor &amp; Dealer</p>

@@ -1,19 +1,15 @@
 import { Section, Container, SectionHeading } from "@/components/site/section";
-import dynamic from "next/dynamic";
+import { LogoRow } from "@/components/sections/brands-marquee";
 import { listLogos, prioritizeLogos } from "@/lib/logos";
-
-// Below the fold, client-only, and carries an autoplay timer — no reason for it
-// to be in the initial bundle of every page that renders the homepage.
-const CoverflowCarousel = dynamic(
-  () => import("@/components/ui/coverflow-carousel").then((m) => m.CoverflowCarousel),
-  { loading: () => <div className="h-72" aria-hidden="true" /> }
-);
 
 const CLIENT_LEAD = ["reliance", "godrej", "patanjali"];
 
 export function Clients() {
   const clients = prioritizeLogos(listLogos("clients"), CLIENT_LEAD);
   if (clients.length === 0) return null;
+
+  // Deliberately slow: ~14s per logo, never faster than a 2-minute loop.
+  const duration = `${Math.max(120, clients.length * 14)}s`;
 
   return (
     <Section tone="default">
@@ -26,8 +22,10 @@ export function Clients() {
         />
       </Container>
 
-      <div className="mt-12">
-        <CoverflowCarousel items={clients} />
+      <div className="relative mt-12 overflow-hidden">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-28" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-28" aria-hidden="true" />
+        <LogoRow logos={clients} duration={duration} large />
       </div>
     </Section>
   );

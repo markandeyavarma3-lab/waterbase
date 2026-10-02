@@ -17,7 +17,7 @@ export function ProductCategories() {
         <div className="mt-12 space-y-24">
           {PRODUCT_GROUPS.map((group) => (
             <div key={group.id}>
-              <h2 className="mb-8 font-display text-2xl font-bold text-foreground">{group.title}</h2>
+              <h2 className="mb-8 font-display text-2xl font-bold text-heading">{group.title}</h2>
               <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {categoriesInGroup(group.id).map((c) => {
                   const images = listImages(`products/${c.folder}`);

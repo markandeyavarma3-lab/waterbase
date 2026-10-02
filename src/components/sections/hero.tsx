@@ -1,38 +1,28 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Phone, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { Reveal } from "@/components/sections/reveal";
-import { DUR, EASE_OUT_EXPO } from "@/lib/motion";
 import { WaterCaustics } from "@/components/site/water-caustics";
-import { WaveDivider } from "@/components/site/wave-divider";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig, callNowTelLink } from "@/lib/site-config";
 import { trackCallClick, trackRequestCallbackClick } from "@/lib/analytics";
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, -40]);
-
   return (
     // `isolate` creates a stacking context on the section. Without it the
     // decorative layers below (which sat at -z-10) painted BEHIND this element's
     // own bg-olive-deep fill and were invisible — which is why the old aurora,
     // canvas ripple and cursor glow all rendered as flat dark green.
-    <section ref={sectionRef} className="relative isolate overflow-hidden bg-sunrise text-water-deep bg-grain">
+    <section className="relative isolate overflow-hidden bg-sunrise text-water-deep bg-grain">
       {/* ONE signature effect, replacing three that competed and none of which
           were actually visible: an aurora at 0.08 alpha behind blur-3xl, a
           canvas water-ripple, and a cursor glow (which does nothing on touch). */}
-      <motion.div style={{ y }} className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0">
         <WaterCaustics />
-      </motion.div>
+      </div>
       <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
       
 
@@ -42,8 +32,8 @@ export function Hero() {
             {/* The dot no longer pulses. A looping ping next to the headline
                 competes with the caustic and pulls the eye off the message —
                 a steady dot with a soft halo reads as considered, not busy. */}
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-brand-sun/30 bg-gradient-to-r from-white/80 via-brand-sun/10 to-white/80 px-5 py-2 text-sm font-semibold tracking-[-0.01em] text-water-deep shadow-[0_0_12px_rgba(212,175,55,0.12)] backdrop-blur">
-              <span className="relative inline-flex h-2 w-2 shrink-0 rounded-full bg-brand-sun shadow-[0_0_0_3px_rgba(212,175,55,0.25)]" />
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-brand-blue-light/50 bg-gradient-to-r from-brand-blue-soft to-brand-green-soft px-5 py-2 text-sm font-semibold tracking-[-0.01em] text-water-deep shadow-soft">
+              <span className="relative inline-flex h-2 w-2 shrink-0 rounded-full bg-brand-green shadow-[0_0_0_3px_rgba(46,148,102,0.2)]" />
               {siteConfig.heroBadge}
             </span>
           </Reveal>
@@ -52,7 +42,7 @@ export function Hero() {
                 improved typographic treatment (larger, tighter, single accent). */}
             <h1 className="mx-auto mt-7 max-w-5xl font-display text-[clamp(2rem,7.2vw,3.9rem)] font-extrabold leading-[1.02] tracking-[-0.032em]">
               <span className="block lg:whitespace-nowrap">Complete <span className="text-brand-green">water management</span>,</span>
-              <span className="block text-water-deep/85">engineered end to end.</span>
+              <span className="block">engineered end to end.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
@@ -119,26 +109,21 @@ export function Hero() {
           <div className="mx-auto mt-16 max-w-4xl border-t border-water-deep/12 pt-8">
             <div className="grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-water-deep/12">
               {siteConfig.stats.map((s, i) => (
-                <motion.div
+                <div
                   key={s.label}
-                  className="px-2 text-center"
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{ duration: DUR.settle, delay: 0.3 + i * 0.06, ease: EASE_OUT_EXPO }}
+                  className="hero-stat px-2 text-center"
+                  style={{ animationDelay: `${300 + i * 60}ms` }}
                 >
                   <p className="font-display text-[clamp(1.5rem,3.4vw,2rem)] font-extrabold leading-none tracking-[-0.02em] tabular-nums text-water-deep">
                     <CountUp end={s.value} suffix={s.suffix} />
                   </p>
                   <p className="mt-2 text-xs leading-snug text-water-deep/72 sm:text-[0.8125rem]">{s.label}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         </div>
       </Container>
-
-      <WaveDivider fill="var(--background)" />
     </section>
   );
 }

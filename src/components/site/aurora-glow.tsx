@@ -25,17 +25,17 @@ const variants = {
   /** Crop-green sections */
   field: [
     { gradient: "radial-gradient(circle,rgba(46,148,102,0.09),transparent_65%)", className: "-left-[14%] -top-[20%] h-[30vw] w-[30vw]", animation: "aurora-1 26s ease-in-out infinite" },
-    { gradient: "radial-gradient(circle,rgba(244,162,76,0.05),transparent_65%)", className: "-right-[16%] bottom-[-24%] h-[27vw] w-[27vw]", animation: "aurora-2 31s ease-in-out infinite" },
+    { gradient: "radial-gradient(circle,rgba(63,163,218,0.05),transparent_65%)", className: "-right-[16%] bottom-[-24%] h-[27vw] w-[27vw]", animation: "aurora-2 31s ease-in-out infinite" },
   ],
   /** Warm soil sections */
   soil: [
-    { gradient: "radial-gradient(circle,rgba(160,110,69,0.09),transparent_65%)", className: "-right-[12%] -top-[24%] h-[29vw] w-[29vw]", animation: "aurora-3 28s ease-in-out infinite" },
-    { gradient: "radial-gradient(circle,rgba(244,162,76,0.055),transparent_65%)", className: "-left-[15%] bottom-[-20%] h-[25vw] w-[25vw]", animation: "aurora-1 32s ease-in-out infinite" },
+    { gradient: "radial-gradient(circle,rgba(63,163,218,0.09),transparent_65%)", className: "-right-[12%] -top-[24%] h-[29vw] w-[29vw]", animation: "aurora-3 28s ease-in-out infinite" },
+    { gradient: "radial-gradient(circle,rgba(46,148,102,0.055),transparent_65%)", className: "-left-[15%] bottom-[-20%] h-[25vw] w-[25vw]", animation: "aurora-1 32s ease-in-out infinite" },
   ],
   /** Low sunlight sections */
   sun: [
-    { gradient: "radial-gradient(circle,rgba(244,162,76,0.10),transparent_65%)", className: "-left-[13%] -top-[22%] h-[31vw] w-[31vw]", animation: "aurora-2 27s ease-in-out infinite" },
-    { gradient: "radial-gradient(circle,rgba(160,110,69,0.05),transparent_65%)", className: "-right-[15%] bottom-[-22%] h-[26vw] w-[26vw]", animation: "aurora-3 30s ease-in-out infinite" },
+    { gradient: "radial-gradient(circle,rgba(63,163,218,0.09),transparent_65%)", className: "-left-[13%] -top-[22%] h-[31vw] w-[31vw]", animation: "aurora-2 27s ease-in-out infinite" },
+    { gradient: "radial-gradient(circle,rgba(63,163,218,0.05),transparent_65%)", className: "-right-[15%] bottom-[-22%] h-[26vw] w-[26vw]", animation: "aurora-3 30s ease-in-out infinite" },
   ],
   /** Neutral/plain sections — barely-there water hint */
   plain: [

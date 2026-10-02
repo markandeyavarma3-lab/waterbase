@@ -75,23 +75,23 @@
   --color-brand-blue-soft: #E8F4FB;
 
   /* Soil — warm earth */
-  --color-brand-soil: #A06E45;
-  --color-brand-soil-dark: #7A5232;
-  --color-brand-soil-darker: #5C3D26;
-  --color-brand-soil-light: #CDA079;
-  --color-brand-soil-soft: #F3EADF;
+  --color-brand-soil: #F4A24C;
+  --color-brand-soil-dark: #E58F2E;
+  --color-brand-soil-darker: #C96F12;
+  --color-brand-soil-light: #F9C589;
+  --color-brand-soil-soft: #FDF1E0;
 
   /* Sun — sunrise orange */
   --color-brand-sun: #F4A24C;
-  --color-brand-sun-dark: #A85F16;
-  --color-brand-sun-darker: #7E4711;
+  --color-brand-sun-dark: #C96F12;
+  --color-brand-sun-darker: #B05C0C;
   --color-brand-sun-light: #F9C589;
   --color-brand-sun-soft: #FDF1E0;
   /* Muted amber for the primary action on dark sections. The full-strength
      brand-sun reads as neon against the olive; this keeps the same hue family
      but drops the brightness so it leads without shouting. */
   --color-brand-sun-muted: #CE8440;
-  --color-brand-sun-muted-hover: #B87033;
+  --color-brand-sun-muted-hover: #E39239;
 
   /* Water glow — bright teal/cyan shimmer accent for ripple + glow effects */
   --color-brand-glow: #54D6E0;
@@ -103,10 +103,11 @@
      warm soil and low sun at the bottom. Text on these is DEEP WATER, not white
      — the ground is light, so white would fail contrast outdoors on a phone,
      which is exactly where these customers are. */
+  --color-heading: #2A7CAC;   /* headlines: deeper sky blue */
   --color-sky: #D6EDF3;      /* water / sky */
   --color-field: #E8F0E2;    /* crop green, desaturated */
-  --color-sand: #F6EAD6;     /* soil warmed by low sun */
-  --color-water-deep: #123C46;  /* primary text on light ground */
+  --color-sand: #EAF4F8;     /* soil warmed by low sun */
+  --color-water-deep: #2B4F5C;  /* primary text on light ground */
   --color-water-mid: #1F6376;   /* primary action, dark sections */
   --color-water-soft: #EEF5F3;  /* light section ground */
 
@@ -119,21 +120,21 @@
      White cards placed on any of them still read as white and lift cleanly. */
   --color-tint-sky:   #F1F8FB;  /* water */
   --color-tint-field: #F3F9F3;  /* crop */
-  --color-tint-soil:  #FAF6F1;  /* earth */
-  --color-tint-sun:   #FDFAF2;  /* early light */
+  --color-tint-soil:  #F0F8FC;  /* earth */
+  --color-tint-sun:   #FFFFFF;  /* early light */
 
   /* Olive — earthy leaf green, distinct from the primary brand-green */
-  --color-olive: #7D8B4A;
-  --color-olive-dark: #5F6A38;
-  --color-olive-light: #A8B073;
-  --color-olive-soft: #EEF1E1;
+  --color-olive: #4FB98A;
+  --color-olive-dark: #2E9466;
+  --color-olive-light: #8FDCB8;
+  --color-olive-soft: #E7F3EC;
   --color-olive-deep: #0F2530;
 
   /* Warm neutrals — kept for back-compat, no longer the default UI neutral */
-  --color-ink: #2A2622;
-  --color-stone-50: #FAF6EF;
-  --color-stone-100: #F3EEE5;
-  --color-stone-200: #E9E1D5;
+  --color-ink: #123C46;
+  --color-stone-50: #F6FAFB;
+  --color-stone-100: #EDF4F6;
+  --color-stone-200: #E2EBEE;
 
   /* Graphite/steel — the default structural neutral (industrial, not warm-paper) */
   --color-graphite-950: #0B1A20;
@@ -177,9 +178,9 @@
   --radius: 0.3125rem;
 
   --background: #FAFCFC;
-  --foreground: #123C46;
+  --foreground: #2B4F5C;
   --card: #FFFFFF;
-  --card-foreground: #123C46;
+  --card-foreground: #2B4F5C;
   --popover: #FFFFFF;
   --popover-foreground: #123C46;
   --primary: #2E9466;
@@ -199,67 +200,31 @@
   --chart-1: #2E9466;
   --chart-2: #3FA3DA;
   --chart-3: #F4A24C;
-  --chart-4: #A06E45;
+  --chart-4: #F4A24C;
   --chart-5: #6BC097;
 
   /* Sidebar — admin dashboard */
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #2A2622;
+  --sidebar-foreground: #123C46;
   --sidebar-primary: #2E9466;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #E7F3EC;
   --sidebar-accent-foreground: #1F6A49;
-  --sidebar-border: #EAE2D6;
+  --sidebar-border: #E2EBEE;
   --sidebar-ring: #2E9466;
 }
 
-/* ── Living mesh — interpolatable colours ───────────────────────
-   Registered so keyframes can blend them. Soft-to-medium mixes of:
-   sky blue, field green, soil brown, morning sunlight, plus mist teal. */
-@property --mesh-sky { syntax: "<color>"; inherits: true; initial-value: #C8E8F4; }
-@property --mesh-green { syntax: "<color>"; inherits: true; initial-value: #D9ECDC; }
-@property --mesh-soil { syntax: "<color>"; inherits: true; initial-value: #E8D7C4; }
-@property --mesh-sun { syntax: "<color>"; inherits: true; initial-value: #F7F0E2; }
-@property --mesh-mist { syntax: "<color>"; inherits: true; initial-value: #D7F0EE; }
-@property --mesh-accent { syntax: "<color>"; inherits: true; initial-value: #2E7A5C; }
-@property --mesh-cta { syntax: "<color>"; inherits: true; initial-value: #2A5E72; }
-@property --mesh-ink { syntax: "<color>"; inherits: true; initial-value: #163844; }
-
-@keyframes mesh-palette {
-  /* Style A — sky-led */
-  0%, 100% {
-    --mesh-sky: #B9E0F0;
-    --mesh-green: #E3F0E5;
-    --mesh-soil: #F0E6D8;
-    --mesh-sun: #FBF8F1;
-    --mesh-mist: #D2EEF0;
-    --mesh-accent: #2A7D6A;
-    --mesh-cta: #245A70;
-    --mesh-ink: #153844;
-  }
-  /* Style B — field-led */
-  33% {
-    --mesh-sky: #E2F3F7;
-    --mesh-green: #C8E4CC;
-    --mesh-soil: #E7D4BE;
-    --mesh-sun: #F5EEDC;
-    --mesh-mist: #E4F3EA;
-    --mesh-accent: #3A7A48;
-    --mesh-cta: #3B5C3E;
-    --mesh-ink: #1C3A26;
-  }
-  /* Style C — sun / soil-led */
-  66% {
-    --mesh-sky: #E8F3F6;
-    --mesh-green: #E6EEDC;
-    --mesh-soil: #E4CDB0;
-    --mesh-sun: #F6E7C4;
-    --mesh-mist: #F2EDE0;
-    --mesh-accent: #9A6A42;
-    --mesh-cta: #7A4E32;
-    --mesh-ink: #3A2818;
-  }
-}
+/* ── Mesh colours — one static palette for every mesh surface ────
+   White, sky blue and light green; sunrise orange is an accent only. These used
+   to be animated forever, which cost seconds of style recalculation on load. */
+@property --mesh-sky { syntax: "<color>"; inherits: true; initial-value: #D9EEF9; }
+@property --mesh-green { syntax: "<color>"; inherits: true; initial-value: #E3F4EA; }
+@property --mesh-soil { syntax: "<color>"; inherits: true; initial-value: #EEF7FC; }
+@property --mesh-sun { syntax: "<color>"; inherits: true; initial-value: #FFFFFF; }
+@property --mesh-mist { syntax: "<color>"; inherits: true; initial-value: #F1F9FC; }
+@property --mesh-accent { syntax: "<color>"; inherits: true; initial-value: #2E9466; }
+@property --mesh-cta { syntax: "<color>"; inherits: true; initial-value: #237352; }
+@property --mesh-ink { syntax: "<color>"; inherits: true; initial-value: #2B4F5C; }
 
 /*
  * Page theme — a scoped override applied to whole pages. It used to be a WARM
@@ -270,24 +235,24 @@
  */
 .theme-warm {
   --background: #FAFCFC;
-  --foreground: #12303A;
+  --foreground: #2B4F5C;
   --card: #FFFFFF;
-  --card-foreground: #12303A;
+  --card-foreground: #2B4F5C;
   --popover: #FFFFFF;
-  --popover-foreground: #2A2622;
+  --popover-foreground: #2B4F5C;
   --secondary: #EDF3F4;
-  --secondary-foreground: #2A2622;
+  --secondary-foreground: #2B4F5C;
   --muted: #F1F7F8;
   --muted-foreground: #5B6B70;
   --border: #E2EAEC;
   --input: #D8E3E5;
 
-  --color-graphite-50: #F3EEE5;
-  --color-graphite-100: #E9E1D5;
-  --color-graphite-300: #A8B073;
-  --color-graphite-500: #7D8B4A;
-  --color-graphite-700: #5F6A38;
-  --color-graphite-900: #332C22;
+  --color-graphite-50: #F1F7F9;
+  --color-graphite-100: #E2EBEE;
+  --color-graphite-300: #A2B5BB;
+  --color-graphite-500: #52707A;
+  --color-graphite-700: #24505C;
+  --color-graphite-900: #123C46;
 }
 
 /* No dark theme. The shadcn `.dark` block that used to sit here defined a full
@@ -457,6 +422,22 @@
 /* ── Gentle float (floating badge cards) ──────────────────────── */
 
 /* ── Scroll cue dot ───────────────────────────────────────────── */
+
+/* ── Hero stats rise in on load ── */
+@keyframes hero-stat-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-stat { animation: hero-stat-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+@media (prefers-reduced-motion: reduce) { .hero-stat { animation: none; } }
+
+/* ── Tab panel swap ── */
+@keyframes tab-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.tab-fade { animation: tab-fade-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+@media (prefers-reduced-motion: reduce) { .tab-fade { animation: none; } }
 
 /* ── Water surface — layered SVG wave drift (CSS-only fallback / dividers) ── */
 @keyframes wave-drift-1 {
@@ -944,7 +925,6 @@
     inset: -25%;
     z-index: -1;
     background-image: linear-gradient(135deg, var(--card-wash-a) 0%, #ffffff 50%, var(--card-wash-b) 100%);
-    animation: panel-drift 24s var(--ease-in-out-soft) infinite;
     pointer-events: none;
   }
   /* Lift is desktop-only: a hover transform that fires on tap and then sticks
@@ -962,8 +942,8 @@
      own gradient fill instead of muddying it. */
   .tone-sky   { --card-edge: rgba(31, 99, 118, 0.12); --card-cast: rgba(31, 99, 118, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-field) 70%, white 30%); }
   .tone-field { --card-edge: rgba(46, 148, 102, 0.13); --card-cast: rgba(46, 148, 102, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-field) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-soil) 70%, white 30%); }
-  .tone-soil  { --card-edge: rgba(160, 110, 69, 0.14); --card-cast: rgba(160, 110, 69, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-soil) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-sun) 70%, white 30%); }
-  .tone-sun   { --card-edge: rgba(196, 145, 60, 0.14); --card-cast: rgba(196, 145, 60, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-sun) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%); }
+  .tone-soil  { --card-edge: rgba(31, 99, 118, 0.12); --card-cast: rgba(31, 99, 118, 0.08); --card-wash-a: color-mix(in srgb, var(--color-tint-soil) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-sun) 70%, white 30%); }
+  .tone-sun   { --card-edge: rgba(31, 99, 118, 0.10); --card-cast: rgba(31, 99, 118, 0.06); --card-wash-a: color-mix(in srgb, var(--color-tint-sun) 70%, white 30%); --card-wash-b: color-mix(in srgb, var(--color-tint-sky) 70%, white 30%); }
   .tone-plain { --card-edge: rgba(31, 99, 118, 0.10); --card-cast: rgba(31, 99, 118, 0.06); --card-wash-a: #ffffff; --card-wash-b: color-mix(in srgb, var(--color-tint-sky) 55%, white 45%); }
 
   /* Living mesh — screenshot-1 blobs, cycling A (sky) → B (field) → C (sun)
@@ -988,17 +968,11 @@
     --color-brand-blue-dark: var(--mesh-cta);
     --color-brand-blue-deep: var(--mesh-ink);
     --color-brand-blue-soft: color-mix(in srgb, var(--mesh-sky) 60%, white);
-    --color-brand-soil: color-mix(in srgb, var(--mesh-soil) 45%, var(--mesh-cta));
-    --color-brand-soil-dark: var(--mesh-cta);
-    --color-brand-soil-darker: var(--mesh-ink);
-    --color-brand-sun: color-mix(in srgb, var(--mesh-sun) 40%, var(--mesh-accent));
-    --color-brand-sun-dark: var(--mesh-cta);
-    --color-brand-sun-darker: var(--mesh-ink);
     --color-water-deep: var(--mesh-ink);
     --color-water-mid: var(--mesh-cta);
     --foreground: var(--mesh-ink);
     --primary: var(--mesh-accent);
-    --muted-foreground: color-mix(in srgb, var(--mesh-ink) 62%, var(--mesh-soil));
+    --muted-foreground: color-mix(in srgb, var(--mesh-ink) 62%, white);
     color: var(--mesh-ink);
     background-color: var(--mesh-sun);
     background-image:
@@ -1008,20 +982,55 @@
       radial-gradient(ellipse 48% 44% at 74% 46%, var(--mesh-sun) 0%, transparent 52%),
       radial-gradient(ellipse 56% 50% at 26% 58%, var(--mesh-mist) 0%, transparent 54%);
     background-size: 160% 160%, 160% 160%, 160% 160%, 160% 160%, 160% 160%;
-    animation:
-      mesh-palette 24s var(--ease-in-out-soft) infinite,
-      wash-drift 34s var(--ease-in-out-soft) infinite;
+  }
+
+  /* Clean grounds: flat white / sky / light green, no animated blobs.
+     --section-bg is the colour at the TOP of the section, which is what its
+     wave (see .wave-top) has to match. */
+  .tint-wash-sky, .tint-wash-field, .tint-wash-soil, .tint-wash-sun,
+  .tint-wash-plain, .tint-wash-dark, .tint-wash-darker, .tint-wash-brand-soft {
+    animation: none;
+    background-color: var(--section-bg);
+    background-image: var(--section-paint, none);
+  }
+  .tint-wash-plain, .tint-wash-sun { --section-bg: #FFFFFF; }
+  .tint-wash-sky, .tint-wash-soil { --section-bg: #F0F8FC; }
+  .tint-wash-field, .tint-wash-brand-soft { --section-bg: #F0F9F3; }
+  .tint-wash-dark, .tint-wash-darker {
+    --section-bg: #E3F2FA;
+    --section-paint: linear-gradient(180deg, #E3F2FA 0%, #F2F9FD 100%);
+  }
+
+  /* A section that rises out of the one above on a wave. It is pulled up by
+     --wave-h and paints its ground only BELOW that band, so the previous
+     section shows between the crests of the <WaveTop /> drawn in the band.
+     Requires padding-top >= --wave-h (every section has at least 3.5rem). */
+  .wave-top {
+    --wave-h: 3rem;
+    margin-top: calc(-1 * var(--wave-h));
+    background-color: transparent;
+    background-image: linear-gradient(var(--section-bg), var(--section-bg));
+    background-repeat: no-repeat;
+    background-position: 0 var(--wave-h);
+    background-size: 100% calc(100% - var(--wave-h));
+  }
+  .wave-top.tint-wash-dark, .wave-top.tint-wash-darker {
+    background-image: var(--section-paint);
+  }
+  @media (min-width: 768px) {
+    .wave-top { --wave-h: 4.5rem; }
+  }
+
+  .bg-sunrise, .living-mesh {
+    animation: none;
+    background-color: #FFFFFF;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 92% 8%, #E3F4EA 0%, transparent 60%),
+      linear-gradient(180deg, #D9EEF9 0%, #EEF7FC 55%, #FFFFFF 100%);
+    background-size: 100% 100%;
   }
 
   /* Independent clocks so neighbouring blocks are never in the same style. */
-  .tint-wash-sky, .bg-sunrise, .living-mesh-a { animation-delay: 0s, 0s; }
-  .tint-wash-field, .living-mesh-b { animation-delay: -8s, -4s; }
-  .tint-wash-soil, .living-mesh-c { animation-delay: -16s, -8s; }
-  .tint-wash-sun { animation-delay: -4s, -10s; }
-  .tint-wash-plain { animation-delay: -12s, -2s; }
-  .tint-wash-brand-soft { animation-delay: -20s, -6s; }
-  .tint-wash-dark { animation-delay: -6s, -12s; }
-  .tint-wash-darker { animation-delay: -14s, -1s; }
 
   /* Screenshot 2 — white/frosted bar that tints with the current mesh. */
   .sink-panel {
@@ -1030,8 +1039,6 @@
     box-shadow:
       0 10px 40px color-mix(in srgb, var(--mesh-soil, #e8d7c4) 22%, transparent),
       0 1px 2px color-mix(in srgb, var(--mesh-ink, #163844) 6%, transparent);
-    backdrop-filter: blur(18px);
-    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
 
   /* Nine-step process cards — same living mesh as the page, each on its own
@@ -1049,16 +1056,10 @@
     box-shadow:
       0 1px 2px color-mix(in srgb, var(--mesh-ink, #163844) 6%, transparent),
       0 8px 22px color-mix(in srgb, var(--mesh-soil, #e8d7c4) 18%, transparent);
-    animation:
-      mesh-palette 24s var(--ease-in-out-soft) infinite,
-      wash-drift 34s var(--ease-in-out-soft) infinite;
   }
   .process-step-card.surface-card::before {
     display: none;
   }
-  .process-step-card.living-mesh-a { animation-delay: 0s, 0s; }
-  .process-step-card.living-mesh-b { animation-delay: -8s, -4s; }
-  .process-step-card.living-mesh-c { animation-delay: -16s, -8s; }
 
   /* Nav bar + pills — transparent shell so the page mesh shows through. */
   .nav-bar-sink {
@@ -1071,12 +1072,7 @@
     color: var(--mesh-ink, #163844);
     background: color-mix(in srgb, white 38%, transparent);
     border-color: color-mix(in srgb, white 30%, var(--mesh-sky, #c8e8f4));
-    backdrop-filter: blur(6px);
-    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
-  .nav-pill.living-mesh-a { animation-delay: 0s; }
-  .nav-pill.living-mesh-b { animation-delay: -8s; }
-  .nav-pill.living-mesh-c { animation-delay: -16s; }
   .nav-pill:hover {
     background: color-mix(in srgb, white 28%, var(--mesh-sky, #c8e8f4));
   }
@@ -1088,9 +1084,8 @@
   /* Hero / CTA buttons — soft fills that ride the living mesh. */
   .cta-sink-primary {
     color: #fff;
-    background: color-mix(in srgb, var(--mesh-cta, #2a5e72) 82%, var(--mesh-sky, #c8e8f4));
+    background: var(--mesh-cta, #237352);
     box-shadow: 0 10px 28px color-mix(in srgb, var(--mesh-cta, #2a5e72) 28%, transparent);
-    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
   .cta-sink-primary:hover {
     background: color-mix(in srgb, var(--mesh-ink, #163844) 88%, var(--mesh-sky, #c8e8f4));
@@ -1107,8 +1102,6 @@
     color: var(--mesh-ink, #163844);
     background: color-mix(in srgb, white 70%, var(--mesh-mist, #d7f0ee));
     border: 1px solid color-mix(in srgb, white 35%, var(--mesh-sky, #c8e8f4));
-    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
-    animation-delay: -8s;
   }
   .cta-sink-secondary:hover {
     background: color-mix(in srgb, white 55%, var(--mesh-sky, #c8e8f4));
@@ -1151,19 +1144,11 @@
       color-mix(in srgb, white 35%, #5BB8E8),
       color-mix(in srgb, #3FA3DA 70%, var(--mesh-cta, #2a5e72))
     );
-    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
-  .process-node.living-mesh-a { animation-delay: 0s; }
-  .process-node.living-mesh-b { animation-delay: -8s; }
-  .process-node.living-mesh-c { animation-delay: -16s; }
   .process-node-badge {
     background: color-mix(in srgb, var(--mesh-cta, #2a5e72) 75%, #5BB8E8);
     color: #fff;
-    animation: mesh-palette 24s var(--ease-in-out-soft) infinite;
   }
-  .process-node-badge.living-mesh-a { animation-delay: 0s; }
-  .process-node-badge.living-mesh-b { animation-delay: -8s; }
-  .process-node-badge.living-mesh-c { animation-delay: -16s; }
 
   /* Header water line — see the header-current keyframes. Deliberately faint:
      this sits under the nav on every page, so it has to register as texture
@@ -1286,6 +1271,9 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  h1, h2, h3 {
+    color: var(--color-heading);
   }
   body {
     @apply bg-background text-foreground antialiased;

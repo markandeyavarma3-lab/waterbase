@@ -1,32 +1,32 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, LayoutGrid, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
-import { ProductCompass, type CompassBatch } from "@/components/sections/product-compass";
+import { ProductTabs } from "@/components/sections/product-tabs";
+import { ProductTile, type ProductTabBatch, type ProductTabItem } from "@/components/sections/product-tile";
 import { InteractiveCard } from "@/components/ui/interactive-card";
 import { PRODUCT_CATEGORIES, type ProductCategory } from "@/lib/products";
 import { siteConfig } from "@/lib/site-config";
+import { listLogos } from "@/lib/logos";
 
 /**
- * The compass shows the catalogue in four batches of four. The categories come
+ * The tabs show the catalogue in four batches of four. The categories come
  * from lib/products.ts — the same list /products renders — so a title or
  * description can only ever be edited in one place. Batches are picked by
  * folder rather than by array position, so reordering the catalogue can never
  * silently move a product into the wrong batch.
  */
-function pick(...folders: string[]): ProductCategory[] {
+function pick(...folders: string[]): ProductTabItem[] {
   return folders.map((folder) => {
-    const c = PRODUCT_CATEGORIES.find((x) => x.folder === folder);
+    const c: ProductCategory | undefined = PRODUCT_CATEGORIES.find((x) => x.folder === folder);
     if (!c) throw new Error(`supply.tsx: unknown product folder "${folder}"`);
-    return c;
+    return { icon: c.icon, title: c.title, desc: c.desc, image: listLogos(`products/${folder}`)[0]?.src };
   });
 }
 
-const batches: CompassBatch[] = [
+const batches: ProductTabBatch[] = [
   {
     label: "Irrigation",
     items: pick("drip-irrigation", "micro-mini-sprinklers", "sprinkler-irrigation", "rainguns"),
@@ -55,7 +55,7 @@ const brands = siteConfig.brandPartners;
 
 export function Supply() {
   return (
-    <Section tone="soil" className="overflow-visible">
+    <Section tone="soil">
       <Container>
         <SectionHeading eyebrow="What we supply" title="The complete agricultural range" lead="Every component for your farm — from drip and sprinkler systems to pumps, pipes, and planting materials." action={<Button asChild variant="outline"><Link href="/products">Browse all products <ArrowRight /></Link></Button>} />
 
@@ -72,12 +72,13 @@ export function Supply() {
             />
           </div>
         </Reveal>
-      </Container>
 
-      <ProductCompass batches={batches} />
+        <ProductTabs
+          labels={batches.map((b) => b.label)}
+          panels={batches.map((b) => b.items.map((item) => <ProductTile key={item.title} item={item} />))}
+        />
 
-      <Container>
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
           <Reveal className="h-full">
             <InteractiveCard className="h-full p-6">
               <h3 className="relative font-display text-lg font-semibold">Supplied across South India</h3>
