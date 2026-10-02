@@ -45,9 +45,9 @@ const csp = [
   // pagead2.googlesyndication.com: Google Ads' consent-mode measurement ping
   // (/ccm/collect). Observed live in a real browser with the tags running —
   // the static origin scan could not see it, because gtag.js chooses it at runtime.
-  "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.google.co.in https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com",
+  "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.google.co.in https://googleads.g.doubleclick.net https://ad.doubleclick.net https://pagead2.googlesyndication.com",
   // Supabase (auth + leads), GA4 measurement, Vercel Speed Insights.
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://www.google.com",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://stats.g.doubleclick.net https://www.googletagmanager.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://www.google.com https://www.google.co.in https://ad.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com",
   // The Ads tag drops a conversion-linker iframe.
   "frame-src https://td.doubleclick.net https://www.googletagmanager.com",
   "frame-ancestors 'none'",
