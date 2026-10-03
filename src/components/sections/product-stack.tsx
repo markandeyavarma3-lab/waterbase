@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PRODUCT_CATEGORIES, PRODUCT_GROUPS } from "@/lib/products";
 import { listLogos } from "@/lib/logos";
+import { SubsidyTag } from "@/components/site/subsidy-tag";
 
 const groupTitle = Object.fromEntries(PRODUCT_GROUPS.map((g) => [g.id, g.title]));
 
@@ -56,6 +57,7 @@ export function ProductStack() {
                 <span className="mt-5 hidden h-12 w-12 sm:flex items-center justify-center rounded-2xl bg-brand-blue-soft text-brand-blue">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </span>
+                {p.group === "micro-irrigation" ? <SubsidyTag className="mt-4 w-fit" /> : null}
                 <h3 className="mt-4 font-display text-2xl font-extrabold tracking-tight md:text-[1.75rem]">{p.title}</h3>
                 <p className="mt-2 text-base leading-relaxed text-muted-foreground">{p.desc}</p>
                 <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green">

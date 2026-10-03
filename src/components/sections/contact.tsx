@@ -3,6 +3,7 @@ import { LeadForm } from "@/components/sections/lead-form";
 import { Reveal } from "@/components/sections/reveal";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { siteConfig, whatsappLink, fullAddress, formatPhone, callNowTelLink } from "@/lib/site-config";
+import { OpenNowBadge } from "@/components/site/open-now-badge";
 
 export function Contact() {
   const waMessage = "Hi Waterbase, I'd like to know more about your irrigation solutions.";
@@ -73,6 +74,7 @@ export function Contact() {
                       <li className="flex justify-between gap-6"><span>{siteConfig.hoursSummary.days}</span><span className="text-muted-foreground">{siteConfig.hoursSummary.time}</span></li>
                       <li className="flex justify-between gap-6"><span>{siteConfig.hoursSummary.closedDay}</span><span className="text-muted-foreground">Closed</span></li>
                     </ul>
+                    <OpenNowBadge className="mt-3" />
                   </div>
                 </div>
               </div>

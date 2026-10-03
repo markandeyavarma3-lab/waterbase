@@ -1,3 +1,4 @@
+import { SubsidyTag } from "@/components/site/subsidy-tag";
 import Link from "next/link";
 import { BadgeCheck, ArrowRight } from "lucide-react";
 import { Section, Container, Eyebrow } from "@/components/site/section";
@@ -22,7 +23,10 @@ export function Apmip() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
             <Reveal>
-              <Eyebrow>Government subsidy · APMIP</Eyebrow>
+              <div className="flex flex-wrap items-center gap-3">
+                <Eyebrow>Government subsidy · APMIP</Eyebrow>
+                <SubsidyTag>Up to 90% subsidy</SubsidyTag>
+              </div>
             </Reveal>
             <Reveal delay={80}>
               <h2 className="mt-3 font-display text-3xl font-bold leading-[1.1] tracking-tight text-balance text-heading md:text-[2.5rem]">Drip &amp; sprinkler subsidies, handled for you</h2>

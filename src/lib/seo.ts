@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
+import { PRODUCT_CATEGORIES } from "@/lib/products";
 
 // "9:00 AM" -> "09:00", "8:30 PM" -> "20:30" (schema.org wants 24h HH:MM)
 // Exported for testing: midnight and noon are the two cases every hand-rolled
@@ -13,6 +14,14 @@ export function to24h(t: string): string {
   if (ap === "AM" && h === 12) h = 0;
   return `${String(h).padStart(2, "0")}:${m[2]}`;
 }
+
+const SERVICES_OFFERED = [
+  "Irrigation site survey and system design",
+  "Drip and sprinkler system installation",
+  "APMIP micro-irrigation subsidy assistance",
+  "Borewell pump installation and service",
+  "Commercial and landscape irrigation projects",
+];
 
 export function localBusinessJsonLd() {
   const { address } = siteConfig;
@@ -55,6 +64,21 @@ export function localBusinessJsonLd() {
     areaServed: siteConfig.areasServed,
     openingHoursSpecification,
     hasMap: siteConfig.mapsUrl,
+    image: `${siteConfig.url}/opengraph-image`,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Irrigation products and services",
+      itemListElement: [
+        ...PRODUCT_CATEGORIES.map((c) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Product", name: c.title, description: c.desc },
+        })),
+        ...SERVICES_OFFERED.map((name) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name, areaServed: siteConfig.areasServed },
+        })),
+      ],
+    },
     knowsAbout: [
       "Drip Irrigation",
       "Sprinkler Irrigation",

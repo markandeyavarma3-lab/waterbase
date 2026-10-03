@@ -1,16 +1,12 @@
 import type { LucideIcon } from "lucide-react";
+import { DripLineIcon, SprinklerIcon, RaingunIcon, BorewellIcon, PumpIcon } from "@/components/icons/irrigation-icons";
 import {
-  Droplets,
-  CloudRain,
   Filter,
-  Gauge,
   Cpu,
   Workflow,
-  Waves,
   Layers,
   Leaf,
   Route,
-  Box,
   Cable,
   CircleDashed,
 } from "lucide-react";
@@ -45,10 +41,10 @@ export const PRODUCT_GROUPS = [
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
   // Micro irrigation & watering
-  { group: "micro-irrigation", folder: "drip-irrigation", icon: Droplets, title: "Drip Irrigation Systems", desc: "Inline & online drippers, laterals, and complete drip systems." },
-  { group: "micro-irrigation", folder: "micro-mini-sprinklers", icon: CloudRain, title: "Micro & Mini Sprinklers", desc: "Low-volume sprinklers for nurseries and horticulture." },
-  { group: "micro-irrigation", folder: "sprinkler-irrigation", icon: CloudRain, title: "Sprinkler Irrigation", desc: "Overhead sprinkler systems for field crops." },
-  { group: "micro-irrigation", folder: "rainguns", icon: Waves, title: "Rainguns", desc: "High-discharge rainguns for large coverage areas." },
+  { group: "micro-irrigation", folder: "drip-irrigation", icon: DripLineIcon, title: "Drip Irrigation Systems", desc: "Inline & online drippers, laterals, and complete drip systems." },
+  { group: "micro-irrigation", folder: "micro-mini-sprinklers", icon: SprinklerIcon, title: "Micro & Mini Sprinklers", desc: "Low-volume sprinklers for nurseries and horticulture." },
+  { group: "micro-irrigation", folder: "sprinkler-irrigation", icon: SprinklerIcon, title: "Sprinkler Irrigation", desc: "Overhead sprinkler systems for field crops." },
+  { group: "micro-irrigation", folder: "rainguns", icon: RaingunIcon, title: "Rainguns", desc: "High-discharge rainguns for large coverage areas." },
   { group: "micro-irrigation", folder: "filters-dosing-injectors", icon: Filter, title: "Filters, Dosing Pump & Injectors", desc: "Screen, disc, sand filters and fertigation tools." },
 
   // Pipes & fittings
@@ -56,10 +52,10 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
   { group: "pipes", folder: "pe-pipes", icon: Route, title: "PE Pipes & Fittings", desc: "Flexible polyethylene pipes and compression fittings." },
   { group: "pipes", folder: "hose-pipes", icon: Cable, title: "Hose Pipes & Fittings", desc: "PE / HDPE hose and coiled pipe for portable and auxiliary watering." },
   { group: "pipes", folder: "column-pipes", icon: CircleDashed, title: "Column Pipes & Fittings", desc: "High-strength pipes for submersible borewell pumps." },
-  { group: "pipes", folder: "casing-pipes", icon: Box, title: "Casing Pipes", desc: "Reliable casing pipes to protect borewells." },
+  { group: "pipes", folder: "casing-pipes", icon: BorewellIcon, title: "Casing Pipes", desc: "Reliable casing pipes to protect borewells." },
 
   // Pumps & automation
-  { group: "pumps", folder: "motors-pumps", icon: Gauge, title: "Motors & Pumps", desc: "Submersible, monoblock, and open-well pumps." },
+  { group: "pumps", folder: "motors-pumps", icon: PumpIcon, title: "Motors & Pumps", desc: "Submersible, monoblock, and open-well pumps." },
   { group: "pumps", folder: "starters-others", icon: Cpu, title: "Starters & Others", desc: "Pump starters, electrical panels, and automation." },
 
   // Farm essentials

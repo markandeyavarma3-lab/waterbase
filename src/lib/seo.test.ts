@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { to24h } from "./seo";
+import { to24h, localBusinessJsonLd } from "./seo";
+import { PRODUCT_CATEGORIES } from "./products";
 
 /**
  * Feeds `openingHoursSpecification` in the LocalBusiness JSON-LD. Getting noon
@@ -57,5 +58,19 @@ describe("business hours in site-config", () => {
     const days = siteConfig.hours.map((h) => h.day);
     expect(days).toHaveLength(7);
     expect(new Set(days).size).toBe(7);
+  });
+});
+
+describe("LocalBusiness structured data", () => {
+  const ld = localBusinessJsonLd();
+  it("lists every product category in the offer catalog", () => {
+    const names = ld.hasOfferCatalog.itemListElement
+      .filter((o) => o.itemOffered["@type"] === "Product")
+      .map((o) => o.itemOffered.name);
+    expect(names).toEqual(PRODUCT_CATEGORIES.map((c) => c.title));
+  });
+  it("has six opening-hours entries (Sunday closed) and an image", () => {
+    expect(ld.openingHoursSpecification).toHaveLength(6);
+    expect(ld.image).toMatch(/^https:\/\/www\./);
   });
 });

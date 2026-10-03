@@ -67,10 +67,10 @@ export default function ProductSupplyPage() {
             {supplyModes.map((m) => (
               <StaggerItem key={m.title}>
                 <InteractiveCard className="p-6">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-sun-soft text-brand-sun-dark transition-colors duration-300 group-hover:bg-brand-sun group-hover:text-white">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
                     <m.icon className="h-6 w-6" />
                   </span>
-                  <h3 className="mt-4 font-display text-base font-semibold transition-colors group-hover:text-brand-sun-dark">{m.title}</h3>
+                  <h3 className="mt-4 font-display text-base font-semibold transition-colors group-hover:text-brand-green">{m.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{m.desc}</p>
                 </InteractiveCard>
               </StaggerItem>

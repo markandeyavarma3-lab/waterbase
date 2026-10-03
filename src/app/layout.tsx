@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { SiteChrome } from "@/components/site/site-chrome";
+import { Footer } from "@/components/site/footer";
 import { LocalBusinessJsonLd } from "@/components/seo/local-business-jsonld";
 import { ConversionTracker } from "@/components/site/conversion-tracker";
 import { RouteProgress } from "@/components/site/route-progress";
@@ -115,7 +116,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <LocalBusinessJsonLd />
         <ConversionTracker />
         <RouteProgress />
-        <SiteChrome>{children}</SiteChrome>
+        <SiteChrome footer={<Footer />}>{children}</SiteChrome>
         <ConsentBanner />
         <Analytics />
         {/* GA4 + Google Ads, one gtag.js load, consent-gated. */}

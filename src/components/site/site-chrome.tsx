@@ -3,13 +3,12 @@
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { Header } from "@/components/site/header";
-import { Footer } from "@/components/site/footer";
 import { StickyCallBar } from "@/components/site/sticky-call-bar";
 import { WhatsAppFloat } from "@/components/site/whatsapp-float";
 import { CallbackDialogProvider } from "@/components/site/callback-dialog";
 import { HangingCallDrop } from "@/components/site/hanging-call-drop";
 
-export function SiteChrome({ children }: { children: ReactNode }) {
+export function SiteChrome({ children, footer }: { children: ReactNode; footer: ReactNode }) {
   const pathname = usePathname();
   if (pathname?.startsWith("/admin")) {
     return <>{children}</>;
@@ -25,7 +24,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <Header />
       <HangingCallDrop />
       <main id="main">{children}</main>
-      <Footer />
+      {footer}
       {/* Spacer that reserves room for the fixed mobile CTA bar. It has to sit
           AFTER the footer — placed before it, the bar still overlapped the
           footer's legal links at the bottom of every page on a phone. */}
