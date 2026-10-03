@@ -16,7 +16,7 @@ const CARD: Record<CardSize, { box: string; img: string; sizes: string }> = {
   xl: { box: "h-48 w-80 px-10 sm:h-52 sm:w-[22rem]", img: "h-28", sizes: "352px" },
 };
 
-/** Frosted glass card; the logo sits slightly muted and pops to full colour on hover. */
+/** White glass card; logos keep their own brand colours and grow slightly on hover. */
 export function LogoCard({ logo, size = "sm" }: { logo: Logo; size?: CardSize }) {
   const c = CARD[size];
   return (
@@ -27,7 +27,7 @@ export function LogoCard({ logo, size = "sm" }: { logo: Logo; size?: CardSize })
           alt={logo.name}
           fill
           sizes={c.sizes}
-          className="object-contain opacity-80 grayscale-[85%] transition-[filter,opacity,transform] duration-500 group-hover/logo:scale-[1.04] group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
+          className="object-contain transition-transform duration-500 group-hover/logo:scale-[1.05]"
         />
       </div>
     </div>

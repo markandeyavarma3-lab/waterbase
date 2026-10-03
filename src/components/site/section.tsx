@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import { AuroraGlow } from "@/components/site/aurora-glow";
 import { WaveTop } from "@/components/site/wave-divider";
+import { Reveal } from "@/components/sections/reveal";
 
 export function Container({ className, children }: { className?: string; children: ReactNode }) {
   // px-4 on small phones (not px-6) — on a 320px screen that returns 16px of
@@ -101,7 +102,7 @@ export function Eyebrow({ children, onDark = false, className }: { children: Rea
 export function SectionHeading({ eyebrow, title, lead, align = "left", onDark = false, action, className }: { eyebrow?: ReactNode; title: ReactNode; lead?: ReactNode; align?: "left" | "center"; onDark?: boolean; action?: ReactNode; className?: string }) {
   return (
     <div className={cn("flex flex-col gap-4", align === "center" && "items-center text-center", action && "md:flex-row md:items-end md:justify-between md:gap-10", className)}>
-      <div className={cn("max-w-2xl", align === "center" && "mx-auto")}>
+      <Reveal className={cn("max-w-2xl", align === "center" && "mx-auto")}>
         {/* mx-auto (not justify-center) now that Eyebrow is `w-fit`: it hugs its
             text, so it has to be centred by margin rather than by justification. */}
         {eyebrow ? <Eyebrow onDark={onDark} className={align === "center" ? "mx-auto" : undefined}>{eyebrow}</Eyebrow> : null}
@@ -113,7 +114,7 @@ export function SectionHeading({ eyebrow, title, lead, align = "left", onDark = 
           align === "center" && "heading-accent heading-accent-center"
         )}>{title}</h2>
         {lead ? <p className={cn("mt-5 text-lg leading-relaxed md:text-xl md:leading-relaxed", onDark ? "text-white/80" : "text-muted-foreground")}>{lead}</p> : null}
-      </div>
+      </Reveal>
       {action ? <div className="shrink-0">{action}</div> : null}
     </div>
   );

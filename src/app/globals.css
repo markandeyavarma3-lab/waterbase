@@ -375,6 +375,25 @@
 .hero-stat { animation: hero-stat-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both; }
 @media (prefers-reduced-motion: reduce) { .hero-stat { animation: none; } }
 
+/* ── WhatsApp quick-reply menu ── */
+@keyframes wa-menu-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+.wa-menu { transform-origin: bottom right; animation: wa-menu-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.wa-menu-item { animation: wa-menu-in 320ms cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(60ms + var(--i, 0) * 45ms); }
+
+/* ── Page change: each new page fades and rises in ── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.page-enter { animation: page-enter 450ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-menu, .wa-menu-item, .page-enter { animation: none; }
+}
+
 /* ── Glass logo cards (brands + companies) ── */
 .logo-glass {
   background: rgba(255, 255, 255, 0.72);
