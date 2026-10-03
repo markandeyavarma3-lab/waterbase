@@ -34,10 +34,10 @@ const buttonVariants = cva(
         // each hue's darkest token (not the mid "-dark" one): a translucent
         // 15% fill needs a darker foreground than a solid fill would to hold
         // 4.5:1 contrast.
-        default: "border border-brand-green/25 bg-brand-green/15 text-brand-green-darker shadow-soft backdrop-blur-sm hover:bg-brand-green/25",
+        default: "bg-brand-green text-white shadow-[0_8px_20px_-6px_rgba(46,148,102,0.55)] hover:bg-brand-green-dark hover:shadow-[0_12px_26px_-8px_rgba(46,148,102,0.6)]",
         accent: "border border-brand-blue/25 bg-brand-blue/15 text-brand-blue-deep shadow-soft backdrop-blur-sm hover:bg-brand-blue/25",
         outline:
-          "border-border bg-background shadow-xs hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+          "border-brand-blue-light/60 bg-white text-water-deep shadow-xs hover:border-brand-green/50 hover:bg-brand-green-soft hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:

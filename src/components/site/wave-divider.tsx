@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 
 const WAVE_PATH = "M0,40 C150,90 350,0 600,40 C850,80 1050,10 1200,40 L1200,120 L0,120 Z";
+// Back layer: higher crests, shifted phase, so two distinct waves show.
+const WAVE_PATH_BACK = "M0,30 C200,0 400,70 600,30 C800,-5 1000,70 1200,30 L1200,120 L0,120 Z";
 
 function WaveLayers({ fill }: { fill: string }) {
   return (
@@ -13,8 +15,8 @@ function WaveLayers({ fill }: { fill: string }) {
         viewBox="0 0 2400 120"
         preserveAspectRatio="none"
       >
-        <path d={WAVE_PATH} fill={fill} fillOpacity={0.5} />
-        <path d={WAVE_PATH} fill={fill} fillOpacity={0.5} transform="translate(1200,0)" />
+        <path d={WAVE_PATH_BACK} fill={fill} fillOpacity={0.45} />
+        <path d={WAVE_PATH_BACK} fill={fill} fillOpacity={0.45} transform="translate(1200,0)" />
       </svg>
       <svg
         className="absolute inset-y-0 left-0 h-full"

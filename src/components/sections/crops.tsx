@@ -31,7 +31,7 @@ export function Crops({ limit }: { limit?: number }) {
   return (
     <section className="wave-top relative isolate overflow-hidden tint-wash-field">
       <WaveTop />
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 md:pt-32">
         <Reveal>
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div className="max-w-2xl">

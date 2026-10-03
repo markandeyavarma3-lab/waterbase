@@ -8,7 +8,7 @@ export function Brands() {
   return (
     <section className="wave-top relative isolate overflow-hidden tint-wash-brand-soft">
       <WaveTop />
-      <div className="mx-auto max-w-6xl px-4 py-14 text-center sm:px-6 sm:py-20">
+      <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-24 md:pt-32">
         <Reveal>
           <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Authorized Dealer &amp; Distributor</p>
           <h2 className="mt-2 font-display text-[clamp(1.375rem,3.6vw,1.875rem)] font-extrabold">Trusted, genuine brands</h2>

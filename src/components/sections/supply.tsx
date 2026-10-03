@@ -1,53 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, LayoutGrid, Package } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, Container, SectionHeading } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
-import { ProductTabs } from "@/components/sections/product-tabs";
-import { ProductTile, type ProductTabBatch, type ProductTabItem } from "@/components/sections/product-tile";
+import { ProductStack } from "@/components/sections/product-stack";
 import { InteractiveCard } from "@/components/ui/interactive-card";
-import { PRODUCT_CATEGORIES, type ProductCategory } from "@/lib/products";
 import { siteConfig } from "@/lib/site-config";
-import { listLogos } from "@/lib/logos";
-
-/**
- * The tabs show the catalogue in four batches of four. The categories come
- * from lib/products.ts — the same list /products renders — so a title or
- * description can only ever be edited in one place. Batches are picked by
- * folder rather than by array position, so reordering the catalogue can never
- * silently move a product into the wrong batch.
- */
-function pick(...folders: string[]): ProductTabItem[] {
-  return folders.map((folder) => {
-    const c: ProductCategory | undefined = PRODUCT_CATEGORIES.find((x) => x.folder === folder);
-    if (!c) throw new Error(`supply.tsx: unknown product folder "${folder}"`);
-    return { icon: c.icon, title: c.title, desc: c.desc, image: listLogos(`products/${folder}`)[0]?.src };
-  });
-}
-
-const batches: ProductTabBatch[] = [
-  {
-    label: "Irrigation",
-    items: pick("drip-irrigation", "micro-mini-sprinklers", "sprinkler-irrigation", "rainguns"),
-  },
-  {
-    label: "Pipes & fittings",
-    items: pick("pvc-pipes", "pe-pipes", "hose-pipes", "column-pipes"),
-  },
-  {
-    label: "Pumps & control",
-    items: pick("casing-pipes", "motors-pumps", "filters-dosing-injectors", "starters-others"),
-  },
-  {
-    label: "Farm essentials",
-    items: [
-      ...pick("mulching-sheets", "planting-material"),
-      { icon: Package, title: "Bulk & project supply", desc: "Volume orders for estates, contractors and commercial sites." },
-      { icon: LayoutGrid, title: "Full product catalogue", desc: "Every line we stock — open the products page." },
-    ],
-  },
-];
 
 // Both already live in site-config; they were hand-copied here.
 const reach = siteConfig.areasServed;
@@ -73,10 +32,7 @@ export function Supply() {
           </div>
         </Reveal>
 
-        <ProductTabs
-          labels={batches.map((b) => b.label)}
-          panels={batches.map((b) => b.items.map((item) => <ProductTile key={item.title} item={item} />))}
-        />
+        <ProductStack />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           <Reveal className="h-full">

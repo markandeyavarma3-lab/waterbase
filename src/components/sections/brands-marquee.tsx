@@ -43,7 +43,7 @@ export function BrandsMarquee({ twoRows = false }: { twoRows?: boolean }) {
   const hasLogos = logos.length > 0;
 
   return (
-    <section className="wave-top relative isolate overflow-hidden tint-wash-plain py-16 md:py-20">
+    <section className="wave-top relative isolate overflow-hidden tint-wash-plain py-16 md:pb-24 md:pt-32">
       <WaveTop />
       <Container>
         <div className="text-center">

@@ -169,7 +169,7 @@
 
   /* Distance an element travels on entrance. Mirrors REVEAL_Y in lib/motion.ts —
      small on purpose: long travel reads as a slideshow. */
-  --reveal-y: 10px;
+  --reveal-y: 22px;
   --dur-drift: 26s;    /* ambient background movement */
 }
 
@@ -431,13 +431,18 @@
 .hero-stat { animation: hero-stat-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both; }
 @media (prefers-reduced-motion: reduce) { .hero-stat { animation: none; } }
 
-/* ── Tab panel swap ── */
-@keyframes tab-fade-in {
-  from { opacity: 0; transform: translateY(6px); }
+/* ── Hero entrance + floating chip ── */
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: none; }
 }
-.tab-fade { animation: tab-fade-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-@media (prefers-reduced-motion: reduce) { .tab-fade { animation: none; } }
+.hero-in { animation: hero-in 800ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.hero-float { animation: hero-float 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .hero-in, .hero-float { animation: none; } }
 
 /* ── Water surface — layered SVG wave drift (CSS-only fallback / dividers) ── */
 @keyframes wave-drift-1 {
@@ -937,6 +942,14 @@
     }
   }
 
+  /* Premium card hover: a clear lift and a soft sky shadow (desktop only). */
+  @media (hover: hover) and (pointer: fine) {
+    .card-lift:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 2px 6px rgba(31, 99, 118, 0.06), 0 22px 44px -12px rgba(42, 124, 172, 0.28);
+    }
+  }
+
   /* Section tone -> the tint its cards inherit. --card-wash is a real hex blend
      (not the rgba edge/cast colours) so it composites cleanly into the card's
      own gradient fill instead of muddying it. */
@@ -994,11 +1007,11 @@
     background-image: var(--section-paint, none);
   }
   .tint-wash-plain, .tint-wash-sun { --section-bg: #FFFFFF; }
-  .tint-wash-sky, .tint-wash-soil { --section-bg: #F0F8FC; }
-  .tint-wash-field, .tint-wash-brand-soft { --section-bg: #F0F9F3; }
+  .tint-wash-sky, .tint-wash-soil { --section-bg: #E4F3FB; }
+  .tint-wash-field, .tint-wash-brand-soft { --section-bg: #E6F5EC; }
   .tint-wash-dark, .tint-wash-darker {
-    --section-bg: #E3F2FA;
-    --section-paint: linear-gradient(180deg, #E3F2FA 0%, #F2F9FD 100%);
+    --section-bg: #D3EBF8;
+    --section-paint: linear-gradient(180deg, #D3EBF8 0%, #EAF6FC 100%);
   }
 
   /* A section that rises out of the one above on a wave. It is pulled up by
@@ -1006,7 +1019,7 @@
      section shows between the crests of the <WaveTop /> drawn in the band.
      Requires padding-top >= --wave-h (every section has at least 3.5rem). */
   .wave-top {
-    --wave-h: 3rem;
+    --wave-h: 3.5rem;
     margin-top: calc(-1 * var(--wave-h));
     background-color: transparent;
     background-image: linear-gradient(var(--section-bg), var(--section-bg));
@@ -1018,7 +1031,7 @@
     background-image: var(--section-paint);
   }
   @media (min-width: 768px) {
-    .wave-top { --wave-h: 4.5rem; }
+    .wave-top { --wave-h: 6rem; }
   }
 
   .bg-sunrise, .living-mesh {

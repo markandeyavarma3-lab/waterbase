@@ -36,7 +36,7 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
       </motion.div>
       <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
 
-      <Container className="relative z-10 pt-32 pb-10 sm:pt-36 sm:pb-14 md:pt-40 md:pb-20">
+      <Container className="relative z-10 pt-32 pb-16 sm:pt-36 sm:pb-20 md:pt-44 md:pb-28">
         <Reveal>
           <nav aria-label="Breadcrumb" className="-mt-2 mb-3 flex items-center gap-1 text-sm text-water-deep/60">
             <Link href="/" className="tap-target-y flex shrink-0 items-center pr-1 transition-colors hover:text-water-deep">Home</Link>
@@ -49,8 +49,8 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
               {eyebrow}
             </p>
           ) : null}
-          <h1 className="mt-5 max-w-3xl font-display text-[clamp(1.875rem,5.6vw,3.25rem)] font-extrabold leading-[1.07] tracking-tight">{title}</h1>
-          {description ? <p className="mt-4 max-w-2xl text-base leading-relaxed text-water-deep/70 sm:text-lg md:text-xl">{description}</p> : null}
+          <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.25rem,6vw,3.9rem)] font-extrabold leading-[1.04] tracking-[-0.035em]">{title}</h1>
+          {description ? <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg md:text-xl">{description}</p> : null}
         </Reveal>
       </Container>
     </section>

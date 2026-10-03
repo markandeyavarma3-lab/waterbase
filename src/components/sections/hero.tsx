@@ -1,65 +1,58 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Phone, ShieldCheck } from "lucide-react";
+import { ArrowRight, Droplets, Phone, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
-import { Reveal } from "@/components/sections/reveal";
 import { WaterCaustics } from "@/components/site/water-caustics";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig, callNowTelLink } from "@/lib/site-config";
 import { trackCallClick, trackRequestCallbackClick } from "@/lib/analytics";
 
+/**
+ * Split hero: message and actions on the left, a three-photo collage on the
+ * right. Entrance motion is CSS (`.hero-in`), so the top of the homepage
+ * ships no animation library.
+ */
 export function Hero() {
   return (
-    // `isolate` creates a stacking context on the section. Without it the
-    // decorative layers below (which sat at -z-10) painted BEHIND this element's
-    // own bg-olive-deep fill and were invisible — which is why the old aurora,
-    // canvas ripple and cursor glow all rendered as flat dark green.
-    <section className="relative isolate overflow-hidden bg-sunrise text-water-deep bg-grain">
-      {/* ONE signature effect, replacing three that competed and none of which
-          were actually visible: an aurora at 0.08 alpha behind blur-3xl, a
-          canvas water-ripple, and a cursor glow (which does nothing on touch). */}
+    <section className="relative isolate overflow-hidden bg-sunrise text-water-deep">
       <div className="absolute inset-0 z-0">
         <WaterCaustics />
       </div>
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
-      
 
-      <Container className="relative z-10 pt-32 pb-24 text-center sm:pt-36 sm:pb-28 md:pt-40 md:pb-36">
-        <div className="mx-auto max-w-5xl">
-          <Reveal>
-            {/* The dot no longer pulses. A looping ping next to the headline
-                competes with the caustic and pulls the eye off the message —
-                a steady dot with a soft halo reads as considered, not busy. */}
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-brand-blue-light/50 bg-gradient-to-r from-brand-blue-soft to-brand-green-soft px-5 py-2 text-sm font-semibold tracking-[-0.01em] text-water-deep shadow-soft">
+      <Container className="relative z-10 pt-28 pb-20 sm:pt-32 md:pt-36 md:pb-28 lg:pb-32">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+          {/* ── Message ── */}
+          <div className="text-center lg:text-left">
+            <span className="hero-in inline-flex items-center gap-2.5 rounded-full border border-brand-blue-light/50 bg-gradient-to-r from-brand-blue-soft to-brand-green-soft px-5 py-2 text-sm font-semibold tracking-[-0.01em] text-water-deep shadow-soft">
               <span className="relative inline-flex h-2 w-2 shrink-0 rounded-full bg-brand-green shadow-[0_0_0_3px_rgba(46,148,102,0.2)]" />
               {siteConfig.heroBadge}
             </span>
-          </Reveal>
-          <Reveal delay={80}>
-            {/* Original tagline, restored at the owner's request. Keeps the
-                improved typographic treatment (larger, tighter, single accent). */}
-            <h1 className="mx-auto mt-7 max-w-5xl font-display text-[clamp(2rem,7.2vw,3.9rem)] font-extrabold leading-[1.02] tracking-[-0.032em]">
-              <span className="block lg:whitespace-nowrap">Complete <span className="text-brand-green">water management</span>,</span>
+
+            <h1
+              className="hero-in mt-6 font-display text-[clamp(2.25rem,6.4vw,4.1rem)] font-extrabold leading-[1.02] tracking-[-0.035em]"
+              style={{ animationDelay: "80ms" }}
+            >
+              Complete <span className="text-brand-green">water management</span>,{" "}
               <span className="block">engineered end to end.</span>
             </h1>
-          </Reveal>
-          <Reveal delay={160}>
-            {/* One line, not three. A long paragraph directly under a headline
-                competes with it instead of supporting it. */}
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-water-deep/70 sm:text-lg">
+
+            <p
+              className="hero-in mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0"
+              style={{ animationDelay: "160ms" }}
+            >
               Survey, design, supply and installation for commercial landscapes,
               estates and large farms — one accountable team from first site visit
               to after-sales.
             </p>
-          </Reveal>
 
-          <Reveal delay={220}>
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              {/* Calling is the PRIMARY action: it is roughly two-thirds of this
-                  business's conversions, so it gets the filled button. The amber
-                  is the muted token — full-strength brand-sun read as neon here. */}
+            <div
+              className="hero-in mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
+              style={{ animationDelay: "240ms" }}
+            >
+              {/* Calling is roughly two-thirds of conversions, so it gets the filled button. */}
               <MotionPress magnetic>
                 <a
                   href={callNowTelLink()}
@@ -83,13 +76,11 @@ export function Hero() {
                 </Link>
               </MotionPress>
             </div>
-          </Reveal>
 
-          {/* Proof, immediately under the actions — the "is this a serious
-              operator?" question answered before any scrolling. Wording matches
-              the claims already used elsewhere on the site. */}
-          <Reveal delay={280}>
-            <p className="mx-auto mt-6 flex max-w-xl flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs text-water-deep/60 sm:text-sm">
+            <p
+              className="hero-in mx-auto mt-7 flex max-w-xl flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground sm:text-sm lg:mx-0 lg:justify-start"
+              style={{ animationDelay: "300ms" }}
+            >
               <ShieldCheck className="h-4 w-4 shrink-0 text-brand-green" aria-hidden="true" />
               <span>Authorised distributor &amp; dealer</span>
               <span className="text-water-deep/30">·</span>
@@ -99,28 +90,67 @@ export function Hero() {
               <span className="text-water-deep/30">·</span>
               <span>20+ brands</span>
             </p>
-          </Reveal>
+          </div>
 
-          {/* Stats as plain figures, not cards. The boxes were doing the work
-              that the numbers should do themselves — five glass tiles read as UI
-              chrome, whereas bare numerals separated by hairlines read as a fact
-              sheet. Icons dropped for the same reason: they added colour and
-              noise without adding meaning. */}
-          <div className="mx-auto mt-16 max-w-4xl border-t border-water-deep/12 pt-8">
-            <div className="grid grid-cols-2 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-water-deep/12">
-              {siteConfig.stats.map((s, i) => (
-                <div
-                  key={s.label}
-                  className="hero-stat px-2 text-center"
-                  style={{ animationDelay: `${300 + i * 60}ms` }}
-                >
-                  <p className="font-display text-[clamp(1.5rem,3.4vw,2rem)] font-extrabold leading-none tracking-[-0.02em] tabular-nums text-water-deep">
-                    <CountUp end={s.value} suffix={s.suffix} />
-                  </p>
-                  <p className="mt-2 text-xs leading-snug text-water-deep/72 sm:text-[0.8125rem]">{s.label}</p>
-                </div>
-              ))}
+          {/* ── Photo collage ── */}
+          <div className="hero-in relative mx-auto w-full max-w-xl lg:max-w-none" style={{ animationDelay: "120ms" }}>
+            <div className="grid grid-cols-5 grid-rows-2 gap-3 sm:gap-4">
+              <div className="relative col-span-3 row-span-2 aspect-[3/4] overflow-hidden rounded-[2rem] shadow-lift sm:aspect-auto sm:min-h-[26rem]">
+                <Image
+                  src="/products/rainguns/raingun-dolly.jpg"
+                  alt="Raingun irrigating a green field"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 380px, 60vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative col-span-2 overflow-hidden rounded-[1.5rem] shadow-lift">
+                <Image
+                  src="/products/micro-mini-sprinklers/micro-spray.jpg"
+                  alt="Micro sprinkler spraying water droplets"
+                  fill
+                  sizes="(min-width: 1024px) 240px, 40vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative col-span-2 overflow-hidden rounded-[1.5rem] shadow-lift">
+                <Image
+                  src="/products/sprinkler-irrigation/field-sprinkler.jpg"
+                  alt="Field sprinkler on prepared farmland"
+                  fill
+                  sizes="(min-width: 1024px) 240px, 40vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
+
+            {/* Floating proof chip over the collage */}
+            <div className="hero-float absolute -bottom-5 left-4 flex items-center gap-3 rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-lift sm:left-6">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-blue-soft text-brand-blue">
+                <Droplets className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <span className="text-left">
+                <span className="block font-display text-lg font-extrabold leading-none text-heading tabular-nums">
+                  <CountUp end={siteConfig.stats[1].value} suffix={siteConfig.stats[1].suffix} />
+                </span>
+                <span className="text-xs text-muted-foreground">{siteConfig.stats[1].label}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Stats strip ── */}
+        <div className="mx-auto mt-16 max-w-5xl rounded-3xl border border-white/70 bg-white/75 px-4 py-7 shadow-soft md:mt-20">
+          <div className="grid grid-cols-2 gap-y-7 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-water-deep/10">
+            {siteConfig.stats.map((s, i) => (
+              <div key={s.label} className="hero-stat px-2 text-center" style={{ animationDelay: `${350 + i * 70}ms` }}>
+                <p className="font-display text-[clamp(1.5rem,3.4vw,2.1rem)] font-extrabold leading-none tracking-[-0.02em] tabular-nums text-heading">
+                  <CountUp end={s.value} suffix={s.suffix} />
+                </p>
+                <p className="mt-2 text-xs leading-snug text-muted-foreground sm:text-[0.8125rem]">{s.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </Container>

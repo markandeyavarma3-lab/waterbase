@@ -73,7 +73,7 @@ export function Section({ tone = "default", id, className, children }: { tone?: 
     // the fill and were invisible everywhere on the site. `overflow-hidden` is
     // baked in here (not left to callers) because every section now carries
     // its own ambient glow blobs, which bleed past the edge by design.
-    <section id={id} className={cn("wave-top relative isolate overflow-hidden py-14 sm:py-20 md:py-28", toneClass[tone], className)}>
+    <section id={id} className={cn("wave-top relative isolate overflow-clip py-16 sm:py-24 md:py-32", toneClass[tone], className)}>
       <AuroraGlow variant={glowVariant[tone]} />
       <WaveTop />
       {children}
@@ -108,11 +108,11 @@ export function SectionHeading({ eyebrow, title, lead, align = "left", onDark = 
         {/* Fluid size: scales continuously between phone and desktop instead of
             snapping at the md breakpoint, which is what made tablet widths look off. */}
         <h2 className={cn(
-          "mt-4 font-display text-[clamp(1.625rem,4.4vw,2.65rem)] font-bold leading-[1.12] tracking-tight text-balance",
+          "mt-4 font-display text-[clamp(1.875rem,4.8vw,3rem)] font-extrabold leading-[1.08] tracking-[-0.025em] text-balance",
           onDark ? "text-white" : "text-heading",
           align === "center" && "heading-accent heading-accent-center"
         )}>{title}</h2>
-        {lead ? <p className={cn("mt-4 text-lg leading-relaxed", onDark ? "text-white/80" : "text-muted-foreground")}>{lead}</p> : null}
+        {lead ? <p className={cn("mt-5 text-lg leading-relaxed md:text-xl md:leading-relaxed", onDark ? "text-white/80" : "text-muted-foreground")}>{lead}</p> : null}
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}
     </div>
