@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Clock, Mail, MapPin, PhoneCall } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { Reveal } from "@/components/sections/reveal";
@@ -6,6 +5,7 @@ import { ContactActions } from "@/components/site/contact-actions";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { siteConfig, whatsappLink, fullAddress, formatPhone } from "@/lib/site-config";
 import { WaveTop } from "@/components/site/wave-divider";
+import { CallbackTrigger } from "@/components/site/callback-dialog";
 
 export function ContactCTA() {
   return (
@@ -40,13 +40,13 @@ export function ContactCTA() {
                   <span className="text-sm text-water-deep/60">{formatPhone(siteConfig.whatsappNumber)}</span>
                 </span>
               </a>
-              <Link href="/contact" className="flex items-center gap-4 border-b border-water-deep/10 px-6 py-4 transition-colors hover:bg-white/40">
+              <CallbackTrigger className="flex items-center gap-4 border-b border-water-deep/10 px-6 py-4 transition-colors hover:bg-white/40">
                 <PhoneCall className="h-4 w-4 shrink-0 text-brand-blue" aria-hidden="true" />
                 <span className="min-w-0">
                   <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-water-deep">Request a callback</span>
                   <span className="text-sm text-water-deep/60">We&apos;ll call you back</span>
                 </span>
-              </Link>
+              </CallbackTrigger>
               <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-4 border-b border-water-deep/10 px-6 py-4 transition-colors hover:bg-white/40">
                 <Mail className="h-4 w-4 shrink-0 text-water-deep/50" aria-hidden="true" />
                 <span className="min-w-0">

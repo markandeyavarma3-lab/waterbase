@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight, Droplets, Phone, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/site/section";
 import { CountUp } from "@/components/sections/count-up";
 import { WaterCaustics } from "@/components/site/water-caustics";
 import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig, callNowTelLink } from "@/lib/site-config";
-import { trackCallClick, trackRequestCallbackClick } from "@/lib/analytics";
+import { trackCallClick } from "@/lib/analytics";
+import { CallbackTrigger } from "@/components/site/callback-dialog";
 
 /**
  * Split hero: message and actions on the left, a three-photo collage on the
@@ -65,15 +65,12 @@ export function Hero() {
                 </a>
               </MotionPress>
               <MotionPress>
-                <Link
-                  href="/contact"
-                  onClick={trackRequestCallbackClick}
-                  data-gtm="request_callback"
+                <CallbackTrigger
                   className="cta-sink-secondary group inline-flex items-center gap-2 rounded-full px-7 py-4 text-base font-semibold transition-colors duration-300"
                 >
                   Request a callback
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
+                </CallbackTrigger>
               </MotionPress>
             </div>
 

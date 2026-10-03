@@ -1,4 +1,4 @@
-import { Mail, MapPin, Clock, Sprout, ArrowUpRight, Phone } from "lucide-react";
+import { Mail, MapPin, Clock, Sprout, Phone } from "lucide-react";
 import { LeadForm } from "@/components/sections/lead-form";
 import { Reveal } from "@/components/sections/reveal";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
@@ -8,17 +8,17 @@ export function Contact() {
   const waMessage = "Hi Waterbase, I'd like to know more about your irrigation solutions.";
 
   return (
-    <section id="contact" className="scroll-mt-20 bg-background py-16 sm:py-24">
+    <section id="contact" className="relative isolate overflow-hidden bg-sunrise pt-28 pb-20 sm:pt-32 md:pt-36 md:pb-28">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
           <div>
             <Reveal>
               <p className="mb-3 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-green">
                 <Sprout className="h-4 w-4" />
                 Get in touch
               </p>
-              <h2 className="font-display text-3xl font-bold text-brand-green-darker sm:text-4xl">Request a callback</h2>
-              <p className="mt-4 max-w-md text-muted-foreground">Share acreage, crop or landscape brief. We call back — usually within a few working hours — with a clear next step.</p>
+              <h1 className="font-display text-[clamp(2.25rem,5.6vw,3.6rem)] font-extrabold leading-[1.04] tracking-[-0.035em]">Let&apos;s plan your irrigation project</h1>
+              <p className="mt-4 max-w-md text-lg text-muted-foreground">Leave your name and number — we call back, usually within a few working hours, with a clear next step.</p>
             </Reveal>
 
             <Reveal delay={120}>
@@ -80,65 +80,14 @@ export function Contact() {
           </div>
 
           <Reveal delay={200}>
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
+            <div className="rounded-[2rem] border border-white/80 bg-white p-6 shadow-lift sm:p-8">
+              <h2 className="font-display text-2xl font-extrabold tracking-tight">Request a callback</h2>
+              <p className="mb-6 mt-1 text-sm text-muted-foreground">Only your name and number are needed.</p>
               <LeadForm />
             </div>
           </Reveal>
         </div>
 
-        <Reveal delay={120}>
-          <a
-            href={siteConfig.mapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group mt-12 flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:border-brand-green/40 hover:shadow-lift sm:p-6"
-          >
-            <span className="flex items-center gap-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-green-soft text-brand-green transition-colors duration-300 group-hover:bg-brand-green group-hover:text-white">
-                <MapPin className="h-6 w-6" />
-              </span>
-              <span>
-                <span className="block font-display font-semibold text-foreground">Find us on Google Maps</span>
-                <span className="block text-sm text-muted-foreground">{siteConfig.address.city}, {siteConfig.address.state} — tap for directions</span>
-              </span>
-            </span>
-            <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-colors group-hover:text-brand-green" />
-          </a>
-        </Reveal>
-
-        <Reveal delay={160}>
-          <div className="mt-8">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand-green">Google Business Profile</p>
-            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-              Search “Waterbase Technologies Eluru” on Google, then tap Directions, Call, or Write a review. Keep hours, photos and the website link current on the listing so Maps and Search stay accurate.
-            </p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              {siteConfig.googleListings.map((listing) => (
-                <a
-                  key={listing.id}
-                  href={listing.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-2xl border border-border bg-card p-4 shadow-soft transition-colors hover:border-brand-green/40"
-                >
-                  <span className="block font-display font-semibold text-foreground">{listing.name}</span>
-                  <span className="mt-1 block text-sm text-muted-foreground">{listing.blurb}</span>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-brand-green">
-                    Open in Maps <ArrowUpRight className="h-4 w-4" />
-                  </span>
-                </a>
-              ))}
-            </div>
-            <a
-              href={siteConfig.googleReviewsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex text-sm font-semibold text-brand-green hover:underline"
-            >
-              View Google reviews
-            </a>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

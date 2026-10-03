@@ -58,7 +58,9 @@ export const leadSchema = z.object({
     z.string().check(z.regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"))
   ),
 
-  requirement: z.enum(REQUIREMENT_VALUES, { message: "Please select what you need" }),
+  // Optional: the callback form asks only for name and mobile. Omitted means
+  // "other" when stored (see submitLead) — the DB column is NOT NULL.
+  requirement: z.optional(z.enum(REQUIREMENT_VALUES, { message: "Please select what you need" })),
 
   // Optional qualifying details
   location: z.optional(z.string().check(z.trim(), z.maxLength(120, "Location is too long"))),

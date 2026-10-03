@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { Menu, Phone } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription,
@@ -12,8 +12,6 @@ import {
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
 import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
-import { callNowTelLink } from "@/lib/site-config";
-import { trackCallClick } from "@/lib/analytics";
 
 /** Scroll distance over which the bar settles from its "at top" to "scrolled" state. */
 const SETTLE_PX = 120;
@@ -213,46 +211,18 @@ export function Header() {
             </Link>
           </div>
 
-          <div className="hidden items-center gap-1.5 lg:flex">
-            {/* Nav — each link carries its own fixed-colour pill, rotating through
-                the living-mesh palettes, so the bar is never a flat row of text. */}
-            <nav aria-label="Main navigation" className="flex items-center gap-1.5">
-              {NAV_LINKS.map((l, i) => {
-                const active = isActive(l.href);
-                return (
-                  <Link
-                    key={l.href}
-                    href={l.href}
-                    className={cn(
-                      "nav-pill tap-target-y flex items-center rounded-full border px-2.5 py-2 font-display text-[0.78rem] font-semibold uppercase tracking-wide transition-shadow duration-200 xl:px-3",
-                      i % 3 === 0 && "living-mesh-a",
-                      i % 3 === 1 && "living-mesh-b",
-                      i % 3 === 2 && "living-mesh-c",
-                      active && "nav-pill-active shadow-sm"
-                    )}
-                  >
-                    {l.label}
-                  </Link>
-                );
-              })}
-            </nav>
-
-            {/* Desktop Call button. Mobile already has the sticky Call/WhatsApp
-                bar; desktop visitors previously had no call action in the header
-                at all. Same styling and the same tracking (Ads `call` conversion
-                + GTM `cta_call_now`) as the hero's Call now. Icon-only at lg,
-                where the bar is already full; labelled from xl. */}
-            <a
-              href={callNowTelLink()}
-              onClick={trackCallClick}
-              data-gtm="call_now_header"
-              aria-label="Call now"
-              className="cta-sink-primary cta-call-now tap-target-y ml-1 inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-2 font-display text-[0.8rem] font-semibold uppercase tracking-wide transition-colors duration-300 xl:px-4"
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden xl:inline">Call now</span>
-            </a>
-          </div>
+          <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex xl:gap-2">
+            {NAV_LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={isActive(l.href) ? "page" : undefined}
+                className="nav-link tap-target-y flex items-center px-3 py-2 font-display text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-water-deep/80 transition-colors hover:text-water-deep aria-[current=page]:text-brand-green"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </header>

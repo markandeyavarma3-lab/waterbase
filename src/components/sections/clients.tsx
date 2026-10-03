@@ -25,7 +25,7 @@ export function Clients() {
       <div className="relative mt-12 overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-28" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-28" aria-hidden="true" />
-        <LogoRow logos={clients} duration={duration} large />
+        <LogoRow logos={clients} duration={duration} size="xl" />
       </div>
     </Section>
   );

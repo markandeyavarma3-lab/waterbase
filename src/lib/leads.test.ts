@@ -88,10 +88,14 @@ describe("leadSchema — requirement", () => {
     expect(r.success).toBe(false);
   });
 
-  it("rejects an empty requirement (the form's initial state)", () => {
+  it("rejects an empty-string requirement (the form sends undefined instead)", () => {
     expect(
       leadSchema.safeParse({ name: "Ravi Kumar", mobile: "9440018418", requirement: "" }).success
     ).toBe(false);
+  });
+
+  it("accepts a lead with no requirement — only name and mobile are mandatory", () => {
+    expect(leadSchema.safeParse({ name: "Ravi Kumar", mobile: "9440018418" }).success).toBe(true);
   });
 });
 

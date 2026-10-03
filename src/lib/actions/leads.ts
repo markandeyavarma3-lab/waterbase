@@ -115,7 +115,8 @@ export async function submitLead(input: unknown): Promise<LeadResult> {
     return { ok: false, message: "Please check the form and try again." };
   }
 
-  const { name, mobile, requirement, location, landSize } = parsed.data;
+  const { name, mobile, location, landSize } = parsed.data;
+  const requirement = parsed.data.requirement ?? "other";
 
   try {
     const supabase = createAdminClient();

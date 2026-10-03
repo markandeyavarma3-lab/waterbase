@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { PhoneCall, Phone } from "lucide-react";
 import { MotionPress } from "@/components/ui/motion-press";
 import { whatsappLink, callNowTelLink } from "@/lib/site-config";
-import { trackCallClick, trackRequestCallbackClick } from "@/lib/analytics";
+import { trackCallClick } from "@/lib/analytics";
+import { CallbackTrigger } from "@/components/site/callback-dialog";
 import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 import { cn } from "@/lib/utils";
 
@@ -65,14 +65,11 @@ export function ContactActions({
             </a>
           </MotionPress>
           <MotionPress>
-            <Link
-              href="/contact"
-              onClick={trackRequestCallbackClick}
-              data-gtm="request_callback"
+            <CallbackTrigger
               className={cn("cta-sink-secondary inline-flex items-center justify-center gap-2 rounded-full font-semibold", pad)}
             >
               <PhoneCall className="h-4 w-4" /> Request a callback
-            </Link>
+            </CallbackTrigger>
           </MotionPress>
         </>
       )}
