@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { Reveal } from "@/components/sections/reveal";
 import { Container } from "@/components/site/section";
 import { WaterCaustics } from "@/components/site/water-caustics";
+import { WaveBackdrop } from "@/components/site/wave-divider";
 import { siteConfig } from "@/lib/site-config";
 
 export function PageHero({ eyebrow, title, description }: { eyebrow?: string; title: string; description?: string }) {
@@ -33,6 +34,7 @@ export function PageHero({ eyebrow, title, description }: { eyebrow?: string; ti
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
         <WaterCaustics />
+        <WaveBackdrop />
       </motion.div>
       <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.025] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:22px_22px]" aria-hidden="true" />
 

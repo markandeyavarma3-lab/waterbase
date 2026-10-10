@@ -7,6 +7,7 @@ import { Stats } from "@/components/sections/stats";
 import { LeadForm } from "@/components/sections/lead-form";
 import { ContactActions } from "@/components/site/contact-actions";
 import type { RequirementValue } from "@/lib/leads";
+import { WaveBackdrop } from "@/components/site/wave-divider";
 
 export interface LandingPageTemplateProps {
   badge: string;
@@ -55,7 +56,8 @@ export function LandingPageTemplate({
     <>
       {/* HERO */}
       <section className="relative isolate overflow-hidden bg-sunrise text-water-deep">
-        <Container className="pt-32 pb-12 sm:pt-36 sm:pb-16 md:pt-40 md:pb-24">
+        <WaveBackdrop className="z-0" />
+        <Container className="relative z-10 pt-32 pb-12 sm:pt-36 sm:pb-16 md:pt-40 md:pb-24">
           {/* minmax(0,1fr) rather than 1fr — a bare 1fr track has min-width:auto,
               so a wide child (the form) can push the grid past the viewport. */}
           <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_420px]">

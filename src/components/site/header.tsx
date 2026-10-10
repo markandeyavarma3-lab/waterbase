@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
+import { WaveBackdrop } from "@/components/site/wave-divider";
+import { StatusTab } from "@/components/site/status-tab";
 import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
 
 /** Scroll distance over which the bar settles from its "at top" to "scrolled" state. */
@@ -126,9 +128,11 @@ export function Header() {
               is not itself positioned — the Call button and the mobile menu
               button washed out to grey as the veil strengthened on scroll. */}
           <div
-            className="hdr-veil pointer-events-none absolute inset-0 -z-10 rounded-full bg-white/60 backdrop-blur-md"
+            className="hdr-veil pointer-events-none absolute inset-0 -z-10 rounded-full bg-white/90 backdrop-blur-md"
             aria-hidden="true"
           />
+          {/* Inner pages: slow translucent waves drifting inside the bar. */}
+          {pathname !== "/" ? <WaveBackdrop className="-z-10 rounded-full" /> : null}
           {/* water current along the pill's lower edge */}
           <div className="header-water pointer-events-none absolute inset-x-6 bottom-0 h-px" aria-hidden="true" />
 
@@ -224,6 +228,16 @@ export function Header() {
             ))}
           </nav>
         </div>
+        {pathname === "/" ? (
+          <div
+            className={cn(
+              "relative -mt-px flex justify-center transition-[opacity,transform] duration-300",
+              atTop ? "opacity-100" : "pointer-events-none -translate-y-2 opacity-0"
+            )}
+          >
+            <StatusTab />
+          </div>
+        ) : null}
       </div>
     </header>
   );

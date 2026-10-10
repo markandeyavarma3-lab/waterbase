@@ -28,15 +28,15 @@ export function ProductStack() {
           >
             <Link
               href="/products"
-              className="group grid overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_-6px_24px_-12px_rgba(42,124,172,0.25),0_24px_48px_-20px_rgba(31,99,118,0.30)] md:h-[21rem] md:grid-cols-[1.1fr_1fr]"
+              className="group grid overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_-6px_24px_-12px_rgba(42,124,172,0.25),0_24px_48px_-20px_rgba(31,99,118,0.30)] md:h-[22rem] md:grid-cols-[65fr_35fr]"
             >
-              <div className="relative h-40 overflow-hidden bg-brand-blue-soft sm:h-60 md:h-full">
+              <div className="relative h-52 overflow-hidden bg-brand-blue-soft sm:h-72 md:h-full">
                 {p.image ? (
                   <Image
                     src={p.image}
                     alt=""
                     fill
-                    sizes="(min-width: 768px) 520px, 100vw"
+                    sizes="(min-width: 768px) 660px, 100vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (
@@ -45,7 +45,7 @@ export function ProductStack() {
                   </div>
                 )}
               </div>
-              <div className="flex flex-col justify-center p-6 sm:p-8 md:p-10">
+              <div className="flex flex-col justify-center p-5 sm:p-7">
                 <div className="flex items-center justify-between gap-4">
                   <span className="truncate rounded-full bg-brand-green-soft px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-brand-green-dark sm:text-xs">
                     {groupTitle[p.group]}
@@ -58,9 +58,9 @@ export function ProductStack() {
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 {p.group === "micro-irrigation" ? <SubsidyTag className="mt-4 w-fit" /> : null}
-                <h3 className="mt-4 font-display text-2xl font-extrabold tracking-tight md:text-[1.75rem]">{p.title}</h3>
-                <p className="mt-2 text-base leading-relaxed text-muted-foreground">{p.desc}</p>
-                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green">
+                <h3 className="mt-3 font-display text-xl font-extrabold tracking-tight md:text-2xl">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:text-[0.95rem]">{p.desc}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green">
                   View range
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </span>

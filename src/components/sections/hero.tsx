@@ -9,7 +9,6 @@ import { MotionPress } from "@/components/ui/motion-press";
 import { siteConfig, callNowTelLink } from "@/lib/site-config";
 import { trackCallClick } from "@/lib/analytics";
 import { CallbackTrigger } from "@/components/site/callback-dialog";
-import { OpenNowBadge } from "@/components/site/open-now-badge";
 
 /**
  * Split hero: message and actions on the left, a three-photo collage on the
@@ -75,12 +74,8 @@ export function Hero() {
               </MotionPress>
             </div>
 
-            <div className="hero-in mt-5 flex justify-center lg:justify-start" style={{ animationDelay: "280ms" }}>
-              <OpenNowBadge className="justify-center lg:justify-start" />
-            </div>
-
             <p
-              className="hero-in mx-auto mt-5 flex max-w-xl flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground sm:text-sm lg:mx-0 lg:justify-start"
+              className="hero-in mx-auto mt-7 flex max-w-xl flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground sm:text-sm lg:mx-0 lg:justify-start"
               style={{ animationDelay: "300ms" }}
             >
               <ShieldCheck className="h-4 w-4 shrink-0 text-brand-green" aria-hidden="true" />

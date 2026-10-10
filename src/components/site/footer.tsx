@@ -1,20 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Clock } from "lucide-react";
 import { siteConfig, whatsappLink, formatPhone, fullAddress, callNowTelLink } from "@/lib/site-config";
 import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
-import { listLogos } from "@/lib/logos";
 import { WaveTop } from "@/components/site/wave-divider";
 import { MapPreview } from "@/components/site/map-preview";
 import { OpenNowBadge } from "@/components/site/open-now-badge";
 
-/**
- * Server component (it lists brand logos from /public), rendered by the root
- * layout and handed to the client SiteChrome as a prop.
- */
+/** Rendered by the root layout and handed to the client SiteChrome as a prop. */
 export function Footer() {
-  const brands = [...listLogos("brands/row-1"), ...listLogos("brands/row-2")];
-
   return (
     <footer className="wave-top relative isolate overflow-hidden tint-wash-dark pt-[var(--wave-h)] text-water-deep/80">
       <WaveTop />
@@ -104,24 +97,6 @@ export function Footer() {
           </p>
         </div>
       </div>
-
-      {/* ── Brands strip ── */}
-      {brands.length > 0 ? (
-        <div className="border-t border-water-deep/8">
-          <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-water-deep/50">Authorised dealer for</p>
-            <ul className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              {brands.map((b) => (
-                <li key={b.src} className="flex h-12 w-24 items-center justify-center rounded-xl bg-white px-2.5 shadow-soft">
-                  <span className="relative h-8 w-full">
-                    <Image src={b.src} alt={b.name} fill sizes="96px" className="object-contain" />
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ) : null}
 
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 border-t border-water-deep/8 px-4 py-5 text-xs text-water-deep/55 sm:flex-row sm:px-6">
         <p>© {new Date().getFullYear()} {siteConfig.legalName}. {siteConfig.businessType}</p>

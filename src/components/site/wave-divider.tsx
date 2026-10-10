@@ -1,31 +1,51 @@
 import { cn } from "@/lib/utils";
 
-const WAVE_PATH = "M0,40 C150,90 350,0 600,40 C850,80 1050,10 1200,40 L1200,120 L0,120 Z";
-// Back layer: higher crests, shifted phase, so two distinct waves show.
-const WAVE_PATH_BACK = "M0,30 C200,0 400,70 600,30 C800,-5 1000,70 1200,30 L1200,120 L0,120 Z";
+/**
+ * Wave paths are built from symmetric cubic segments whose tangents match at
+ * every join — including the 1200 → 2400 tile join — so the crest has no kinks
+ * and the -50% drift loops without a visible seam.
+ */
+function wavePath(mid: number, amp: number, periods: number) {
+  const seg = 1200 / periods / 2;
+  const k = seg / 2;
+  let d = `M0,${mid}`;
+  for (let i = 0; i < periods * 2; i++) {
+    const x0 = i * seg;
+    const up = i % 2 === 0;
+    d += ` C${x0 + k},${up ? mid - amp : mid + amp} ${x0 + seg - k},${up ? mid - amp : mid + amp} ${x0 + seg},${mid}`;
+  }
+  return d;
+}
+const FRONT = wavePath(62, 22, 2);
+const BACK = wavePath(48, 28, 3);
+const close = (d: string) => `${d} L1200,120 L0,120 Z`;
+
+function Tile({ d, fill, opacity, stroke }: { d: string; fill: string; opacity?: number; stroke?: string }) {
+  return (
+    <>
+      {[0, 1200].map((x) => (
+        <g key={x} transform={`translate(${x},0)`}>
+          <path d={close(d)} fill={fill} fillOpacity={opacity} />
+          {stroke ? <path d={d} fill="none" stroke={stroke} strokeWidth={1.5} vectorEffect="non-scaling-stroke" /> : null}
+        </g>
+      ))}
+    </>
+  );
+}
 
 function WaveLayers({ fill }: { fill: string }) {
   return (
     <>
-      {/* The viewBox spans 2400 units: each svg holds two copies of the wave
-          (x=0 and x=1200) so the -50% drift tiles without a seam. */}
-      <svg
-        className="absolute inset-y-0 left-0 h-full"
-        style={{ width: "200%", animation: "wave-drift-1 16s linear infinite" }}
-        viewBox="0 0 2400 120"
-        preserveAspectRatio="none"
-      >
-        <path d={WAVE_PATH_BACK} fill={fill} fillOpacity={0.45} />
-        <path d={WAVE_PATH_BACK} fill={fill} fillOpacity={0.45} transform="translate(1200,0)" />
+      {/* Sky-tinted back swell: the contrast that makes the wave read against a pale neighbour. */}
+      <svg className="wave-svg wave-back absolute inset-y-0 left-0 h-full" viewBox="0 0 2400 120" preserveAspectRatio="none">
+        <Tile d={BACK} fill="#3FA3DA" opacity={0.14} />
       </svg>
-      <svg
-        className="absolute inset-y-0 left-0 h-full"
-        style={{ width: "200%", animation: "wave-drift-2 21s linear infinite" }}
-        viewBox="0 0 2400 120"
-        preserveAspectRatio="none"
-      >
-        <path d={WAVE_PATH} fill={fill} />
-        <path d={WAVE_PATH} fill={fill} transform="translate(1200,0)" />
+      <svg className="wave-svg wave-mid absolute inset-y-0 left-0 h-full" viewBox="0 0 2400 120" preserveAspectRatio="none">
+        <Tile d={wavePath(54, 24, 2)} fill={fill} opacity={0.6} />
+      </svg>
+      {/* Front: the section colour itself, with a soft white highlight along the crest. */}
+      <svg className="wave-svg wave-front absolute inset-y-0 left-0 h-full" viewBox="0 0 2400 120" preserveAspectRatio="none">
+        <Tile d={FRONT} fill={fill} stroke="rgba(255,255,255,0.85)" />
       </svg>
     </>
   );
@@ -49,6 +69,25 @@ export function WaveTop() {
   return (
     <div className="motion-wave pointer-events-none absolute inset-x-0 top-0 -z-10 h-[var(--wave-h)]" aria-hidden="true">
       <WaveLayers fill="var(--section-bg)" />
+    </div>
+  );
+}
+
+/** Translucent waves drifting across a banner or bar, for movement behind content. */
+export function WaveBackdrop({ className, tone = "sky" }: { className?: string; tone?: "sky" | "light" }) {
+  const a = tone === "sky" ? "#3FA3DA" : "#FFFFFF";
+  const b = tone === "sky" ? "#2E9466" : "#FFFFFF";
+  return (
+    <div className={cn("motion-wave pointer-events-none absolute inset-0 overflow-hidden", className)} aria-hidden="true">
+      <svg className="wave-svg wave-back absolute bottom-0 left-0 h-[38%]" viewBox="0 0 2400 120" preserveAspectRatio="none">
+        <Tile d={BACK} fill={a} opacity={tone === "sky" ? 0.07 : 0.35} />
+      </svg>
+      <svg className="wave-svg wave-mid absolute bottom-0 left-0 h-[26%]" viewBox="0 0 2400 120" preserveAspectRatio="none">
+        <Tile d={wavePath(54, 24, 2)} fill={b} opacity={tone === "sky" ? 0.06 : 0.3} />
+      </svg>
+      <svg className="wave-svg wave-front absolute bottom-0 left-0 h-[16%]" viewBox="0 0 2400 120" preserveAspectRatio="none">
+        <Tile d={FRONT} fill={a} opacity={tone === "sky" ? 0.09 : 0.4} />
+      </svg>
     </div>
   );
 }

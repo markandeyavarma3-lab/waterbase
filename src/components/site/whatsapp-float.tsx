@@ -96,6 +96,16 @@ export function WhatsAppFloat() {
         </div>
       ) : null}
 
+      <div className="flex items-center gap-3">
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="wa-float-label rounded-full border border-white/80 bg-white px-3.5 py-2 text-xs font-semibold text-water-deep shadow-lift sm:text-sm"
+        >
+          Need help? <span className="text-[#1EBE5D]">Chat on WhatsApp</span>
+        </button>
+      ) : null}
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -111,6 +121,7 @@ export function WhatsAppFloat() {
           <WhatsAppIcon className="relative h-8 w-8 sm:h-9 sm:w-9" />
         )}
       </button>
+      </div>
     </div>
   );
 }
