@@ -28,7 +28,7 @@ export function ProductStack() {
           >
             <Link
               href="/products"
-              className="group grid overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_-6px_24px_-12px_rgba(42,124,172,0.25),0_24px_48px_-20px_rgba(31,99,118,0.30)] md:h-[22rem] md:grid-cols-[65fr_35fr]"
+              className="group grid overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_-6px_24px_-12px_rgba(42,124,172,0.25),0_24px_48px_-20px_rgba(31,99,118,0.30)] md:h-[22rem] md:grid-cols-[60fr_40fr]"
             >
               <div className="relative h-52 overflow-hidden bg-brand-blue-soft sm:h-72 md:h-full">
                 {p.image ? (
@@ -36,7 +36,7 @@ export function ProductStack() {
                     src={p.image}
                     alt=""
                     fill
-                    sizes="(min-width: 768px) 660px, 100vw"
+                    sizes="(min-width: 768px) 610px, 100vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (

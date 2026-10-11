@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { Wordmark } from "@/components/site/wordmark";
 import { WaveBackdrop } from "@/components/site/wave-divider";
 import { StatusTab } from "@/components/site/status-tab";
+import { HangingCallDrop } from "@/components/site/hanging-call-drop";
 import { NAV_LINKS, SOLUTION_LINKS } from "@/lib/nav";
 
 /** Scroll distance over which the bar settles from its "at top" to "scrolled" state. */
@@ -120,7 +121,8 @@ export function Header() {
           over the page rather than dividing it. It gains veil and shadow as you
           scroll, which keeps it legible once light content passes beneath. */}
       <div className="hdr-rail px-3 sm:px-4 md:px-6">
-        <div className="hdr-bar nav-bar-sink relative isolate mx-auto flex max-w-6xl items-center justify-between gap-2 overflow-hidden rounded-full px-4 sm:gap-4 sm:px-5">
+        <div className="mx-auto flex max-w-6xl items-center gap-3">
+        <div className="hdr-bar nav-bar-sink relative isolate flex min-w-0 flex-1 items-center justify-between gap-2 overflow-hidden rounded-full px-4 sm:gap-4 sm:px-5">
           {/* Frosted veil — no own mesh layer; the page background bleeds through.
               -z-10 inside the `isolate` bar: behind every piece of bar content,
               but still above the bar's own background. Without it the veil (an
@@ -210,23 +212,25 @@ export function Header() {
               <Wordmark
                 key={logoRun}
                 animate={atTop}
-                className="font-[family-name:var(--font-logo)] text-[clamp(1.3rem,5.4vw,1.9rem)] font-bold uppercase tracking-[0.042em] text-heading lg:text-[clamp(1.2rem,2.25vw,1.85rem)]"
+                className="font-[family-name:var(--font-logo)] text-[clamp(1.3rem,5.4vw,1.9rem)] font-bold uppercase tracking-[0.042em] text-heading lg:text-[clamp(1.1rem,1.95vw,1.8rem)]"
               />
             </Link>
           </div>
 
-          <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex xl:gap-2">
+          <nav aria-label="Main navigation" className="ml-4 hidden shrink-0 items-center gap-0.5 lg:flex xl:gap-2">
             {NAV_LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 aria-current={isActive(l.href) ? "page" : undefined}
-                className="nav-link tap-target-y flex items-center px-3 py-2 font-display text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-water-deep/80 transition-colors hover:text-water-deep aria-[current=page]:text-brand-green"
+                className="nav-link tap-target-y flex items-center px-2 py-2 font-display text-[0.78rem] xl:px-3 xl:text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-water-deep/80 transition-colors hover:text-water-deep aria-[current=page]:text-brand-green"
               >
                 {l.label}
               </Link>
             ))}
           </nav>
+        </div>
+        <HangingCallDrop />
         </div>
         {pathname === "/" ? (
           <div

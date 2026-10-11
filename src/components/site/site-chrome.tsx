@@ -6,7 +6,6 @@ import { Header } from "@/components/site/header";
 import { StickyCallBar } from "@/components/site/sticky-call-bar";
 import { WhatsAppFloat } from "@/components/site/whatsapp-float";
 import { CallbackDialogProvider } from "@/components/site/callback-dialog";
-import { HangingCallDrop } from "@/components/site/hanging-call-drop";
 
 export function SiteChrome({ children, footer }: { children: ReactNode; footer: ReactNode }) {
   const pathname = usePathname();
@@ -22,7 +21,6 @@ export function SiteChrome({ children, footer }: { children: ReactNode; footer: 
         Skip to content
       </a>
       <Header />
-      <HangingCallDrop />
       <main id="main">{children}</main>
       {footer}
       {/* Spacer that reserves room for the fixed mobile CTA bar. It has to sit
