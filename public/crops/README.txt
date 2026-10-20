@@ -31,8 +31,11 @@ HOW TO USE
 
 NOTES
 -----
-- A crop with no photos yet shows a "Photos coming soon"
-  placeholder, so the layout always looks complete.
+- A crop with no photos yet is omitted from the grid (text-only
+  "and many more" chips cover other crops we still serve).
 - A crop with only 1 photo just shows that photo (no scrolling).
 - Do not delete the .gitkeep files — they keep the empty folders
   tracked in git.
+
+Phase 4 filled vegetables/, flowers/, and plantations/ with licensed
+stock. See PHOTO-CREDITS-PHASE4.txt.
