@@ -1,11 +1,12 @@
 import { Gauge, Waves, ArrowUpFromLine, Zap, Sun, SlidersHorizontal, Award, MapPin, LifeBuoy, BadgePercent } from "lucide-react";
 import { LandingPageTemplate } from "@/components/sections/landing-page-template";
+import { KsbRanges } from "@/components/sections/ksb-ranges";
 import { pageMeta } from "@/lib/seo";
 import { statText } from "@/lib/site-config";
 
 export const metadata = pageMeta({
   title: "KSB Pumps & Motors Dealer in Eluru | Waterbase Technologies",
-  description: "Authorized KSB Pumps & Motors dealer in Eluru — submersible, monoblock, openwell and solar pumps with genuine warranty and expert installation.",
+  description: "Authorized KSB Pumps & Motors dealer in Eluru — agricultural pumps (borewell, openwell, monobloc, solar) and domestic pumps (tank filling, pressure boosting, drainage) with genuine warranty and installation.",
   path: "/ksb-pumps",
 });
 
@@ -38,10 +39,11 @@ export default function KsbPumpsPage() {
       <LandingPageTemplate
       badge="KSB Authorized Dealer · Eluru, AP"
       title="KSB Pumps & Motors — Genuine, Correctly Sized, Installed Right"
-      description="We're the authorized KSB Pumps & Motors dealer in Eluru. One team handles pump selection, supply and installation — submersible, monoblock, openwell and solar — for farms, homes and industries."
+      description="We're the authorized KSB Pumps & Motors dealer in Eluru. Pumps for agricultural use and for domestic use, selected, supplied and installed by one team: borewell, openwell, monobloc, solar, pressure boosters and more."
       trustPoints={TRUST_POINTS}
       products={PRODUCTS}
       whyReasons={WHY}
+      productsSlot={<KsbRanges />}
       formTitle="Get the Right Pump for Your Borewell"
       formDesc="Tell us your requirement and we'll recommend the right KSB pump — no commitment needed."
       formRequirement="product_supply"

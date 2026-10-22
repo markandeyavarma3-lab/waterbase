@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Container, Section, SectionHeading } from "@/components/site/section";
@@ -30,6 +31,8 @@ export interface LandingPageTemplateProps {
   whyEyebrow?: string;
   whyTitle?: string;
   whyLead?: string;
+  /** Replaces the generic product grid with a page-specific section (e.g. /ksb-pumps). */
+  productsSlot?: ReactNode;
 }
 
 export function LandingPageTemplate({
@@ -51,6 +54,7 @@ export function LandingPageTemplate({
   whyEyebrow = "Why choose us",
   whyTitle = "Your reliable partner",
   whyLead,
+  productsSlot,
 }: LandingPageTemplateProps) {
   return (
     <>
@@ -103,6 +107,7 @@ export function LandingPageTemplate({
       <Stats />
 
       {/* PRODUCTS */}
+      {productsSlot ?? (
       <Section tone="sky">
         <Container>
           <SectionHeading eyebrow={productsEyebrow} title={productsTitle} lead={productsLead} />
@@ -115,6 +120,7 @@ export function LandingPageTemplate({
           </div>
         </Container>
       </Section>
+      )}
 
       {/* WHY */}
       <Section tone="soil">
