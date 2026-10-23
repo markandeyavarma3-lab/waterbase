@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import {
   ArrowUpFromLine, Waves, Gauge, Sun, Tractor, Cable,
   Home, Droplet, Building2, ShowerHead, Car, ArrowDownToLine, Sprout, Wrench,
@@ -17,7 +19,7 @@ type Series = { icon: LucideIcon; name: string; type: string; spec?: string; bes
  * (ksbindia.in). Copy is our own; specs are the headline figures KSB lists.
  * Availability and pricing are confirmed per enquiry, so every card asks on WhatsApp.
  */
-const AGRICULTURAL: Series[] = [
+export const AGRICULTURAL: Series[] = [
   { icon: ArrowUpFromLine, name: "Borewell Submersible Pumps", type: "Multistage borewell submersible", bestFor: "Irrigation and horticulture from borewells, sized to your depth and water yield." },
   { icon: Waves, name: "Monosub R (S)", type: "Openwell submersible · single-phase", spec: "Up to 5 HP", bestFor: "Open wells and farm ponds on small farms, where only single-phase power is available." },
   { icon: Waves, name: "Monosub R (MR)", type: "Openwell submersible · three-phase", spec: "Up to 30 HP", bestFor: "Larger farms drawing from open wells, tanks or ponds." },
@@ -27,7 +29,7 @@ const AGRICULTURAL: Series[] = [
   { icon: Cable, name: "Starters & Cables", type: "DStart Plus starter · Conti flat cables", bestFor: "Safe starting and wiring matched to your pump, supplied with the pump set." },
 ];
 
-const DOMESTIC: Series[] = [
+export const DOMESTIC: Series[] = [
   { icon: Home, name: "AQUA Series & CUTE+", type: "Self-priming mini monobloc", bestFor: "Filling overhead tanks in houses and bungalows." },
   { icon: Droplet, name: "Peristar V / GS", type: "Self-priming monobloc", spec: "Suction up to 6 m / 8 m", bestFor: "Overhead tanks, garden sprinklers and car washing." },
   { icon: Car, name: "Peristar ZDX", type: "High-torque self-priming monobloc", bestFor: "Booster duty, car washing and solar water-heater circulation." },
@@ -89,6 +91,11 @@ function UseSection({
               <SeriesCard s={s} use={use} />
             </Reveal>
           ))}
+        </div>
+        <div className="mt-8 text-center">
+          <Link href={`/ksb-pumps/${use}`} className="inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-brand-green-dark shadow-soft transition-colors hover:bg-brand-green hover:text-white">
+            Full {use} pump guide <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </Container>
     </Section>

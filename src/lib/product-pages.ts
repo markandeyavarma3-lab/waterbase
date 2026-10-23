@@ -1,0 +1,376 @@
+import {
+  Droplets, Gauge, Filter, Waves, Sprout, CloudRain, Wind, Link2, Layers, Cable,
+  ArrowUpFromLine, Ruler, Zap, Route, Package, Wrench, CircleDashed, Lock,
+} from "lucide-react";
+import type { ProductDetailData } from "@/components/sections/product-detail";
+import { AGRICULTURAL, DOMESTIC } from "@/components/sections/ksb-ranges";
+import type { RequirementValue } from "@/lib/leads";
+
+export type ProductPage = {
+  slug: string;
+  metaTitle: string;
+  metaDescription: string;
+  badge: string;
+  title: string;
+  description: string;
+  trustPoints: string[];
+  formTitle: string;
+  formRequirement: RequirementValue;
+  detail: ProductDetailData;
+};
+
+const JAIN_SOURCE = "Specifications as published by Jain Irrigation Systems (jains.com). Exact model, size and stock confirmed on enquiry.";
+const KSB_SOURCE = "Series names and ratings as published by KSB (ksbindia.in). Exact model, stock and price confirmed on enquiry.";
+
+const DRIP_PARENT = { href: "/jain-systems", label: "All Jain drip & sprinkler systems" };
+const PUMP_PARENT = { href: "/ksb-pumps", label: "All KSB pumps & motors" };
+const PIPE_PARENT = { href: "/heavy-pipes", label: "All pipes & fittings" };
+
+export const JAIN_PAGES: ProductPage[] = [
+  {
+    slug: "drip-irrigation",
+    metaTitle: "Jain Drip Irrigation Systems in Eluru — Turbo Drip Lines",
+    metaDescription: "Jain Turbo Slim and Turbo Top drip lines, drippers, filters and fertigation, designed and installed for your crop. APMIP subsidy help. Authorised Jain dealer, Eluru.",
+    badge: "Authorised Jain Dealer · Eluru, AP",
+    title: "Jain Drip Irrigation Systems, Designed for Your Crop",
+    description: "Jain Turbo drip lines, drippers, filters and fertigation, planned for your crop spacing, water source and land slope, then installed by our own team. APMIP subsidy paperwork handled for eligible farmers.",
+    trustPoints: [
+      "Authorised Jain dealer: genuine drip lines with warranty",
+      "Free farm survey and drip layout before you buy",
+      "APMIP subsidy up to 90% for eligible farmers",
+      "Installation and after-sales by our own team",
+    ],
+    formTitle: "Get a Drip Quote for Your Farm",
+    formRequirement: "product_supply",
+    detail: {
+      parent: DRIP_PARENT,
+      image: "/products/drip-irrigation/drip-field.jpg",
+      imageAlt: "Drip lines installed along crop rows",
+      specsTitle: "Jain Turbo drip lines at a glance",
+      specsLead: "The two drip line families we install most, and the sizes they come in.",
+      specs: [
+        ["Drip line sizes", "12, 16, 17, 18, 19, 22 and 25 mm"],
+        ["Dripper spacing", "10 cm to 100 cm, chosen to your crop rows"],
+        ["Dripper flow", "0.8 to 4.0 litres/hour (Turbo Slim) · 1.1 to 2.2 litres/hour (Turbo Top PC)"],
+        ["Pressure-compensating", "Turbo Top PC and PCAS keep flow even on slopes and long rows"],
+        ["Sub-surface option", "Turbo Top PCAS (anti-siphon) stops soil being sucked back in"],
+        ["Quality standard", "Turbo Slim conforms to ISO 9261"],
+        ["Filtration", "Screen, disc or sand media filter matched to your water source"],
+      ],
+      variantsTitle: "Drip products we supply and install",
+      variantsLead: "Everything from the drip line to the filter and fertigation unit, sized as one system.",
+      context: "Jain drip irrigation",
+      variants: [
+        { icon: Droplets, name: "Jain Turbo Slim drip line", type: "Thin-wall inline drip line", spec: "0.8–4.0 lph", bestFor: "Closely spaced row crops: sugarcane, banana, cotton, chilli, tomato, vegetables, flowers and spices." },
+        { icon: Gauge, name: "Jain Turbo Top PC drip line", type: "Pressure-compensating drip line", spec: "1.1–2.2 lph", bestFor: "Uneven or hilly land and very long rows, where every plant must get the same water." },
+        { icon: Sprout, name: "Jain Turbo Top PCAS", type: "Pressure-compensating, anti-siphon", bestFor: "Sub-surface drip and greenhouses, with roots and sand kept out of the dripper." },
+        { icon: Waves, name: "Online drippers & micro tubes", type: "Emitters for tree crops", bestFor: "Coconut, oil palm, mango, guava and other orchards, with drippers placed around each tree." },
+        { icon: Filter, name: "Filters & fertigation", type: "Screen, disc, sand filters · dosing", bestFor: "Clean water and fertiliser delivered through the drip, so drippers never clog." },
+        { icon: Layers, name: "Mainline & sub-main pipes", type: "HDPE and PVC with fittings", bestFor: "Carrying water from the pump to every drip line with the right pressure." },
+      ],
+      usesTitle: "Crops we design drip systems for",
+      uses: ["Banana", "Sugarcane", "Chilli", "Tomato", "Cotton", "Coconut", "Oil palm", "Mango", "Vegetables", "Flowers", "Greenhouses & nurseries"],
+      source: JAIN_SOURCE,
+    },
+  },
+  {
+    slug: "sprinklers",
+    metaTitle: "Jain Sprinklers & Rain Guns in Eluru — Mini Sprinklers, Rainguns",
+    metaDescription: "Jain impact sprinklers, mini sprinklers, rain guns, micro sprinklers and foggers for field crops, orchards and nurseries. Supplied and installed in Eluru.",
+    badge: "Authorised Jain Dealer · Eluru, AP",
+    title: "Jain Sprinklers & Rain Guns for Fields, Orchards and Nurseries",
+    description: "Impact sprinklers, rain guns, micro sprinklers and foggers. We pick the nozzle, spacing and pump pressure for your field, then supply and install the full system.",
+    trustPoints: [
+      "Authorised Jain dealer: genuine sprinklers with warranty",
+      "Free field survey and sprinkler spacing plan",
+      "APMIP subsidy help for eligible farmers",
+      "Sprinkler pipes, couplers and risers all in stock",
+    ],
+    formTitle: "Get a Sprinkler Quote",
+    formRequirement: "product_supply",
+    detail: {
+      parent: DRIP_PARENT,
+      image: "/products/rainguns/raingun-dolly.jpg",
+      imageAlt: "Rain gun irrigating a field",
+      specsTitle: "Sprinkler and rain gun ratings",
+      specsLead: "Headline ratings for two of the Jain models we supply most.",
+      specs: [
+        ["Jain 5035 SD sprinkler: flow", "720 to 3,540 litres/hour"],
+        ["Jain 5035 SD: wetted diameter", "24 to 36 metres"],
+        ["Jain 5035 SD: working pressure", "2.5 to 5.0 kg/cm²"],
+        ["Jain Raingun 280 PC: wetted radius", "20 to 47 metres"],
+        ["Jain Raingun 280 PC: working pressure", "1.5 to 5.0 kg/cm²"],
+        ["Rain gun options", "Full-circle and part-circle models, interchangeable nozzles"],
+      ],
+      variantsTitle: "Sprinkler systems we supply and install",
+      variantsLead: "From one rain gun on a dolly to a full sprinkler layout across your field.",
+      context: "Jain sprinklers and rain guns",
+      variants: [
+        { icon: CloudRain, name: "Jain 5035 SD impact sprinkler", type: "Field sprinkler", spec: "24–36 m dia.", bestFor: "Pulses, oilseeds, groundnut, vegetables, sugarcane, cotton and fodder crops." },
+        { icon: CloudRain, name: "Jain metal impact sprinklers", type: "421 / 423 / 433 series", bestFor: "Heavy-duty field use, with part-circle models for field edges and corners." },
+        { icon: Waves, name: "Jain Raingun 280 / 280 PC", type: "Large-area rain gun", spec: "Up to 47 m radius", bestFor: "Sugarcane, fodder and large open fields where one gun replaces many sprinklers." },
+        { icon: Wind, name: "Micro sprinklers & jets", type: "Low-volume sprinklers", bestFor: "Orchards, under-tree watering and nurseries that need gentle, even spray." },
+        { icon: Droplets, name: "Foggers & misters", type: "Fine mist", bestFor: "Greenhouses and nurseries that need humidity and cooling." },
+        { icon: Link2, name: "Sprinkler pipes & quick couplers", type: "Portable pipe sets", bestFor: "Fast laying and shifting of sprinkler lines between field sections." },
+      ],
+      usesTitle: "Where sprinklers work best",
+      uses: ["Groundnut", "Pulses", "Oilseeds", "Vegetables", "Sugarcane", "Cotton", "Fodder", "Orchards", "Nurseries", "Lawns & landscapes"],
+      source: JAIN_SOURCE,
+    },
+  },
+];
+
+export const KSB_PAGES: ProductPage[] = [
+  {
+    slug: "agricultural",
+    metaTitle: "KSB Agricultural Pumps in Eluru — Borewell, Openwell, Monobloc, Solar",
+    metaDescription: "KSB borewell submersible, Monosub openwell, Ultra+ monobloc and solar pumps for farms. Sized to your borewell, installed and serviced. Authorised KSB dealer, Eluru.",
+    badge: "Authorised KSB Dealer · Eluru, AP",
+    title: "KSB Pumps for Agricultural Use, Sized to Your Water Source",
+    description: "Borewell, openwell, surface monobloc and solar pumps for farms of every size. We check your borewell depth, water level and power supply first, then recommend, supply and install the right KSB pump.",
+    trustPoints: [
+      "Authorised KSB dealer: genuine pumps with manufacturer warranty",
+      "Free pump sizing from your borewell depth and yield",
+      "Single-phase and three-phase options",
+      "Installation, starters and after-sales by our team",
+    ],
+    formTitle: "Get the Right Pump for Your Farm",
+    formRequirement: "product_supply",
+    detail: {
+      parent: PUMP_PARENT,
+      image: "/products/motors-pumps/pumps-on-pallets.jpg",
+      imageAlt: "KSB pumps ready for dispatch",
+      specsTitle: "What we check before recommending a pump",
+      specsLead: "A wrongly sized pump wastes power or burns out. These details decide the right model.",
+      specs: [
+        ["Water source", "Borewell, open well, pond, canal or sump"],
+        ["Borewell depth & water level", "Sets the head the pump must lift against"],
+        ["Water yield", "How much the source gives per hour, so the pump never runs dry"],
+        ["Power supply", "Single-phase or three-phase, or solar for fields without power"],
+        ["Delivery", "Distance and height to your field, tank or drip system"],
+        ["Ratings available", "Openwell up to 30 HP · monobloc up to 20 HP · solar 2–20 HP"],
+      ],
+      variantsTitle: "KSB pumps for farms",
+      variantsLead: "Every series below is part of KSB's agricultural range. Ask us which model fits your source.",
+      context: "KSB agricultural pump",
+      variants: AGRICULTURAL,
+      usesTitle: "Common uses",
+      uses: ["Borewell irrigation", "Open well & farm pond", "Canal lifting", "Drip & sprinkler supply", "Solar irrigation", "Farmhouse water"],
+      source: KSB_SOURCE,
+    },
+  },
+  {
+    slug: "domestic",
+    metaTitle: "KSB Domestic Pumps in Eluru — Tank Filling, Pressure Boosters",
+    metaDescription: "KSB domestic pumps for homes, apartments and buildings: self-priming monobloc, pressure boosters, jet pumps, openwell and drainage pumps. Authorised KSB dealer, Eluru.",
+    badge: "Authorised KSB Dealer · Eluru, AP",
+    title: "KSB Pumps for Domestic Use: Homes, Apartments and Buildings",
+    description: "Tank-filling pumps, pressure boosters, jet pumps for shallow wells, and drainage pumps. Quiet, efficient KSB models chosen for your building and installed by our team.",
+    trustPoints: [
+      "Authorised KSB dealer: genuine pumps with manufacturer warranty",
+      "Right pump for your tank height and number of floors",
+      "Pressure booster options for flats and showers",
+      "Installation and after-sales service in and around Eluru",
+    ],
+    formTitle: "Get the Right Pump for Your Home",
+    formRequirement: "product_supply",
+    detail: {
+      parent: PUMP_PARENT,
+      image: "/products/motors-pumps/motors-warehouse-aisle.jpg",
+      imageAlt: "Pumps and motors in stock",
+      specsTitle: "What we check before recommending a pump",
+      specsLead: "Tell us these and we'll suggest the right KSB model and size.",
+      specs: [
+        ["Water source", "Municipal sump, borewell, shallow well or open well"],
+        ["Lift", "Height from the source to your overhead tank"],
+        ["Building", "Independent house, bungalow, apartment or commercial building"],
+        ["Pressure need", "Normal tank filling, or boosted pressure for showers and upper floors"],
+        ["Power", "Single-phase (most homes) or three-phase"],
+        ["Suction lift", "Self-priming Peristar models lift from up to 6–8 m below the pump"],
+      ],
+      variantsTitle: "KSB pumps for homes and buildings",
+      variantsLead: "Every series below is part of KSB's domestic range. Ask us which fits your building.",
+      context: "KSB domestic pump",
+      variants: DOMESTIC,
+      usesTitle: "Common uses",
+      uses: ["Overhead tank filling", "Pressure boosting", "Shallow wells & sumps", "Garden & car washing", "Apartment water supply", "Drainage & sewage"],
+      source: KSB_SOURCE,
+    },
+  },
+];
+
+export const PIPE_PAGES: ProductPage[] = [
+  {
+    slug: "hdpe",
+    metaTitle: "Jain HDPE Pipes & Coils in Eluru — PE 63, PE 80, PE 100",
+    metaDescription: "Jain HDPE pipes and coils to IS 4984 in PE 63, PE 80 and PE 100, rated 2.5 to 25 kgf/cm². For drip mains, submersible pump delivery and lift irrigation. Eluru.",
+    badge: "Authorised Jain Pipe Dealer · Eluru, AP",
+    title: "Jain HDPE Pipes & Coils: Mains, Pump Delivery, Drip Lines",
+    description: "Flexible, leak-proof HDPE in straight lengths and long coils, for drip and sprinkler mains, submersible pump delivery and lift irrigation. Retail and bulk.",
+    trustPoints: [
+      "Authorised Jain dealer: genuine IS-marked HDPE",
+      "Coils and straight lengths in stock at our Eluru godown",
+      "Retail walk-in or contractor bulk pricing",
+      "Matching HDPE fittings available",
+    ],
+    formTitle: "Get an HDPE Pipe Quote",
+    formRequirement: "product_supply",
+    detail: {
+      parent: PIPE_PARENT,
+      image: "/products/pe-pipes/pe-pipe-coils.jpg",
+      imageAlt: "HDPE pipe coils in stock",
+      specsTitle: "Jain HDPE pipe specifications",
+      specsLead: "Tell us the size and pressure class and we'll quote today's price.",
+      specs: [
+        ["Standards", "IS 4984 · ISO 4427"],
+        ["Material grades", "PE 63 · PE 80 · PE 100"],
+        ["Pressure rating", "2.5 to 25 kgf/cm²"],
+        ["Coils", "Up to 160 mm outer diameter; long single lengths (about 2,000 m at 32 mm down to 50 m at 160 mm)"],
+        ["Straight lengths", "6 m and 12 m"],
+        ["Weathering", "Not affected by sunlight or UV; no scale build-up or corrosion"],
+      ],
+      variantsTitle: "HDPE products we supply",
+      variantsLead: "Straight pipes, coils and fittings for farm and water-supply lines.",
+      context: "Jain HDPE pipe",
+      variants: [
+        { icon: Layers, name: "HDPE straight pipes", type: "PE 80 / PE 100 · 6 m & 12 m", bestFor: "Drip and sprinkler mains, sub-mains and lift irrigation pipelines." },
+        { icon: CircleDashed, name: "HDPE coils for submersible pumps", type: "Pump delivery coils", spec: "Up to 160 mm", bestFor: "Borewell pump delivery with fewer joints; easy lowering and lifting of the pump." },
+        { icon: Route, name: "HDPE drinking-water lines", type: "Potable-water grade", bestFor: "Farmhouse and village water supply lines." },
+        { icon: Link2, name: "HDPE fittings", type: "Compression fittings, couplers, elbows, tees", bestFor: "Leak-proof joints and branches on any HDPE line." },
+      ],
+      usesTitle: "Where HDPE is used",
+      uses: ["Drip & sprinkler mains", "Submersible pump delivery", "Lift irrigation", "Drinking water lines", "Farm water transfer"],
+      source: JAIN_SOURCE,
+    },
+  },
+  {
+    slug: "pvc",
+    metaTitle: "Jain PVC Pipes in Eluru — IS 4985 Pressure Pipes 20–630 mm",
+    metaDescription: "Jain uPVC pressure pipes to IS 4985, 20 to 630 mm, 2.5 to 16 kg/cm², in solvent-cement and Quick-Fix rubber-ring joints, plus PVC fittings. Eluru dealer.",
+    badge: "Authorised Jain Pipe Dealer · Eluru, AP",
+    title: "Jain PVC Pipes & Fittings for Irrigation and Water Supply",
+    description: "IS 4985 uPVC pressure pipes from 20 mm to 630 mm, in every pressure class, with solvent-cement or Quick-Fix rubber-ring joints and a full range of PVC fittings.",
+    trustPoints: [
+      "Authorised Jain dealer: genuine IS-marked PVC",
+      "All common sizes and pressure classes in stock",
+      "Retail walk-in or contractor bulk pricing",
+      "Full range of PVC fittings and solvent",
+    ],
+    formTitle: "Get a PVC Pipe Quote",
+    formRequirement: "product_supply",
+    detail: {
+      parent: PIPE_PARENT,
+      image: "/products/pvc-pipes/blue-pvc-stock.jpg",
+      imageAlt: "PVC pipes in stock",
+      specsTitle: "Jain PVC pipe specifications",
+      specsLead: "Tell us the size, class and quantity for today's price.",
+      specs: [
+        ["Standards", "IS 4985 · ISO 1452"],
+        ["Size range", "20 mm to 630 mm"],
+        ["Pressure classes", "2.5 to 16 kg/cm²"],
+        ["Joint types", "Solvent-cement socketed · plain end · Quick-Fix rubber-ring joint"],
+        ["Material", "uPVC: corrosion and chemical resistant, light, smooth bore"],
+      ],
+      variantsTitle: "PVC products we supply",
+      variantsLead: "Pressure pipes and every fitting you need to finish the line.",
+      context: "Jain PVC pipe",
+      variants: [
+        { icon: Package, name: "PVC pressure pipes (solvent joint)", type: "Socketed · IS 4985", spec: "20–630 mm", bestFor: "Irrigation mainlines, drip and sprinkler mains, and drinking water supply." },
+        { icon: Lock, name: "Quick-Fix rubber-ring joint pipes", type: "RRJ pipes", bestFor: "Large-diameter mains laid quickly, with joints that allow for ground movement." },
+        { icon: ArrowUpFromLine, name: "PVC suction & delivery pipes", type: "For surface pumps", bestFor: "Monoblock and centrifugal pump suction and delivery lines." },
+        { icon: Wrench, name: "PVC fittings", type: "Elbows, tees, couplers, reducers, adaptors", bestFor: "Every bend, branch and end on your PVC line, plus solvent cement." },
+      ],
+      usesTitle: "Where PVC is used",
+      uses: ["Irrigation mainlines", "Lift & gravity irrigation", "Drip & sprinkler mains", "Drinking water supply", "Rainwater harvesting", "Pump suction & delivery"],
+      source: JAIN_SOURCE,
+    },
+  },
+  {
+    slug: "casing",
+    metaTitle: "Jain Borewell Casing & Screen Pipes in Eluru — IS 12818",
+    metaDescription: "Jain uPVC well casing and slotted screen pipes to IS 12818, ¾\" to 24\", with casing caps, reducers and centralisers. For borewells and tube wells. Eluru dealer.",
+    badge: "Authorised Jain Pipe Dealer · Eluru, AP",
+    title: "Jain Borewell Casing & Screen Pipes",
+    description: "uPVC casing and slotted screen pipes to IS 12818 that protect your borewell from collapse and corrosion, with all casing fittings. Sizes from ¾ inch to 24 inch.",
+    trustPoints: [
+      "Authorised Jain dealer: genuine IS 12818 casing",
+      "Plain casing and slotted screen pipes",
+      "Casing caps, reducers and centralisers in stock",
+      "Bulk supply for borewell drilling contractors",
+    ],
+    formTitle: "Get a Casing Pipe Quote",
+    formRequirement: "product_supply",
+    detail: {
+      parent: PIPE_PARENT,
+      image: "/products/casing-pipes/thick-pipe-stock.jpg",
+      imageAlt: "Casing pipes in stock",
+      specsTitle: "Jain casing pipe specifications",
+      specsLead: "Tell us your borewell diameter and depth for a quote.",
+      specs: [
+        ["Standards", "IS 12818 · DIN 4925 · ASTM F 480"],
+        ["Size range", "¾ inch to 24 inch, in different classes"],
+        ["Types", "Plain casing pipes and slotted screen pipes"],
+        ["Material", "uPVC: no corrosion or rust, safe for drinking water"],
+        ["Strength", "Collapse strength to resist ground pressure in the bore"],
+        ["Screen", "Non-clogging slots that let water in and control sand pumping"],
+      ],
+      variantsTitle: "Casing products we supply",
+      variantsLead: "Everything needed to case and finish a borewell.",
+      context: "Jain casing pipe",
+      variants: [
+        { icon: Package, name: "Plain casing pipes", type: "uPVC · IS 12818", spec: "¾\"–24\"", bestFor: "Lining the borewell above the water-bearing layer so it never collapses." },
+        { icon: Filter, name: "Slotted screen pipes", type: "Well screen", bestFor: "The water-bearing zone: water flows in, sand stays out." },
+        { icon: Wrench, name: "Casing fittings", type: "Top cap, end cap, reducer, lifting cap", bestFor: "Sealing, joining and finishing the casing string." },
+        { icon: Ruler, name: "Centralisers", type: "Casing centraliser", bestFor: "Keeping casing centred in the bore during installation." },
+      ],
+      usesTitle: "Where casing pipes are used",
+      uses: ["Borewells", "Tube wells", "Recharge wells", "Monitoring wells", "Dewatering wells"],
+      source: JAIN_SOURCE,
+    },
+  },
+  {
+    slug: "column",
+    metaTitle: "Jain Sure-Loc Plus Column Pipes in Eluru — 1.25\" to 8\"",
+    metaDescription: "Jain Sure-Loc Plus uPVC column pipes for submersible borewell pumps, 1.25\" to 8\", with lock joints, pump connectors and fittings. Authorised dealer, Eluru.",
+    badge: "Authorised Jain Pipe Dealer · Eluru, AP",
+    title: "Jain Sure-Loc Plus Column Pipes for Submersible Pumps",
+    description: "uPVC column pipes with locking joints at both ends, made for lowering and lifting borewell submersible pumps. No tools, solvent or threading needed. Sizes from 1.25 to 8 inch.",
+    trustPoints: [
+      "Authorised Jain dealer: genuine Sure-Loc Plus column pipes",
+      "Sized to your pump and borewell depth",
+      "Pump connectors, couplers and clamps in stock",
+      "Bulk supply for pump and borewell contractors",
+    ],
+    formTitle: "Get a Column Pipe Quote",
+    formRequirement: "product_supply",
+    detail: {
+      parent: PIPE_PARENT,
+      image: "/products/column-pipes/column-pipe-ends.jpg",
+      imageAlt: "Column pipes in stock",
+      specsTitle: "Jain Sure-Loc Plus specifications",
+      specsLead: "Tell us your pump size and setting depth for a quote.",
+      specs: [
+        ["Product", "Jain Sure-Loc Plus uPVC column pipe"],
+        ["Size range", "1.25 inch to 8 inch"],
+        ["Joint", "Locking joint at both ends resists pump start/stop twisting; leak-proof"],
+        ["Installation", "Assembled by hand: no wrenches, nut-bolts, solvent or curing time"],
+        ["Material", "Virgin PVC with impact modifier; safe for drinking water; no rust"],
+        ["Efficiency", "Smooth bore with low friction loss (Jain quotes energy savings of up to 20%)"],
+      ],
+      variantsTitle: "Column pipe products we supply",
+      variantsLead: "Pipes plus every fitting needed to hang your pump safely.",
+      context: "Jain column pipe",
+      variants: [
+        { icon: Package, name: "Sure-Loc Plus column pipes", type: "uPVC column pipe", spec: "1.25\"–8\"", bestFor: "Rising main for submersible pumps in borewells and tube wells." },
+        { icon: Zap, name: "Pump & top connectors", type: "Column pipe fittings", bestFor: "Joining the column to the pump below and the delivery line at the top." },
+        { icon: Cable, name: "Cable clips & pump guard", type: "Accessories", bestFor: "Holding the pump cable to the column and protecting the pump." },
+        { icon: Lock, name: "Couplers, clamps & non-return valve", type: "Installation fittings", bestFor: "Safe lowering and holding of the pump, and stopping backflow." },
+      ],
+      usesTitle: "Where column pipes are used",
+      uses: ["Borewell submersible pumps", "Tube wells", "Borewell rising mains", "Shiftable pumping systems"],
+      source: JAIN_SOURCE,
+    },
+  },
+];
+
+export const findPage = (pages: ProductPage[], slug: string) => pages.find((p) => p.slug === slug);

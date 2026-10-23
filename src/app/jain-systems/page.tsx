@@ -17,10 +17,10 @@ const TRUST_POINTS = [
 ];
 
 const PRODUCTS = [
-  { icon: Droplets, name: "Drip Laterals & Emitters", desc: "Precision drip delivers water directly to roots — cuts water usage by 50–70% versus flood irrigation." },
-  { icon: Gauge, name: "Pressure-Compensating (PC) Drip", desc: "Consistent flow regardless of slope or pressure variation. Ideal for uneven terrain and long field rows." },
-  { icon: Wind, name: "Micro-Sprinklers", desc: "Fine, even coverage for orchards, groundnut, nurseries and under-canopy watering. Low-pressure operation." },
-  { icon: CloudRain, name: "Rain Guns & Field Sprinklers", desc: "Large-area coverage for paddy, sugarcane and open fields. Multiple nozzle sizes available." },
+  { icon: Droplets, name: "Drip Laterals & Emitters", desc: "Precision drip delivers water directly to roots — cuts water usage by 50–70% versus flood irrigation.", href: "/jain-systems/drip-irrigation" },
+  { icon: Gauge, name: "Pressure-Compensating (PC) Drip", desc: "Consistent flow regardless of slope or pressure variation. Ideal for uneven terrain and long field rows.", href: "/jain-systems/drip-irrigation" },
+  { icon: Wind, name: "Micro-Sprinklers", desc: "Fine, even coverage for orchards, groundnut, nurseries and under-canopy watering. Low-pressure operation.", href: "/jain-systems/sprinklers" },
+  { icon: CloudRain, name: "Rain Guns & Field Sprinklers", desc: "Large-area coverage for paddy, sugarcane and open fields. Multiple nozzle sizes available.", href: "/jain-systems/sprinklers" },
   { icon: Layers, name: "HDPE Mainline & Sub-main Pipes", desc: "Jain-quality HDPE mains, sub-mains and fittings rated for long-term field use in all soil types." },
   { icon: Filter, name: "Disc, Sand & Screen Filters", desc: "Prevent emitter clogging and protect your entire system. Filter type recommended based on your water source." },
 ];

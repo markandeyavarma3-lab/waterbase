@@ -16,9 +16,10 @@ const TRUST_POINTS = [
 ];
 
 const PRODUCTS = [
-  { icon: Layers, name: "HDPE Pipes & Coils", desc: "Agriculture-grade and mainline HDPE in all diameters. UV-stabilized, pressure-rated, suitable for drip and field mains." },
-  { icon: Package, name: "PVC Column Pipes", desc: "For borewell suction, delivery and domestic water lines. Available in multiple pressure classes and lengths." },
-  { icon: Package2, name: "Borewell Casing Pipes", desc: "Slotted and plain casing in all wall thicknesses for shallow and deep borewells across all soil types." },
+  { icon: Layers, name: "HDPE Pipes & Coils", desc: "Agriculture-grade and mainline HDPE in all diameters. UV-stabilized, pressure-rated, suitable for drip and field mains.", href: "/heavy-pipes/hdpe" },
+  { icon: Package, name: "PVC Column Pipes", desc: "For borewell suction, delivery and domestic water lines. Available in multiple pressure classes and lengths.", href: "/heavy-pipes/column" },
+  { icon: Package2, name: "Borewell Casing Pipes", desc: "Slotted and plain casing in all wall thicknesses for shallow and deep borewells across all soil types.", href: "/heavy-pipes/casing" },
+  { icon: Package, name: "PVC Pressure Pipes", desc: "IS 4985 uPVC pipes from 20 to 630 mm for irrigation mains and water supply, with solvent or rubber-ring joints.", href: "/heavy-pipes/pvc" },
   { icon: Wrench, name: "GI & MS Pipes", desc: "For pump delivery lines, overhead tank systems and industrial water distribution. All sizes available." },
   { icon: Link2, name: "Pipe Fittings & Joints", desc: "Elbows, tees, reducers, couplings and bushings in PVC, HDPE and GI — all thread types and diameters." },
   { icon: Settings2, name: "Drip & Sprinkler Accessories", desc: "End caps, stakes, connectors, punch tools, inline valves and repair sleeves for drip and sprinkler systems." },
